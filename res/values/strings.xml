@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RealTrack</string>
+    <string name="allprojectsactivity_label">All Projects</string>
+    <string name="addprojectactivity_label">Add Project</string>
+    <string name="displayprojectactivity_label">Project Details</string>
+    <string name="editprojectactivity_label">Edit Project</string>
+</resources>
