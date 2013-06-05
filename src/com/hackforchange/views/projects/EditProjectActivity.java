@@ -4,7 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import com.hackforchange.backend.ProjectDAO;
+import com.hackforchange.backend.projects.ProjectDAO;
 
 import java.text.DateFormat;
 import java.text.ParseException;

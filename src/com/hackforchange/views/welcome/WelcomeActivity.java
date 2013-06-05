@@ -9,12 +9,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.hackforchange.views.R;
+import com.hackforchange.R;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.AllProjectsActivity;
 
 import java.util.ArrayList;
 
+// TODO:
+// 1. Add back button on Actionbar for editing activity, adding activity
+// 2. Add cancel button for editing activity, adding activity
 public class WelcomeActivity extends Activity {
   private ListView homeitemslist; //holds a list of the homeitems
   private ArrayList<String> homeitems_data, filteredhomeitems_data;

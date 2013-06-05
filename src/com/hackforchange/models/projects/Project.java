@@ -1,4 +1,4 @@
-package com.hackforchange.models;
+package com.hackforchange.models.projects;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -11,7 +11,7 @@ public class Project {
   private String title;
   private long startDate;
   private long endDate;
-  private String notes;
+  private String notes; // notes are optional
 
   // Database table
   public static final String PROJECT_TABLE = "projects";

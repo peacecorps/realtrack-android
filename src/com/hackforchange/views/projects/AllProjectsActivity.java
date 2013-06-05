@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.hackforchange.views.R;
-import com.hackforchange.backend.ProjectDAO;
-import com.hackforchange.models.Project;
+import com.hackforchange.R;
+import com.hackforchange.models.projects.Project;
+import com.hackforchange.backend.projects.ProjectDAO;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,7 @@ public class AllProjectsActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
+    getActionBar().setDisplayHomeAsUpEnabled(true);
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     projects_data = pDao.getAllProjects();
     filteredprojects_data = new ArrayList<Project>(); //used for filtered data
@@ -96,6 +97,10 @@ public class AllProjectsActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
       case R.id.action_addproject:
         Intent intent = new Intent(this, AddProjectActivity.class);
         this.startActivity(intent);

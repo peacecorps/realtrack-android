@@ -1,4 +1,4 @@
-package com.hackforchange.backend;
+package com.hackforchange.projects;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,6 +17,7 @@ public class ProjectDAO {
     this.opener = new ProjectDatabaseHelper(context);
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
+    this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
   }
 
   public ArrayList<Project> getAllProjects() {

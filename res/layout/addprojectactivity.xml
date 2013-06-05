@@ -16,13 +16,13 @@
                   android:layout_alignParentBottom="true"
                   android:textStyle="bold"
                   android:textSize="25dp"
-                  android:textColor="#ffbb33"
-                  android:background="#669900"
+                  android:textColor="#dbdbdb"
+                  android:background="#9933cc"
                   android:paddingLeft="7dp"
                   android:paddingTop="7dp"
                   android:paddingBottom="7dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="7dp"
+                  android:layout_marginBottom="7dp"
                   android:text="Title"/>
         <EditText android:id="@+id/title"
                   android:layout_width="fill_parent"
@@ -53,13 +53,13 @@
                   android:layout_alignParentBottom="true"
                   android:textStyle="bold"
                   android:textSize="25dp"
-                  android:textColor="#ffbb33"
-                  android:background="#669900"
+                  android:textColor="#dbdbdb"
+                  android:background="#9933cc"
                   android:paddingLeft="7dp"
                   android:paddingTop="7dp"
                   android:paddingBottom="7dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="7dp"
+                  android:layout_marginBottom="7dp"
                   android:text="Start Date"/>
         <EditText android:id="@+id/startDate"
                   android:layout_width="fill_parent"
@@ -91,13 +91,13 @@
                   android:layout_alignParentBottom="true"
                   android:textStyle="bold"
                   android:textSize="25dp"
-                  android:textColor="#ffbb33"
-                  android:background="#669900"
+                  android:textColor="#dbdbdb"
+                  android:background="#9933cc"
                   android:paddingLeft="7dp"
                   android:paddingTop="7dp"
                   android:paddingBottom="7dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="7dp"
+                  android:layout_marginBottom="7dp"
                   android:text="End Date"/>
         <EditText android:id="@+id/endDate"
                   android:layout_width="fill_parent"
@@ -129,13 +129,13 @@
                   android:layout_alignParentBottom="true"
                   android:textStyle="bold"
                   android:textSize="25dp"
-                  android:textColor="#ffbb33"
-                  android:background="#669900"
+                  android:textColor="#dbdbdb"
+                  android:background="#9933cc"
                   android:paddingLeft="7dp"
                   android:paddingTop="7dp"
                   android:paddingBottom="7dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="7dp"
+                  android:layout_marginBottom="7dp"
                   android:text="Notes"/>
         <EditText android:id="@+id/notes"
                   android:layout_width="fill_parent"
@@ -158,17 +158,19 @@
                   android:minLines="6"/>
     </LinearLayout>
     <LinearLayout
+            android:padding="10dp"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:gravity="center_horizontal">
+            android:layout_height="wrap_content" android:gravity="center_horizontal">
         <Button
-
-                android:textColor="#ffbb33"
-                android:background="#669900"
-                android:layout_width="wrap_content"
+                android:textSize="22dp"
+                android:textColor="#dbdbdb"
+                android:background="#0099cc"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit"
                 android:padding="10dp"
+                android:text="Submit"
+                android:textStyle="bold"
                 android:id="@+id/submitbutton"/>
     </LinearLayout>
 </LinearLayout>

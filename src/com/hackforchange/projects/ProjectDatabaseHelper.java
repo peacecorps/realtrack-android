@@ -1,4 +1,4 @@
-package com.hackforchange.backend;
+package com.hackforchange.projects;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

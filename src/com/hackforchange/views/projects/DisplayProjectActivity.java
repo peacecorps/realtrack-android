@@ -8,10 +8,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.hackforchange.views.R;
-import com.hackforchange.backend.ProjectDAO;
-import com.hackforchange.models.Project;
+import com.hackforchange.R;
+import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.projects.Project;
+import com.hackforchange.views.activities.AddActivitiesActivity;
+import com.hackforchange.views.activities.ListActivitiesActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +47,7 @@ public class DisplayProjectActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
+    getActionBar().setDisplayHomeAsUpEnabled(true);
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     p = pDao.getProjectWithId(id);
     TextView title = (TextView) findViewById(R.id.title);
@@ -54,6 +61,36 @@ public class DisplayProjectActivity extends Activity {
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
     notes.setText(p.getNotes());
+
+    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+    ArrayList <Activities> aList = aDao.getAllActivitiesWithProjectId(id);
+    TextView showActivities = (TextView) findViewById(R.id.showActivities);
+
+    // if there are no activities associated as yet with this project, hide the "Show Activities" button
+    // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
+    if(aList.size()==0){
+      ((LinearLayout)findViewById(R.id.showActivitiesHolder)).setVisibility(View.GONE);
+    }
+
+    // transition to new activity that shows all the activites associated with this project
+    showActivities.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent i = new Intent(DisplayProjectActivity.this, ListActivitiesActivity.class);
+        i.putExtra("projectid",id);
+        startActivity(i);
+      }
+    });
+
+    TextView addActivities = (TextView) findViewById(R.id.addActivities);
+    addActivities.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent i = new Intent(DisplayProjectActivity.this, AddActivitiesActivity.class);
+        i.putExtra("projectid",id);
+        startActivity(i);
+      }
+    });
   }
 
   // create actionbar menu
@@ -73,7 +110,12 @@ public class DisplayProjectActivity extends Activity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
       case R.id.action_deleteproject:
+        // warn the user first!
         new AlertDialog.Builder(this)
           .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
           .setCancelable(false)

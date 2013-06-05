@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import com.hackforchange.backend.ProjectDAO;
-import com.hackforchange.models.Project;
-import com.hackforchange.views.R;
+import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.models.projects.Project;
+import com.hackforchange.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -43,6 +44,7 @@ public class AddProjectActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
+    getActionBar().setDisplayHomeAsUpEnabled(true);
 
     // entering the start date
     startDate = (EditText) findViewById(R.id.startDate);
@@ -125,6 +127,20 @@ public class AddProjectActivity extends Activity {
         return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
     }
     return null;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch(item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+
+    return true;
   }
 
 }
