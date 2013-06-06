@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.projects.Project;
-import com.hackforchange.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -105,9 +105,9 @@ public class AddProjectActivity extends Activity {
         mMonth = monthOfYear;
         mDay = dayOfMonth;
         if(startOrEnd)
-          startDate.setText((mMonth + 1) + "/" + mDay + "/" + mYear); //sets the chosen date in the text view
+          startDate.setText(String.format("%02d/%02d/%4d",(mMonth + 1),mDay,mYear)); //sets the chosen date in the text view
         else
-          endDate.setText((mMonth + 1) + "/" + mDay + "/" + mYear); //sets the chosen date in the text view
+          endDate.setText(String.format("%02d/%02d/%4d",(mMonth + 1),mDay,mYear)); //sets the chosen date in the text view
         removeDialog(DATE_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
                                    // each time either startDate or endDate is clicked because we prepopulate the date picker with different
                                    // dates for startDate and endDate in EditProjectActivity.java's overriden onCreateDialog

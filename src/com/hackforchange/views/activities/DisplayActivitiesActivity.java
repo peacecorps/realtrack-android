@@ -1,23 +1,16 @@
-package com.hackforchange.views.projects;
+package com.hackforchange.views.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
-import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.activities.Activities;
-import com.hackforchange.models.projects.Project;
-import com.hackforchange.views.activities.AddActivitiesActivity;
-import com.hackforchange.views.activities.AllActivitiesActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,17 +19,20 @@ import java.util.Date;
 
 /*
  * Presents an activity that displays details of an existing activity
- * Also lets you edit the project (EditProjectActivity) or delete the project (right from this java file)
+ * Also lets you edit the project (EditActivitiesActivity) or delete the project (right from this java file)
  * by choosing buttons in the ActionBar
  * Pressing the back key will exit the activity
  */
-public class DisplayProjectActivity extends Activity {
+public class DisplayActivitiesActivity extends Activity {
+  public String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+  private ArrayList<Activities> activities_data, filteredactivities_data;
+  private ActivitiesListAdapter listAdapter, tempListAdapter;
   private int id;
-  private Project p;
+  private Activities a;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.displayprojectactivity);
+    setContentView(R.layout.displayactivitiesactivity);
 
     // read in the ID of the project that this activity must display details of
     id = getIntent().getExtras().getInt("projectid");
@@ -46,57 +42,40 @@ public class DisplayProjectActivity extends Activity {
   public void onResume(){
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
-    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-    p = pDao.getProjectWithId(id);
+    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+    a = aDao.getActivityWithId(id);
     TextView title = (TextView) findViewById(R.id.title);
-    title.setText(p.getTitle());
+    title.setText(a.getTitle());
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-    Date d = new Date(p.getStartDate());
+    Date d = new Date(a.getStartDate());
     TextView startDate = (TextView) findViewById(R.id.startDate);
     startDate.setText(parser.format(d));
-    d = new Date(p.getEndDate());
+    d = new Date(a.getEndDate());
     TextView endDate = (TextView) findViewById(R.id.endDate);
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
-    notes.setText(p.getNotes());
+    notes.setText(a.getNotes());
+    TextView orgs = (TextView) findViewById(R.id.orgs);
+    orgs.setText(a.getOrgs());
+    TextView comms = (TextView) findViewById(R.id.comms);
+    comms.setText(a.getComms());
+    TextView initiatives = (TextView) findViewById(R.id.initiatives);
 
-    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-    ArrayList <Activities> aList = aDao.getAllActivitiesForProjectId(id);
-    TextView showActivities = (TextView) findViewById(R.id.showActivities);
-
-    // if there are no activities associated as yet with this project, hide the "Show Activities" button
-    // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
-    if(aList.size()==0){
-      ((Button)findViewById(R.id.showActivities)).setVisibility(View.GONE);
+    // convert initiatives back to human-readable form
+    String[] initiativesList = a.getInitiatives().split("|");
+    String inits = "";
+    for(int i=0; i<initiativesList.length; i++){
+      if(initiativesList[i]=="1")
+        inits += AllInits[i]+"\n";
     }
-
-    // transition to new activity that shows all the activites associated with this project
-    showActivities.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent i = new Intent(DisplayProjectActivity.this, AllActivitiesActivity.class);
-        i.putExtra("projectid",id);
-        startActivity(i);
-      }
-    });
-
-    TextView addActivities = (TextView) findViewById(R.id.addActivities);
-    addActivities.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent i = new Intent(DisplayProjectActivity.this, AddActivitiesActivity.class);
-        i.putExtra("projectid",id);
-        startActivity(i);
-      }
-    });
+    initiatives.setText(inits);
   }
 
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.displayprojectmenu, menu);
-
+    inflater.inflate(R.menu.displayactivitiesmenu, menu);
     getActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
@@ -119,17 +98,17 @@ public class DisplayProjectActivity extends Activity {
           .setNegativeButton("No", null)
           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-              ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-              pDao.deleteProject(DisplayProjectActivity.this.id);
+              ActivitiesDAO pDao = new ActivitiesDAO(getApplicationContext());
+              pDao.deleteActivities(DisplayActivitiesActivity.this.id);
               finish();
             }
           })
           .show();
         break;
       case R.id.action_editproject:
-        Intent i = new Intent(DisplayProjectActivity.this, EditProjectActivity.class);
-        i.putExtra("projectid",id);
-        startActivity(i);
+        //Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
+        //i.putExtra("projectid",id);
+        //startActivity(i);
         break;
       default:
         return super.onOptionsItemSelected(item);

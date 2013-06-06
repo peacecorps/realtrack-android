@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Vrf" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Vrf</item>
+    </style>
+
+    <style name="ActionBar.Solid.Vrf" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">#575757</item>
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:titleTextStyle">@style/ActionBar.Title.Style</item>
+    </style>
+
+    <style name="ActionBar.Title.Style" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22dp</item>
+    </style>
+</resources>

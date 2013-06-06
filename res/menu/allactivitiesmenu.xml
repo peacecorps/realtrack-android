@@ -2,8 +2,12 @@
 
     <item
             android:id="@+id/action_search"
-            android:orderInCategory="100"
             android:showAsAction="always"
             android:title="Search"
             android:actionViewClass="android.widget.SearchView"/>
+    <item
+            android:id="@+id/action_addactivity"
+            android:showAsAction="ifRoom"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Add Activity"/>
 </menu>

@@ -46,7 +46,6 @@ public class EditProjectActivity extends AddProjectActivity {
     notes.setText(p.getNotes());
 
     // change the submit button listener to UPDATE the existing project instead of creating a NEW one
-    submitButton.setText("Save"); //rename the 'Submit' button to 'Save'
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

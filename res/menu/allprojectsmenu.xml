@@ -3,12 +3,11 @@
     <item
             android:id="@+id/action_search"
             android:showAsAction="always"
-            android:icon="@android:drawable/ic_menu_search"
             android:title="Search"
             android:actionViewClass="android.widget.SearchView"/>
     <item
             android:id="@+id/action_addproject"
             android:showAsAction="ifRoom"
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Search"/>
+            android:title="Add Project"/>
 </menu>

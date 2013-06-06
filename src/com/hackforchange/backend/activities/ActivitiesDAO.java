@@ -23,7 +23,7 @@ public class ActivitiesDAO {
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
   }
 
-  public ArrayList<Activities> getAllActivitiesWithProjectId(int projectid) {
+  public ArrayList<Activities> getAllActivitiesForProjectId(int projectid) {
     ArrayList <Activities> output = null;
     String[] columnsToRead = new String[8];
     columnsToRead[0] = Activities.COLUMN_TITLE;
@@ -69,6 +69,34 @@ public class ActivitiesDAO {
     return output;
   }
 
+  public Activities getActivityWithId(int id) {
+    ArrayList <Activities> output = null;
+    String[] columnsToRead = new String[8];
+    columnsToRead[0] = Activities.COLUMN_TITLE;
+    columnsToRead[1] = Activities.COLUMN_STARTDATE;
+    columnsToRead[2] = Activities.COLUMN_ENDDATE;
+    columnsToRead[3] = Activities.COLUMN_NOTES;
+    columnsToRead[4] = Activities.COLUMN_ID;
+    columnsToRead[5] = Activities.COLUMN_ORGS;
+    columnsToRead[6] = Activities.COLUMN_COMMS;
+    columnsToRead[7] = Activities.COLUMN_INITIATIVES;
+    String whereClause = Activities.COLUMN_ID + '=' + id;
+    Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
+      whereClause, null, null, null, null);
+    returnData.moveToFirst();
+    Activities a = new Activities();
+    a.setTitle(returnData.getString(0));
+    a.setStartDate(returnData.getLong(1));
+    a.setEndDate(returnData.getLong(2));
+    a.setNotes(returnData.getString(3));
+    a.setId(Integer.parseInt(returnData.getString(4)));
+    a.setOrgs(returnData.getString(5));
+    a.setComms(returnData.getString(6));
+    a.setInitiatives(returnData.getString(7));
+    // Return the constructed Activities object
+    return a;
+  }
+
   public void addActivities(Activities activity) {
     ContentValues newValue = new ContentValues(7);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
@@ -78,6 +106,8 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_ORGS, activity.getOrgs());
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
+    newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
+
     // Insert the item into the database
     writeDatabase.insert(Activities.ACTIVITIES_TABLE, null, newValue);
   }

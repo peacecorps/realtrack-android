@@ -66,7 +66,6 @@ public class WelcomeActivity extends Activity {
     SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
     //searchView.setIconified(false); //expand the search field by default
     searchView.setOnQueryTextListener (queryTextListener);
-    getActionBar().setDisplayShowHomeEnabled(true);
     getActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
