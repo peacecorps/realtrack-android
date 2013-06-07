@@ -6,7 +6,7 @@
     </style>
 
     <style name="ActionBar.Solid.Vrf" parent="@android:style/Widget.Holo.ActionBar">
-        <item name="android:background">#575757</item>
+        <item name="android:background">#3b3b3b</item>
         <item name="android:displayOptions">showTitle</item>
         <item name="android:titleTextStyle">@style/ActionBar.Title.Style</item>
     </style>

@@ -158,7 +158,7 @@ public class AllProjectsActivity extends Activity {
       public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final AdapterView<?> pView = parent;
         final int pos = position;
-        CharSequence[] options = {"Show Details","Delete"};
+        CharSequence[] options = {"Show Details","Edit","Delete"};
         new AlertDialog.Builder(AllProjectsActivity.this)
           .setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -170,7 +170,13 @@ public class AllProjectsActivity extends Activity {
                   i.putExtra("projectid", p.getId());
                   startActivity(i);
                   break;
-                case 1: // delete the project that was clicked
+                case 1: // edit the project that was clicked
+                  p = (Project) pView.getItemAtPosition(pos);
+                  i = new Intent(AllProjectsActivity.this, EditProjectActivity.class);
+                  i.putExtra("projectid", p.getId());
+                  startActivity(i);
+                  break;
+                case 2: // delete the project that was clicked
                   new AlertDialog.Builder(AllProjectsActivity.this)
                   .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
                   .setCancelable(false)
