@@ -15,9 +15,8 @@ import com.hackforchange.views.projects.AllProjectsActivity;
 
 import java.util.ArrayList;
 
-// TODO:
-// 1. Add back button on Actionbar for editing activity, adding activity
-// 2. Add cancel button for editing activity, adding activity
+// TODO: Add cancel button for editing activity, adding activity
+// TODO: Add reminders for activities. Might need a separate table for this.
 public class WelcomeActivity extends Activity {
   private ListView homeitemslist; //holds a list of the homeitems
   private ArrayList<String> homeitems_data, filteredhomeitems_data;

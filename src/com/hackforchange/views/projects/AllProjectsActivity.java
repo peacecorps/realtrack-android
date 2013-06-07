@@ -1,6 +1,8 @@
 package com.hackforchange.views.projects;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,8 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import com.hackforchange.R;
-import com.hackforchange.models.projects.Project;
 import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.models.projects.Project;
 
 import java.util.ArrayList;
 
@@ -35,9 +37,6 @@ public class AllProjectsActivity extends Activity {
   public void onResume(){
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
-    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-    projects_data = pDao.getAllProjects();
-    filteredprojects_data = new ArrayList<Project>(); //used for filtered data
     updateProjectsList();
   }
 
@@ -133,9 +132,14 @@ public class AllProjectsActivity extends Activity {
    * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
    ********************************************************************************************************************/
   void updateProjectsList(){
+    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+    projects_data = pDao.getAllProjects();
+    filteredprojects_data = new ArrayList<Project>(); //used for filtered data
     listAdapter = new ProjectListAdapter(this, R.layout.projectslist_row, projects_data);
     projectslist = (ListView)findViewById(R.id.projectslistView);
     projectslist.setAdapter(listAdapter);
+
+    // short click takes you to detail of the project
     projectslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,6 +147,48 @@ public class AllProjectsActivity extends Activity {
         Intent i = new Intent(AllProjectsActivity.this, DisplayProjectActivity.class);
         i.putExtra("projectid", p.getId());
         startActivity(i);
+      }
+    });
+
+    // handle long clicks - user gets options to:
+    // 1. see details of clicked project
+    // 2. delete clicked project
+    projectslist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final AdapterView<?> pView = parent;
+        final int pos = position;
+        CharSequence[] options = {"Show Details","Delete"};
+        new AlertDialog.Builder(AllProjectsActivity.this)
+          .setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              switch(which){
+                case 0: // show details of the project
+                  Project p = (Project) pView.getItemAtPosition(pos);
+                  Intent i = new Intent(AllProjectsActivity.this, DisplayProjectActivity.class);
+                  i.putExtra("projectid", p.getId());
+                  startActivity(i);
+                  break;
+                case 1: // delete the project that was clicked
+                  new AlertDialog.Builder(AllProjectsActivity.this)
+                  .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
+                  .setCancelable(false)
+                  .setNegativeButton("No", null)
+                  .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                      ProjectDAO aDao = new ProjectDAO(getApplicationContext());
+                      aDao.deleteProject(((Project) pView.getItemAtPosition(pos)).getId());
+                      updateProjectsList();
+                    }
+                  })
+                  .show();
+                  break;
+              }
+            }
+          }).show();
+
+        return false;
       }
     });
   }

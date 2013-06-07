@@ -1,6 +1,8 @@
 package com.hackforchange.views.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -38,9 +40,6 @@ public class AllActivitiesActivity extends Activity {
   public void onResume(){
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
-    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-    activities_data = aDao.getAllActivitiesForProjectId(projectid);
-    filteredactivities_data = new ArrayList<Activities>(); //used for filtered data
     updateActivitiesList();
   }
 
@@ -136,9 +135,14 @@ public class AllActivitiesActivity extends Activity {
    * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
    ********************************************************************************************************************/
   void updateActivitiesList(){
+    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+    activities_data = aDao.getAllActivitiesForProjectId(projectid);
+    filteredactivities_data = new ArrayList<Activities>(); //used for filtered data
     listAdapter = new ActivitiesListAdapter(this, R.layout.activitieslist_row, activities_data);
     activitieslist = (ListView)findViewById(R.id.activitieslistView);
     activitieslist.setAdapter(listAdapter);
+
+    // short click takes you to detail of the activity
     activitieslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -146,6 +150,48 @@ public class AllActivitiesActivity extends Activity {
         Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
         i.putExtra("activitiesid", a.getId());
         startActivity(i);
+      }
+    });
+
+    // handle long clicks - user gets options to:
+    // 1. see details of clicked project
+    // 2. delete clicked project
+    activitieslist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final AdapterView<?> aView = parent;
+        final int pos = position;
+        CharSequence[] options = {"Show Details","Delete"};
+        new AlertDialog.Builder(AllActivitiesActivity.this)
+          .setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              switch(which){
+                case 0: // show details of the activity
+                  Activities a = (Activities) aView.getItemAtPosition(pos);
+                  Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
+                  i.putExtra("activitiesid", a.getId());
+                  startActivity(i);
+                  break;
+                case 1: // delete the project that was clicked
+                  new AlertDialog.Builder(AllActivitiesActivity.this)
+                    .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
+                    .setCancelable(false)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int id) {
+                        ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+                        aDao.deleteActivities(((Activities) aView.getItemAtPosition(pos)).getId());
+                        updateActivitiesList();
+                      }
+                    })
+                    .show();
+                  break;
+              }
+            }
+          }).show();
+
+        return false;
       }
     });
   }

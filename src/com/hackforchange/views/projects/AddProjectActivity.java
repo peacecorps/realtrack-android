@@ -23,6 +23,7 @@ import java.util.Date;
  * Presents an activity that lets you add a new project
  * Pressing the back key will exit the activity without adding a project
  */
+// TODO Make sure required text fields are not empty
 public class AddProjectActivity extends Activity {
   static final int DATE_DIALOG = 0;
   protected int mYear, mMonth, mDay;

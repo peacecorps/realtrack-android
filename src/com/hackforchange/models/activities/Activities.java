@@ -17,7 +17,6 @@ public class Activities {
   private String orgs; // organizations associated with this activity; optional
   private String comms; // communities associated with this activity; optional
   private String initiatives; // initiatives associated with this activity; optional
-  // TODO: Add reminders. Maybe need a separate table for this?
 
   // Database table
   public static final String ACTIVITIES_TABLE = "ACTIVITIES";
