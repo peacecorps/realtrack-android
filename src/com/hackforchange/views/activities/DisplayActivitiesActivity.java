@@ -3,6 +3,7 @@ package com.hackforchange.views.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,10 +25,10 @@ import java.util.Date;
  * Pressing the back key will exit the activity
  */
 public class DisplayActivitiesActivity extends Activity {
-  public String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+  public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
   private ArrayList<Activities> activities_data, filteredactivities_data;
   private ActivitiesListAdapter listAdapter, tempListAdapter;
-  private int id;
+  private int activitiesid;
   private Activities a;
 
   public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class DisplayActivitiesActivity extends Activity {
     setContentView(R.layout.displayactivitiesactivity);
 
     // read in the ID of the project that this activity must display details of
-    id = getIntent().getExtras().getInt("projectid");
+    activitiesid = getIntent().getExtras().getInt("activitiesid");
   }
 
   @Override
@@ -43,7 +44,7 @@ public class DisplayActivitiesActivity extends Activity {
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-    a = aDao.getActivityWithId(id);
+    a = aDao.getActivityWithId(activitiesid);
     TextView title = (TextView) findViewById(R.id.title);
     title.setText(a.getTitle());
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
@@ -62,12 +63,13 @@ public class DisplayActivitiesActivity extends Activity {
     TextView initiatives = (TextView) findViewById(R.id.initiatives);
 
     // convert initiatives back to human-readable form
-    String[] initiativesList = a.getInitiatives().split("|");
+    String[] initiativesList = a.getInitiatives().split("\\|");
     String inits = "";
     for(int i=0; i<initiativesList.length; i++){
-      if(initiativesList[i]=="1")
-        inits += AllInits[i]+"\n";
+     if(initiativesList[i].equals("1"))
+       inits += AllInits[i]+"\n";
     }
+    inits = (inits.length()>1)?inits.substring(0,inits.length()-1):""; // remove the last superfluous newline character
     initiatives.setText(inits);
   }
 
@@ -90,25 +92,25 @@ public class DisplayActivitiesActivity extends Activity {
         // provide a back button on the actionbar
         finish();
         break;
-      case R.id.action_deleteproject:
+      case R.id.action_deleteactivity:
         // warn the user first!
         new AlertDialog.Builder(this)
-          .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
+          .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
           .setCancelable(false)
           .setNegativeButton("No", null)
           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-              ActivitiesDAO pDao = new ActivitiesDAO(getApplicationContext());
-              pDao.deleteActivities(DisplayActivitiesActivity.this.id);
+              ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+              aDao.deleteActivities(DisplayActivitiesActivity.this.activitiesid);
               finish();
             }
           })
           .show();
         break;
-      case R.id.action_editproject:
-        //Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
-        //i.putExtra("projectid",id);
-        //startActivity(i);
+      case R.id.action_editactivity:
+        Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
+        i.putExtra("activitiesid",activitiesid);
+        startActivity(i);
         break;
       default:
         return super.onOptionsItemSelected(item);

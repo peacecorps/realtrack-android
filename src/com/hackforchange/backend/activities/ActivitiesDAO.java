@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.activities.Activities;
 
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ import java.util.ArrayList;
  * DAO object to update/delete/add activities
  */
 public class ActivitiesDAO {
-  private ActivitiesDatabaseHelper opener;
+  private GlobalDatabaseHelper opener;
   private SQLiteDatabase readDatabase;
   private SQLiteDatabase writeDatabase;
 
   public ActivitiesDAO(Context context) {
-    this.opener = new ActivitiesDatabaseHelper(context);
+    this.opener = GlobalDatabaseHelper.getInstance(context);
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
@@ -71,7 +72,7 @@ public class ActivitiesDAO {
 
   public Activities getActivityWithId(int id) {
     ArrayList <Activities> output = null;
-    String[] columnsToRead = new String[8];
+    String[] columnsToRead = new String[9];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
     columnsToRead[2] = Activities.COLUMN_ENDDATE;
@@ -80,6 +81,7 @@ public class ActivitiesDAO {
     columnsToRead[5] = Activities.COLUMN_ORGS;
     columnsToRead[6] = Activities.COLUMN_COMMS;
     columnsToRead[7] = Activities.COLUMN_INITIATIVES;
+    columnsToRead[8] = Activities.COLUMN_PROJECTID;
     String whereClause = Activities.COLUMN_ID + '=' + id;
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
       whereClause, null, null, null, null);
@@ -93,12 +95,13 @@ public class ActivitiesDAO {
     a.setOrgs(returnData.getString(5));
     a.setComms(returnData.getString(6));
     a.setInitiatives(returnData.getString(7));
+    a.setProjectid(returnData.getInt(8));
     // Return the constructed Activities object
     return a;
   }
 
   public void addActivities(Activities activity) {
-    ContentValues newValue = new ContentValues(7);
+    ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
     newValue.put(Activities.COLUMN_ENDDATE, activity.getEndDate());
@@ -113,7 +116,7 @@ public class ActivitiesDAO {
   }
 
   public void updateActivities(Activities activity){
-    ContentValues newValue = new ContentValues(7);
+    ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
     newValue.put(Activities.COLUMN_ENDDATE, activity.getEndDate());
@@ -121,6 +124,7 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_ORGS, activity.getOrgs());
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
+    newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
     String whereClause = Activities.COLUMN_ID + '=' + activity.getId();
     // Update the item into the database
     writeDatabase.update(Activities.ACTIVITIES_TABLE, newValue, whereClause, null);

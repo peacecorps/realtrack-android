@@ -69,16 +69,18 @@ public class DisplayProjectActivity extends Activity {
     if(aList.size()==0){
       ((Button)findViewById(R.id.showActivities)).setVisibility(View.GONE);
     }
-
-    // transition to new activity that shows all the activites associated with this project
-    showActivities.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent i = new Intent(DisplayProjectActivity.this, AllActivitiesActivity.class);
-        i.putExtra("projectid",id);
-        startActivity(i);
-      }
-    });
+    else{
+      ((Button)findViewById(R.id.showActivities)).setVisibility(View.VISIBLE);
+      // transition to new activity that shows all the activites associated with this project
+      showActivities.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent i = new Intent(DisplayProjectActivity.this, AllActivitiesActivity.class);
+          i.putExtra("projectid",id);
+          startActivity(i);
+        }
+      });
+    }
 
     TextView addActivities = (TextView) findViewById(R.id.addActivities);
     addActivities.setOnClickListener(new View.OnClickListener() {

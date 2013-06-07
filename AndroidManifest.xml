@@ -26,6 +26,9 @@
                   android:label="@string/allactivitiesactivity_label"/>
         <activity android:name=".views.activities.AddActivitiesActivity"
                   android:label="@string/addactivitiesactivity_label"/>
-        <activity android:name=".views.activities.DisplayActivitiesActivity"/>
+        <activity android:name=".views.activities.DisplayActivitiesActivity"
+                  android:label="@string/displayactivitiesactivity_label"/>
+        <activity android:name=".views.activities.EditActivitiesActivity"
+                  android:label="@string/editactivitiesactivity_label"/>
     </application>
 </manifest>

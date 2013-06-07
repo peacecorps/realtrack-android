@@ -5,6 +5,8 @@
     <string name="addprojectactivity_label">Add Project</string>
     <string name="displayprojectactivity_label">Project Details</string>
     <string name="editprojectactivity_label">Edit Project</string>
-    <string name="allactivitiesactivity_label">Activities</string>
+    <string name="allactivitiesactivity_label">All Activities</string>
     <string name="addactivitiesactivity_label">Add Activity</string>
+    <string name="displayactivitiesactivity_label">Activity Details</string>
+    <string name="editactivitiesactivity_label">Edit Activity</string>
 </resources>

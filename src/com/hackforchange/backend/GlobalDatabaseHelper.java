@@ -1,21 +1,31 @@
-package com.hackforchange.backend.activities;
+package com.hackforchange.backend;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.hackforchange.models.activities.Activities;
-
-public class ActivitiesDatabaseHelper extends SQLiteOpenHelper {
-  public static final String DATABASE_NAME = "activities.db";
+import com.hackforchange.models.projects.Project;
+/*
+ * This is a database helper that is shared by the different model classes
+ */
+public class GlobalDatabaseHelper extends SQLiteOpenHelper {
+  public static final String DATABASE_NAME = "database.db";
   public static final int DATABASE_VERSION = 1;
+  private static GlobalDatabaseHelper gHelper;
 
-  public ActivitiesDatabaseHelper(Context context) {
+  private GlobalDatabaseHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+  }
+
+  public static GlobalDatabaseHelper getInstance(Context context){
+    gHelper = new GlobalDatabaseHelper(context);
+    return gHelper;
   }
 
   // Method is called during creation of the database
   @Override
   public void onCreate(SQLiteDatabase database) {
+    Project.onCreate(database);
     Activities.onCreate(database);
   }
 
@@ -23,6 +33,6 @@ public class ActivitiesDatabaseHelper extends SQLiteOpenHelper {
   @Override
   public void onUpgrade(SQLiteDatabase database, int oldVersion,
                         int newVersion) {
-    Activities.onUpgrade(database, oldVersion, newVersion);
+    Project.onUpgrade(database, oldVersion, newVersion);
   }
 }

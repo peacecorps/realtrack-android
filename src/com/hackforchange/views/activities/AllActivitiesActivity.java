@@ -17,7 +17,7 @@ import com.hackforchange.models.activities.Activities;
 import java.util.ArrayList;
 
 /*
- * Presents an activity that lists all the activities associated with a project
+ * Presents an activity that lists all the activities associated with a activities
  */
 public class AllActivitiesActivity extends Activity {
   private ListView activitieslist; //holds a list of the activities
@@ -28,9 +28,9 @@ public class AllActivitiesActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.mainactivity);
+    setContentView(R.layout.allactivitiesactivity);
 
-    // get the owner project
+    // get the owner activities
     projectid = getIntent().getExtras().getInt("projectid");
   }
 
@@ -69,7 +69,7 @@ public class AllActivitiesActivity extends Activity {
     SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
     searchView.setOnQueryTextListener (queryTextListener);
 
-    final MenuItem addActivities = menu.findItem(R.id.action_addproject);
+    final MenuItem addActivities = menu.findItem(R.id.action_addactivities);
 
     // hide the add button when the search view is expanded
     final Menu m = menu;
@@ -93,7 +93,7 @@ public class AllActivitiesActivity extends Activity {
   }
 
   /*********************************************************************************************************************
-   * transition to view for adding new project when the add icon in the action bar is clicked
+   * transition to view for adding new activities when the add icon in the action bar is clicked
    ********************************************************************************************************************/
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -102,9 +102,10 @@ public class AllActivitiesActivity extends Activity {
         // provide a back button on the actionbar
         finish();
         break;
-      case R.id.action_addproject:
-        Intent intent = new Intent(this, AddActivitiesActivity.class);
-        this.startActivity(intent);
+      case R.id.action_addactivities:
+        Intent i = new Intent(this, AddActivitiesActivity.class);
+        i.putExtra("projectid",this.projectid);
+        this.startActivity(i);
         break;
       default:
         return super.onOptionsItemSelected(item);
@@ -136,14 +137,14 @@ public class AllActivitiesActivity extends Activity {
    ********************************************************************************************************************/
   void updateActivitiesList(){
     listAdapter = new ActivitiesListAdapter(this, R.layout.activitieslist_row, activities_data);
-    activitieslist = (ListView)findViewById(R.id.homeitemlistView);
+    activitieslist = (ListView)findViewById(R.id.activitieslistView);
     activitieslist.setAdapter(listAdapter);
     activitieslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Activities p = (Activities) listAdapter.getItem(position);
+        Activities a = (Activities) listAdapter.getItem(position);
         Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
-        i.putExtra("projectid", p.getId());
+        i.putExtra("activitiesid", a.getId());
         startActivity(i);
       }
     });

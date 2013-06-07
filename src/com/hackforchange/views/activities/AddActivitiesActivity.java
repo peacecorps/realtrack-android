@@ -82,14 +82,6 @@ public class AddActivitiesActivity extends Activity {
     orgs = (EditText) findViewById(R.id.orgs);
     comms = (EditText) findViewById(R.id.comms);
 
-    // store initiatives in compact form "xxxxx" where the first x is WID, second is Youth etc
-    // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
-    initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked()?"1":"0")+"|"+
-                  (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked()?"1":"0")+"|"+
-                  (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked()?"1":"0")+"|"+
-                  (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked()?"1":"0")+"|"+
-                  (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked()?"1":"0");
-
     submitButton = (Button) findViewById(R.id.submitbutton);
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -107,7 +99,17 @@ public class AddActivitiesActivity extends Activity {
         a.setNotes(notes.getText().toString());
         a.setOrgs(orgs.getText().toString());
         a.setComms(comms.getText().toString());
+
+        // store initiatives in compact form "x|x|x|x|x" where the first x is WID, second is Youth etc
+        // this order MUST match the DisplayActivitiesActivity.AllInits array
+        // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
+        initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked()?"1":"0")+"|"+
+          (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked()?"1":"0")+"|"+
+          (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked()?"1":"0")+"|"+
+          (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked()?"1":"0")+"|"+
+          (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked()?"1":"0");
         a.setInitiatives(initiatives);
+
         a.setProjectid(projectid);
 
         ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());

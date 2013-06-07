@@ -4,17 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.projects.Project;
 
 import java.util.ArrayList;
 
 public class ProjectDAO {
-  private ProjectDatabaseHelper opener;
+  private GlobalDatabaseHelper opener;
   private SQLiteDatabase readDatabase;
   private SQLiteDatabase writeDatabase;
 
   public ProjectDAO(Context context) {
-    this.opener = new ProjectDatabaseHelper(context);
+    this.opener = GlobalDatabaseHelper.getInstance(context);
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
