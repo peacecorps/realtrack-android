@@ -25,7 +25,7 @@ public class ActivitiesDAO {
   }
 
   public ArrayList<Activities> getAllActivitiesForProjectId(int projectid) {
-    ArrayList <Activities> output = null;
+    ArrayList<Activities> output = null;
     String[] columnsToRead = new String[8];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
@@ -42,9 +42,9 @@ public class ActivitiesDAO {
     return output;
   }
 
-  private ArrayList <Activities> extractActivities(Cursor returnData) {
+  private ArrayList<Activities> extractActivities(Cursor returnData) {
     // The output ArrayList is initialized
-    ArrayList <Activities> output = new ArrayList <Activities>();
+    ArrayList<Activities> output = new ArrayList<Activities>();
     // Move the counter to the first item in the return data
     returnData.moveToFirst();
     int count = 0;
@@ -60,7 +60,7 @@ public class ActivitiesDAO {
       a.setOrgs(returnData.getString(5));
       a.setComms(returnData.getString(6));
       a.setInitiatives(returnData.getString(7));
-      output.add(count,a);
+      output.add(count, a);
       // Advance the Cursor
       returnData.moveToNext();
       // Advance the counter
@@ -71,7 +71,7 @@ public class ActivitiesDAO {
   }
 
   public Activities getActivityWithId(int id) {
-    ArrayList <Activities> output = null;
+    ArrayList<Activities> output = null;
     String[] columnsToRead = new String[9];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
@@ -100,7 +100,7 @@ public class ActivitiesDAO {
     return a;
   }
 
-  public void addActivities(Activities activity) {
+  public int addActivities(Activities activity) {
     ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
@@ -113,9 +113,16 @@ public class ActivitiesDAO {
 
     // Insert the item into the database
     writeDatabase.insert(Activities.ACTIVITIES_TABLE, null, newValue);
+
+    // return the id of the activity just created. This will be used as the foreign key for the reminders table
+    Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Activities.ACTIVITIES_TABLE});
+    if (returnData != null && returnData.moveToFirst())
+      return returnData.getInt(0);
+    else
+      return -1;
   }
 
-  public void updateActivities(Activities activity){
+  public void updateActivities(Activities activity) {
     ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());

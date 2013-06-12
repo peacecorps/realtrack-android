@@ -11,11 +11,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.reminders.Reminders;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /*
@@ -30,6 +33,7 @@ public class DisplayActivitiesActivity extends Activity {
   private ActivitiesListAdapter listAdapter, tempListAdapter;
   private int activitiesid;
   private Activities a;
+  private ArrayList<Reminders> reminders_data;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -71,6 +75,44 @@ public class DisplayActivitiesActivity extends Activity {
     }
     inits = (inits.length()>1)?inits.substring(0,inits.length()-1):""; // remove the last superfluous newline character
     initiatives.setText(inits);
+
+    // display reminders
+    TextView reminders = (TextView) findViewById(R.id.reminders);
+    RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+    reminders_data = rDao.getAllRemindersForActivityId(activitiesid);
+    String remindersText = "";
+    Calendar c = Calendar.getInstance();
+    for (Reminders r : reminders_data) {
+      parser = new SimpleDateFormat("hh:mm a");
+      d = new Date(r.getRemindTime());
+      c.setTime(d);
+      switch (c.get(Calendar.DAY_OF_WEEK)) {
+        case Calendar.MONDAY:
+          remindersText += "Monday ";
+          break;
+        case Calendar.TUESDAY:
+          remindersText += "Tuesday ";
+          break;
+        case Calendar.WEDNESDAY:
+          remindersText += "Wednesday ";
+          break;
+        case Calendar.THURSDAY:
+          remindersText += "Thursday ";
+          break;
+        case Calendar.FRIDAY:
+          remindersText += "Friday ";
+          break;
+        case Calendar.SATURDAY:
+          remindersText += "Saturday ";
+          break;
+        case Calendar.SUNDAY:
+          remindersText += "Sunday ";
+          break;
+      }
+      remindersText += parser.format(d)+"\n";
+    }
+    remindersText = (remindersText.length()>1)?remindersText.substring(0,remindersText.length()-1):""; // remove the last superfluous newline character
+    reminders.setText(remindersText);
   }
 
   // create actionbar menu

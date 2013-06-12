@@ -19,7 +19,7 @@ public class Activities {
   private String initiatives; // initiatives associated with this activity; optional
 
   // Database table
-  public static final String ACTIVITIES_TABLE = "ACTIVITIES";
+  public static final String ACTIVITIES_TABLE = "activities";
   public static final String COLUMN_ID = "_id";
   public static final String COLUMN_PROJECTID = "_projectid"; // foreign key referencing Project.id
   public static final String COLUMN_UPDATED = "updated"; //when this ACTIVITIES was last modified
