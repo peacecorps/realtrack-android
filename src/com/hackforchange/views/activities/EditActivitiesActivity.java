@@ -1,9 +1,13 @@
 package com.hackforchange.views.activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import com.hackforchange.R;
@@ -11,6 +15,7 @@ import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.reminders.Reminders;
+import com.hackforchange.reminders.NotificationService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -87,10 +92,10 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
     RemindersDAO rDao = new RemindersDAO(getApplicationContext());
     reminders_data = rDao.getAllRemindersForActivityId(id);
     for (Reminders r : reminders_data) {
-      parser = new SimpleDateFormat("hh:mm a");
+      parser = new SimpleDateFormat("hh:mm aaa");
       d = new Date(r.getRemindTime());
       Calendar c = Calendar.getInstance();
-      c.setTime(d);
+      c.setTimeInMillis(r.getRemindTime());
       switch (c.get(Calendar.DAY_OF_WEEK)) {
         case Calendar.MONDAY:
           mondayCheckbox.setChecked(true);
@@ -166,32 +171,37 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
 
         // save reminders for this activity to the reminders table
         RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-        parser = new SimpleDateFormat("hh:mm a");
+        parser = new SimpleDateFormat("hh:mm aaa");
 
         if (mondayCheckbox.isChecked()) {
           if (mondayTime.getText() != null) {
             try {
               Date date = parser.parse(mondayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(mondayTime.getTag()!=null){ // updating an existing reminder
+              if (mondayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) mondayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(mondayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)mondayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (mondayTime.getTag() != null) {
+            int reminderid = (Integer) mondayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -199,26 +209,31 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (tuesdayTime.getText() != null) {
             try {
               Date date = parser.parse(tuesdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(tuesdayTime.getTag()!=null){ // updating an existing reminder
+              if (tuesdayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) tuesdayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(tuesdayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)tuesdayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (tuesdayTime.getTag() != null) {
+            int reminderid = (Integer) tuesdayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -226,26 +241,32 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (wednesdayTime.getText() != null) {
             try {
               Date date = parser.parse(wednesdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(wednesdayTime.getTag()!=null){ // updating an existing reminder
+              Log.e("burra", date.getDay() + "");
+              if (wednesdayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) wednesdayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(wednesdayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)wednesdayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (wednesdayTime.getTag() != null) {
+            int reminderid = (Integer) wednesdayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -254,26 +275,31 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (thursdayTime.getText() != null) {
             try {
               Date date = parser.parse(thursdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(thursdayTime.getTag()!=null){ // updating an existing reminder
+              if (thursdayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) thursdayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(thursdayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)thursdayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (thursdayTime.getTag() != null) {
+            int reminderid = (Integer) thursdayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -281,26 +307,31 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (fridayTime.getText() != null) {
             try {
               Date date = parser.parse(fridayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(fridayTime.getTag()!=null){ // updating an existing reminder
+              if (fridayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) fridayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(fridayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)fridayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (fridayTime.getTag() != null) {
+            int reminderid = (Integer) fridayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -308,26 +339,31 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (saturdayTime.getText() != null) {
             try {
               Date date = parser.parse(saturdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(saturdayTime.getTag()!=null){ // updating an existing reminder
+              if (saturdayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) saturdayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(saturdayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)saturdayTime.getTag());
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (saturdayTime.getTag() != null) {
+            int reminderid = (Integer) saturdayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);
           }
         }
 
@@ -335,27 +371,31 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
           if (sundayTime.getText() != null) {
             try {
               Date date = parser.parse(sundayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
               r = new Reminders();
               r.setActivityid(id);
               r.setRemindTime(c.getTimeInMillis());
-              if(sundayTime.getTag()!=null){ // updating an existing reminder
+              if (sundayTime.getTag() != null) { // updating an existing reminder
                 r.setId((Integer) sundayTime.getTag()); // retrieve the id of this reminder
-                rDao.updateReminders(r);
-              }
-              else{ // add a new reminder
-                rDao.addReminders(r);
+                rDao.updateReminders(r, getApplicationContext());
+              } else { // add a new reminder
+                rDao.addReminders(r, getApplicationContext());
               }
             } catch (ParseException e) {
             }
           }
-        }
-        else{ // box was unchecked, remove any associated reminder for this day
-          if(sundayTime.getTag()!=null){
-            rDao.deleteReminders((Integer)sundayTime.getTag());
-          }
+        } else { // box was unchecked, remove any associated reminder for this day
+          if (sundayTime.getTag() != null) {
+            int reminderid = (Integer) sundayTime.getTag();
+            rDao.deleteReminders(reminderid, getApplicationContext());
+            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),reminderid);          }
         }
 
         finish();
@@ -385,13 +425,19 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
         } catch (ParseException e) {
         }
         break;
-      case TIME_DIALOG:
-        // get the current time
-        final Calendar d = Calendar.getInstance();
-        mHour = d.get(Calendar.HOUR_OF_DAY);
-        mMonth = d.get(Calendar.MINUTE);
-        return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
     }
     return null;
+  }
+
+  // remove all the alarms associated with a reminder
+  // also used by AllActivitiesActivity and DisplayActivitiesActivity
+  public static void deleteAlarmsForReminder(Context context, int reminderid){
+    Intent notifIntent = new Intent(context, NotificationService.class);
+    notifIntent.putExtra("reminderid", reminderid); // not necessary for alarmManager.cancel to match pending intents but leaving it here anyway
+    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an action, the extras will NOT be sent!!
+    PendingIntent pendingIntent = PendingIntent.getService(context, reminderid, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents using Reminders.id as the request code
+    pendingIntent.cancel();
+    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    alarmManager.cancel(pendingIntent);
   }
 }

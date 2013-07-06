@@ -4,8 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.hackforchange.models.activities.Activities;
-import com.hackforchange.models.reminders.Reminders;
+import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
+import com.hackforchange.models.reminders.Reminders;
 /*
  * This is a database helper that is shared by the different model classes
  */
@@ -29,6 +30,7 @@ public class GlobalDatabaseHelper extends SQLiteOpenHelper {
     Project.onCreate(database);
     Activities.onCreate(database);
     Reminders.onCreate(database);
+    Participation.onCreate(database);
   }
 
   // Method is called during an upgrade of the database,
@@ -38,5 +40,6 @@ public class GlobalDatabaseHelper extends SQLiteOpenHelper {
     Project.onUpgrade(database, oldVersion, newVersion);
     Activities.onUpgrade(database, oldVersion, newVersion);
     Reminders.onUpgrade(database, oldVersion, newVersion);
+    Participation.onUpgrade(database, oldVersion, newVersion);
   }
 }

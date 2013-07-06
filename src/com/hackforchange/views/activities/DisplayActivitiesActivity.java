@@ -83,33 +83,9 @@ public class DisplayActivitiesActivity extends Activity {
     String remindersText = "";
     Calendar c = Calendar.getInstance();
     for (Reminders r : reminders_data) {
-      parser = new SimpleDateFormat("hh:mm a");
-      d = new Date(r.getRemindTime());
-      c.setTime(d);
-      switch (c.get(Calendar.DAY_OF_WEEK)) {
-        case Calendar.MONDAY:
-          remindersText += "Monday ";
-          break;
-        case Calendar.TUESDAY:
-          remindersText += "Tuesday ";
-          break;
-        case Calendar.WEDNESDAY:
-          remindersText += "Wednesday ";
-          break;
-        case Calendar.THURSDAY:
-          remindersText += "Thursday ";
-          break;
-        case Calendar.FRIDAY:
-          remindersText += "Friday ";
-          break;
-        case Calendar.SATURDAY:
-          remindersText += "Saturday ";
-          break;
-        case Calendar.SUNDAY:
-          remindersText += "Sunday ";
-          break;
-      }
-      remindersText += parser.format(d)+"\n";
+      parser = new SimpleDateFormat("EEEE, hh:mm aaa");
+      c.setTimeInMillis(r.getRemindTime());
+      remindersText += parser.format(r.getRemindTime())+"\n";
     }
     remindersText = (remindersText.length()>1)?remindersText.substring(0,remindersText.length()-1):""; // remove the last superfluous newline character
     reminders.setText(remindersText);
@@ -143,7 +119,15 @@ public class DisplayActivitiesActivity extends Activity {
           .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
               ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-              aDao.deleteActivities(DisplayActivitiesActivity.this.activitiesid);
+              int activityId = DisplayActivitiesActivity.this.activitiesid;
+              aDao.deleteActivities(activityId);
+              // cancel all alarms for participation events of the reminders of this activity
+              RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+              ArrayList<Reminders> reminders_data;
+              reminders_data = rDao.getAllRemindersForActivityId(activityId);
+              for(Reminders r: reminders_data){
+                EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),r.getId());
+              }
               finish();
             }
           })

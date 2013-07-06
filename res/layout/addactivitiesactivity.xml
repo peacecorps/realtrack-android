@@ -108,6 +108,7 @@
                       android:textColor="#ffffff"
                       android:textStyle="bold"
                       android:textSize="19dp"
+                      android:clickable="false"
                       android:layout_gravity="fill_horizontal"
                       android:inputType="time"
                       android:hint="HH:MM AM/PM"

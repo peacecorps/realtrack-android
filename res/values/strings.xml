@@ -9,4 +9,5 @@
     <string name="addactivitiesactivity_label">Add Activity</string>
     <string name="displayactivitiesactivity_label">Activity Details</string>
     <string name="editactivitiesactivity_label">Edit Activity</string>
+    <string name="recordparticipationactivity_label">Record Participation</string>
 </resources>

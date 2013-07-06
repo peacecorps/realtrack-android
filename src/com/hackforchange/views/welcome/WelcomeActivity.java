@@ -8,13 +8,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.hackforchange.R;
-import com.hackforchange.reminders.NotificationReceiver;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.AllProjectsActivity;
 
 import java.util.ArrayList;
 
-// TODO: Add cancel button for editing activity, adding activity
+// TODO: Add cancel button for editing activity, adding activity.
 public class WelcomeActivity extends Activity {
   private ListView homeitemslist; //holds a list of the homeitems
   private ArrayList<String> homeitems_data, filteredhomeitems_data;
@@ -44,10 +43,6 @@ public class WelcomeActivity extends Activity {
 
     // populate the home items list
     updateHomeItemsList();
-
-    // schedule an alarm for the notifications
-    // this is eventually done in the NotificationService class
-    NotificationReceiver.scheduleAlarm(getApplicationContext());
   }
 
   // create actionbar menu
@@ -82,7 +77,7 @@ public class WelcomeActivity extends Activity {
    * check whether the string passed in is present in any of the homeitems in our list
    * called by queryTextListener
    ********************************************************************************************************************/
-  void filterhomeitemsList(String text){
+  /*void filterhomeitemsList(String text){
     filteredhomeitems_data.clear();
     for(int i=0;i<homeitems_data.size();i++){
       if(homeitems_data.get(i).toLowerCase().matches(".*"+text.toLowerCase()+".*")){
@@ -91,7 +86,7 @@ public class WelcomeActivity extends Activity {
     }
     listAdapter = new HomeItemListAdapter(WelcomeActivity.this, R.layout.homeitemslist_row, filteredhomeitems_data);
     homeitemslist.setAdapter(listAdapter);
-  }
+  }*/
 
   /*********************************************************************************************************************
    * populate the homeitems list

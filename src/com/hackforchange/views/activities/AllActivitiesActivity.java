@@ -14,7 +14,9 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.reminders.Reminders;
 
 import java.util.ArrayList;
 
@@ -187,7 +189,15 @@ public class AllActivitiesActivity extends Activity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                       public void onClick(DialogInterface dialog, int id) {
                         ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-                        aDao.deleteActivities(((Activities) aView.getItemAtPosition(pos)).getId());
+                        int activityId = ((Activities) aView.getItemAtPosition(pos)).getId();
+                        aDao.deleteActivities(activityId);
+                        // cancel all alarms for participation events of the reminders of this activity
+                        RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+                        ArrayList<Reminders> reminders_data;
+                        reminders_data = rDao.getAllRemindersForActivityId(activityId);
+                        for(Reminders r: reminders_data){
+                          EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),r.getId());
+                        }
                         updateActivitiesList();
                       }
                     })

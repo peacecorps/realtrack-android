@@ -47,7 +47,7 @@ public class AddActivitiesActivity extends Activity {
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -58,8 +58,12 @@ public class AddActivitiesActivity extends Activity {
     mondayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 1;
-        showDialog(TIME_DIALOG);
+        if (mondayCheckbox.isChecked()) {
+          dayOfWeek = 1;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", mondayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -69,8 +73,12 @@ public class AddActivitiesActivity extends Activity {
     tuesdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 2;
-        showDialog(TIME_DIALOG);
+        if (tuesdayCheckbox.isChecked()) {
+          dayOfWeek = 2;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", tuesdayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -80,8 +88,12 @@ public class AddActivitiesActivity extends Activity {
     wednesdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 3;
-        showDialog(TIME_DIALOG);
+        if (wednesdayCheckbox.isChecked()) {
+          dayOfWeek = 3;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", wednesdayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -91,8 +103,12 @@ public class AddActivitiesActivity extends Activity {
     thursdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 4;
-        showDialog(TIME_DIALOG);
+        if (thursdayCheckbox.isChecked()) {
+          dayOfWeek = 4;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", thursdayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -102,8 +118,12 @@ public class AddActivitiesActivity extends Activity {
     fridayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 5;
-        showDialog(TIME_DIALOG);
+        if (fridayCheckbox.isChecked()) {
+          dayOfWeek = 5;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", fridayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -113,8 +133,12 @@ public class AddActivitiesActivity extends Activity {
     saturdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 6;
-        showDialog(TIME_DIALOG);
+        if (saturdayCheckbox.isChecked()) {
+          dayOfWeek = 6;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", saturdayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -124,8 +148,12 @@ public class AddActivitiesActivity extends Activity {
     sundayTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        dayOfWeek = 7;
-        showDialog(TIME_DIALOG);
+        if (sundayCheckbox.isChecked()) {
+          dayOfWeek = 7;
+          Bundle bundle = new Bundle();
+          bundle.putString("timetodisplay", sundayTime.getText().toString());
+          showDialog(TIME_DIALOG, bundle);
+        }
       }
     });
 
@@ -137,7 +165,7 @@ public class AddActivitiesActivity extends Activity {
       @Override
       public void onClick(View v) {
         startOrEnd = true;
-        showDialog(DATE_DIALOG);
+        showDialog(DATE_DIALOG, null);
       }
     });
 
@@ -149,7 +177,7 @@ public class AddActivitiesActivity extends Activity {
       @Override
       public void onClick(View v) {
         startOrEnd = false;
-        showDialog(DATE_DIALOG);
+        showDialog(DATE_DIALOG, null);
       }
     });
 
@@ -159,12 +187,67 @@ public class AddActivitiesActivity extends Activity {
     comms = (EditText) findViewById(R.id.comms);
 
     mondayCheckbox = (CheckBox) findViewById(R.id.mondayCheckBox);
+    mondayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!mondayCheckbox.isChecked())
+          mondayTime.setText("");
+      }
+    });
+
     tuesdayCheckbox = (CheckBox) findViewById(R.id.tuesdayCheckBox);
+    tuesdayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!tuesdayCheckbox.isChecked())
+          tuesdayTime.setText("");
+      }
+    });
+
     wednesdayCheckbox = (CheckBox) findViewById(R.id.wednesdayCheckBox);
+    wednesdayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!wednesdayCheckbox.isChecked())
+          wednesdayTime.setText("");
+      }
+    });
+
     thursdayCheckbox = (CheckBox) findViewById(R.id.thursdayCheckBox);
+    thursdayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!thursdayCheckbox.isChecked())
+          thursdayTime.setText("");
+      }
+    });
+
     fridayCheckbox = (CheckBox) findViewById(R.id.fridayCheckBox);
+    fridayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!fridayCheckbox.isChecked())
+          fridayTime.setText("");
+      }
+    });
+
     saturdayCheckbox = (CheckBox) findViewById(R.id.saturdayCheckBox);
+    saturdayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!saturdayCheckbox.isChecked())
+          saturdayTime.setText("");
+      }
+    });
+
     sundayCheckbox = (CheckBox) findViewById(R.id.sundayCheckBox);
+    sundayCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!sundayCheckbox.isChecked())
+          sundayTime.setText("");
+      }
+    });
 
     submitButton = (Button) findViewById(R.id.submitbutton);
     submitButton.setOnClickListener(new View.OnClickListener() {
@@ -191,11 +274,11 @@ public class AddActivitiesActivity extends Activity {
         // store initiatives in compact form "x|x|x|x|x" where the first x is WID, second is Youth etc
         // this order MUST match the DisplayActivitiesActivity.AllInits array
         // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
-        initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked()?"1":"0")+"|"+
-          (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked()?"1":"0")+"|"+
-          (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked()?"1":"0")+"|"+
-          (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked()?"1":"0")+"|"+
-          (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked()?"1":"0");
+        initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked() ? "1" : "0") + "|" +
+          (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked() ? "1" : "0") + "|" +
+          (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked() ? "1" : "0") + "|" +
+          (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked() ? "1" : "0") + "|" +
+          (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked() ? "1" : "0");
         a.setInitiatives(initiatives);
 
         // don't forget to save the associated project
@@ -210,134 +293,167 @@ public class AddActivitiesActivity extends Activity {
 
         // save reminders for this activity to the reminders table
         RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-        parser = new SimpleDateFormat("hh:mm a");
+        parser = new SimpleDateFormat("hh:mm aaa");
 
-        if(mondayCheckbox.isChecked()){
-          if(mondayTime.getText()!=null){
-            try{
+        if (mondayCheckbox.isChecked()) {
+          if (mondayTime.getText() != null) {
+            try {
               Date date = parser.parse(mondayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(tuesdayCheckbox.isChecked()){
-          if(tuesdayTime.getText()!=null){
-            try{
+        if (tuesdayCheckbox.isChecked()) {
+          if (tuesdayTime.getText() != null) {
+            try {
               Date date = parser.parse(tuesdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(wednesdayCheckbox.isChecked()){
-          if(wednesdayTime.getText()!=null){
-            try{
+        if (wednesdayCheckbox.isChecked()) {
+          if (wednesdayTime.getText() != null) {
+            try {
               Date date = parser.parse(wednesdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(thursdayCheckbox.isChecked()){
-          if(thursdayTime.getText()!=null){
-            try{
+        if (thursdayCheckbox.isChecked()) {
+          if (thursdayTime.getText() != null) {
+            try {
               Date date = parser.parse(thursdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(fridayCheckbox.isChecked()){
-          if(fridayTime.getText()!=null){
-            try{
+        if (fridayCheckbox.isChecked()) {
+          if (fridayTime.getText() != null) {
+            try {
               Date date = parser.parse(fridayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(saturdayCheckbox.isChecked()){
-          if(saturdayTime.getText()!=null){
-            try{
+        if (saturdayCheckbox.isChecked()) {
+          if (saturdayTime.getText() != null) {
+            try {
               Date date = parser.parse(saturdayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
 
-        if(sundayCheckbox.isChecked()){
-          if(sundayTime.getText()!=null){
-            try{
+        if (sundayCheckbox.isChecked()) {
+          if (sundayTime.getText() != null) {
+            try {
               Date date = parser.parse(sundayTime.getText().toString());
+              // the date object we just constructed has only two fields that are of interest to us: the hour and the
+              // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
+              // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+              // minute from the date object.
               Calendar c = Calendar.getInstance();
-              c.setTime(date);
+              c.set(Calendar.HOUR_OF_DAY, date.getHours());
+              c.set(Calendar.MINUTE, date.getMinutes());
               c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
               r = new Reminders();
               r.setActivityid(createdActivityId);
               r.setRemindTime(c.getTimeInMillis());
-              rDao.addReminders(r);
-            } catch (ParseException e){
+              rDao.addReminders(r, getApplicationContext());
+            } catch (ParseException e) {
             }
           }
         }
-
-        //TODO: Create notification and broadcastreceiver
         finish();
       }
     });
   }
 
   protected TimePickerDialog.OnTimeSetListener mTimeSetListener =
-    new TimePickerDialog.OnTimeSetListener(){
+    new TimePickerDialog.OnTimeSetListener() {
       @Override
       public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
-        String timeToDisplay = String.format("%02d:%02d %s",((mHour/12)>0?((mHour==12)?12:(mHour-12)):((mHour==0)?12:mHour)),mMinute,((mHour/12)>0?"PM":"AM"));
-        switch(dayOfWeek){
+        String timeToDisplay = String.format("%02d:%02d %s", ((mHour / 12) > 0 ? ((mHour == 12) ? 12 : (mHour - 12)) : ((mHour == 0) ? 12 : mHour)), mMinute, ((mHour / 12) > 0 ? "PM" : "AM"));
+        switch (dayOfWeek) {
           case 1:
             mondayTime.setText(timeToDisplay); //sets the chosen date in the text view
             break;
@@ -375,10 +491,10 @@ public class AddActivitiesActivity extends Activity {
         mYear = year;
         mMonth = monthOfYear;
         mDay = dayOfMonth;
-        if(startOrEnd)
-          startDate.setText(String.format("%02d/%02d/%4d",(mMonth + 1),mDay,mYear)); //sets the chosen date in the text view
+        if (startOrEnd)
+          startDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
         else
-          endDate.setText(String.format("%02d/%02d/%4d",(mMonth + 1),mDay,mYear)); //sets the chosen date in the text view
+          endDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
         removeDialog(DATE_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
         // each time either startDate or endDate is clicked because we prepopulate the date picker with different
         // dates for startDate and endDate in EditProjectActivity.java's overriden onCreateDialog
@@ -387,28 +503,37 @@ public class AddActivitiesActivity extends Activity {
     };
 
   @Override
-  protected Dialog onCreateDialog(int id){
-    switch(id){
+  protected Dialog onCreateDialog(int id, Bundle bundle) {
+    switch (id) {
       case DATE_DIALOG:
         // get the current date
-        final Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
       case TIME_DIALOG:
-        // get the current time
-        final Calendar d = Calendar.getInstance();
-        mHour = d.get(Calendar.HOUR_OF_DAY);
-        mMonth = d.get(Calendar.MINUTE);
-        return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
+        // get the prepopulated date
+        DateFormat parser = new SimpleDateFormat("hh:mm aaa");
+        Date date;
+        c = Calendar.getInstance();
+        String timeToDisplay = bundle.getString("timetodisplay");
+        try {
+          date = parser.parse(timeToDisplay);
+          c.setTime(date);
+        } catch (ParseException e) {
+        } finally {
+          mHour = c.get(Calendar.HOUR_OF_DAY);
+          mMinute = c.get(Calendar.MINUTE);
+          return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
+        }
     }
     return null;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch(item.getItemId()) {
+    switch (item.getItemId()) {
       case android.R.id.home:
         // provide a back button on the actionbar
         finish();

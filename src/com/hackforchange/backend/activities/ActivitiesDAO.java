@@ -71,7 +71,6 @@ public class ActivitiesDAO {
   }
 
   public Activities getActivityWithId(int id) {
-    ArrayList<Activities> output = null;
     String[] columnsToRead = new String[9];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
