@@ -34,6 +34,7 @@
                   android:label="@string/editactivitiesactivity_label"/>
         <activity android:name=".views.activities.RecordParticipationActivity"
                   android:label="@string/recordparticipationactivity_label"/>
+        <activity android:name=".views.activities.PendingParticipationActivity"/>
         <receiver android:name=".reminders.NotificationReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

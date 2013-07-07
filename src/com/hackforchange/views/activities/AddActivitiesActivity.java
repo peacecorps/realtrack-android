@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * Add a new activity to an existing project
  */
-// TODO Make sure required text fields are not empty
+// TODO: Make sure required text fields are not empty
 public class AddActivitiesActivity extends Activity {
   static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
   protected int mYear, mMonth, mDay, mHour, mMinute, dayOfWeek;

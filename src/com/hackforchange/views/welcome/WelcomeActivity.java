@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.hackforchange.R;
+import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.models.activities.Participation;
+import com.hackforchange.views.activities.PendingParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.AllProjectsActivity;
 
@@ -17,7 +20,8 @@ import java.util.ArrayList;
 public class WelcomeActivity extends Activity {
   private ListView homeitemslist; //holds a list of the homeitems
   private ArrayList<String> homeitems_data, filteredhomeitems_data;
-  private HomeItemListAdapter listAdapter, tempListAdapter;
+  private HomeItemListAdapter listAdapter;
+  private ArrayList<Participation> unservicedParticipation_data;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class WelcomeActivity extends Activity {
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
 
     // Items on welcome screen
@@ -35,7 +39,10 @@ public class WelcomeActivity extends Activity {
     // 3. New Project
     // 4. Export
     homeitems_data = new ArrayList<String>();
-    homeitems_data.add("Pending");
+    ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+    unservicedParticipation_data = pDao.getAllUnservicedParticipations();
+    if (unservicedParticipation_data.size() != 0)
+      homeitems_data.add("Pending (" + unservicedParticipation_data.size() + ")");
     homeitems_data.add("All Projects");
     homeitems_data.add("New Project");
     homeitems_data.add("Export");
@@ -88,31 +95,51 @@ public class WelcomeActivity extends Activity {
     homeitemslist.setAdapter(listAdapter);
   }*/
 
-  /*********************************************************************************************************************
+  /**
+   * ******************************************************************************************************************
    * populate the homeitems list
    * list style defined in layout/weaponslist_row.xml
    * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
-   ********************************************************************************************************************/
-  void updateHomeItemsList(){
+   * ******************************************************************************************************************
+   */
+  void updateHomeItemsList() {
     listAdapter = new HomeItemListAdapter(this, R.layout.homeitemslist_row, homeitems_data);
-    homeitemslist = (ListView)findViewById(R.id.homeitemlistView);
+    homeitemslist = (ListView) findViewById(R.id.homeitemlistView);
     homeitemslist.setAdapter(listAdapter);
     homeitemslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch(position){
-          case 0: // PENDING
-            break;
-          case 1: // ALL PROJECTS
-            Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivity.class);
-            startActivity(newActivity);
-            break;
-          case 2: // NEW PROJECT
-            newActivity = new Intent(WelcomeActivity.this, AddProjectActivity.class);
-            startActivity(newActivity);
-            break;
-          case 3: // EXPORT
-            break;
+        if (unservicedParticipation_data.size() != 0) {
+          switch (position) {
+            case 0: // PENDING
+              Intent newActivity = new Intent(WelcomeActivity.this, PendingParticipationActivity.class);
+              startActivity(newActivity);
+              break;
+            case 1: // ALL PROJECTS
+              newActivity = new Intent(WelcomeActivity.this, AllProjectsActivity.class);
+              startActivity(newActivity);
+              break;
+            case 2: // NEW PROJECT
+              newActivity = new Intent(WelcomeActivity.this, AddProjectActivity.class);
+              startActivity(newActivity);
+              break;
+            case 3: // EXPORT
+              break;
+          }
+        }
+        else{ // no pending participations, hencing the 'Pending' button is not shown
+          switch (position) {
+            case 0: // ALL PROJECTS
+              Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivity.class);
+              startActivity(newActivity);
+              break;
+            case 2: // NEW PROJECT
+              newActivity = new Intent(WelcomeActivity.this, AddProjectActivity.class);
+              startActivity(newActivity);
+              break;
+            case 3: // EXPORT
+              break;
+          }
         }
       }
     });

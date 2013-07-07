@@ -17,7 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-// TODO Make sure required text fields are not empty
+// TODO: Make sure required text fields are not empty
 public class RecordParticipationActivity extends Activity {
   private int participationid;
   private long dateTime;
@@ -55,8 +55,9 @@ public class RecordParticipationActivity extends Activity {
     TextView datetime = (TextView) findViewById(R.id.datetime);
     datetime.setText(parser.format(c.getTime()));
 
-    //TODO: process men and women count
-    //TODO: add pending participation events to the pending option on the home screen
+    // TODO: process men and women count
+    // TODO: add pending participation events to the pending option on the home screen
+    // TODO: make sure men and women counts are not empty if the corresponding checkboxes are checked
     menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
     womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
     menNumText = (EditText) findViewById(R.id.numMen);
