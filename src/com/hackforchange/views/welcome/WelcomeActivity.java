@@ -55,45 +55,8 @@ public class WelcomeActivity extends Activity {
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    /*MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.menu, menu);
-
-    //used to filter the homeitems list as the user types or when he submits the query
-    SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener(){
-      @Override
-      public boolean onQueryTextSubmit(String query) {
-        filterhomeitemsList(query);
-        return false;
-      }
-
-      @Override
-      public boolean onQueryTextChange(String newText) {
-        filterhomeitemsList(newText);
-        return false;
-      }
-    };
-
-    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-    //searchView.setIconified(false); //expand the search field by default
-    searchView.setOnQueryTextListener (queryTextListener);
-    getActionBar().setDisplayShowTitleEnabled(true);*/
     return true;
   }
-
-  /*********************************************************************************************************************
-   * check whether the string passed in is present in any of the homeitems in our list
-   * called by queryTextListener
-   ********************************************************************************************************************/
-  /*void filterhomeitemsList(String text){
-    filteredhomeitems_data.clear();
-    for(int i=0;i<homeitems_data.size();i++){
-      if(homeitems_data.get(i).toLowerCase().matches(".*"+text.toLowerCase()+".*")){
-        filteredhomeitems_data.add(homeitems_data.get(i));
-      }
-    }
-    listAdapter = new HomeItemListAdapter(WelcomeActivity.this, R.layout.homeitemslist_row, filteredhomeitems_data);
-    homeitemslist.setAdapter(listAdapter);
-  }*/
 
   /**
    * ******************************************************************************************************************
@@ -124,6 +87,9 @@ public class WelcomeActivity extends Activity {
               startActivity(newActivity);
               break;
             case 3: // EXPORT
+              // TODO: process men and women count
+              // TODO: generate report in xls format
+              // TODO: attach xls to email?
               break;
           }
         }
@@ -133,11 +99,14 @@ public class WelcomeActivity extends Activity {
               Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivity.class);
               startActivity(newActivity);
               break;
-            case 2: // NEW PROJECT
+            case 1: // NEW PROJECT
               newActivity = new Intent(WelcomeActivity.this, AddProjectActivity.class);
               startActivity(newActivity);
               break;
-            case 3: // EXPORT
+            case 2: // EXPORT
+              // TODO: process men and women count
+              // TODO: generate report in xls format
+              // TODO: attach xls to email?
               break;
           }
         }

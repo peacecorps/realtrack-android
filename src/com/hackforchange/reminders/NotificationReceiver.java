@@ -83,7 +83,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         + ":" + c.get(Calendar.MINUTE));
 
       AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-      alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, pendingIntent); // TODO: change this back to 1 week
+      alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
 
       c.clear();
     }

@@ -127,20 +127,20 @@ public class AllActivitiesActivity extends Activity {
         filteredactivities_data.add(activities_data.get(i));
       }
     }
-    listAdapter = new ActivitiesListAdapter(AllActivitiesActivity.this, R.layout.activitieslist_row, filteredactivities_data);
+    listAdapter = new ActivitiesListAdapter(AllActivitiesActivity.this, R.layout.allactivitieslist_row, filteredactivities_data);
     activitieslist.setAdapter(listAdapter);
   }
 
   /*********************************************************************************************************************
    * populate the activities list
-   * list style defined in layout/activitieslist_row.xml
+   * list style defined in layout/allactivitieslist_row.xmlxml
    * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
    ********************************************************************************************************************/
   void updateActivitiesList(){
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     activities_data = aDao.getAllActivitiesForProjectId(projectid);
     filteredactivities_data = new ArrayList<Activities>(); //used for filtered data
-    listAdapter = new ActivitiesListAdapter(this, R.layout.activitieslist_row, activities_data);
+    listAdapter = new ActivitiesListAdapter(this, R.layout.allactivitieslist_row, activities_data);
     activitieslist = (ListView)findViewById(R.id.activitieslistView);
     activitieslist.setAdapter(listAdapter);
 
@@ -148,7 +148,7 @@ public class AllActivitiesActivity extends Activity {
     activitieslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Activities a = (Activities) listAdapter.getItem(position);
+        Activities a = listAdapter.getItem(position);
         Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
         i.putExtra("activitiesid", a.getId());
         startActivity(i);

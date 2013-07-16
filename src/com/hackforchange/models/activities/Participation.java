@@ -36,7 +36,7 @@ public class Participation {
     + COLUMN_ISSERVICED + " string not null, "
     + COLUMN_DATE    + " integer not null, "
     + COLUMN_REMINDERID + " integer not null references " + Reminders.REMINDERS_TABLE+ " (" + Reminders.COLUMN_ID + ") ON DELETE CASCADE "
-                             //foreign key constraint. Make sure to delete the participation if the project that owns it is deleted
+                             //foreign key constraint. Make sure to delete the participation if the reminders that owns it is deleted
     + ");";
 
   // used to create the table

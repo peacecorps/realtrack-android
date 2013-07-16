@@ -21,6 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+// presents a simple overview of a participation event. Used for the 'Pending' button on the home
+// screen. This is different from AllParticipationsListAdapter because AllParticipationsListAdapter
+// shows the details of the participation e.g. the number of men, women taking part, the day etc
 public class ParticipationListAdapter extends ArrayAdapter<Participation> {
   Context context;
   int layoutResourceId;

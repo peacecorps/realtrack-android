@@ -59,6 +59,23 @@ public class ParticipationDAO {
     return output;
   }
 
+  public ArrayList<Participation> getAllParticipationsForReminderId(int reminderid) {
+    ArrayList<Participation> output = null;
+    String[] columnsToRead = new String[6];
+    columnsToRead[0] = Participation.COLUMN_ID;
+    columnsToRead[1] = Participation.COLUMN_REMINDERID;
+    columnsToRead[2] = Participation.COLUMN_MEN;
+    columnsToRead[3] = Participation.COLUMN_WOMEN;
+    columnsToRead[4] = Participation.COLUMN_DATE;
+    columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+
+    String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid;
+    Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
+      whereClause, null, null, null, null);
+    output = extractParticipation(returnData);
+    return output;
+  }
+
   private ArrayList<Participation> extractParticipation(Cursor returnData) {
     // The output ArrayList is initialized
     ArrayList<Participation> output = new ArrayList<Participation>();

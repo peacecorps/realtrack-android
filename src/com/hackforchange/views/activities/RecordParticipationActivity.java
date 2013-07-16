@@ -55,8 +55,6 @@ public class RecordParticipationActivity extends Activity {
     TextView datetime = (TextView) findViewById(R.id.datetime);
     datetime.setText(parser.format(c.getTime()));
 
-    // TODO: process men and women count
-    // TODO: add pending participation events to the pending option on the home screen
     // TODO: make sure men and women counts are not empty if the corresponding checkboxes are checked
     menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
     womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);

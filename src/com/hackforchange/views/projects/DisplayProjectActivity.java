@@ -62,12 +62,12 @@ public class DisplayProjectActivity extends Activity {
 
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     ArrayList <Activities> aList = aDao.getAllActivitiesForProjectId(id);
-    TextView showActivities = (TextView) findViewById(R.id.showActivities);
+    Button showActivities = (Button) findViewById(R.id.showActivities);
 
     // if there are no activities associated as yet with this project, hide the "Show Activities" button
     // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
     if(aList.size()==0){
-      ((Button)findViewById(R.id.showActivities)).setVisibility(View.GONE);
+      showActivities.setVisibility(View.GONE);
     }
     else{
       ((Button)findViewById(R.id.showActivities)).setVisibility(View.VISIBLE);
