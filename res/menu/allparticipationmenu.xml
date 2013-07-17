@@ -5,4 +5,9 @@
             android:showAsAction="always"
             android:title="Search"
             android:actionViewClass="android.widget.SearchView"/>
+    <item
+            android:id="@+id/action_deleteactivity"
+            android:showAsAction="ifRoom"
+            android:icon="@android:drawable/ic_menu_delete"
+            android:title="Delete"/>
 </menu>

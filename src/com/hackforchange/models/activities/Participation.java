@@ -10,6 +10,7 @@ public class Participation {
   // Instance properties
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
   private int reminderid; // which reminder this participation is for. This is a foreign key that points to Reminders.id
+                          // see comment below about the ABSENCE of an on cascade delete constraint
   private int men; // number of men that participated
   private int women; // number of women that participated
   private long date; // date that the participation is for
@@ -35,8 +36,11 @@ public class Participation {
     + COLUMN_WOMEN   + " integer not null, "
     + COLUMN_ISSERVICED + " string not null, "
     + COLUMN_DATE    + " integer not null, "
-    + COLUMN_REMINDERID + " integer not null references " + Reminders.REMINDERS_TABLE+ " (" + Reminders.COLUMN_ID + ") ON DELETE CASCADE "
-                             //foreign key constraint. Make sure to delete the participation if the reminders that owns it is deleted
+    + COLUMN_REMINDERID + " integer not null references " + Reminders.REMINDERS_TABLE+ " (" + Reminders.COLUMN_ID + ")"
+                             //foreign key constraint. We do NOT have an on cascade delete constraint here because the
+                             //participation records should be preserved even if the user cancels the reminder (and, hence,
+                             //the corresponding alarm). Instead, we give the user the option of manually deleting participation
+                             //participation records from AllParticipationActivity and DisplayActivitiesActivity
     + ");";
 
   // used to create the table

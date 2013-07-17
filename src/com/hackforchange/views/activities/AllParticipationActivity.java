@@ -1,6 +1,8 @@
 package com.hackforchange.views.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,6 +84,23 @@ public class AllParticipationActivity extends Activity {
       case android.R.id.home:
         // provide a back button on the actionbar
         finish();
+        break;
+      case R.id.action_deleteactivity:
+        // warn the user first!
+        new AlertDialog.Builder(this)
+          .setMessage("Are you sure you want to delete all participation records? This CANNOT be undone.")
+          .setCancelable(false)
+          .setNegativeButton("No", null)
+          .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+              ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+              for (Participation p : participation_data) {
+                pDao.deleteParticipation(p.getId());
+              }
+              finish();
+            }
+          })
+          .show();
         break;
       default:
         return super.onOptionsItemSelected(item);

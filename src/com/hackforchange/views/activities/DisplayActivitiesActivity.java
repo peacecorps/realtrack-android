@@ -50,7 +50,7 @@ public class DisplayActivitiesActivity extends Activity {
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
     getActionBar().setDisplayHomeAsUpEnabled(true);
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
@@ -75,11 +75,11 @@ public class DisplayActivitiesActivity extends Activity {
     // convert initiatives back to human-readable form
     String[] initiativesList = a.getInitiatives().split("\\|");
     String inits = "";
-    for(int i=0; i<initiativesList.length; i++){
-     if(initiativesList[i].equals("1"))
-       inits += AllInits[i]+"\n";
+    for (int i = 0; i < initiativesList.length; i++) {
+      if (initiativesList[i].equals("1"))
+        inits += AllInits[i] + "\n";
     }
-    inits = (inits.length()>1)?inits.substring(0,inits.length()-1):""; // remove the last superfluous newline character
+    inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous newline character
     initiatives.setText(inits);
 
     // display reminders
@@ -91,36 +91,64 @@ public class DisplayActivitiesActivity extends Activity {
     for (Reminders r : reminders_data) {
       parser = new SimpleDateFormat("EEEE, hh:mm aaa");
       c.setTimeInMillis(r.getRemindTime());
-      remindersText += parser.format(r.getRemindTime())+"\n";
+      remindersText += parser.format(r.getRemindTime()) + "\n";
     }
-    remindersText = (remindersText.length()>1)?remindersText.substring(0,remindersText.length()-1):""; // remove the last superfluous newline character
+    remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
     reminders.setText(remindersText);
 
-    ArrayList <Participation> pList = new ArrayList<Participation>();
-    ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+    final ArrayList<Participation> pList = new ArrayList<Participation>();
+    final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
     for (Reminders r : reminders_data) {
       pList.addAll(pDao.getAllParticipationsForReminderId(r.getId()));
     }
 
-    Button showParticipation = (Button) findViewById(R.id.showParticipation);
-    // if there are no participation records associated as yet with this activity, hide the "Show Participation" button.
+    final Button showParticipation = (Button) findViewById(R.id.showParticipation);
+    final Button deleteParticipation = (Button) findViewById(R.id.deleteParticipation);
+    // if there are no participation records associated as yet with this activity, hide the "Show Participation" button
+    // and the "Delete Participation" button.
     // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
-    if(pList.size()==0){
+    if (pList.size() == 0) {
       showParticipation.setVisibility(View.GONE);
-    }
-    else{
+      deleteParticipation.setVisibility(View.GONE);
+    } else {
       showParticipation.setVisibility(View.VISIBLE);
       // transition to new activity that shows all the activites associated with this project
       showParticipation.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           Intent i = new Intent(DisplayActivitiesActivity.this, AllParticipationActivity.class);
-          i.putExtra("activitiesid",activitiesid);
+          i.putExtra("activitiesid", activitiesid);
           startActivity(i);
+        }
+      });
+
+      deleteParticipation.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          new AlertDialog.Builder(DisplayActivitiesActivity.this)
+            .setMessage("Are you sure you want to delete all participation records? This CANNOT be undone.")
+            .setCancelable(false)
+            .setNegativeButton("No", null)
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int id) {
+                for (Participation p : pList) {
+                  pDao.deleteParticipation(p.getId());
+                }
+                // hide these buttons because they are no longer meaningful
+                showParticipation.setVisibility(View.GONE);
+                deleteParticipation.setVisibility(View.GONE);
+              }
+            })
+            .show();
         }
       });
     }
   }
+
+  //TODO: when deleting existing reminders, ask user if he wants the participation records to be expunged. If not, don't
+  //do it. This means you first need to remove the on cascade constraints in the Participation object. And if the user
+  //chooses to remove the participation records, do it manually using the participationdao.
+  //TODO: provide menu option to delete all participation records for an activity in AllParticipationActivity
 
   // create actionbar menu
   @Override
@@ -131,12 +159,14 @@ public class DisplayActivitiesActivity extends Activity {
     return true;
   }
 
-  /*********************************************************************************************************************
+  /**
+   * ******************************************************************************************************************
    * transition to view for adding new project when the add icon in the action bar is clicked
-   ********************************************************************************************************************/
+   * ******************************************************************************************************************
+   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch(item.getItemId()) {
+    switch (item.getItemId()) {
       case android.R.id.home:
         // provide a back button on the actionbar
         finish();
@@ -156,8 +186,8 @@ public class DisplayActivitiesActivity extends Activity {
               RemindersDAO rDao = new RemindersDAO(getApplicationContext());
               ArrayList<Reminders> reminders_data;
               reminders_data = rDao.getAllRemindersForActivityId(activityId);
-              for(Reminders r: reminders_data){
-                EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),r.getId());
+              for (Reminders r : reminders_data) {
+                EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
               }
               finish();
             }
@@ -166,7 +196,7 @@ public class DisplayActivitiesActivity extends Activity {
         break;
       case R.id.action_editactivity:
         Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
-        i.putExtra("activitiesid",activitiesid);
+        i.putExtra("activitiesid", activitiesid);
         startActivity(i);
         break;
       default:
