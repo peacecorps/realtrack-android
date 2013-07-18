@@ -195,11 +195,12 @@ public class ParticipationDAO {
 
     // return the id of the activity just created. This will be used as the foreign key for the reminders table
     Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Participation.PARTICIPATION_TABLE});
-    closeDB();
-    if (returnData != null && returnData.moveToFirst())
-      return returnData.getInt(0);
-    else
-      return -1;
+    int retVal = -1;
+    if (returnData != null && returnData.moveToFirst()){
+      retVal = returnData.getInt(0);
+      closeDB();
+    }
+    return retVal;
   }
 
   public void updateParticipation(Participation participation) {

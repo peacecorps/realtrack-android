@@ -191,7 +191,7 @@
         <Button
                 android:textSize="22dp"
                 android:textColor="#dbdbdb"
-                android:background="#0099cc"
+                android:background="#F08222"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
