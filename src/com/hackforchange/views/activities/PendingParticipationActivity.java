@@ -1,19 +1,19 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
 
 import java.util.ArrayList;
 
-public class PendingParticipationActivity extends Activity {
+public class PendingParticipationActivity extends SherlockActivity {
   private ArrayList<Participation> unservicedParticipation_data;
 
   public void onCreate(Bundle savedInstanceState) {

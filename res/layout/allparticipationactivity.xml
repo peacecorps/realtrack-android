@@ -10,7 +10,7 @@
                   android:layout_height="wrap_content">
         <TextView android:gravity="center_vertical"
                   android:textStyle="normal"
-                  android:textSize="22dp"
+                  android:textSize="20dp"
                   android:textColor="#d6d6d6"
                   android:background="#575757"
                   android:paddingLeft="10dp"
@@ -21,7 +21,7 @@
                   android:text="Date"/>
         <TextView android:gravity="center_vertical"
                   android:textStyle="normal"
-                  android:textSize="22dp"
+                  android:textSize="20dp"
                   android:textColor="#d6d6d6"
                   android:background="#575757"
                   android:paddingLeft="10dp"
@@ -32,7 +32,7 @@
                   android:text="Time"/>
         <TextView android:gravity="center_vertical"
                   android:textStyle="bold"
-                  android:textSize="22dp"
+                  android:textSize="20dp"
                   android:textColor="#ffffff"
                   android:background="@drawable/homelistitem_background"
                   android:paddingLeft="7dp"
@@ -42,7 +42,7 @@
                   android:text="Men"/>
         <TextView android:gravity="center_vertical"
                   android:textStyle="bold"
-                  android:textSize="22dp"
+                  android:textSize="20dp"
                   android:textColor="#ffffff"
                   android:background="@drawable/homelistitem_background"
                   android:paddingLeft="7dp"

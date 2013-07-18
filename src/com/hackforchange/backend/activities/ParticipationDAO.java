@@ -23,9 +23,29 @@ public class ParticipationDAO {
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
+    closeDB();
+  }
+
+  private void openDB(){
+    if(!readDatabase.isOpen()){
+      readDatabase = opener.getReadableDatabase();
+    }
+    if(!writeDatabase.isOpen()){
+      writeDatabase = opener.getWritableDatabase();
+    }
+  }
+
+  private void closeDB(){
+    if(readDatabase.isOpen()){
+      readDatabase.close();
+    }
+    if(writeDatabase.isOpen()){
+      writeDatabase.close();
+    }
   }
 
   public ArrayList<Participation> getAllUnservicedParticipations() {
+    openDB();
     ArrayList<Participation> output = null;
     String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
@@ -40,10 +60,12 @@ public class ParticipationDAO {
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractParticipation(returnData);
+    closeDB();
     return output;
   }
 
   public ArrayList<Participation> getAllUnservicedParticipationsForReminderId(int reminderid) {
+    openDB();
     ArrayList<Participation> output = null;
     String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
@@ -58,10 +80,12 @@ public class ParticipationDAO {
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractParticipation(returnData);
+    closeDB();
     return output;
   }
 
   public ArrayList<Participation> getAllParticipationsForReminderId(int reminderid) {
+    openDB();
     ArrayList<Participation> output = null;
     String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
@@ -76,10 +100,12 @@ public class ParticipationDAO {
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractParticipation(returnData);
+    closeDB();
     return output;
   }
 
   public ArrayList<Participation> getAllParticipationsForActivityId(int activityid) {
+    openDB();
     ArrayList<Participation> output = null;
     String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
@@ -94,6 +120,7 @@ public class ParticipationDAO {
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractParticipation(returnData);
+    closeDB();
     return output;
   }
 
@@ -125,6 +152,7 @@ public class ParticipationDAO {
   }
 
   public Participation getParticipationWithId(int id) {
+    openDB();
     String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
     columnsToRead[1] = Participation.COLUMN_REMINDERID;
@@ -146,11 +174,13 @@ public class ParticipationDAO {
     p.setDate(returnData.getLong(4));
     p.setServiced(Boolean.parseBoolean(returnData.getString(5)));
     p.setActivityid(returnData.getInt(6));
+    closeDB();
     // Return the constructed Participation object
     return p;
   }
 
   public int addParticipation(Participation participation) {
+    openDB();
     ContentValues newValue = new ContentValues(6);
     newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
     newValue.put(Participation.COLUMN_ACTIVITYID, participation.getActivityid());
@@ -165,6 +195,7 @@ public class ParticipationDAO {
 
     // return the id of the activity just created. This will be used as the foreign key for the reminders table
     Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Participation.PARTICIPATION_TABLE});
+    closeDB();
     if (returnData != null && returnData.moveToFirst())
       return returnData.getInt(0);
     else
@@ -172,6 +203,7 @@ public class ParticipationDAO {
   }
 
   public void updateParticipation(Participation participation) {
+    openDB();
     ContentValues newValue = new ContentValues(6);
     newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
     newValue.put(Participation.COLUMN_MEN, participation.getMen());
@@ -182,11 +214,15 @@ public class ParticipationDAO {
     String whereClause = Participation.COLUMN_ID + '=' + participation.getId();
     // Update the item into the database
     writeDatabase.update(Participation.PARTICIPATION_TABLE, newValue, whereClause, null);
+    closeDB();
   }
 
   public int deleteParticipation(int id) {
+    openDB();
     String whereClause = Participation.COLUMN_ID + '=' + id;
     // Return the total number of rows removed
-    return writeDatabase.delete(Participation.PARTICIPATION_TABLE, whereClause, null);
+    int numItemsDeleted = writeDatabase.delete(Participation.PARTICIPATION_TABLE, whereClause, null);
+    closeDB();
+    return numItemsDeleted;
   }
 }

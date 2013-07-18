@@ -19,9 +19,29 @@ public class ProjectDAO {
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
+    closeDB();
+  }
+
+  private void openDB(){
+    if(!readDatabase.isOpen()){
+      readDatabase = opener.getReadableDatabase();
+    }
+    if(!writeDatabase.isOpen()){
+      writeDatabase = opener.getWritableDatabase();
+    }
+  }
+
+  private void closeDB(){
+    if(readDatabase.isOpen()){
+      readDatabase.close();
+    }
+    if(writeDatabase.isOpen()){
+      writeDatabase.close();
+    }
   }
 
   public ArrayList<Project> getAllProjects() {
+    openDB();
     ArrayList <Project> output = null;
     String[] columnsToRead = new String[5];
     columnsToRead[0] = Project.COLUMN_TITLE;
@@ -32,10 +52,12 @@ public class ProjectDAO {
     Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead, null,
       null, null, null, null);
     output = extractProjects(returnData);
+    closeDB();
     return output;
   }
 
   public Project getProjectWithId(int id) {
+    openDB();
     ArrayList <Project> output = null;
     String[] columnsToRead = new String[5];
     columnsToRead[0] = Project.COLUMN_TITLE;
@@ -53,6 +75,7 @@ public class ProjectDAO {
     p.setEndDate(returnData.getLong(2));
     p.setNotes(returnData.getString(3));
     p.setId(Integer.parseInt(returnData.getString(4)));
+    closeDB();
     // Return the constructed Project
     return p;
   }
@@ -83,6 +106,7 @@ public class ProjectDAO {
   }
 
   public void addProject(Project project) {
+    openDB();
     ContentValues newValue = new ContentValues(4);
     newValue.put(Project.COLUMN_TITLE, project.getTitle());
     newValue.put(Project.COLUMN_STARTDATE, project.getStartDate());
@@ -90,9 +114,11 @@ public class ProjectDAO {
     newValue.put(Project.COLUMN_NOTES, project.getNotes());
     // Insert the item into the database
     writeDatabase.insert(Project.PROJECT_TABLE, null, newValue);
+    closeDB();
   }
 
   public void updateProject(Project project){
+    openDB();
     ContentValues newValue = new ContentValues(4);
     newValue.put(Project.COLUMN_TITLE, project.getTitle());
     newValue.put(Project.COLUMN_STARTDATE, project.getStartDate());
@@ -101,11 +127,15 @@ public class ProjectDAO {
     String whereClause = Project.COLUMN_ID + '=' + project.getId();
     // Update the item into the database
     writeDatabase.update(Project.PROJECT_TABLE, newValue, whereClause, null);
+    closeDB();
   }
 
   public int deleteProject(int id) {
+    openDB();
     String whereClause = Project.COLUMN_ID + '=' + id;
     // Return the total number of rows removed
-    return writeDatabase.delete(Project.PROJECT_TABLE, whereClause, null);
+    int numItemsDeleted = writeDatabase.delete(Project.PROJECT_TABLE, whereClause, null);
+    closeDB();
+    return numItemsDeleted;
   }
 }

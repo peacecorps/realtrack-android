@@ -1,12 +1,12 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -16,8 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-// TODO: Make sure required text fields are not empty
-public class RecordParticipationActivity extends Activity {
+public class RecordParticipationActivity extends SherlockActivity {
   private int participationid;
   private long dateTime;
   protected Button submitButton;
@@ -59,25 +58,43 @@ public class RecordParticipationActivity extends Activity {
     womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
     menNumText = (EditText) findViewById(R.id.numMen);
     womenNumText = (EditText) findViewById(R.id.numWomen);
-
     submitButton = (Button) findViewById(R.id.submitbutton);
+
+    menCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!menCheckbox.isChecked())
+          menNumText.setText("");
+      }
+    });
+
+    womenCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!womenCheckbox.isChecked())
+          womenNumText.setText("");
+      }
+    });
+
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         // set men, women and serviced
         if(menCheckbox.isChecked()){
-          if(menNumText.getText()!=null){
+          if(menNumText.getText().length()==0)
+            return;
+          else
             p.setMen(Integer.parseInt(menNumText.getText().toString()));
-          }
         }
         else{
           p.setMen(0);
         }
 
         if(womenCheckbox.isChecked()){
-          if(womenNumText.getText()!=null){
+          if(womenNumText.getText().length()==0)
+            return;
+          else
             p.setWomen(Integer.parseInt(womenNumText.getText().toString()));
-          }
         }
         else{
           p.setWomen(0);

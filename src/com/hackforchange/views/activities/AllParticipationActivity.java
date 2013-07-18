@@ -1,19 +1,18 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.models.reminders.Reminders;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 /*
  * Presents an activity that lists all the participation associated with a participation
  */
-public class AllParticipationActivity extends Activity {
+public class AllParticipationActivity extends SherlockActivity {
   private ListView participationlist; //holds a list of the participation
   private ArrayList<Participation> participation_data, filteredparticipation_data;
   private AllParticipationsListAdapter listAdapter;
@@ -40,14 +39,14 @@ public class AllParticipationActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     updateParticipationList();
   }
 
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.allparticipationmenu, menu);
 
     //used to filter the participation list as the user types or when he submits the query
@@ -68,7 +67,7 @@ public class AllParticipationActivity extends Activity {
     // set the text listener for the Search field
     SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
     searchView.setOnQueryTextListener(queryTextListener);
-    getActionBar().setDisplayShowTitleEnabled(true);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
 

@@ -1,13 +1,13 @@
 package com.hackforchange.views.welcome;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 // TODO: Add cancel button for editing activity, adding activity.
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends SherlockActivity {
   private ListView homeitemslist; //holds a list of the homeitems
   private ArrayList<String> homeitems_data, filteredhomeitems_data;
   private HomeItemListAdapter listAdapter;

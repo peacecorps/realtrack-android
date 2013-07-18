@@ -1,16 +1,16 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -33,7 +33,7 @@ import java.util.Date;
  */
 // TODO: show participation history
 // TODO: participation history graph?
-public class DisplayActivitiesActivity extends Activity {
+public class DisplayActivitiesActivity extends SherlockActivity {
   public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
   private ArrayList<Activities> activities_data, filteredactivities_data;
   private ActivitiesListAdapter listAdapter, tempListAdapter;
@@ -52,7 +52,7 @@ public class DisplayActivitiesActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     a = aDao.getActivityWithId(activitiesid);
     TextView title = (TextView) findViewById(R.id.title);
@@ -150,9 +150,9 @@ public class DisplayActivitiesActivity extends Activity {
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.displayactivitiesmenu, menu);
-    getActionBar().setDisplayShowTitleEnabled(true);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
 

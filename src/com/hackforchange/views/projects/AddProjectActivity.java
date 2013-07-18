@@ -1,14 +1,14 @@
 package com.hackforchange.views.projects;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.projects.Project;
@@ -26,7 +26,7 @@ import java.util.Date;
 // TODO: Make sure required text fields are not empty
 // TODO: make sure activity dates don't go out of project dates
 // TODO: make sure repeating alarms stop when the activity ends
-public class AddProjectActivity extends Activity {
+public class AddProjectActivity extends SherlockActivity {
   static final int DATE_DIALOG = 0;
   protected int mYear, mMonth, mDay;
   protected EditText title;
@@ -47,7 +47,7 @@ public class AddProjectActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // entering the start date
     startDate = (EditText) findViewById(R.id.startDate);

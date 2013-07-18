@@ -5,5 +5,5 @@
             android:orderInCategory="100"
             android:showAsAction="always"
             android:title="Search"
-            android:actionViewClass="android.widget.SearchView"/>
+            android:actionViewClass="com.actionbarsherlock.widget.SearchView"/>
 </menu>

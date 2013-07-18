@@ -1,13 +1,13 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
@@ -24,7 +24,7 @@ import java.util.Date;
  * Add a new activity to an existing project
  */
 // TODO: Make sure required text fields are not empty
-public class AddActivitiesActivity extends Activity {
+public class AddActivitiesActivity extends SherlockActivity {
   static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
   protected int mYear, mMonth, mDay, mHour, mMinute, dayOfWeek;
   protected EditText title, startDate, endDate, notes, orgs, comms;
@@ -49,7 +49,7 @@ public class AddActivitiesActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // entering the reminder time
     mondayTime = (EditText) findViewById(R.id.mondayTime);

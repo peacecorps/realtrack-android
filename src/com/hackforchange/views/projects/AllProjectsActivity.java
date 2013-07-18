@@ -1,17 +1,17 @@
 package com.hackforchange.views.projects;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuInflater;
 import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.projects.Project;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Presents an activity that lists all the projects in the app's database
  * Pressing the back key will exit the activity and take you back to the home screen (WelcomeActivity)
  */
-public class AllProjectsActivity extends Activity {
+public class AllProjectsActivity extends SherlockActivity {
   private ListView projectslist; //holds a list of the projects
   private ArrayList<Project> projects_data, filteredprojects_data;
   private ProjectListAdapter listAdapter, tempListAdapter;
@@ -36,14 +36,14 @@ public class AllProjectsActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     updateProjectsList();
   }
 
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.allprojectsmenu, menu);
 
     //used to filter the projects list as the user types or when he submits the query
@@ -85,7 +85,7 @@ public class AllProjectsActivity extends Activity {
       }
     });
 
-    getActionBar().setDisplayShowTitleEnabled(true);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
 

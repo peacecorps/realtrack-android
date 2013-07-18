@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
@@ -139,19 +140,19 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), participationid, notifIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // build notification
-        Notification notification = new Notification.Builder(getApplicationContext())
+        Notification notificationBuilder = new NotificationCompat.Builder(getApplicationContext())
           .setSmallIcon(R.drawable.icon)
           .setContentTitle("Record Attendance")
           .setContentText(remindersText)
           .setContentIntent(pendingIntent)
-          .build();
+          .getNotification();
         // Hide the notification after it is clicked
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationBuilder.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // display notification
         Log.e("burra", "show notification for " + participationid);
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(participationid, notification);
+        notificationManager.notify(participationid, notificationBuilder);
       }
       return null;
     }

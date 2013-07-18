@@ -1,17 +1,17 @@
 package com.hackforchange.views.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import com.actionbarsherlock.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /*
  * Presents an activity that lists all the activities associated with a activities
  */
-public class AllActivitiesActivity extends Activity {
+public class AllActivitiesActivity extends SherlockActivity {
   private ListView activitieslist; //holds a list of the activities
   private ArrayList<Activities> activities_data, filteredactivities_data;
   private ActivitiesListAdapter listAdapter, tempListAdapter;
@@ -41,14 +41,14 @@ public class AllActivitiesActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     updateActivitiesList();
   }
 
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.allactivitiesmenu, menu);
 
     //used to filter the activities list as the user types or when he submits the query
@@ -89,7 +89,7 @@ public class AllActivitiesActivity extends Activity {
         return false;
       }
     });
-    getActionBar().setDisplayShowTitleEnabled(true);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
 

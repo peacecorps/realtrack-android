@@ -1,16 +1,16 @@
 package com.hackforchange.views.projects;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
@@ -30,7 +30,7 @@ import java.util.Date;
  * by choosing buttons in the ActionBar
  * Pressing the back key will exit the activity
  */
-public class DisplayProjectActivity extends Activity {
+public class DisplayProjectActivity extends SherlockActivity {
   private int id;
   private Project p;
 
@@ -45,7 +45,7 @@ public class DisplayProjectActivity extends Activity {
   @Override
   public void onResume(){
     super.onResume();
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     p = pDao.getProjectWithId(id);
     TextView title = (TextView) findViewById(R.id.title);
@@ -96,10 +96,10 @@ public class DisplayProjectActivity extends Activity {
   // create actionbar menu
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.displayprojectmenu, menu);
 
-    getActionBar().setDisplayShowTitleEnabled(true);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
 

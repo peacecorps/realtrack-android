@@ -23,9 +23,29 @@ public class RemindersDAO {
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
+    closeDB();
+  }
+
+  private void openDB(){
+    if(!readDatabase.isOpen()){
+      readDatabase = opener.getReadableDatabase();
+    }
+    if(!writeDatabase.isOpen()){
+      writeDatabase = opener.getWritableDatabase();
+    }
+  }
+
+  private void closeDB(){
+    if(readDatabase.isOpen()){
+      readDatabase.close();
+    }
+    if(writeDatabase.isOpen()){
+      writeDatabase.close();
+    }
   }
 
   public ArrayList<Reminders> getAllReminders() {
+    openDB();
     ArrayList<Reminders> output = null;
     String[] columnsToRead = new String[3];
     columnsToRead[0] = Reminders.COLUMN_ID;
@@ -33,10 +53,12 @@ public class RemindersDAO {
     columnsToRead[2] = Reminders.COLUMN_REMINDTIME;
     Cursor returnData = readDatabase.query(Reminders.REMINDERS_TABLE, columnsToRead, null, null, null, null, null);
     output = extractReminders(returnData);
+    closeDB();
     return output;
   }
 
   public ArrayList<Reminders> getAllRemindersForActivityId(int activityid) {
+    openDB();
     ArrayList<Reminders> output = null;
     String[] columnsToRead = new String[3];
     columnsToRead[0] = Reminders.COLUMN_ID;
@@ -47,6 +69,7 @@ public class RemindersDAO {
       Cursor returnData = readDatabase.query(Reminders.REMINDERS_TABLE, columnsToRead,
       whereClause, null, null, null, orderbyClause);
     output = extractReminders(returnData);
+    closeDB();
     return output;
   }
 
@@ -74,6 +97,7 @@ public class RemindersDAO {
   }
 
   public Reminders getReminderWithId(int id) {
+    openDB();
     String[] columnsToRead = new String[2];
     columnsToRead[0] = Reminders.COLUMN_ACTIVITYID;
     columnsToRead[1] = Reminders.COLUMN_REMINDTIME;
@@ -86,35 +110,42 @@ public class RemindersDAO {
     r.setId(id);
     r.setActivityid(returnData.getInt(0));
     r.setRemindTime(returnData.getLong(1));
+    closeDB();
     // Return the constructed Reminders object
     return r;
   }
 
   public void addReminders(Reminders reminder, Context context) {
+    openDB();
     ContentValues newValue = new ContentValues(2);
     newValue.put(Reminders.COLUMN_ACTIVITYID, reminder.getActivityid());
     newValue.put(Reminders.COLUMN_REMINDTIME, reminder.getRemindTime());
     // Insert the item into the database
     writeDatabase.insert(Reminders.REMINDERS_TABLE, null, newValue);
+    closeDB();
     createOrUpdateAlarms(context);
   }
 
   public void updateReminders(Reminders reminder, Context context) {
+    openDB();
     ContentValues newValue = new ContentValues(2);
     newValue.put(Reminders.COLUMN_ACTIVITYID, reminder.getActivityid());
     newValue.put(Reminders.COLUMN_REMINDTIME, reminder.getRemindTime());
     String whereClause = Reminders.COLUMN_ID + '=' + reminder.getId();
     // Update the item into the database
     writeDatabase.update(Reminders.REMINDERS_TABLE, newValue, whereClause, null);
+    closeDB();
     createOrUpdateAlarms(context);
   }
 
   public int deleteReminders(int id, Context context) {
+    openDB();
     String whereClause = Reminders.COLUMN_ID + '=' + id;
     // Return the total number of rows removed
-    int numDeletedItems = writeDatabase.delete(Reminders.REMINDERS_TABLE, whereClause, null);
+    int numItemsDeleted = writeDatabase.delete(Reminders.REMINDERS_TABLE, whereClause, null);
+    closeDB();
     createOrUpdateAlarms(context);
-    return numDeletedItems;
+    return numItemsDeleted;
   }
 
   private void createOrUpdateAlarms(Context context){

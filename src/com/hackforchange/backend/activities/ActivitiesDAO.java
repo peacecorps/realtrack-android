@@ -22,9 +22,29 @@ public class ActivitiesDAO {
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
     this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
+    closeDB();
+  }
+
+  private void openDB(){
+    if(!readDatabase.isOpen()){
+      readDatabase = opener.getReadableDatabase();
+    }
+    if(!writeDatabase.isOpen()){
+      writeDatabase = opener.getWritableDatabase();
+    }
+  }
+
+  private void closeDB(){
+    if(readDatabase.isOpen()){
+      readDatabase.close();
+    }
+    if(writeDatabase.isOpen()){
+      writeDatabase.close();
+    }
   }
 
   public ArrayList<Activities> getAllActivitiesForProjectId(int projectid) {
+    openDB();
     ArrayList<Activities> output = null;
     String[] columnsToRead = new String[8];
     columnsToRead[0] = Activities.COLUMN_TITLE;
@@ -39,6 +59,7 @@ public class ActivitiesDAO {
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractActivities(returnData);
+    closeDB();
     return output;
   }
 
@@ -71,6 +92,7 @@ public class ActivitiesDAO {
   }
 
   public Activities getActivityWithId(int id) {
+    openDB();
     String[] columnsToRead = new String[9];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
@@ -95,11 +117,13 @@ public class ActivitiesDAO {
     a.setComms(returnData.getString(6));
     a.setInitiatives(returnData.getString(7));
     a.setProjectid(returnData.getInt(8));
+    closeDB();
     // Return the constructed Activities object
     return a;
   }
 
   public int addActivities(Activities activity) {
+    openDB();
     ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
@@ -115,6 +139,7 @@ public class ActivitiesDAO {
 
     // return the id of the activity just created. This will be used as the foreign key for the reminders table
     Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Activities.ACTIVITIES_TABLE});
+    closeDB();
     if (returnData != null && returnData.moveToFirst())
       return returnData.getInt(0);
     else
@@ -122,6 +147,7 @@ public class ActivitiesDAO {
   }
 
   public void updateActivities(Activities activity) {
+    openDB();
     ContentValues newValue = new ContentValues(8);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
@@ -134,11 +160,15 @@ public class ActivitiesDAO {
     String whereClause = Activities.COLUMN_ID + '=' + activity.getId();
     // Update the item into the database
     writeDatabase.update(Activities.ACTIVITIES_TABLE, newValue, whereClause, null);
+    closeDB();
   }
 
   public int deleteActivities(int id) {
+    openDB();
     String whereClause = Activities.COLUMN_ID + '=' + id;
     // Return the total number of rows removed
-    return writeDatabase.delete(Activities.ACTIVITIES_TABLE, whereClause, null);
+    int numItemsDeleted = writeDatabase.delete(Activities.ACTIVITIES_TABLE, whereClause, null);
+    closeDB();
+    return numItemsDeleted;
   }
 }
