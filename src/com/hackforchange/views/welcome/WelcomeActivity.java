@@ -2,18 +2,25 @@ package com.hackforchange.views.welcome;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.hackforchange.R;
+import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
+import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.PendingParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.AllProjectsActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 // TODO: Add cancel button for editing activity, adding activity.
@@ -87,9 +94,9 @@ public class WelcomeActivity extends Activity {
               startActivity(newActivity);
               break;
             case 3: // EXPORT
-              // TODO: process men and women count
+              exportData();
               // TODO: generate report in xls format
-              // TODO: attach xls to email?
+              // TODO: attach xls to email
               break;
           }
         }
@@ -104,7 +111,7 @@ public class WelcomeActivity extends Activity {
               startActivity(newActivity);
               break;
             case 2: // EXPORT
-              // TODO: process men and women count
+              exportData();
               // TODO: generate report in xls format
               // TODO: attach xls to email?
               break;
@@ -112,5 +119,47 @@ public class WelcomeActivity extends Activity {
         }
       }
     });
+  }
+
+  void exportData(){
+    ProjectDAO projectDAO = new ProjectDAO(getApplicationContext());
+    ActivitiesDAO activitiesDAO = new ActivitiesDAO(getApplicationContext());
+    ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
+    ArrayList <Project> projects_data = projectDAO.getAllProjects();
+    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+    StringBuilder s = new StringBuilder();
+    s.append("Data Report\n");
+    s.append("===========\n");
+    for(Project p: projects_data){
+      s.append("----------------------"+"\n");
+      s.append("Project: " + p.getTitle() + "\n");
+      s.append("----------------------"+"\n");
+      s.append("  Start Date: "+parser.format(p.getStartDate())+"\n");
+      s.append("  End Date: "+parser.format(p.getEndDate())+"\n");
+      ArrayList <Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
+      for(Activities a: activities_data){
+        s.append("    ----------------------"+"\n");
+        s.append("    Activity: "+a.getTitle()+"\n");
+        s.append("    ----------------------"+"\n");
+        s.append("      Start Date: "+parser.format(a.getStartDate())+"\n");
+        s.append("      End Date: "+parser.format(a.getEndDate())+"\n");
+        ArrayList <Participation> participation_data = participationDao.getAllParticipationsForActivityId(a.getId());
+        int sumMen = 0, sumWomen = 0;
+        for(Participation participation: participation_data){
+          sumMen += participation.getMen();
+          sumWomen += participation.getWomen();
+        }
+        s.append("      Total Participation: "+(sumMen+sumWomen)+"\n");
+        s.append("        Men: "+sumMen+"\n");
+        s.append("        Women: "+sumWomen+"\n");
+      }
+    }
+    Intent send = new Intent(Intent.ACTION_SENDTO);
+    String uriText = "mailto:" + Uri.encode("") +
+      "?subject=" + Uri.encode("RealTrack Data Report") +
+      "&body=" + Uri.encode(s.toString());
+    Uri uri = Uri.parse(uriText);
+    send.setData(uri);
+    startActivity(Intent.createChooser(send, "Send mail..."));
   }
 }

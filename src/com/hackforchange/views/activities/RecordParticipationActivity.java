@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
-import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Participation;
 
 import java.text.DateFormat;
@@ -48,7 +47,7 @@ public class RecordParticipationActivity extends Activity {
 
     // display title for this activity
     TextView title = (TextView) findViewById(R.id.title);
-    title.setText(new ActivitiesDAO(getApplicationContext()).getActivityWithId(new RemindersDAO(getApplicationContext()).getReminderWithId(p.getReminderid()).getActivityid()).getTitle());
+    title.setText(new ActivitiesDAO(getApplicationContext()).getActivityWithId(p.getActivityid()).getTitle());
 
     // display date and time for this reminder
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM

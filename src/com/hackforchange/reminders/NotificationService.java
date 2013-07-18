@@ -110,6 +110,7 @@ public class NotificationService extends Service {
       // serviced is set to false by default in pDao.addParticipation()
       p = new Participation();
       p.setReminderid(reminderid);
+      p.setActivityid((new RemindersDAO(getApplicationContext()).getReminderWithId(reminderid)).getActivityid());
       p.setMen(0);
       p.setWomen(0);
       p.setDate(Calendar.getInstance().getTimeInMillis());
@@ -125,8 +126,8 @@ public class NotificationService extends Service {
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
         c.setTimeInMillis(p.getDate());
 
-        // participation -> reminder -> activity -> activity's title
-        String remindersText = new ActivitiesDAO(getApplicationContext()).getActivityWithId((new RemindersDAO(getApplicationContext()).getReminderWithId(p.getReminderid())).getActivityid()).getTitle() + ", ";
+        // participation -> activity -> activity's title
+        String remindersText = new ActivitiesDAO(getApplicationContext()).getActivityWithId(p.getActivityid()).getTitle() + ", ";
         String dateTime = parser.format(p.getDate()); // will be displayed in RecordParticipationActivity
         remindersText += dateTime;
 

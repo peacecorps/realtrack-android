@@ -96,11 +96,8 @@ public class DisplayActivitiesActivity extends Activity {
     remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
     reminders.setText(remindersText);
 
-    final ArrayList<Participation> pList = new ArrayList<Participation>();
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-    for (Reminders r : reminders_data) {
-      pList.addAll(pDao.getAllParticipationsForReminderId(r.getId()));
-    }
+    final ArrayList<Participation> pList = pDao.getAllParticipationsForActivityId(activitiesid);
 
     final Button showParticipation = (Button) findViewById(R.id.showParticipation);
     final Button deleteParticipation = (Button) findViewById(R.id.deleteParticipation);

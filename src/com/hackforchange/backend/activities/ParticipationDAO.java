@@ -27,13 +27,14 @@ public class ParticipationDAO {
 
   public ArrayList<Participation> getAllUnservicedParticipations() {
     ArrayList<Participation> output = null;
-    String[] columnsToRead = new String[6];
+    String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
     columnsToRead[1] = Participation.COLUMN_REMINDERID;
     columnsToRead[2] = Participation.COLUMN_MEN;
     columnsToRead[3] = Participation.COLUMN_WOMEN;
     columnsToRead[4] = Participation.COLUMN_DATE;
     columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+    columnsToRead[6] = Participation.COLUMN_ACTIVITYID;
 
     String whereClause = Participation.COLUMN_ISSERVICED + '=' + "'false'";
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -44,13 +45,14 @@ public class ParticipationDAO {
 
   public ArrayList<Participation> getAllUnservicedParticipationsForReminderId(int reminderid) {
     ArrayList<Participation> output = null;
-    String[] columnsToRead = new String[6];
+    String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
     columnsToRead[1] = Participation.COLUMN_REMINDERID;
     columnsToRead[2] = Participation.COLUMN_MEN;
     columnsToRead[3] = Participation.COLUMN_WOMEN;
     columnsToRead[4] = Participation.COLUMN_DATE;
     columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+    columnsToRead[6] = Participation.COLUMN_ACTIVITYID;
 
     String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid + " and " + Participation.COLUMN_ISSERVICED + '=' + "'false'";
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -61,15 +63,34 @@ public class ParticipationDAO {
 
   public ArrayList<Participation> getAllParticipationsForReminderId(int reminderid) {
     ArrayList<Participation> output = null;
-    String[] columnsToRead = new String[6];
+    String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
     columnsToRead[1] = Participation.COLUMN_REMINDERID;
     columnsToRead[2] = Participation.COLUMN_MEN;
     columnsToRead[3] = Participation.COLUMN_WOMEN;
     columnsToRead[4] = Participation.COLUMN_DATE;
     columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+    columnsToRead[6] = Participation.COLUMN_ACTIVITYID;
 
     String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid;
+    Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
+      whereClause, null, null, null, null);
+    output = extractParticipation(returnData);
+    return output;
+  }
+
+  public ArrayList<Participation> getAllParticipationsForActivityId(int activityid) {
+    ArrayList<Participation> output = null;
+    String[] columnsToRead = new String[7];
+    columnsToRead[0] = Participation.COLUMN_ID;
+    columnsToRead[1] = Participation.COLUMN_REMINDERID;
+    columnsToRead[2] = Participation.COLUMN_MEN;
+    columnsToRead[3] = Participation.COLUMN_WOMEN;
+    columnsToRead[4] = Participation.COLUMN_DATE;
+    columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+    columnsToRead[6] = Participation.COLUMN_ACTIVITYID;
+
+    String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid;
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
     output = extractParticipation(returnData);
@@ -92,6 +113,7 @@ public class ParticipationDAO {
       p.setWomen(returnData.getInt(3));
       p.setDate(returnData.getLong(4));
       p.setServiced(Boolean.parseBoolean(returnData.getString(5)));
+      p.setActivityid(returnData.getInt(6));
       output.add(count, p);
       // Advance the Cursor
       returnData.moveToNext();
@@ -103,13 +125,14 @@ public class ParticipationDAO {
   }
 
   public Participation getParticipationWithId(int id) {
-    String[] columnsToRead = new String[6];
+    String[] columnsToRead = new String[7];
     columnsToRead[0] = Participation.COLUMN_ID;
     columnsToRead[1] = Participation.COLUMN_REMINDERID;
     columnsToRead[2] = Participation.COLUMN_MEN;
     columnsToRead[3] = Participation.COLUMN_WOMEN;
     columnsToRead[4] = Participation.COLUMN_DATE;
     columnsToRead[5] = Participation.COLUMN_ISSERVICED;
+    columnsToRead[6] = Participation.COLUMN_ACTIVITYID;
     String whereClause = Participation.COLUMN_ID + '=' + id;
     Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
       whereClause, null, null, null, null);
@@ -122,13 +145,15 @@ public class ParticipationDAO {
     p.setWomen(returnData.getInt(3));
     p.setDate(returnData.getLong(4));
     p.setServiced(Boolean.parseBoolean(returnData.getString(5)));
+    p.setActivityid(returnData.getInt(6));
     // Return the constructed Participation object
     return p;
   }
 
   public int addParticipation(Participation participation) {
-    ContentValues newValue = new ContentValues(5);
+    ContentValues newValue = new ContentValues(6);
     newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
+    newValue.put(Participation.COLUMN_ACTIVITYID, participation.getActivityid());
     newValue.put(Participation.COLUMN_MEN, participation.getMen());
     newValue.put(Participation.COLUMN_WOMEN, participation.getWomen());
     //DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
@@ -147,12 +172,13 @@ public class ParticipationDAO {
   }
 
   public void updateParticipation(Participation participation) {
-    ContentValues newValue = new ContentValues(5);
+    ContentValues newValue = new ContentValues(6);
     newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
     newValue.put(Participation.COLUMN_MEN, participation.getMen());
     newValue.put(Participation.COLUMN_WOMEN, participation.getWomen());
     newValue.put(Participation.COLUMN_DATE, participation.getDate());
     newValue.put(Participation.COLUMN_ISSERVICED, participation.isServiced()?"true":"false");
+    newValue.put(Participation.COLUMN_ACTIVITYID, participation.getActivityid());
     String whereClause = Participation.COLUMN_ID + '=' + participation.getId();
     // Update the item into the database
     writeDatabase.update(Participation.PARTICIPATION_TABLE, newValue, whereClause, null);

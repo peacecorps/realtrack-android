@@ -10,11 +10,9 @@ import android.widget.TextView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
-import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
-import com.hackforchange.models.reminders.Reminders;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,11 +57,9 @@ public class ParticipationListAdapter extends ArrayAdapter<Participation> {
       holder = (ParticipationHolder)row.getTag();
 
     Participation participation = data.get(position);
-    // Participation -> Reminders -> Activities
-    RemindersDAO rDao = new RemindersDAO(getContext());
-    Reminders r = rDao.getReminderWithId(participation.getReminderid());
+    // Participation -> Activities
     ActivitiesDAO aDao = new ActivitiesDAO(getContext());
-    Activities activity = aDao.getActivityWithId(r.getActivityid());
+    Activities activity = aDao.getActivityWithId(participation.getActivityid());
     // Activities -> Project
     ProjectDAO pDao = new ProjectDAO(getContext());
     Project project = pDao.getProjectWithId(activity.getProjectid());

@@ -1,7 +1,6 @@
 package com.hackforchange.models.activities;
 
 import android.database.sqlite.SQLiteDatabase;
-import com.hackforchange.models.reminders.Reminders;
 
 /***********************************************************************************************************************
  * Models the representation of an activity
@@ -9,8 +8,8 @@ import com.hackforchange.models.reminders.Reminders;
 public class Participation {
   // Instance properties
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
-  private int reminderid; // which reminder this participation is for. This is a foreign key that points to Reminders.id
-                          // see comment below about the ABSENCE of an on cascade delete constraint
+  private int reminderid; // which reminder this participation is for. This is NOT a foreign key!!
+  private int activityid; // which activity this participation is for. This is a foreign key that points to Activities.id
   private int men; // number of men that participated
   private int women; // number of women that participated
   private long date; // date that the participation is for
@@ -20,6 +19,7 @@ public class Participation {
   public static final String PARTICIPATION_TABLE = "participation";
   public static final String COLUMN_ID = "_id";
   public static final String COLUMN_REMINDERID = "_reminderid"; // foreign key referencing Reminders.id
+  public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Reminders.id
   public static final String COLUMN_UPDATED = "updated"; //when this PARTICIPATION was last modified
   public static final String COLUMN_MEN = "men";
   public static final String COLUMN_WOMEN = "women";
@@ -36,11 +36,8 @@ public class Participation {
     + COLUMN_WOMEN   + " integer not null, "
     + COLUMN_ISSERVICED + " string not null, "
     + COLUMN_DATE    + " integer not null, "
-    + COLUMN_REMINDERID + " integer not null references " + Reminders.REMINDERS_TABLE+ " (" + Reminders.COLUMN_ID + ")"
-                             //foreign key constraint. We do NOT have an on cascade delete constraint here because the
-                             //participation records should be preserved even if the user cancels the reminder (and, hence,
-                             //the corresponding alarm). Instead, we give the user the option of manually deleting participation
-                             //participation records from AllParticipationActivity and DisplayActivitiesActivity
+    + COLUMN_REMINDERID + " integer not null, "
+    + COLUMN_ACTIVITYID + " integer not null references " + Activities.ACTIVITIES_TABLE + " (" + Activities.COLUMN_ID + ") ON DELETE CASCADE"
     + ");";
 
   // used to create the table
@@ -96,12 +93,19 @@ public class Participation {
     this.women = women;
   }
 
-
   public boolean isServiced() {
     return serviced;
   }
 
   public void setServiced(boolean serviced) {
     this.serviced = serviced;
+  }
+
+  public int getActivityid() {
+    return activityid;
+  }
+
+  public void setActivityid(int activityid) {
+    this.activityid = activityid;
   }
 }

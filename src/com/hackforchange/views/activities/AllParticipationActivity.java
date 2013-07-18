@@ -27,7 +27,6 @@ public class AllParticipationActivity extends Activity {
   private ArrayList<Participation> participation_data, filteredparticipation_data;
   private AllParticipationsListAdapter listAdapter;
   private int activitiesid;
-  private ArrayList<Reminders> reminders_data;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -139,12 +138,9 @@ public class AllParticipationActivity extends Activity {
   void updateParticipationList() {
     // fetch all the participation records for this activity
     RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-    reminders_data = rDao.getAllRemindersForActivityId(activitiesid);
     participation_data = new ArrayList<Participation>();
     ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-    for (Reminders r : reminders_data) {
-      participation_data.addAll(pDao.getAllParticipationsForReminderId(r.getId()));
-    }
+    participation_data = pDao.getAllParticipationsForActivityId(activitiesid);
 
     listAdapter = new AllParticipationsListAdapter(this, R.layout.allparticipationlist_row, this.participation_data);
     participationlist = (ListView) findViewById(R.id.participationdetailslistview);
