@@ -20,13 +20,13 @@ public class RecordParticipationActivity extends SherlockActivity {
     private int participationid;
     private long dateTime;
     protected Button submitButton;
-    protected EditText menNumText, womenNumText;
+    protected EditText menNumText, womenNumText, notesText;
     protected CheckBox menCheckbox, womenCheckbox;
     protected Participation p;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recordparticipationactivity);
+        setContentView(R.layout.activity_recordparticipation);
 
         // read in the ID of the activities for which we're recording participation
         participationid = getIntent().getExtras().getInt("participationid");
@@ -58,6 +58,7 @@ public class RecordParticipationActivity extends SherlockActivity {
         womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
         menNumText = (EditText) findViewById(R.id.numMen);
         womenNumText = (EditText) findViewById(R.id.numWomen);
+        notesText = (EditText) findViewById(R.id.notes);
         submitButton = (Button) findViewById(R.id.submitbutton);
 
         menCheckbox.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +98,8 @@ public class RecordParticipationActivity extends SherlockActivity {
                 } else {
                     p.setWomen(0);
                 }
+
+                p.setNotes(notesText.getText().toString());
 
                 // update the serviced flag for this Reminder in the Reminders table
                 // so that the next time the NotificationReceiver checks, this participation

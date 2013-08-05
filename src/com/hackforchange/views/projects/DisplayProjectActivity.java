@@ -32,7 +32,7 @@ public class DisplayProjectActivity extends SherlockActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.displayprojectactivity);
+        setContentView(R.layout.activity_displayproject);
 
         // read in the ID of the project that this activity must display details of
         id = getIntent().getExtras().getInt("projectid");

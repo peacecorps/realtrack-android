@@ -1,4 +1,4 @@
-package com.hackforchange.reminders;
+package com.hackforchange.reminderalarms;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

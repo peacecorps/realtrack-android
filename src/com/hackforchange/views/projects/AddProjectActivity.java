@@ -41,7 +41,7 @@ public class AddProjectActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addprojectactivity);
+        setContentView(R.layout.activity_addproject);
     }
 
     @Override

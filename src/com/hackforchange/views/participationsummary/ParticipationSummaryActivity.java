@@ -3,11 +3,13 @@ package com.hackforchange.views.participationsummary;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -23,12 +25,14 @@ import java.util.List;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
   private ListView projectSummaryListView;
-  private List<ProjectHolder> projectHolderList;
+  private List<ProjectHolder> projectHolderList, filteredProjectHolderList;
+  private ArrayList<Project> projects_data;
+  private ProjectSummaryListAdapter projectSummaryListAdapter;
   private StringBuilder s;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.participationsummaryactivity);
+    setContentView(R.layout.activity_participationsummary);
   }
 
   @Override
@@ -43,6 +47,46 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.participationsummarymenu, menu);
+
+    //used to filter the projects list as the user types or when he submits the query
+    SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+        filterprojectsList(query);
+        return false;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        filterprojectsList(newText);
+        return false;
+      }
+    };
+
+    // set the text listener for the Search field
+    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+    searchView.setOnQueryTextListener(queryTextListener);
+
+    final MenuItem exportDataMenuItem = menu.findItem(R.id.action_exportdata);
+
+    // hide the add button when the search view is expanded
+    final Menu m = menu;
+    searchView.setOnSearchClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (m != null) exportDataMenuItem.setVisible(false);
+      }
+    });
+    searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+      @Override
+      public boolean onClose() {
+        invalidateOptionsMenu(); // this is needed because Android doesn't remember the Add icon and changes it back
+        // to the Settings icon when the Search view is closed
+        if (m != null) exportDataMenuItem.setVisible(true);
+        return false;
+      }
+    });
+
     return true;
   }
 
@@ -66,13 +110,30 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     return true;
   }
 
+  /**
+   * ******************************************************************************************************************
+   * check whether the string passed in is present in any of the projects in our list
+   * called by queryTextListener
+   * ******************************************************************************************************************
+   */
+  void filterprojectsList(String text) {
+    filteredProjectHolderList.clear();
+    for (int i = 0; i < projectHolderList.size(); i++) {
+      if (projectHolderList.get(i).getTitle().toLowerCase().matches(".*" + text.toLowerCase() + ".*")) {
+        filteredProjectHolderList.add(projectHolderList.get(i));
+      }
+    }
+    projectSummaryListAdapter = new ProjectSummaryListAdapter(this, R.layout.row_projectsummary, filteredProjectHolderList);
+    projectSummaryListView.setAdapter(projectSummaryListAdapter);
+  }
+
   private void updateParticipationSummaryList() {
     projectSummaryListView = (ListView) findViewById(R.id.projectsummarylistview);
     projectHolderList = new ArrayList<ProjectHolder>();
     ProjectDAO projectDAO = new ProjectDAO(getApplicationContext());
     ActivitiesDAO activitiesDAO = new ActivitiesDAO(getApplicationContext());
     ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
-    ArrayList<Project> projects_data = projectDAO.getAllProjects();
+    projects_data = projectDAO.getAllProjects();
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
     s = new StringBuilder();
     s.append("Data Report\n");
@@ -81,11 +142,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       ProjectHolder pHolder = new ProjectHolder();
       pHolder.setTitle(p.getTitle());
       List<ActivitiesHolder> activitiesHolderList = new ArrayList<ActivitiesHolder>();
-      /*s.append("----------------------" + "\n");
+      s.append("----------------------" + "\n");
       s.append("Project: " + p.getTitle() + "\n");
       s.append("----------------------" + "\n");
       s.append("  Start Date: " + parser.format(p.getStartDate()) + "\n");
-      s.append("  End Date: " + parser.format(p.getEndDate()) + "\n");*/
+      s.append("  End Date: " + parser.format(p.getEndDate()) + "\n");
       ArrayList<Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
       for (Activities a : activities_data) {
         s.append("    ----------------------" + "\n");
@@ -115,6 +176,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       }
     }
 
-    projectSummaryListView.setAdapter(new ProjectSummaryListAdapter(this, R.layout.row_projectsummary, projectHolderList));
+    projectSummaryListAdapter = new ProjectSummaryListAdapter(this, R.layout.row_projectsummary, projectHolderList);
+    projectSummaryListView.setAdapter(projectSummaryListAdapter);
+    filteredProjectHolderList = new ArrayList<ProjectHolder>(); //used for filtered data
   }
 }

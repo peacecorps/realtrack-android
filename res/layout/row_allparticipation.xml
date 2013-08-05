@@ -28,7 +28,7 @@
                 android:visibility="visible"
                 android:background="@color/darkgrey"/>
 
-        <TextView
+        <!--<TextView
                 android:id="@+id/time"
                 android:gravity="center_vertical"
                 android:textStyle="normal"
@@ -44,7 +44,7 @@
                 android:layout_width="0.2dp"
                 android:layout_height="fill_parent"
                 android:visibility="visible"
-                android:background="@color/darkgrey"/>
+                android:background="@color/darkgrey"/>-->
 
         <TextView
                 android:id="@+id/men"
@@ -74,6 +74,22 @@
                 android:layout_height="fill_parent"
                 android:layout_width="0px"/>
     </LinearLayout>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.2dp"
+            android:visibility="visible"
+            android:background="@color/darkgrey"/>
+
+    <TextView
+            android:id="@+id/notes"
+            android:gravity="center_vertical"
+            android:textStyle="normal"
+            android:textSize="17dp"
+            android:textColor="@color/darkgrey"
+            android:paddingLeft="7dp"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"/>
 
     <View
             android:layout_width="fill_parent"

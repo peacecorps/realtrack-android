@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.reminders.Reminders;
-import com.hackforchange.reminders.NotificationReceiver;
+import com.hackforchange.reminderalarms.NotificationReceiver;
 
 import java.util.ArrayList;
 

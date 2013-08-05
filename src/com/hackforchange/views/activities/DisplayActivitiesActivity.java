@@ -43,7 +43,7 @@ public class DisplayActivitiesActivity extends SherlockActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.displayactivitiesactivity);
+        setContentView(R.layout.activity_displayactivities);
 
         // read in the ID of the project that this activity must display details of
         activitiesid = getIntent().getExtras().getInt("activitiesid");

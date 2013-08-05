@@ -29,7 +29,7 @@ public class AllParticipationActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.allparticipationactivity);
+        setContentView(R.layout.activity_allparticipation);
 
         // get the owner participation
         activitiesid = getIntent().getExtras().getInt("activitiesid");

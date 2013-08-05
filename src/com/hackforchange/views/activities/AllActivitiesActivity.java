@@ -32,7 +32,7 @@ public class AllActivitiesActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.allactivitiesactivity);
+        setContentView(R.layout.activity_allactivities);
 
         // get the owner activities
         projectid = getIntent().getExtras().getInt("projectid");

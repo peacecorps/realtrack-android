@@ -18,7 +18,7 @@ public class PendingParticipationActivity extends SherlockActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pendingparticipationactivity);
+        setContentView(R.layout.activity_pendingparticipation);
     }
 
     @Override

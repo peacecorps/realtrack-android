@@ -59,11 +59,11 @@
         <activity android:name=".views.participationsummary.ParticipationSummaryActivity"
                   android:label="@string/allparticipationsactivity_label"/>
 
-        <receiver android:name=".reminders.NotificationReceiver">
+        <receiver android:name=".reminderalarms.NotificationReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <service android:name=".reminders.NotificationService"/>
+        <service android:name=".reminderalarms.NotificationService"/>
     </application>
 </manifest>

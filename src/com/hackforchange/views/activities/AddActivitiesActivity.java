@@ -40,7 +40,7 @@ public class AddActivitiesActivity extends SherlockActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addactivitiesactivity);
+        setContentView(R.layout.activity_addactivities);
 
         // get the owner project
         projectid = getIntent().getExtras().getInt("projectid");

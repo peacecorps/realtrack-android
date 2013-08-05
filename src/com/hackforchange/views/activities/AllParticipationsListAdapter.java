@@ -43,9 +43,10 @@ public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
             holder = new AllParticipationHolder();
             //holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
             holder.date = (TextView) row.findViewById(R.id.date);
-            holder.time = (TextView) row.findViewById(R.id.time);
+            /*holder.time = (TextView) row.findViewById(R.id.time);*/
             holder.men = (TextView) row.findViewById(R.id.men);
             holder.women = (TextView) row.findViewById(R.id.women);
+            holder.notes = (TextView) row.findViewById(R.id.notes);
 
             row.setTag(holder);
         } else
@@ -55,10 +56,11 @@ public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
         Date d = new Date(participation.getDate());
         holder.date.setText(parser.format(d));
-        parser = new SimpleDateFormat("hh:mm aaa"); // example: 6:13 PM
-        holder.time.setText(parser.format(d));
+        /*parser = new SimpleDateFormat("hh:mm aaa"); // example: 6:13 PM
+        holder.time.setText(parser.format(d));*/
         holder.men.setText(participation.getMen() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
         holder.women.setText(participation.getWomen() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
+        holder.notes.setText("Notes: " + participation.getNotes());
 
         return row;
     }
@@ -67,7 +69,8 @@ public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
 class AllParticipationHolder {
     //ImageView imgIcon;
     TextView date;
-    TextView time;
+    /*TextView time;*/
     TextView men;
     TextView women;
+    TextView notes;
 }

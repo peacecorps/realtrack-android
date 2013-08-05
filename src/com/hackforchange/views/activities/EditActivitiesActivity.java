@@ -15,7 +15,7 @@ import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.reminders.Reminders;
-import com.hackforchange.reminders.NotificationService;
+import com.hackforchange.reminderalarms.NotificationService;
 
 import java.text.DateFormat;
 import java.text.ParseException;

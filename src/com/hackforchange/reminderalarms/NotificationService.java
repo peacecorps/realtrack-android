@@ -1,4 +1,4 @@
-package com.hackforchange.reminders;
+package com.hackforchange.reminderalarms;
 
 import android.app.Notification;
 import android.app.NotificationManager;
