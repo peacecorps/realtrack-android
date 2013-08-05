@@ -4,6 +4,24 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/globalpattern_background">
+
+    <ImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/logo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RealTrack"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/darkgrey"
+        android:layout_margin="20dp"/>
+
     <ListView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

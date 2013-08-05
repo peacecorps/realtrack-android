@@ -7,39 +7,40 @@ import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.models.reminders.Reminders;
+
 /*
  * This is a database helper that is shared by the different model classes
  */
 public class GlobalDatabaseHelper extends SQLiteOpenHelper {
-  public static final String DATABASE_NAME = "database.db";
-  public static final int DATABASE_VERSION = 1;
-  private static GlobalDatabaseHelper gHelper;
+    public static final String DATABASE_NAME = "database.db";
+    public static final int DATABASE_VERSION = 1;
+    private static GlobalDatabaseHelper gHelper;
 
-  private GlobalDatabaseHelper(Context context) {
-    super(context, DATABASE_NAME, null, DATABASE_VERSION);
-  }
+    private GlobalDatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
-  public static GlobalDatabaseHelper getInstance(Context context){
-    gHelper = new GlobalDatabaseHelper(context);
-    return gHelper;
-  }
+    public static GlobalDatabaseHelper getInstance(Context context) {
+        gHelper = new GlobalDatabaseHelper(context);
+        return gHelper;
+    }
 
-  // Method is called during creation of the database
-  @Override
-  public void onCreate(SQLiteDatabase database) {
-    Project.onCreate(database);
-    Activities.onCreate(database);
-    Reminders.onCreate(database);
-    Participation.onCreate(database);
-  }
+    // Method is called during creation of the database
+    @Override
+    public void onCreate(SQLiteDatabase database) {
+        Project.onCreate(database);
+        Activities.onCreate(database);
+        Reminders.onCreate(database);
+        Participation.onCreate(database);
+    }
 
-  // Method is called during an upgrade of the database,
-  @Override
-  public void onUpgrade(SQLiteDatabase database, int oldVersion,
-                        int newVersion) {
-    Project.onUpgrade(database, oldVersion, newVersion);
-    Activities.onUpgrade(database, oldVersion, newVersion);
-    Reminders.onUpgrade(database, oldVersion, newVersion);
-    Participation.onUpgrade(database, oldVersion, newVersion);
-  }
+    // Method is called during an upgrade of the database,
+    @Override
+    public void onUpgrade(SQLiteDatabase database, int oldVersion,
+                          int newVersion) {
+        Project.onUpgrade(database, oldVersion, newVersion);
+        Activities.onUpgrade(database, oldVersion, newVersion);
+        Reminders.onUpgrade(database, oldVersion, newVersion);
+        Participation.onUpgrade(database, oldVersion, newVersion);
+    }
 }

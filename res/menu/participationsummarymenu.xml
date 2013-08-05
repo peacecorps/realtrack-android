@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/action_search"
+    android:showAsAction="always"
+    android:title="Search"
+    android:actionViewClass="com.actionbarsherlock.widget.SearchView" />
+  <item
+    android:id="@+id/action_exportdata"
+    android:showAsAction="ifRoom"
+    android:icon="@android:drawable/sym_action_email"
+    android:title="Email" />
+</menu>

@@ -3,11 +3,16 @@
           package="com.hackforchange"
           android:versionCode="1"
           android:versionName="1.0">
+
     <uses-sdk android:minSdkVersion="8"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <application android:label="@string/app_name" android:icon="@drawable/icon"
-                 android:theme="@style/Theme.Vrf">
+
+    <application
+            android:label="@string/app_name"
+            android:icon="@drawable/icon"
+            android:theme="@style/Theme.Vrf">
         <activity android:name=".views.welcome.WelcomeActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -15,29 +20,45 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".views.projects.AllProjectsActivity"
-                  android:label="@string/allprojectsactivity_label">
-        </activity>
-        <activity android:name=".views.projects.AddProjectActivity"
-                  android:label="@string/addprojectactivity_label"/>
-        <activity android:name=".views.projects.DisplayProjectActivity"
-                  android:label="@string/displayprojectactivity_label"/>
-        <activity android:name=".views.projects.EditProjectActivity"
-                  android:label="@string/editprojectactivity_label"/>
-        <activity android:name=".views.activities.AllActivitiesActivity"
-                  android:label="@string/allactivitiesactivity_label"/>
-        <activity android:name=".views.activities.AddActivitiesActivity"
-                  android:label="@string/addactivitiesactivity_label"/>
-        <activity android:name=".views.activities.DisplayActivitiesActivity"
-                  android:label="@string/displayactivitiesactivity_label"/>
-        <activity android:name=".views.activities.EditActivitiesActivity"
-                  android:label="@string/editactivitiesactivity_label"/>
-        <activity android:name=".views.activities.RecordParticipationActivity"
-                  android:label="@string/recordparticipationactivity_label"/>
-        <activity android:name=".views.activities.PendingParticipationActivity"
-                  android:label="@string/pendingparticipationactivity_label"/>
-        <activity android:name=".views.activities.AllParticipationActivity"
+        <activity
+                android:name=".views.projectsactivities.AllProjectsActivitiesActivity"
+                android:label="@string/allprojectsactivity_label"></activity>
+        <!--<activity
+                android:name=".views.projects.AllProjectsActivity"
+                android:label="@string/allprojectsactivity_label"></activity>-->
+        <activity
+                android:name=".views.projects.AddProjectActivity"
+                android:label="@string/addprojectactivity_label"/>
+        <activity
+                android:name=".views.projects.DisplayProjectActivity"
+                android:label="@string/displayprojectactivity_label"/>
+        <activity
+                android:name=".views.projects.EditProjectActivity"
+                android:label="@string/editprojectactivity_label"/>
+        <!--<activity
+                android:name=".views.activities.AllActivitiesActivity"
+                android:label="@string/allactivitiesactivity_label"/>-->
+        <activity
+                android:name=".views.activities.AddActivitiesActivity"
+                android:label="@string/addactivitiesactivity_label"/>
+        <activity
+                android:name=".views.activities.DisplayActivitiesActivity"
+                android:label="@string/displayactivitiesactivity_label"/>
+        <activity
+                android:name=".views.activities.EditActivitiesActivity"
+                android:label="@string/editactivitiesactivity_label"/>
+        <activity
+                android:name=".views.activities.RecordParticipationActivity"
+                android:label="@string/recordparticipationactivity_label"/>
+        <activity
+                android:name=".views.activities.PendingParticipationActivity"
+                android:label="@string/pendingparticipationactivity_label"/>
+        <activity
+                android:name=".views.activities.AllParticipationActivity"
+                android:label="@string/allparticipationsactivity_label"/>
+        <activity android:name=".views.participationsummary.ParticipationSummaryActivity"
                   android:label="@string/allparticipationsactivity_label"/>
+
         <receiver android:name=".reminders.NotificationReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

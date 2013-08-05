@@ -1,366 +1,424 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/scrollView"
-            android:background="@drawable/globalpattern_background">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Title"/>
-        <EditText android:id="@+id/title"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:hint="Name Your Activity"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Start Date"/>
-        <EditText android:id="@+id/startDate"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:inputType="date"
-                  android:hint="MM/DD/YYYY"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="End Date"/>
-        <EditText android:id="@+id/endDate"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:inputType="date"
-                  android:hint="MM/DD/YYYY"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Reminders"/>
-        <android.support.v7.widget.GridLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:useDefaultMargins="true"
-                app:alignmentMode="alignBounds"
-                app:columnOrderPreserved="false"
-                app:columnCount="2"
-                android:background="@drawable/homelistitem_background"
-                android:padding="10dp">
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Monday"
-                    android:id="@+id/mondayCheckBox"/>
-            <EditText android:id="@+id/mondayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:clickable="false"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Tuesday"
-                    android:id="@+id/tuesdayCheckBox"/>
-            <EditText android:id="@+id/tuesdayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Wednesday"
-                    android:id="@+id/wednesdayCheckBox"/>
-            <EditText android:id="@+id/wednesdayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Thursday"
-                    android:id="@+id/thursdayCheckBox"/>
-            <EditText android:id="@+id/thursdayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Friday"
-                    android:id="@+id/fridayCheckBox"/>
-            <EditText android:id="@+id/fridayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Saturday"
-                    android:id="@+id/saturdayCheckBox"/>
-            <EditText android:id="@+id/saturdayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Sunday"
-                    android:id="@+id/sundayCheckBox"/>
-            <EditText android:id="@+id/sundayTime"
-                      android:textColor="#ffffff"
-                      android:textStyle="bold"
-                      android:textSize="19dp"
-                      android:layout_gravity="fill_horizontal"
-                      android:background="@android:color/transparent"
-                      android:inputType="time"
-                      android:hint="HH:MM AM/PM"
-                      android:textColorHint="#969696"/>
-        </android.support.v7.widget.GridLayout>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Notes"/>
-        <EditText android:id="@+id/notes"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:inputType="text|textImeMultiLine|textMultiLine"
-                  android:maxLines="6"
-                  android:minLines="3"
-                  android:hint="Enter Notes (Optional)"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Organizations"/>
-        <EditText android:id="@+id/orgs"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:inputType="text|textImeMultiLine|textMultiLine"
-                  android:maxLines="6"
-                  android:minLines="3"
-                  android:hint="Organizations Involved (optional)"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Communities"/>
-        <EditText android:id="@+id/comms"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:textSize="23dp"
-                  android:textColor="#FFFFFF"
-                  android:background="@drawable/homelistitem_background"
-                  android:layout_marginBottom="0dp"
-                  android:paddingTop="10dp"
-                  android:paddingRight="10dp"
-                  android:paddingBottom="10dp"
-                  android:paddingLeft="15dp"
-                  android:inputType="text|textImeMultiLine|textMultiLine"
-                  android:maxLines="6"
-                  android:minLines="3"
-                  android:hint="Communities Impacted (optional)"
-                  android:textColorHint="#969696"/>
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:textStyle="bold"
-                  android:textSize="25dp"
-                  android:textColor="#d6d6d6"
-                  android:background="#575757"
-                  android:padding="10dp"
-                  android:text="Initiatives"/>
-        <android.support.v7.widget.GridLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:useDefaultMargins="true"
-                app:alignmentMode="alignBounds"
-                app:columnOrderPreserved="false"
-                app:columnCount="2"
-                android:background="@drawable/homelistitem_background"
-                android:padding="10dp">
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="WID"
-                    android:id="@+id/widCheckBox" android:layout_width="wrap_content"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Youth"
-                    android:id="@+id/youthCheckBox"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="Malaria"
-                    android:id="@+id/malariaCheckBox"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="Food Security"
-                    android:id="@+id/foodSecurityCheckBox"/>
-            <CheckBox
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="ECPA"
-                    android:layout_gravity="fill_horizontal"
-                    android:layout_columnSpan="2"
-                    android:id="@+id/ECPACheckBox"/>
-        </android.support.v7.widget.GridLayout>
-        <LinearLayout
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-            <Button
-                    android:textSize="25dp"
-                    android:textColor="@android:color/white"
-                    android:background="#0099cc"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Save"
-                    android:textStyle="bold"
-                    android:id="@+id/submitbutton"/>
-        </LinearLayout>
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:id="@+id/scrollView"
+  android:background="@drawable/globalpattern_background">
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Title" />
+
+    <EditText
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:hint="Name Your Activity"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Start Date" />
+
+    <EditText
+      android:id="@+id/startDate"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:inputType="date"
+      android:hint="MM/DD/YYYY"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="End Date" />
+
+    <EditText
+      android:id="@+id/endDate"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:inputType="date"
+      android:hint="MM/DD/YYYY"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Reminders" />
+
+    <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:useDefaultMargins="true"
+      app:alignmentMode="alignBounds"
+      app:columnOrderPreserved="false"
+      app:columnCount="2"
+      android:background="@drawable/homelistitem_background"
+      android:padding="10dp">
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Monday"
+        android:id="@+id/mondayCheckBox" />
+
+      <EditText
+        android:id="@+id/mondayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:clickable="false"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Tuesday"
+        android:id="@+id/tuesdayCheckBox" />
+
+      <EditText
+        android:id="@+id/tuesdayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Wednesday"
+        android:id="@+id/wednesdayCheckBox" />
+
+      <EditText
+        android:id="@+id/wednesdayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Thursday"
+        android:id="@+id/thursdayCheckBox" />
+
+      <EditText
+        android:id="@+id/thursdayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Friday"
+        android:id="@+id/fridayCheckBox" />
+
+      <EditText
+        android:id="@+id/fridayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Saturday"
+        android:id="@+id/saturdayCheckBox" />
+
+      <EditText
+        android:id="@+id/saturdayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Sunday"
+        android:id="@+id/sundayCheckBox" />
+
+      <EditText
+        android:id="@+id/sundayTime"
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:background="@android:color/transparent"
+        android:inputType="time"
+        android:hint="HH:MM AM/PM"
+        android:textColorHint="#969696" />
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Notes" />
+
+    <EditText
+      android:id="@+id/notes"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:inputType="text|textImeMultiLine|textMultiLine"
+      android:maxLines="6"
+      android:minLines="3"
+      android:hint="Enter Notes (Optional)"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Organizations" />
+
+    <EditText
+      android:id="@+id/orgs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:inputType="text|textImeMultiLine|textMultiLine"
+      android:maxLines="6"
+      android:minLines="3"
+      android:hint="Organizations Involved (optional)"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Communities" />
+
+    <EditText
+      android:id="@+id/comms"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      android:textSize="23dp"
+      android:textColor="@color/darkgrey"
+      android:background="@drawable/homelistitem_background"
+      android:layout_marginBottom="0dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:paddingLeft="15dp"
+      android:inputType="text|textImeMultiLine|textMultiLine"
+      android:maxLines="6"
+      android:minLines="3"
+      android:hint="Communities Impacted (optional)"
+      android:textColorHint="#969696" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:textStyle="bold"
+      android:textSize="25dp"
+      android:textColor="@color/darkgrey"
+      android:background="@color/lightgrey"
+      android:padding="10dp"
+      android:text="Initiatives" />
+
+    <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:useDefaultMargins="true"
+      app:alignmentMode="alignBounds"
+      app:columnOrderPreserved="false"
+      app:columnCount="2"
+      android:background="@drawable/homelistitem_background"
+      android:padding="10dp">
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="WID"
+        android:id="@+id/widCheckBox"
+        android:layout_width="wrap_content" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Youth"
+        android:id="@+id/youthCheckBox" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:text="Malaria"
+        android:id="@+id/malariaCheckBox" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:text="Food Security"
+        android:id="@+id/foodSecurityCheckBox" />
+
+      <CheckBox
+        android:textColor="@color/darkgrey"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:text="ECPA"
+        android:layout_gravity="fill_horizontal"
+        android:layout_columnSpan="2"
+        android:id="@+id/ECPACheckBox" />
+    </android.support.v7.widget.GridLayout>
+
+    <LinearLayout
+      android:padding="10dp"
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal">
+
+      <Button
+        android:textSize="25dp"
+        android:textColor="@android:color/white"
+        android:background="@color/blue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Save"
+        android:textStyle="bold"
+        android:id="@+id/submitbutton" />
     </LinearLayout>
+  </LinearLayout>
 </ScrollView>
