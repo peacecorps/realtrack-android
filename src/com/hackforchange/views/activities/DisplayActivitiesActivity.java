@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -35,8 +33,6 @@ import java.util.Date;
 // TODO: participation history graph?
 public class DisplayActivitiesActivity extends SherlockActivity {
     public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
-    private ArrayList<Activities> activities_data, filteredactivities_data;
-    private ActivitiesListAdapter listAdapter, tempListAdapter;
     private int activitiesid;
     private Activities a;
     private ArrayList<Reminders> reminders_data;
@@ -99,7 +95,7 @@ public class DisplayActivitiesActivity extends SherlockActivity {
         final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
         final ArrayList<Participation> pList = pDao.getAllParticipationsForActivityId(activitiesid);
 
-        final Button showParticipation = (Button) findViewById(R.id.showParticipation);
+        /*final Button showParticipation = (Button) findViewById(R.id.showParticipation);
         final Button deleteParticipation = (Button) findViewById(R.id.deleteParticipation);
         // if there are no participation records associated as yet with this activity, hide the "Show Participation" button
         // and the "Delete Participation" button.
@@ -139,12 +135,9 @@ public class DisplayActivitiesActivity extends SherlockActivity {
                             .show();
                 }
             });
-        }
+        }*/
     }
 
-    //TODO: when deleting existing reminders, ask user if he wants the participation records to be expunged. If not, don't
-    //do it. This means you first need to remove the on cascade constraints in the Participation object. And if the user
-    //chooses to remove the participation records, do it manually using the participationdao.
     //TODO: provide menu option to delete all participation records for an activity in AllParticipationActivity
 
     // create actionbar menu

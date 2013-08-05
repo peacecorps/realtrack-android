@@ -13,6 +13,82 @@
             android:textColor="@color/darkgrey"
             android:background="@color/lightgrey"
             android:paddingLeft="3dp"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+
+        <TextView
+                android:gravity="center_vertical"
+                android:textStyle="normal"
+                android:textSize="20dp"
+                android:textColor="@color/darkgrey"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:text="Date"/>
+
+        <View
+                android:layout_width="0.2dp"
+                android:layout_height="fill_parent"
+                android:visibility="visible"
+                android:background="@color/darkgrey"/>
+
+        <!--<TextView
+                android:gravity="center_vertical"
+                android:textStyle="normal"
+                android:textSize="20dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:text="Time"/>
+
+        <View
+                android:layout_width="0.2dp"
+                android:layout_height="fill_parent"
+                android:visibility="visible"
+                android:background="@color/darkgrey"/>-->
+
+        <TextView
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:textColor="@color/darkgrey"
+                android:paddingLeft="7dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:text="Men"/>
+
+        <View
+                android:layout_width="0.2dp"
+                android:layout_height="fill_parent"
+                android:visibility="visible"
+                android:background="@color/darkgrey"/>
+
+        <TextView
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:textColor="@color/darkgrey"
+                android:paddingLeft="7dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:text="Women"/>
+    </LinearLayout>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.2dp"
+            android:visibility="visible"
+            android:background="@color/darkgrey"/>
+
     <ListView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
