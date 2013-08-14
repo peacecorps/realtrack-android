@@ -51,13 +51,17 @@
                 android:name=".views.activities.RecordParticipationActivity"
                 android:label="@string/recordparticipationactivity_label"/>
         <activity
+                android:name=".views.activities.RecordQuickParticipationActivity"
+                android:label="@string/recordquickparticipationactivity_label"/>
+        <activity
                 android:name=".views.activities.PendingParticipationActivity"
                 android:label="@string/pendingparticipationactivity_label"/>
         <activity
                 android:name=".views.activities.AllParticipationActivity"
                 android:label="@string/allparticipationsactivity_label"/>
-        <activity android:name=".views.participationsummary.ParticipationSummaryActivity"
-                  android:label="@string/allparticipationsactivity_label"/>
+        <activity
+                android:name=".views.participationsummary.ParticipationSummaryActivity"
+                android:label="@string/allparticipationsactivity_label"/>
 
         <receiver android:name=".reminderalarms.NotificationReceiver">
             <intent-filter>

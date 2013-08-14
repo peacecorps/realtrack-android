@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
@@ -21,6 +22,7 @@ import com.hackforchange.models.reminders.Reminders;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
 import com.hackforchange.views.activities.EditActivitiesActivity;
+import com.hackforchange.views.activities.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
 import com.hackforchange.views.projects.EditProjectActivity;
 
@@ -120,6 +122,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         context.startActivity(i);
       }
     });
+
     holder.startDate.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -130,8 +133,8 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     });
 
     // handle click on the edit project icon
-    ImageView editActivityBtn = (ImageView) row.findViewById(R.id.editProjectBtn);
-    editActivityBtn.setOnClickListener(new View.OnClickListener() {
+    ImageView editProjectBtn = (ImageView) row.findViewById(R.id.editProjectBtn);
+    editProjectBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent i = new Intent(context, EditProjectActivity.class);
@@ -192,6 +195,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.startDate.setVisibility(View.GONE);
       row.findViewById(R.id.editActivityBtn).setVisibility(View.GONE);
       row.findViewById(R.id.deleteActivityBtn).setVisibility(View.GONE);
+      row.findViewById(R.id.quickParticipationBtn).setVisibility(View.GONE);
 
       // handle click on the title text view and show activity details
       holder.txtTitle.setOnClickListener(new View.OnClickListener() {
@@ -218,10 +222,26 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           context.startActivity(i);
         }
       });
+
       holder.startDate.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           Intent i = new Intent(context, DisplayActivitiesActivity.class);
+          i.putExtra("activitiesid", activities.getId());
+          context.startActivity(i);
+        }
+      });
+
+      // handle click on the quick participation icon
+      ImageView quickParticipationBtn = (ImageView) row.findViewById(R.id.quickParticipationBtn);
+      quickParticipationBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          ParticipationDAO pDao = new ParticipationDAO(context);
+          int largestParticipationId = pDao.getLargestParticipationId();
+
+          Intent i = new Intent(context, RecordQuickParticipationActivity.class);
+          i.putExtra("largestParticipationId", largestParticipationId++); //the new participation will have an id one more than the max so far recorded
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
         }

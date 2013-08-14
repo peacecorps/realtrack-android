@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/homelistitem_background">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
                   android:orientation="horizontal"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
@@ -24,27 +24,9 @@
 
         <View
                 android:layout_width="0.2dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:visibility="visible"
                 android:background="@color/darkgrey"/>
-
-        <!--<TextView
-                android:id="@+id/time"
-                android:gravity="center_vertical"
-                android:textStyle="normal"
-                android:textSize="17dp"
-                android:textColor="@color/darkgrey"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="0px"/>
-
-        <View
-                android:layout_width="0.2dp"
-                android:layout_height="fill_parent"
-                android:visibility="visible"
-                android:background="@color/darkgrey"/>-->
 
         <TextView
                 android:id="@+id/men"
@@ -59,7 +41,7 @@
 
         <View
                 android:layout_width="0.2dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:visibility="visible"
                 android:background="@color/darkgrey"/>
 

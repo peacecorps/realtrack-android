@@ -18,7 +18,7 @@ public class RemindersDAO {
     private SQLiteDatabase readDatabase;
     private SQLiteDatabase writeDatabase;
 
-    public RemindersDAO(Context context) {
+  public RemindersDAO(Context context) {
         this.opener = GlobalDatabaseHelper.getInstance(context);
         this.readDatabase = opener.getReadableDatabase();
         this.writeDatabase = opener.getWritableDatabase();

@@ -197,7 +197,7 @@ public class ParticipationDAO {
         //DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
         //newValue.put(Participation.COLUMN_DATE, parser.format(participation.getDate()));
         newValue.put(Participation.COLUMN_DATE, participation.getDate());
-        newValue.put(Participation.COLUMN_ISSERVICED, "false"); // every new participation is un-serviced, by default
+        newValue.put(Participation.COLUMN_ISSERVICED, participation.isServiced());
         // Insert the item into the database
         writeDatabase.insert(Participation.PARTICIPATION_TABLE, null, newValue);
 
@@ -209,6 +209,19 @@ public class ParticipationDAO {
             closeDB();
         }
         return retVal;
+    }
+
+    public int getLargestParticipationId(){
+      openDB();
+      // return the largest participation id so far. Used to add a quick participation record that is not really
+      // tied to a reminder.
+      Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Participation.PARTICIPATION_TABLE});
+      int retVal = -1;
+      if (returnData != null && returnData.moveToFirst()) {
+        retVal = returnData.getInt(0);
+        closeDB();
+      }
+      return retVal;
     }
 
     public void updateParticipation(Participation participation) {
