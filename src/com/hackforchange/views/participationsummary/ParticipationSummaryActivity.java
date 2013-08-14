@@ -17,16 +17,25 @@ import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
+import com.hackforchange.providers.CachedFileContentProvider;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
+  public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
   private ArrayList<Project> projects_data;
-  private StringBuilder s;
+  private StringBuilder emailContent;
   private LinearLayout summaryLayout;
+  File cacheDir, cacheOutputFile;
+  String fileName;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -39,6 +48,10 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
     summaryLayout.removeAllViews();
+    DateFormat dateParser = new SimpleDateFormat("MMddyyyy");
+    fileName = "RealTrack_Data_Report_"+dateParser.format(Calendar.getInstance().getTimeInMillis())+".csv";
+    cacheDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
+    cacheOutputFile = new File(cacheDir + File.separator + fileName);
     updateParticipationSummaryList();
   }
 
@@ -58,13 +71,20 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         finish();
         break;
       case R.id.action_exportdata:
-        Intent send = new Intent(Intent.ACTION_SENDTO);
+        Intent sendEmailIntent = new Intent(Intent.ACTION_SENDTO);
+        sendEmailIntent.setClassName("com.google.android.gm","com.google.android.gm.ComposeActivityGmail");
+        sendEmailIntent.setType("plain/text");
         String uriText = "mailto:" + Uri.encode("") +
           "?subject=" + Uri.encode("RealTrack Data Report") +
-          "&body=" + Uri.encode(s.toString());
+          "&body=" + Uri.encode("Please find the CSV file of your recorded data attached with this email.");
+          //"&body=" + Uri.encode(emailContent.toString());
         Uri uri = Uri.parse(uriText);
-        send.setData(uri);
-        startActivity(Intent.createChooser(send, "Send mail..."));
+        sendEmailIntent.setData(uri);
+        sendEmailIntent.putExtra(
+          Intent.EXTRA_STREAM,
+          Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+            + fileName));
+        startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
         break;
     }
 
@@ -77,22 +97,52 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
 
     projects_data = projectDAO.getAllProjects();
-    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+    DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy");
+    DateFormat timeParser = new SimpleDateFormat("hh:mm aaa");
 
-    s = new StringBuilder();
-    s.append("Data Report\n");
-    s.append("===========\n");
+    emailContent = new StringBuilder();
+    emailContent.append("Data Report\n");
+    emailContent.append("===========\n");
+
+
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(cacheOutputFile);
+    } catch (FileNotFoundException e) {
+    }
+
+    String csvContent = "Project Title" + "," +
+                        "Project Start Date" + "," +
+                        "Project End Date" + "," +
+                        "Project Notes" + "," +
+                        "Activity Title" + "," +
+                        "Activity Start Date" + "," +
+                        "Activity End Date" + "," +
+                        "Activity Notes" + "," +
+                        "Activity Organizations" + "," +
+                        "Activity Communities" + "," +
+                        "Activity Initiatives" + "," +
+                        "Participation Date" + "," +
+                        "Participation Time" + "," +
+                        "Participation Men" + "," +
+                        "Participation Women" + "," +
+                        "Participation Notes" + "\n";
+
+    try {
+      fos.write(csvContent.getBytes());
+    } catch (IOException e) {
+    }
 
     for (Project p : projects_data) {
       View childProjectView = getLayoutInflater().inflate(R.layout.row_projectsummary, null);
       TextView projectTitle = (TextView) childProjectView.findViewById(R.id.txtTitle);
       projectTitle.setText(p.getTitle());
 
-      s.append("----------------------" + "\n");
-      s.append("Project: " + p.getTitle() + "\n");
-      s.append("----------------------" + "\n");
-      s.append("  Start Date: " + parser.format(p.getStartDate()) + "\n");
-      s.append("  End Date: " + parser.format(p.getEndDate()) + "\n");
+      emailContent.append("----------------------" + "\n");
+      emailContent.append("Project: " + p.getTitle() + "\n");
+      emailContent.append("----------------------" + "\n");
+      emailContent.append("  Start Date: " + dateParser.format(p.getStartDate()) + "\n");
+      emailContent.append("  End Date: " + dateParser.format(p.getEndDate()) + "\n");
 
       ArrayList<Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
 
@@ -104,11 +154,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         TextView activityTitle = (TextView) childActivityView.findViewById(R.id.txtTitle);
         activityTitle.setText(a.getTitle());
 
-        s.append("    ----------------------" + "\n");
-        s.append("    Activity: " + a.getTitle() + "\n");
-        s.append("    ----------------------" + "\n");
-        s.append("      Start Date: " + parser.format(a.getStartDate()) + "\n");
-        s.append("      End Date: " + parser.format(a.getEndDate()) + "\n");
+        emailContent.append("    ----------------------" + "\n");
+        emailContent.append("    Activity: " + a.getTitle() + "\n");
+        emailContent.append("    ----------------------" + "\n");
+        emailContent.append("      Start Date: " + dateParser.format(a.getStartDate()) + "\n");
+        emailContent.append("      End Date: " + dateParser.format(a.getEndDate()) + "\n");
 
         ArrayList<Participation> participation_data = participationDao.getAllParticipationsForActivityId(a.getId());
 
@@ -120,7 +170,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           View childParticipationView = getLayoutInflater().inflate(R.layout.row_allparticipation, null);
           TextView participationDate = (TextView) childParticipationView.findViewById(R.id.date);
           Date d = new Date(participation.getDate());
-          participationDate.setText(parser.format(d));
+          participationDate.setText(dateParser.format(d));
           TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
           participationMen.setText(participation.getMen()+"");
           TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
@@ -131,11 +181,46 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
           sumMen += participation.getMen();
           sumWomen += participation.getWomen();
+
+          String[] initiativesList = a.getInitiatives().split("\\|");
+          String inits = "";
+          for (int i = 0; i < initiativesList.length; i++) {
+            if (initiativesList[i].equals("1"))
+              inits += AllInits[i] + "|";
+          }
+          inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous pipe character
+
+          csvContent = p.getTitle() + "," +
+                              dateParser.format(p.getStartDate()) + "," +
+                              dateParser.format(p.getEndDate()) + "," +
+                              p.getNotes() + "," +
+                              a.getTitle() + "," +
+                              dateParser.format(a.getStartDate()) + "," +
+                              dateParser.format(a.getEndDate()) + "," +
+                              a.getNotes() + "," +
+                              a.getOrgs() + "," +
+                              a.getComms() + "," +
+                              inits + "," +
+                              dateParser.format(participation.getDate()) + "," +
+                              timeParser.format(participation.getDate()) + "," +
+                              participation.getMen() + "," +
+                              participation.getWomen() + "," +
+                              participation.getNotes() + "\n";
+          try {
+            fos.write(csvContent.getBytes());
+          } catch (IOException e) {
+          }
+
         }
-        s.append("      Total Participation: " + (sumMen + sumWomen) + "\n");
-        s.append("        Men: " + sumMen + "\n");
-        s.append("        Women: " + sumWomen + "\n");
+        emailContent.append("      Total Participation: " + (sumMen + sumWomen) + "\n");
+        emailContent.append("        Men: " + sumMen + "\n");
+        emailContent.append("        Women: " + sumWomen + "\n");
       }
+    }
+
+    try {
+      fos.close();
+    } catch (IOException e) {
     }
   }
 

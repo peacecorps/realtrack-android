@@ -29,7 +29,6 @@ import java.util.Date;
  * by choosing buttons in the ActionBar
  * Pressing the back key will exit the activity
  */
-// TODO: show participation history
 // TODO: participation history graph?
 public class DisplayActivitiesActivity extends SherlockActivity {
     public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};

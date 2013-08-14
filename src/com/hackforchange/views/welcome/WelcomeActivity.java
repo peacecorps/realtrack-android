@@ -26,7 +26,7 @@ public class WelcomeActivity extends SherlockActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.welcomeactivity);
+    setContentView(R.layout.activity_welcomeactivity);
   }
 
   @Override
