@@ -206,9 +206,9 @@ public class ParticipationDAO {
         int retVal = -1;
         if (returnData != null && returnData.moveToFirst()) {
             retVal = returnData.getInt(0);
-            closeDB();
         }
-        return retVal;
+      closeDB();
+      return retVal;
     }
 
     public int getLargestParticipationId(){
@@ -219,8 +219,8 @@ public class ParticipationDAO {
       int retVal = -1;
       if (returnData != null && returnData.moveToFirst()) {
         retVal = returnData.getInt(0);
-        closeDB();
       }
+      closeDB();
       return retVal;
     }
 

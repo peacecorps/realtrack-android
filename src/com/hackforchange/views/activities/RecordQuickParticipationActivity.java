@@ -40,10 +40,7 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
   @Override
   public void onResume() {
     super.onResume();
-    Calendar c = Calendar.getInstance();
-
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-    p = pDao.getParticipationWithId(largestParticipationId);
 
     // display title for this activity
     TextView title = (TextView) findViewById(R.id.title);

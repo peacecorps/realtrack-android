@@ -238,10 +238,10 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         @Override
         public void onClick(View v) {
           ParticipationDAO pDao = new ParticipationDAO(context);
-          int largestParticipationId = pDao.getLargestParticipationId();
+          int largestParticipationId = pDao.getLargestParticipationId()+1; //the new participation will have an id one more than the max so far recorded
 
           Intent i = new Intent(context, RecordQuickParticipationActivity.class);
-          i.putExtra("largestParticipationId", largestParticipationId++); //the new participation will have an id one more than the max so far recorded
+          i.putExtra("largestParticipationId", largestParticipationId);
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
         }
