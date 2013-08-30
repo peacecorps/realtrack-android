@@ -146,9 +146,6 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
       ArrayList<Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
 
-      if(activities_data.size() > 0)
-        summaryLayout.addView(childProjectView);
-
       for (Activities a : activities_data) {
         View childActivityView = getLayoutInflater().inflate(R.layout.row_activitiessummary, null);
         TextView activityTitle = (TextView) childActivityView.findViewById(R.id.txtTitle);
@@ -162,8 +159,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
         ArrayList<Participation> participation_data = participationDao.getAllParticipationsForActivityId(a.getId());
 
-        if(participation_data.size() > 0)
+        if(participation_data.size() > 0){
+          if(childProjectView.getParent()==null)
+            summaryLayout.addView(childProjectView);
           summaryLayout.addView(childActivityView);
+        }
 
         int sumMen = 0, sumWomen = 0;
         for (Participation participation : participation_data) {

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -40,6 +42,7 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
   @Override
   public void onResume() {
     super.onResume();
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
 
     // display title for this activity
@@ -145,6 +148,9 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
           p.setWomen(0);
         }
 
+        if(!menCheckbox.isChecked() && !womenCheckbox.isChecked())
+          return;
+
         p.setNotes(notesText.getText().toString());
 
         // update the serviced flag for this Reminder in the Reminders table
@@ -218,4 +224,22 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
                                    // http://stackoverflow.com/questions/2222648/change-the-contents-of-an-android-dialog-box-after-creation
       }
     };
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+    }
+
+    return true;
+  }
 }

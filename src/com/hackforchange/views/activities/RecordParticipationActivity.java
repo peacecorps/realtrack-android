@@ -99,6 +99,9 @@ public class RecordParticipationActivity extends SherlockActivity {
                     p.setWomen(0);
                 }
 
+                if(!menCheckbox.isChecked() && !womenCheckbox.isChecked())
+                  return;
+
                 p.setNotes(notesText.getText().toString());
 
                 // update the serviced flag for this Reminder in the Reminders table
