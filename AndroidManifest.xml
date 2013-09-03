@@ -69,6 +69,9 @@
             </intent-filter>
         </receiver>
         <service android:name=".reminderalarms.NotificationService"/>
-        <provider android:name=".providers.CachedFileContentProvider" android:authorities="com.hackforchange.providers"></provider>
+        <provider android:name=".providers.CachedFileContentProvider"
+                  android:authorities="com.hackforchange.providers.CachedFileContentProvider"
+                  android:exported="true">
+        </provider>
     </application>
 </manifest>

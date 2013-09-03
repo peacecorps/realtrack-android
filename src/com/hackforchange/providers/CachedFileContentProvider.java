@@ -13,10 +13,8 @@ import java.io.FileNotFoundException;
 // Source: http://stephendnicholas.com/archives/974
 public class CachedFileContentProvider extends ContentProvider {
 
-  private static final String CLASS_NAME = "CachedFileProvider";
-
   // The authority is the symbolic name for the provider class
-  public static final String AUTHORITY = "com.hackforchange.providers";
+  public static final String AUTHORITY = "com.hackforchange.providers.CachedFileContentProvider";
 
   // UriMatcher used to match against incoming requests
   private UriMatcher uriMatcher;
@@ -54,14 +52,12 @@ public class CachedFileContentProvider extends ContentProvider {
         // Create & return a ParcelFileDescriptor pointing to the file
         // Note: I don't care what mode they ask for - they're only getting
         // read only
-        ParcelFileDescriptor pfd = ParcelFileDescriptor.open(new File(
-          fileLocation), ParcelFileDescriptor.MODE_READ_ONLY);
+        ParcelFileDescriptor pfd = ParcelFileDescriptor.open(new File(fileLocation), ParcelFileDescriptor.MODE_READ_ONLY);
         return pfd;
 
       // Otherwise unrecognised Uri
       default:
-        throw new FileNotFoundException("Unsupported uri: "
-          + uri.toString());
+        throw new FileNotFoundException("Unsupported uri: " + uri.toString());
     }
   }
 

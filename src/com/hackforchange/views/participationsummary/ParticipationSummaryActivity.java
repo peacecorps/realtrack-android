@@ -77,7 +77,6 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         String uriText = "mailto:" + Uri.encode("") +
           "?subject=" + Uri.encode("RealTrack Data Report") +
           "&body=" + Uri.encode("Please find the CSV file of your recorded data attached with this email.");
-          //"&body=" + Uri.encode(emailContent.toString());
         Uri uri = Uri.parse(uriText);
         sendEmailIntent.setData(uri);
         sendEmailIntent.putExtra(
