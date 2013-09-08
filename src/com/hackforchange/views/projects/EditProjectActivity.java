@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 
 import java.text.DateFormat;
@@ -18,77 +20,96 @@ import java.util.Date;
  * Pressing the back key will exit the activity WITHOUT modding the project
  */
 public class EditProjectActivity extends AddProjectActivity {
-    private int id;
+  private int id;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // read in the ID of the project that this activity must display details of
-        id = getIntent().getExtras().getInt("projectid");
-    }
+    // read in the ID of the project that this activity must display details of
+    id = getIntent().getExtras().getInt("projectid");
+  }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+  @Override
+  public void onResume() {
+    super.onResume();
 
-        // pre-populate the fields with the project details from the DB
-        // the user can then change them if he so desires (the changes are handled
-        // from AddProjectActivity
-        ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-        p = pDao.getProjectWithId(id);
-        title.setText(p.getTitle());
+    // pre-populate the fields with the project details from the DB
+    // the user can then change them if he so desires (the changes are handled
+    // from AddProjectActivity
+    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+    p = pDao.getProjectWithId(id);
+    title.setText(p.getTitle());
+    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+    Date d = new Date(p.getStartDate());
+    startDate.setText(parser.format(d));
+    d = new Date(p.getEndDate());
+    endDate.setText(parser.format(d));
+    notes.setText(p.getNotes());
+
+    // change the submit button listener to UPDATE the existing project instead of creating a NEW one
+    submitButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-        Date d = new Date(p.getStartDate());
-        startDate.setText(parser.format(d));
-        d = new Date(p.getEndDate());
-        endDate.setText(parser.format(d));
-        notes.setText(p.getNotes());
-
-        // change the submit button listener to UPDATE the existing project instead of creating a NEW one
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-                try {
-                    Date date = parser.parse(startDate.getText().toString());
-                    p.setStartDate(date.getTime());
-                    date = parser.parse(endDate.getText().toString());
-                    p.setEndDate(date.getTime());
-                } catch (ParseException e) {
-                }
-                p.setTitle(title.getText().toString());
-                p.setNotes(notes.getText().toString());
-
-                ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-                pDao.updateProject(p);
-                finish();
-            }
-        });
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG:
-                // get the prepopulated date
-                DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-                Date date;
-                try {
-                    if (startOrEnd)
-                        date = parser.parse(startDate.getText().toString());
-                    else
-                        date = parser.parse(endDate.getText().toString());
-
-                    final Calendar c = Calendar.getInstance();
-                    c.setTime(date);
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-                    return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-                } catch (ParseException e) {
-                }
+        try {
+          Date date = parser.parse(startDate.getText().toString());
+          p.setStartDate(date.getTime());
+          date = parser.parse(endDate.getText().toString());
+          p.setEndDate(date.getTime());
+        } catch (ParseException e) {
+          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+          return;
         }
-        return null;
+
+        p.setTitle(title.getText().toString());
+        if(p.getTitle().equals("")){
+          Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        p.setNotes(notes.getText().toString());
+
+        ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+        pDao.updateProject(p);
+        finish();
+      }
+    });
+  }
+
+  @Override
+  protected Dialog onCreateDialog(int id) {
+    switch (id) {
+      case DATE_DIALOG:
+        // get the prepopulated date
+        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+        Date date;
+        try {
+          if (startOrEnd) {
+            date = parser.parse(startDate.getText().toString());
+            DatePickerDialog datePickerDialog = createDatePickerDialogFromDate(date);
+            date = parser.parse(endDate.getText().toString());
+            datePickerDialog.getDatePicker().setMaxDate(date.getTime());
+            return datePickerDialog;
+          } else {
+            date = parser.parse(endDate.getText().toString());
+            DatePickerDialog datePickerDialog = createDatePickerDialogFromDate(date);
+            date = parser.parse(startDate.getText().toString());
+            datePickerDialog.getDatePicker().setMinDate(date.getTime());
+            return datePickerDialog;
+          }
+        } catch (ParseException e) {
+        }
     }
+    return null;
+  }
+
+  private DatePickerDialog createDatePickerDialogFromDate(Date date) {
+    final Calendar c = Calendar.getInstance();
+    c.setTime(date);
+    mYear = c.get(Calendar.YEAR);
+    mMonth = c.get(Calendar.MONTH);
+    mDay = c.get(Calendar.DAY_OF_MONTH);
+    return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+  }
 }

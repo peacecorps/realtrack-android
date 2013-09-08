@@ -13,4 +13,5 @@
   <string name="recordquickparticipationactivity_label">Quick Add Participation</string>
   <string name="pendingparticipationactivity_label">Pending Participations</string>
   <string name="allparticipationsactivity_label">Participation Details</string>
+  <string name="emptyfieldserrormessage">"All non-optional fields are required"</string>
 </resources>

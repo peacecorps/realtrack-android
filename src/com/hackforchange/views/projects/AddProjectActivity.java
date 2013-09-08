@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
@@ -88,8 +89,14 @@ public class AddProjectActivity extends SherlockActivity {
                     date = parser.parse(endDate.getText().toString());
                     p.setEndDate(date.getTime());
                 } catch (ParseException e) {
+                  Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+                  return;
                 }
                 p.setTitle(title.getText().toString());
+                if(p.getTitle().equals("")){
+                  Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+                  return;
+                }
                 p.setNotes(notes.getText().toString());
 
                 ProjectDAO pDao = new ProjectDAO(getApplicationContext());
@@ -127,7 +134,20 @@ public class AddProjectActivity extends SherlockActivity {
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
-                return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+                DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+                try {
+                  if(startOrEnd){
+                    Date date = parser.parse(endDate.getText().toString());
+                    datePickerDialog.getDatePicker().setMaxDate(date.getTime());
+                  }
+                  else{
+                    Date date = parser.parse(startDate.getText().toString());
+                    datePickerDialog.getDatePicker().setMinDate(date.getTime());
+                  }
+                } catch (ParseException e) {
+                }
+                return datePickerDialog;
         }
         return null;
     }

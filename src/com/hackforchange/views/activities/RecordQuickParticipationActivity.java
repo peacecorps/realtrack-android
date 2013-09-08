@@ -12,6 +12,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 
 import java.text.DateFormat;
@@ -23,19 +24,19 @@ import java.util.Date;
 public class RecordQuickParticipationActivity extends SherlockActivity {
   static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
   protected int mYear, mMonth, mDay, mHour, mMinute;
-  private int largestParticipationId, activitiesId;
+  private int activitiesId;
   protected Button submitButton;
   protected EditText menNumText, womenNumText, notesText;
   TextView date, time;
   protected CheckBox menCheckbox, womenCheckbox;
-  protected Participation p;
+  private Participation p;
+  private Activities a;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recordquickparticipation);
 
     // read in the largest participation id yet recorded
-    largestParticipationId = getIntent().getExtras().getInt("largestParticipationId");
     activitiesId = getIntent().getExtras().getInt("activitiesid");
   }
 
@@ -45,15 +46,17 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
 
+    a = new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId);
+
     // display title for this activity
     TextView title = (TextView) findViewById(R.id.title);
-    title.setText(new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId).getTitle());
+    title.setText(a.getTitle());
 
     // display date and time for this reminder
 
     date = (TextView) findViewById(R.id.date);
     date.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
-                                             // not doing this means the first click simply focuses the text field
+                                         // not doing this means the first click simply focuses the text field
     date.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -74,7 +77,6 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
       }
     });
 
-    // TODO: make sure men and women counts are not empty if the corresponding checkboxes are checked
     menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
     womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
     menNumText = (EditText) findViewById(R.id.numMen);
@@ -105,10 +107,6 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
 
         p.setReminderid(0); // this field doesn't matter because we're setting serviced to true; it's here just for the not null constraint
 
-        if(date.getText().length() == 0 || time.getText().length() == 0)
-          return;
-
-
         DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
         DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
         try {
@@ -125,6 +123,8 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
           c.set(Calendar.MINUTE, date.getMinutes());
           p.setDate(c.getTimeInMillis());
         } catch (ParseException e) {
+          Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+          return;
         }
 
         p.setActivityid(activitiesId);
@@ -148,8 +148,10 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
           p.setWomen(0);
         }
 
-        if(!menCheckbox.isChecked() && !womenCheckbox.isChecked())
+        if(!menCheckbox.isChecked() && !womenCheckbox.isChecked()){
+          Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
           return;
+        }
 
         p.setNotes(notesText.getText().toString());
 
@@ -169,12 +171,16 @@ public class RecordQuickParticipationActivity extends SherlockActivity {
   protected Dialog onCreateDialog(int id, Bundle bundle) {
     switch (id) {
       case DATE_DIALOG:
-        // get the current date
+        // get the start date
         Calendar c = Calendar.getInstance();
+        c.setTime(new Date(a.getStartDate()));
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-        return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(a.getStartDate());
+        datePickerDialog.getDatePicker().setMaxDate(a.getEndDate());
+        return datePickerDialog;
       case TIME_DIALOG:
         // get the prepopulated date
         DateFormat parser = new SimpleDateFormat("hh:mm aaa");

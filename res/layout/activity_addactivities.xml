@@ -101,7 +101,7 @@
       android:textColor="@color/darkgrey"
       android:background="@color/lightgrey"
       android:padding="10dp"
-      android:text="Reminders" />
+      android:text="Reminders (optional)" />
 
     <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -258,7 +258,7 @@
       android:textColor="@color/darkgrey"
       android:background="@color/lightgrey"
       android:padding="10dp"
-      android:text="Notes" />
+      android:text="Notes (optional)" />
 
     <EditText
       android:id="@+id/notes"
@@ -276,7 +276,7 @@
       android:inputType="text|textImeMultiLine|textMultiLine"
       android:maxLines="6"
       android:minLines="3"
-      android:hint="Enter Notes (Optional)"
+      android:hint="Enter Notes"
       android:textColorHint="#969696" />
 
     <TextView
@@ -288,7 +288,7 @@
       android:textColor="@color/darkgrey"
       android:background="@color/lightgrey"
       android:padding="10dp"
-      android:text="Organizations" />
+      android:text="Organizations (optional)" />
 
     <EditText
       android:id="@+id/orgs"
@@ -306,7 +306,7 @@
       android:inputType="text|textImeMultiLine|textMultiLine"
       android:maxLines="6"
       android:minLines="3"
-      android:hint="Organizations Involved (optional)"
+      android:hint="Organizations Involved"
       android:textColorHint="#969696" />
 
     <TextView
@@ -318,7 +318,7 @@
       android:textColor="@color/darkgrey"
       android:background="@color/lightgrey"
       android:padding="10dp"
-      android:text="Communities" />
+      android:text="Communities (optional)" />
 
     <EditText
       android:id="@+id/comms"
@@ -336,7 +336,7 @@
       android:inputType="text|textImeMultiLine|textMultiLine"
       android:maxLines="6"
       android:minLines="3"
-      android:hint="Communities Impacted (optional)"
+      android:hint="Communities Impacted"
       android:textColorHint="#969696" />
 
     <TextView
@@ -348,7 +348,7 @@
       android:textColor="@color/darkgrey"
       android:background="@color/lightgrey"
       android:padding="10dp"
-      android:text="Initiatives" />
+      android:text="Initiatives (optional)" />
 
     <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
