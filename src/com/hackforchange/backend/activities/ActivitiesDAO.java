@@ -57,7 +57,7 @@ public class ActivitiesDAO {
         columnsToRead[7] = Activities.COLUMN_INITIATIVES;
         String whereClause = Activities.COLUMN_PROJECTID + '=' + projectid;
         Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         output = extractActivities(returnData);
         closeDB();
         return output;
@@ -105,7 +105,7 @@ public class ActivitiesDAO {
         columnsToRead[8] = Activities.COLUMN_PROJECTID;
         String whereClause = Activities.COLUMN_ID + '=' + id;
         Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         returnData.moveToFirst();
         Activities a = new Activities();
         a.setTitle(returnData.getString(0));

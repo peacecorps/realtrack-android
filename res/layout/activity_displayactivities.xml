@@ -1,240 +1,240 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:id="@+id/scrollView"
-  android:background="@drawable/globalpattern_background">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView"
+            android:background="@drawable/globalpattern_background">
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Title" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Title"/>
 
-    <TextView
-      android:id="@+id/title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Start Date" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Start Date"/>
 
-    <TextView
-      android:id="@+id/startDate"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="End Date" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="End Date"/>
 
-    <TextView
-      android:id="@+id/endDate"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Reminders" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Reminders"/>
 
-    <TextView
-      android:id="@+id/reminders"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/reminders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Notes" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Notes"/>
 
-    <TextView
-      android:id="@+id/notes"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Organizations" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Organizations"/>
 
-    <TextView
-      android:id="@+id/orgs"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/orgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Communities" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Communities"/>
 
-    <TextView
-      android:id="@+id/comms"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="0dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/comms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:textStyle="bold"
-      android:textSize="25dp"
-      android:textColor="@color/darkgrey"
-      android:background="@color/lightgrey"
-      android:padding="10dp"
-      android:text="Initiatives" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
+                android:text="Initiatives"/>
 
-    <TextView
-      android:id="@+id/initiatives"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textStyle="bold"
-      android:textSize="23dp"
-      android:textColor="@color/darkgrey"
-      android:background="@drawable/homelistitem_background"
-      android:layout_marginBottom="10dp"
-      android:paddingTop="10dp"
-      android:paddingRight="10dp"
-      android:paddingBottom="10dp"
-      android:paddingLeft="15dp" />
+        <TextView
+                android:id="@+id/initiatives"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23dp"
+                android:textColor="@color/darkgrey"
+                android:background="@drawable/homelistitem_background"
+                android:layout_marginBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"/>
 
-    <!--<Button
-      android:textSize="22dp"
-      android:textColor="#dbdbdb"
-      android:background="@color/blue"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:padding="10dp"
-      android:layout_marginLeft="10dp"
-      android:layout_marginRight="10dp"
-      android:layout_marginBottom="10dp"
-      android:text="Show Participation"
-      android:textStyle="bold"
-      android:id="@+id/showParticipation" />
+        <!--<Button
+          android:textSize="22dp"
+          android:textColor="#dbdbdb"
+          android:background="@color/blue"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginBottom="10dp"
+          android:text="Show Participation"
+          android:textStyle="bold"
+          android:id="@+id/showParticipation" />
 
-    <Button
-      android:textSize="22dp"
-      android:textColor="#dbdbdb"
-      android:background="@color/orange"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:padding="10dp"
-      android:layout_marginLeft="10dp"
-      android:layout_marginRight="10dp"
-      android:layout_marginBottom="10dp"
-      android:text="Delete Participation"
-      android:textStyle="bold"
-      android:id="@+id/deleteParticipation" />-->
-  </LinearLayout>
+        <Button
+          android:textSize="22dp"
+          android:textColor="#dbdbdb"
+          android:background="@color/orange"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginBottom="10dp"
+          android:text="Delete Participation"
+          android:textStyle="bold"
+          android:id="@+id/deleteParticipation" />-->
+    </LinearLayout>
 </ScrollView>

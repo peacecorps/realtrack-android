@@ -113,17 +113,17 @@ public class DisplayProjectActivity extends SherlockActivity {
             case R.id.action_deleteproject:
                 // warn the user first!
                 new AlertDialog.Builder(this)
-                        .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
-                        .setCancelable(false)
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-                                pDao.deleteProject(DisplayProjectActivity.this.id);
-                                finish();
-                            }
-                        })
-                        .show();
+                    .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
+                    .setCancelable(false)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+                            pDao.deleteProject(DisplayProjectActivity.this.id);
+                            finish();
+                        }
+                    })
+                    .show();
                 break;
             case R.id.action_editproject:
                 Intent i = new Intent(DisplayProjectActivity.this, EditProjectActivity.class);

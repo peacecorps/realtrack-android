@@ -141,11 +141,11 @@ public class NotificationService extends Service {
 
                 // build notification
                 Notification notificationBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.drawable.icon)
-                        .setContentTitle("Record Attendance")
-                        .setContentText(remindersText)
-                        .setContentIntent(pendingIntent)
-                        .getNotification();
+                    .setSmallIcon(R.drawable.icon)
+                    .setContentTitle("Record Attendance")
+                    .setContentText(remindersText)
+                    .setContentIntent(pendingIntent)
+                    .getNotification();
                 // Hide the notification after it is clicked
                 notificationBuilder.flags |= Notification.FLAG_AUTO_CANCEL;
 

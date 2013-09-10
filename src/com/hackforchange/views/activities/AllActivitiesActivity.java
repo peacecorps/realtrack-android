@@ -171,47 +171,47 @@ public class AllActivitiesActivity extends SherlockActivity {
                 final int pos = position;
                 CharSequence[] options = {"Show Details", "Edit", "Delete"};
                 new AlertDialog.Builder(AllActivitiesActivity.this)
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0: // show details of the activity
-                                        Activities a = (Activities) aView.getItemAtPosition(pos);
-                                        Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
-                                        i.putExtra("activitiesid", a.getId());
-                                        startActivity(i);
-                                        break;
-                                    case 1: // edit the activity that was clicked
-                                        a = (Activities) aView.getItemAtPosition(pos);
-                                        i = new Intent(AllActivitiesActivity.this, EditActivitiesActivity.class);
-                                        i.putExtra("activitiesid", a.getId());
-                                        startActivity(i);
-                                        break;
-                                    case 2: // delete the activity that was clicked
-                                        new AlertDialog.Builder(AllActivitiesActivity.this)
-                                                .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
-                                                .setCancelable(false)
-                                                .setNegativeButton("No", null)
-                                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-                                                        int activityId = ((Activities) aView.getItemAtPosition(pos)).getId();
-                                                        aDao.deleteActivities(activityId);
-                                                        // cancel all alarms for participation events of the reminders of this activity
-                                                        RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-                                                        ArrayList<Reminders> reminders_data;
-                                                        reminders_data = rDao.getAllRemindersForActivityId(activityId);
-                                                        for (Reminders r : reminders_data) {
-                                                            EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
-                                                        }
-                                                        updateActivitiesList();
-                                                    }
-                                                })
-                                                .show();
-                                        break;
-                                }
+                    .setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0: // show details of the activity
+                                    Activities a = (Activities) aView.getItemAtPosition(pos);
+                                    Intent i = new Intent(AllActivitiesActivity.this, DisplayActivitiesActivity.class);
+                                    i.putExtra("activitiesid", a.getId());
+                                    startActivity(i);
+                                    break;
+                                case 1: // edit the activity that was clicked
+                                    a = (Activities) aView.getItemAtPosition(pos);
+                                    i = new Intent(AllActivitiesActivity.this, EditActivitiesActivity.class);
+                                    i.putExtra("activitiesid", a.getId());
+                                    startActivity(i);
+                                    break;
+                                case 2: // delete the activity that was clicked
+                                    new AlertDialog.Builder(AllActivitiesActivity.this)
+                                        .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
+                                        .setCancelable(false)
+                                        .setNegativeButton("No", null)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+                                                int activityId = ((Activities) aView.getItemAtPosition(pos)).getId();
+                                                aDao.deleteActivities(activityId);
+                                                // cancel all alarms for participation events of the reminders of this activity
+                                                RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+                                                ArrayList<Reminders> reminders_data;
+                                                reminders_data = rDao.getAllRemindersForActivityId(activityId);
+                                                for (Reminders r : reminders_data) {
+                                                    EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
+                                                }
+                                                updateActivitiesList();
+                                            }
+                                        })
+                                        .show();
+                                    break;
                             }
-                        }).show();
+                        }
+                    }).show();
 
                 return false;
             }

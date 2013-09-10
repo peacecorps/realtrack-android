@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Theme.Vrf" parent="@style/Theme.Sherlock.Light.DarkActionBar">
-    <item name="android:actionBarStyle">@style/ActionBar.Solid.Vrf</item>
-  </style>
+    <style name="Theme.Vrf" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Vrf</item>
+    </style>
 
-  <style name="ActionBar.Solid.Vrf" parent="@style/Widget.Sherlock.ActionBar">
-    <item name="android:background">#3b3b3b</item>
-    <item name="android:displayOptions">showTitle</item>
-    <item name="android:titleTextStyle">@style/ActionBar.Title.Style</item>
-  </style>
+    <style name="ActionBar.Solid.Vrf" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="android:background">#3b3b3b</item>
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:titleTextStyle">@style/ActionBar.Title.Style</item>
+    </style>
 
-  <style name="ActionBar.Title.Style" parent="@style/TextAppearance.Sherlock.Widget.ActionBar.Title">
-    <item name="android:textColor">#ffffff</item>
-    <item name="android:textStyle">bold</item>
-    <item name="android:textSize">22dp</item>
-  </style>
+    <style name="ActionBar.Title.Style" parent="@style/TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22dp</item>
+    </style>
 </resources>

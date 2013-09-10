@@ -85,19 +85,19 @@ public class AllParticipationActivity extends SherlockActivity {
             case R.id.action_deleteactivity:
                 // warn the user first!
                 new AlertDialog.Builder(this)
-                        .setMessage("Are you sure you want to delete all participation records? This CANNOT be undone.")
-                        .setCancelable(false)
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-                                for (Participation p : participation_data) {
-                                    pDao.deleteParticipation(p.getId());
-                                }
-                                finish();
+                    .setMessage("Are you sure you want to delete all participation records? This CANNOT be undone.")
+                    .setCancelable(false)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+                            for (Participation p : participation_data) {
+                                pDao.deleteParticipation(p.getId());
                             }
-                        })
-                        .show();
+                            finish();
+                        }
+                    })
+                    .show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

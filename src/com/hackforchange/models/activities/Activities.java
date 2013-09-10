@@ -35,20 +35,20 @@ public class Activities {
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table if not exists "
-            + ACTIVITIES_TABLE
-            + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
-            + COLUMN_TITLE + " text not null, "
-            + COLUMN_NOTES + " text, " // notes are optional
-            + COLUMN_ORGS + " text, " // notes are optional
-            + COLUMN_COMMS + " text, " // notes are optional
-            + COLUMN_INITIATIVES + " text, " // notes are optional
-            + COLUMN_STARTDATE + " integer not null, "
-            + COLUMN_ENDDATE + " integer not null, "
-            + COLUMN_PROJECTID + " integer not null references " + Project.PROJECT_TABLE + " (" + Project.COLUMN_ID + ") ON DELETE CASCADE "
-            //foreign key constraint. Make sure to delete the activities if the project that owns it is deleted
-            + ");";
+        + ACTIVITIES_TABLE
+        + "("
+        + COLUMN_ID + " integer primary key autoincrement, "
+        + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
+        + COLUMN_TITLE + " text not null, "
+        + COLUMN_NOTES + " text, " // notes are optional
+        + COLUMN_ORGS + " text, " // notes are optional
+        + COLUMN_COMMS + " text, " // notes are optional
+        + COLUMN_INITIATIVES + " text, " // notes are optional
+        + COLUMN_STARTDATE + " integer not null, "
+        + COLUMN_ENDDATE + " integer not null, "
+        + COLUMN_PROJECTID + " integer not null references " + Project.PROJECT_TABLE + " (" + Project.COLUMN_ID + ") ON DELETE CASCADE "
+        //foreign key constraint. Make sure to delete the activities if the project that owns it is deleted
+        + ");";
 
     // used to create the table
     public static void onCreate(SQLiteDatabase database) {

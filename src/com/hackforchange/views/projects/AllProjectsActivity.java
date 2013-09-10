@@ -166,39 +166,39 @@ public class AllProjectsActivity extends SherlockActivity {
                 final int pos = position;
                 CharSequence[] options = {"Show Details", "Edit", "Delete"};
                 new AlertDialog.Builder(AllProjectsActivity.this)
-                        .setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0: // show details of the project
-                                        Project p = (Project) pView.getItemAtPosition(pos);
-                                        Intent i = new Intent(AllProjectsActivity.this, DisplayProjectActivity.class);
-                                        i.putExtra("projectid", p.getId());
-                                        startActivity(i);
-                                        break;
-                                    case 1: // edit the project that was clicked
-                                        p = (Project) pView.getItemAtPosition(pos);
-                                        i = new Intent(AllProjectsActivity.this, EditProjectActivity.class);
-                                        i.putExtra("projectid", p.getId());
-                                        startActivity(i);
-                                        break;
-                                    case 2: // delete the project that was clicked
-                                        new AlertDialog.Builder(AllProjectsActivity.this)
-                                                .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
-                                                .setCancelable(false)
-                                                .setNegativeButton("No", null)
-                                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        ProjectDAO aDao = new ProjectDAO(getApplicationContext());
-                                                        aDao.deleteProject(((Project) pView.getItemAtPosition(pos)).getId());
-                                                        updateProjectsList();
-                                                    }
-                                                })
-                                                .show();
-                                        break;
-                                }
+                    .setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0: // show details of the project
+                                    Project p = (Project) pView.getItemAtPosition(pos);
+                                    Intent i = new Intent(AllProjectsActivity.this, DisplayProjectActivity.class);
+                                    i.putExtra("projectid", p.getId());
+                                    startActivity(i);
+                                    break;
+                                case 1: // edit the project that was clicked
+                                    p = (Project) pView.getItemAtPosition(pos);
+                                    i = new Intent(AllProjectsActivity.this, EditProjectActivity.class);
+                                    i.putExtra("projectid", p.getId());
+                                    startActivity(i);
+                                    break;
+                                case 2: // delete the project that was clicked
+                                    new AlertDialog.Builder(AllProjectsActivity.this)
+                                        .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
+                                        .setCancelable(false)
+                                        .setNegativeButton("No", null)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                ProjectDAO aDao = new ProjectDAO(getApplicationContext());
+                                                aDao.deleteProject(((Project) pView.getItemAtPosition(pos)).getId());
+                                                updateProjectsList();
+                                            }
+                                        })
+                                        .show();
+                                    break;
                             }
-                        }).show();
+                        }
+                    }).show();
 
                 return false;
             }

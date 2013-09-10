@@ -163,25 +163,25 @@ public class DisplayActivitiesActivity extends SherlockActivity {
             case R.id.action_deleteactivity:
                 // warn the user first!
                 new AlertDialog.Builder(this)
-                        .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
-                        .setCancelable(false)
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-                                int activityId = DisplayActivitiesActivity.this.activitiesid;
-                                aDao.deleteActivities(activityId);
-                                // cancel all alarms for participation events of the reminders of this activity
-                                RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-                                ArrayList<Reminders> reminders_data;
-                                reminders_data = rDao.getAllRemindersForActivityId(activityId);
-                                for (Reminders r : reminders_data) {
-                                    EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
-                                }
-                                finish();
+                    .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
+                    .setCancelable(false)
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+                            int activityId = DisplayActivitiesActivity.this.activitiesid;
+                            aDao.deleteActivities(activityId);
+                            // cancel all alarms for participation events of the reminders of this activity
+                            RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+                            ArrayList<Reminders> reminders_data;
+                            reminders_data = rDao.getAllRemindersForActivityId(activityId);
+                            for (Reminders r : reminders_data) {
+                                EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
                             }
-                        })
-                        .show();
+                            finish();
+                        }
+                    })
+                    .show();
                 break;
             case R.id.action_editactivity:
                 Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);

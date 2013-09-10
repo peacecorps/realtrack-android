@@ -89,13 +89,13 @@ public class AddProjectActivity extends SherlockActivity {
                     date = parser.parse(endDate.getText().toString());
                     p.setEndDate(date.getTime());
                 } catch (ParseException e) {
-                  Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
-                  return;
+                    Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 p.setTitle(title.getText().toString());
-                if(p.getTitle().equals("")){
-                  Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
-                  return;
+                if (p.getTitle().equals("")) {
+                    Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 p.setNotes(notes.getText().toString());
 
@@ -108,22 +108,22 @@ public class AddProjectActivity extends SherlockActivity {
 
     // the callback received when the user "sets" the date in the dialog
     protected DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                    mYear = year;
-                    mMonth = monthOfYear;
-                    mDay = dayOfMonth;
-                    if (startOrEnd)
-                        startDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
-                    else
-                        endDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
-                    removeDialog(DATE_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
-                    // each time either startDate or endDate is clicked because we prepopulate the date picker with different
-                    // dates for startDate and endDate in EditProjectActivity.java's overriden onCreateDialog
-                    // http://stackoverflow.com/questions/2222648/change-the-contents-of-an-android-dialog-box-after-creation
-                }
-            };
+        new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year,
+                                  int monthOfYear, int dayOfMonth) {
+                mYear = year;
+                mMonth = monthOfYear;
+                mDay = dayOfMonth;
+                if (startOrEnd)
+                    startDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
+                else
+                    endDate.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
+                removeDialog(DATE_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
+                // each time either startDate or endDate is clicked because we prepopulate the date picker with different
+                // dates for startDate and endDate in EditProjectActivity.java's overriden onCreateDialog
+                // http://stackoverflow.com/questions/2222648/change-the-contents-of-an-android-dialog-box-after-creation
+            }
+        };
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -137,14 +137,13 @@ public class AddProjectActivity extends SherlockActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
                 DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
                 try {
-                  if(startOrEnd){
-                    Date date = parser.parse(endDate.getText().toString());
-                    datePickerDialog.getDatePicker().setMaxDate(date.getTime());
-                  }
-                  else{
-                    Date date = parser.parse(startDate.getText().toString());
-                    datePickerDialog.getDatePicker().setMinDate(date.getTime());
-                  }
+                    if (startOrEnd) {
+                        Date date = parser.parse(endDate.getText().toString());
+                        datePickerDialog.getDatePicker().setMaxDate(date.getTime());
+                    } else {
+                        Date date = parser.parse(startDate.getText().toString());
+                        datePickerDialog.getDatePicker().setMinDate(date.getTime());
+                    }
                 } catch (ParseException e) {
                 }
                 return datePickerDialog;

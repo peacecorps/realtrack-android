@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item
-    android:id="@+id/action_exportdata"
-    android:showAsAction="ifRoom"
-    android:icon="@android:drawable/sym_action_email"
-    android:title="Email" />
+    <item
+            android:id="@+id/action_exportdata"
+            android:showAsAction="ifRoom"
+            android:icon="@android:drawable/sym_action_email"
+            android:title="Email"/>
 </menu>

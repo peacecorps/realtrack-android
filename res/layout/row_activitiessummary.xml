@@ -15,9 +15,9 @@
             android:paddingLeft="3dp"/>
 
     <LinearLayout
-                  android:orientation="horizontal"
-                  android:layout_height="wrap_content"
-                  android:layout_width="fill_parent">
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
 
         <TextView
                 android:gravity="center_vertical"

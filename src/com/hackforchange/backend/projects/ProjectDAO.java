@@ -50,7 +50,7 @@ public class ProjectDAO {
         columnsToRead[3] = Project.COLUMN_NOTES;
         columnsToRead[4] = Project.COLUMN_ID;
         Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead, null,
-                null, null, null, null);
+            null, null, null, null);
         output = extractProjects(returnData);
         closeDB();
         return output;
@@ -67,7 +67,7 @@ public class ProjectDAO {
         columnsToRead[4] = Project.COLUMN_ID;
         String whereClause = Project.COLUMN_ID + '=' + id;
         Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         returnData.moveToFirst();
         Project p = new Project();
         p.setTitle(returnData.getString(0));

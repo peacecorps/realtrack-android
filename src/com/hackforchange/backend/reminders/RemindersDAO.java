@@ -18,7 +18,7 @@ public class RemindersDAO {
     private SQLiteDatabase readDatabase;
     private SQLiteDatabase writeDatabase;
 
-  public RemindersDAO(Context context) {
+    public RemindersDAO(Context context) {
         this.opener = GlobalDatabaseHelper.getInstance(context);
         this.readDatabase = opener.getReadableDatabase();
         this.writeDatabase = opener.getWritableDatabase();
@@ -67,7 +67,7 @@ public class RemindersDAO {
         String whereClause = Reminders.COLUMN_ACTIVITYID + '=' + activityid;
         String orderbyClause = Reminders.COLUMN_REMINDTIME + " asc"; // order in ascending order of remind time
         Cursor returnData = readDatabase.query(Reminders.REMINDERS_TABLE, columnsToRead,
-                whereClause, null, null, null, orderbyClause);
+            whereClause, null, null, null, orderbyClause);
         output = extractReminders(returnData);
         closeDB();
         return output;
@@ -104,7 +104,7 @@ public class RemindersDAO {
 
         String whereClause = Reminders.COLUMN_ID + '=' + id;
         Cursor returnData = readDatabase.query(Reminders.REMINDERS_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         returnData.moveToFirst();
         Reminders r = new Reminders();
         r.setId(id);

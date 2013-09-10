@@ -59,7 +59,7 @@ public class ParticipationDAO {
 
         String whereClause = Participation.COLUMN_ISSERVICED + '=' + "'false'";
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         output = extractParticipation(returnData);
         closeDB();
         return output;
@@ -80,7 +80,7 @@ public class ParticipationDAO {
 
         String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid + " and " + Participation.COLUMN_ISSERVICED + '=' + "'false'";
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         output = extractParticipation(returnData);
         closeDB();
         return output;
@@ -101,7 +101,7 @@ public class ParticipationDAO {
 
         String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid;
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         output = extractParticipation(returnData);
         closeDB();
         return output;
@@ -122,7 +122,7 @@ public class ParticipationDAO {
 
         String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid;
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         output = extractParticipation(returnData);
         closeDB();
         return output;
@@ -169,7 +169,7 @@ public class ParticipationDAO {
         columnsToRead[7] = Participation.COLUMN_NOTES;
         String whereClause = Participation.COLUMN_ID + '=' + id;
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
-                whereClause, null, null, null, null);
+            whereClause, null, null, null, null);
         returnData.moveToFirst();
         Participation p = new Participation();
         Log.e("burra", "pdao get participation with id " + id);
@@ -207,21 +207,21 @@ public class ParticipationDAO {
         if (returnData != null && returnData.moveToFirst()) {
             retVal = returnData.getInt(0);
         }
-      closeDB();
-      return retVal;
+        closeDB();
+        return retVal;
     }
 
-    public int getLargestParticipationId(){
-      openDB();
-      // return the largest participation id so far. Used to add a quick participation record that is not really
-      // tied to a reminder.
-      Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Participation.PARTICIPATION_TABLE});
-      int retVal = -1;
-      if (returnData != null && returnData.moveToFirst()) {
-        retVal = returnData.getInt(0);
-      }
-      closeDB();
-      return retVal;
+    public int getLargestParticipationId() {
+        openDB();
+        // return the largest participation id so far. Used to add a quick participation record that is not really
+        // tied to a reminder.
+        Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Participation.PARTICIPATION_TABLE});
+        int retVal = -1;
+        if (returnData != null && returnData.moveToFirst()) {
+            retVal = returnData.getInt(0);
+        }
+        closeDB();
+        return retVal;
     }
 
     public void updateParticipation(Participation participation) {

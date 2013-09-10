@@ -26,15 +26,15 @@ public class Project {
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table if not exists "
-            + PROJECT_TABLE
-            + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
-            + COLUMN_TITLE + " text not null, "
-            + COLUMN_NOTES + " text, " // notes are optional
-            + COLUMN_STARTDATE + " integer not null, "
-            + COLUMN_ENDDATE + " integer not null"
-            + ");";
+        + PROJECT_TABLE
+        + "("
+        + COLUMN_ID + " integer primary key autoincrement, "
+        + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
+        + COLUMN_TITLE + " text not null, "
+        + COLUMN_NOTES + " text, " // notes are optional
+        + COLUMN_STARTDATE + " integer not null, "
+        + COLUMN_ENDDATE + " integer not null"
+        + ");";
 
     // used to create the table
     public static void onCreate(SQLiteDatabase database) {
