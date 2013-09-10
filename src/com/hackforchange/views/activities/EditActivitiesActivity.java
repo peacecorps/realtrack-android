@@ -1,8 +1,6 @@
 package com.hackforchange.views.activities;
 
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +30,7 @@ import java.util.Date;
  */
 public class EditActivitiesActivity extends AddActivitiesActivity {
   private int id;
-  private int projectid; // used to update the existing activity
+  private Long projectStartDate, projectEndDate;
   private ArrayList<Reminders> reminders_data;
 
   @Override
@@ -45,13 +43,14 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
 
   @Override
   public void onResume() {
-    super.onResume();
-
     // pre-populate the fields with the activities details from the DB
     // the user can then change them if he so desires (the changes are handled
     // from AddActivitiesActivity
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     a = aDao.getActivityWithId(id);
+    projectid = a.getProjectid();
+
+    super.onResume();
 
     // populate the title, dates and other text fields
     title.setText(a.getTitle());
@@ -63,7 +62,6 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
     notes.setText(a.getNotes());
     orgs.setText(a.getOrgs());
     comms.setText(a.getComms());
-    projectid = a.getProjectid();
 
     // populate the initiatives checkboxes
     String[] initiativesList = a.getInitiatives().split("\\|");
@@ -411,32 +409,6 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
         finish();
       }
     });
-  }
-
-  @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case DATE_DIALOG:
-        // get the prepopulated date
-        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-        Date date;
-        try {
-          if (startOrEnd)
-            date = parser.parse(startDate.getText().toString());
-          else
-            date = parser.parse(endDate.getText().toString());
-
-          final Calendar c = Calendar.getInstance();
-          c.setTime(date);
-          mYear = c.get(Calendar.YEAR);
-          mMonth = c.get(Calendar.MONTH);
-          mDay = c.get(Calendar.DAY_OF_MONTH);
-          return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-        } catch (ParseException e) {
-        }
-        break;
-    }
-    return null;
   }
 
   // remove all the alarms associated with a reminder

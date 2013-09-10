@@ -10,8 +10,10 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.projects.Project;
 import com.hackforchange.models.reminders.Reminders;
 
 import java.text.DateFormat;
@@ -33,7 +35,8 @@ public class AddActivitiesActivity extends SherlockActivity {
   protected Button submitButton;
   protected boolean startOrEnd; // used in OnDateSetListener to distinguish between start date and end date field
   protected String initiatives;
-  private int projectid;
+  protected int projectid;
+  private long projectStartDate, projectEndDate;
   // used because we reuse the same listener for both fields
   protected Activities a;
   protected Reminders r;
@@ -50,6 +53,11 @@ public class AddActivitiesActivity extends SherlockActivity {
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+    Project p = pDao.getProjectWithId(projectid);
+    projectStartDate = p.getStartDate();
+    projectEndDate = p.getEndDate();
 
     // entering the reminder time
     mondayTime = (EditText) findViewById(R.id.mondayTime);
@@ -263,14 +271,14 @@ public class AddActivitiesActivity extends SherlockActivity {
           date = parser.parse(endDate.getText().toString());
           a.setEndDate(date.getTime());
         } catch (ParseException e) {
-          Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
           return;
         }
 
         // save title and other params
         a.setTitle(title.getText().toString());
-        if(a.getTitle().equals("")){
-          Toast.makeText(getApplicationContext(),R.string.emptyfieldserrormessage,Toast.LENGTH_SHORT).show();
+        if (a.getTitle().equals("")) {
+          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
           return;
         }
 
@@ -448,6 +456,7 @@ public class AddActivitiesActivity extends SherlockActivity {
             }
           }
         }
+
         finish();
       }
     });
@@ -514,21 +523,36 @@ public class AddActivitiesActivity extends SherlockActivity {
     switch (id) {
       case DATE_DIALOG:
         // get the current date
+        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
         Calendar c = Calendar.getInstance();
+        try{
+          if(startOrEnd && !startDate.getText().toString().equals(""))
+            c.setTime(parser.parse(startDate.getText().toString()));
+          else if(!startOrEnd && !endDate.getText().toString().equals(""))
+            c.setTime(parser.parse(endDate.getText().toString()));
+        } catch(ParseException e){
+        }
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
         try {
           if (startOrEnd) {
+            datePickerDialog.getDatePicker().setMinDate(projectStartDate);
             Date date = parser.parse(endDate.getText().toString());
-            datePickerDialog.getDatePicker().setMaxDate(date.getTime());
+            Long maxDate = date.getTime() < projectEndDate ? date.getTime() : projectEndDate; // choose the lesser of the two for the upper bound
+            datePickerDialog.getDatePicker().setMaxDate(maxDate);
           } else {
+            datePickerDialog.getDatePicker().setMaxDate(projectEndDate);
             Date date = parser.parse(startDate.getText().toString());
-            datePickerDialog.getDatePicker().setMinDate(date.getTime());
+            Long minDate = date.getTime() > projectStartDate ? date.getTime() : projectStartDate; // choose the larger of the two for the lower bound
+            datePickerDialog.getDatePicker().setMinDate(minDate);
           }
         } catch (ParseException e) {
+          if (startOrEnd)
+            datePickerDialog.getDatePicker().setMaxDate(projectEndDate);
+          else
+            datePickerDialog.getDatePicker().setMinDate(projectStartDate);
         }
         return datePickerDialog;
       case TIME_DIALOG:

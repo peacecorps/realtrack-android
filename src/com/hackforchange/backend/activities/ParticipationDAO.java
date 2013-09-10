@@ -197,7 +197,7 @@ public class ParticipationDAO {
         //DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
         //newValue.put(Participation.COLUMN_DATE, parser.format(participation.getDate()));
         newValue.put(Participation.COLUMN_DATE, participation.getDate());
-        newValue.put(Participation.COLUMN_ISSERVICED, participation.isServiced());
+        newValue.put(Participation.COLUMN_ISSERVICED, participation.isServiced() ? "true" : "false");
         // Insert the item into the database
         writeDatabase.insert(Participation.PARTICIPATION_TABLE, null, newValue);
 

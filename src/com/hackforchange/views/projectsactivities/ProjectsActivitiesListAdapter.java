@@ -202,7 +202,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         @Override
         public void onClick(View v) {
           Intent i = new Intent(context, AddActivitiesActivity.class);
-          i.putExtra("projectid", activities.getProjectid());
+          i.putExtra("projectid", projectsActivitiesData.get(groupPos).getProject().getId());
           context.startActivity(i);
         }
       });
