@@ -269,6 +269,8 @@ public class AddActivitiesActivity extends SherlockActivity {
                     Date date = parser.parse(startDate.getText().toString());
                     a.setStartDate(date.getTime());
                     date = parser.parse(endDate.getText().toString());
+                    date.setHours(23);
+                    date.setMinutes(59);
                     a.setEndDate(date.getTime());
                 } catch (ParseException e) {
                     Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();

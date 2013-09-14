@@ -30,7 +30,6 @@ import java.util.Date;
  */
 public class EditActivitiesActivity extends AddActivitiesActivity {
     private int id;
-    private Long projectStartDate, projectEndDate;
     private ArrayList<Reminders> reminders_data;
 
     @Override
@@ -53,15 +52,15 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
         super.onResume();
 
         // populate the title, dates and other text fields
-        title.setText(a.getTitle());
+        super.title.setText(a.getTitle());
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
         Date d = new Date(a.getStartDate());
-        startDate.setText(parser.format(d));
+        super.startDate.setText(parser.format(d));
         d = new Date(a.getEndDate());
-        endDate.setText(parser.format(d));
-        notes.setText(a.getNotes());
-        orgs.setText(a.getOrgs());
-        comms.setText(a.getComms());
+        super.endDate.setText(parser.format(d));
+        super.notes.setText(a.getNotes());
+        super.orgs.setText(a.getOrgs());
+        super.comms.setText(a.getComms());
 
         // populate the initiatives checkboxes
         String[] initiativesList = a.getInitiatives().split("\\|");
@@ -144,6 +143,8 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
                     Date date = parser.parse(startDate.getText().toString());
                     a.setStartDate(date.getTime());
                     date = parser.parse(endDate.getText().toString());
+                    date.setHours(23);
+                    date.setMinutes(59);
                     a.setEndDate(date.getTime());
                 } catch (ParseException e) {
                     Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();

@@ -56,6 +56,8 @@ public class EditProjectActivity extends AddProjectActivity {
                     Date date = parser.parse(startDate.getText().toString());
                     p.setStartDate(date.getTime());
                     date = parser.parse(endDate.getText().toString());
+                    date.setHours(23);
+                    date.setMinutes(59);
                     p.setEndDate(date.getTime());
                 } catch (ParseException e) {
                     Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
