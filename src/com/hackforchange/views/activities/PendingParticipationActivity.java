@@ -1,23 +1,26 @@
 package com.hackforchange.views.activities;
 
+import java.util.ArrayList;
+
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
-
-import java.util.ArrayList;
 
 public class PendingParticipationActivity extends SherlockActivity {
     private ArrayList<Participation> unservicedParticipation_data;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_pendingparticipation);
     }
 
@@ -46,5 +49,16 @@ public class PendingParticipationActivity extends SherlockActivity {
                 startActivity(newActivity);
             }
         });
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // provide a back button on the actionbar
+                finish();
+                break;
+        }
+        return true;
     }
 }
