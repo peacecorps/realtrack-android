@@ -77,19 +77,59 @@
                                               app:alignmentMode="alignBounds"
                                               app:columnOrderPreserved="false"
                                               app:columnCount="2"
+                                              app:rowCount="6"
                                               android:background="@drawable/homelistitem_background"
                                               android:padding="10dp">
+           <CheckBox
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:text="Men under 15"
+                    android:id="@+id/menCheckBox"/>
 
+            <EditText
+                    android:id="@+id/numMen"
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@android:color/transparent"
+                    android:inputType="number"
+                    android:hint="No. of Men"
+                    android:textColorHint="#969696"/>
+            
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
                     android:textSize="19dp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Men"
-                    android:id="@+id/menCheckBox"/>
+                    android:text="Men of age 15-24"
+                    android:id="@+id/men1524CheckBox"/>
 
             <EditText
-                    android:id="@+id/numMen"
+                    android:id="@+id/numMen1524"
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@android:color/transparent"
+                    android:inputType="number"
+                    android:hint="No. of Men"
+                    android:textColorHint="#969696"/>
+            
+            <CheckBox
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:text="Men over 24"
+                    android:id="@+id/menOver24CheckBox"/>
+
+            <EditText
+                    android:id="@+id/numMenOver24"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
                     android:textSize="19dp"
@@ -105,11 +145,51 @@
                     android:textStyle="bold"
                     android:textSize="19dp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Women"
+                    android:text="Women under 15"
                     android:id="@+id/womenCheckBox"/>
 
             <EditText
                     android:id="@+id/numWomen"
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@android:color/transparent"
+                    android:inputType="number"
+                    android:hint="No. of Women"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:text="Women of age 15-24"
+                    android:id="@+id/women1524CheckBox"/>
+
+            <EditText
+                    android:id="@+id/numWomen1524"
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@android:color/transparent"
+                    android:inputType="number"
+                    android:hint="No. of Women"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:textColor="@color/darkgrey"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+                    android:layout_gravity="fill_horizontal"
+                    android:text="Women over 24"
+                    android:id="@+id/womenOver24CheckBox"/>
+
+            <EditText
+                    android:id="@+id/numWomenOver24"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
                     android:textSize="19dp"

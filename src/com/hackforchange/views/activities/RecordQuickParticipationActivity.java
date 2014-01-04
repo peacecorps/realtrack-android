@@ -216,8 +216,11 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
 
         // set men, women and serviced
         if (menCheckbox.isChecked()) {
-          if (menNumText.getText().length() == 0)
+          if (menNumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setMen(Integer.parseInt(menNumText.getText().toString()));
         }
@@ -226,28 +229,37 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
         }
 
         if (men1524Checkbox.isChecked()) {
-          if (men1524NumText.getText().length() == 0)
+          if (men1524NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setMen1524(Integer.parseInt(men1524NumText.getText().toString()));
         }
         else {
-          p.setMen1524(0); // TODO: change to correct field
+          p.setMen1524(0);
         }
 
         if (menOver24Checkbox.isChecked()) {
-          if (menOver24NumText.getText().length() == 0)
+          if (menOver24NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setMenOver24(Integer.parseInt(menOver24NumText.getText().toString()));
         }
         else {
-          p.setMenOver24(0); // TODO: change to correct field
+          p.setMenOver24(0);
         }
 
         if (womenCheckbox.isChecked()) {
-          if (womenNumText.getText().length() == 0)
+          if (womenNumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setWomen(Integer.parseInt(womenNumText.getText().toString()));
         }
@@ -256,23 +268,29 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
         }
 
         if (women1524Checkbox.isChecked()) {
-          if (women1524NumText.getText().length() == 0)
+          if (women1524NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setWomen1524(Integer.parseInt(women1524NumText.getText().toString()));
         }
         else {
-          p.setWomen1524(0); // TODO: change to correct field
+          p.setWomen1524(0);
         }
 
         if (womenOver24Checkbox.isChecked()) {
-          if (womenOver24NumText.getText().length() == 0)
+          if (womenOver24NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
             return;
+          }
           else
             p.setWomenOver24(Integer.parseInt(womenOver24NumText.getText().toString()));
         }
         else {
-          p.setWomenOver24(0); // TODO: change to correct field
+          p.setWomenOver24(0);
         }
 
         p.setNotes(notesText.getText().toString());
