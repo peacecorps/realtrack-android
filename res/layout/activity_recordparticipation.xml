@@ -131,7 +131,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Notes (optional)"/>
+                android:text="Event Details (optional)"/>
 
         <EditText
                 android:id="@+id/notes"
@@ -149,7 +149,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="Enter Notes"
+                android:hint="Enter event details"
                 android:textColorHint="#969696"/>
 
         <LinearLayout
