@@ -29,8 +29,6 @@ import com.hackforchange.views.dialogs.PickTimeDialogListener;
 
 public class RecordQuickParticipationActivity extends SherlockFragmentActivity implements
         PickDateDialogListener, PickTimeDialogListener {
-  static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
-
   protected int mYear, mMonth, mDay, mHour, mMinute;
 
   private int activitiesId;
@@ -78,8 +76,8 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
       @Override
       public void onClick(View v) {
         Bundle bundle = new Bundle();
-        bundle.putLong("startdate", a.getStartDate());
-        bundle.putLong("enddate", a.getEndDate());
+        bundle.putLong("mindate", a.getStartDate());
+        bundle.putLong("maxdate", a.getEndDate());
         showDatePickerDialog(bundle);
       }
 

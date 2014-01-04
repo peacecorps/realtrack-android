@@ -30,6 +30,7 @@ import java.util.Date;
  * Pressing the back key will exit the activity
  */
 // TODO: participation history graph?
+@Deprecated
 public class DisplayActivitiesActivity extends SherlockActivity {
     public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
     private int activitiesid;

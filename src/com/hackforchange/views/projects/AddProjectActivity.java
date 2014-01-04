@@ -27,7 +27,6 @@ import com.hackforchange.views.dialogs.PickDateDialogListener;
 // TODO: make sure activity dates don't go out of project dates
 // TODO: make sure repeating alarms stop when the activity ends
 public class AddProjectActivity extends SherlockFragmentActivity implements PickDateDialogListener {
-  static final int DATE_DIALOG = 0;
   protected int mYear, mMonth, mDay;
   protected EditText title;
   protected EditText startDate;
@@ -59,8 +58,13 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
         Bundle bundle = new Bundle();
         try {
-            Date date = parser.parse(endDate.getText().toString());
-            bundle.putLong("enddate", date.getTime());
+          Date date = parser.parse(startDate.getText().toString());
+          bundle.putLong("displaydate", date.getTime()); // really only required in EditProjectActivity (which is a subclass of this one) for editing a project
+        } catch (ParseException e) {
+        }
+        try {
+          Date date = parser.parse(endDate.getText().toString());
+          bundle.putLong("maxdate", date.getTime());
         } catch (ParseException e) {
         }
         showDatePickerDialog(bundle);
@@ -72,7 +76,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
         pickDateDialog.show(getSupportFragmentManager(), "datepicker");
       }
     });
-    
+
     // entering the end date
     endDate = (EditText) findViewById(R.id.endDate);
     endDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
@@ -84,8 +88,13 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
         DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
         Bundle bundle = new Bundle();
         try {
-            Date date = parser.parse(startDate.getText().toString());
-            bundle.putLong("startdate", date.getTime());
+          Date date = parser.parse(endDate.getText().toString());
+          bundle.putLong("displaydate", date.getTime()); // really only required in EditProjectActivity (which is a subclass of this one) for editing a project
+        } catch (ParseException e) {
+        }
+        try {
+          Date date = parser.parse(startDate.getText().toString());
+          bundle.putLong("mindate", date.getTime());
         } catch (ParseException e) {
         }
         showDatePickerDialog(bundle);

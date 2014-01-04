@@ -15,10 +15,8 @@ import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
-import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
-import com.hackforchange.models.reminders.Reminders;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
 import com.hackforchange.views.activities.EditActivitiesActivity;
@@ -28,7 +26,6 @@ import com.hackforchange.views.projects.EditProjectActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -272,14 +269,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
                                 ActivitiesDAO aDao = new ActivitiesDAO(context);
                                 int activityId = activities.getId();
                                 aDao.deleteActivities(activityId);
-                                // cancel all alarms for participation events of the reminders of this activity
-                                RemindersDAO rDao = new RemindersDAO(context);
-                                ArrayList<Reminders> reminders_data;
-                                reminders_data = rDao.getAllRemindersForActivityId(activityId);
-                                for (Reminders r : reminders_data) {
-                                    EditActivitiesActivity.deleteAlarmsForReminder(context, r.getId());
-                                }
-
+                                
                                 // make sure the list gets updated in the display
                                 projectsActivitiesData.get(groupPos).getActivitiesList().remove(childPos);
                                 notifyDataSetChanged();
