@@ -32,17 +32,27 @@ public class PickDateDialog extends DialogFragment implements DatePickerDialog.O
     // Use the current date as the default date in the picker
     // get the start date
     final Calendar c = Calendar.getInstance();
-    Long startDate = getArguments().getLong("startdate");
-    Long endDate = getArguments().getLong("enddate");
-    c.setTime(new Date(startDate));
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
     int day = c.get(Calendar.DAY_OF_MONTH);
-
-    // Create a new instance of DatePickerDialog and return it
+    
     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-    datePickerDialog.getDatePicker().setMinDate(startDate);
-    datePickerDialog.getDatePicker().setMaxDate(endDate);
+
+    if(getArguments().containsKey("startdate")){
+      Long startDate = getArguments().getLong("startdate");
+      c.setTime(new Date(startDate));
+      year = c.get(Calendar.YEAR);
+      month = c.get(Calendar.MONTH);
+      day = c.get(Calendar.DAY_OF_MONTH);
+      datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
+      datePickerDialog.getDatePicker().setMinDate(startDate);
+    }
+    
+    if(getArguments().containsKey("enddate")){
+      Long endDate = getArguments().getLong("enddate");
+      datePickerDialog.getDatePicker().setMaxDate(endDate);
+    }
+    
     datePickerDialog.getDatePicker().setCalendarViewShown(false); //Unpredictable Android crap again. Workaround for CalendarView bug that causes NPE: http://stackoverflow.com/a/18700331
     return datePickerDialog;
   }

@@ -123,9 +123,13 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             "Activity Initiatives" + "," +
             "Participation Date" + "," +
             "Participation Time" + "," +
-            "Participation Men" + "," +
-            "Participation Women" + "," +
-            "Participation Notes" + "\n";
+            "Participation Men under 15" + "," +
+            "Participation Men 15-24" + "," +
+            "Participation Men over 24" + "," +
+            "Participation Women under 15" + "," +
+            "Participation Women 15-24" + "," +
+            "Participation Women over 24" + "," +
+            "Participation Event Details" + "\n";
 
         try {
             fos.write(csvContent.getBytes());
@@ -165,6 +169,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                 }
 
                 int sumMen = 0, sumWomen = 0;
+                int sumMen1524 = 0, sumWomen1524 = 0;
+                int sumMenOver24 = 0, sumWomenOver24 = 0;
                 for (Participation participation : participation_data) {
                     View childParticipationView = getLayoutInflater().inflate(R.layout.row_allparticipation, null);
                     TextView participationDate = (TextView) childParticipationView.findViewById(R.id.date);
@@ -172,14 +178,26 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                     participationDate.setText(dateParser.format(d));
                     TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
                     participationMen.setText(participation.getMen() + "");
+                    participationMen = (TextView) childParticipationView.findViewById(R.id.men1524);
+                    participationMen.setText(participation.getMen1524() + "");
+                    participationMen = (TextView) childParticipationView.findViewById(R.id.menOver24);
+                    participationMen.setText(participation.getMenOver24() + "");
                     TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
                     participationWomen.setText(participation.getWomen() + "");
+                    participationWomen = (TextView) childParticipationView.findViewById(R.id.women1524);
+                    participationWomen.setText(participation.getWomen1524() + "");
+                    participationWomen = (TextView) childParticipationView.findViewById(R.id.womenOver24);
+                    participationWomen.setText(participation.getWomenOver24() + "");
                     TextView participationNotes = (TextView) childParticipationView.findViewById(R.id.notes);
-                    participationNotes.setText("Notes: " + participation.getNotes());
+                    participationNotes.setText("Event details: " + participation.getNotes());
                     summaryLayout.addView(childParticipationView);
 
                     sumMen += participation.getMen();
                     sumWomen += participation.getWomen();
+                    sumMen1524 += participation.getMen1524();
+                    sumWomen1524 += participation.getWomen1524();
+                    sumMenOver24 += participation.getMenOver24();
+                    sumWomenOver24 += participation.getWomenOver24();
 
                     String[] initiativesList = a.getInitiatives().split("\\|");
                     String inits = "";
@@ -203,7 +221,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                         dateParser.format(participation.getDate()) + "," +
                         timeParser.format(participation.getDate()) + "," +
                         participation.getMen() + "," +
+                        participation.getMen1524() + "," +
+                        participation.getMenOver24() + "," +
                         participation.getWomen() + "," +
+                        participation.getWomen1524() + "," +
+                        participation.getWomenOver24() + "," +
                         participation.getNotes() + "\n";
                     try {
                         fos.write(csvContent.getBytes());
@@ -212,8 +234,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
                 }
                 emailContent.append("      Total Participation: " + (sumMen + sumWomen) + "\n");
-                emailContent.append("        Men: " + sumMen + "\n");
-                emailContent.append("        Women: " + sumWomen + "\n");
+                emailContent.append("        Men under 15: " + sumMen + "\n");
+                emailContent.append("        Men 15-24: " + sumMen1524 + "\n");
+                emailContent.append("        Men over 24: " + sumMenOver24 + "\n");
+                emailContent.append("        Women under 15: " + sumWomen + "\n");
+                emailContent.append("        Women 15-24: " + sumWomen1524 + "\n");
+                emailContent.append("        Women over 24: " + sumWomenOver24 + "\n");
             }
         }
 

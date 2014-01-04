@@ -20,6 +20,7 @@ import java.util.ArrayList;
 /*
  * Presents an activity that lists all the participation associated with an activity
  */
+@Deprecated
 public class AllParticipationActivity extends SherlockActivity {
     private ListView participationlist; //holds a list of the participation
     private ArrayList<Participation> participation_data, filteredparticipation_data;

@@ -18,6 +18,7 @@ import java.util.List;
 // Shows the details of the participation e.g. the number of men, women taking part, the day etc.
 // This is different from ParticipationListAdapter because ParticipationListAdapter presents a
 // simple overview of a participation event (it is used for the 'Pending' button on the home screen).
+@Deprecated
 public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
     Context context;
     int layoutResourceId;
@@ -45,7 +46,11 @@ public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
             holder.date = (TextView) row.findViewById(R.id.date);
             /*holder.time = (TextView) row.findViewById(R.id.time);*/
             holder.men = (TextView) row.findViewById(R.id.men);
+            holder.men1524 = (TextView) row.findViewById(R.id.men1524);
+            holder.menOver24 = (TextView) row.findViewById(R.id.menOver24);
             holder.women = (TextView) row.findViewById(R.id.women);
+            holder.women1524 = (TextView) row.findViewById(R.id.women1524);
+            holder.womenOver24 = (TextView) row.findViewById(R.id.womenOver24);
             holder.notes = (TextView) row.findViewById(R.id.notes);
 
             row.setTag(holder);
@@ -59,7 +64,11 @@ public class AllParticipationsListAdapter extends ArrayAdapter<Participation> {
         /*parser = new SimpleDateFormat("hh:mm aaa"); // example: 6:13 PM
         holder.time.setText(parser.format(d));*/
         holder.men.setText(participation.getMen() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
+        holder.men1524.setText(participation.getMen1524() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
+        holder.menOver24.setText(participation.getMenOver24() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
         holder.women.setText(participation.getWomen() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
+        holder.women1524.setText(participation.getWomen1524() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
+        holder.womenOver24.setText(participation.getWomenOver24() + ""); // setText must always be passed a string or you'll have weird resourcenotfoundexceptions!!
         holder.notes.setText("Notes: " + participation.getNotes());
 
         return row;
@@ -71,6 +80,10 @@ class AllParticipationHolder {
     TextView date;
     /*TextView time;*/
     TextView men;
+    TextView men1524;
+    TextView menOver24;
     TextView women;
+    TextView women1524;
+    TextView womenOver24;
     TextView notes;
 }

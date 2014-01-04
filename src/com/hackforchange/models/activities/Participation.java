@@ -13,7 +13,11 @@ public class Participation {
     private int reminderid; // which reminder this participation is for. This is NOT a foreign key!!
     private int activityid; // which activity this participation is for. This is a foreign key that points to Activities.id
     private int men; // number of men that participated
+    private int men1524; // number of men that participated
+    private int menOver24; // number of men that participated
     private int women; // number of women that participated
+    private int women1524; // number of women that participated
+    private int womenOver24; // number of women that participated
     private long date; // date that the participation is for
     private boolean serviced; // true: participation was recorded. is only be set to true in RecordParticipationActivity
     private String notes;
@@ -24,7 +28,11 @@ public class Participation {
     public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Reminders.id
     public static final String COLUMN_UPDATED = "updated"; //when this PARTICIPATION was last modified
     public static final String COLUMN_MEN = "men";
+    public static final String COLUMN_MEN1524 = "men1524";
+    public static final String COLUMN_MENOVER24 = "menOver24";
     public static final String COLUMN_WOMEN = "women";
+    public static final String COLUMN_WOMEN1524 = "women1524";
+    public static final String COLUMN_WOMENOVER24 = "womenOver24";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_ISSERVICED = "isserviced";
     public static final String COLUMN_NOTES = "notes";
@@ -36,7 +44,11 @@ public class Participation {
         + COLUMN_ID + " integer primary key autoincrement, "
         + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
         + COLUMN_MEN + " integer not null, "
+        + COLUMN_MEN1524 + " integer not null, "
+        + COLUMN_MENOVER24 + " integer not null, "
         + COLUMN_WOMEN + " integer not null, "
+        + COLUMN_WOMEN1524 + " integer not null, "
+        + COLUMN_WOMENOVER24 + " integer not null, "
         + COLUMN_ISSERVICED + " string not null, "
         + COLUMN_DATE + " integer not null, "
         + COLUMN_REMINDERID + " integer not null, "
@@ -119,5 +131,37 @@ public class Participation {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getMen1524() {
+      return men1524;
+    }
+
+    public void setMen1524(int men1524) {
+      this.men1524 = men1524;
+    }
+
+    public int getMenOver24() {
+      return menOver24;
+    }
+
+    public void setMenOver24(int menOver24) {
+      this.menOver24 = menOver24;
+    }
+
+    public int getWomen1524() {
+      return women1524;
+    }
+
+    public void setWomen1524(int women1524) {
+      this.women1524 = women1524;
+    }
+
+    public int getWomenOver24() {
+      return womenOver24;
+    }
+
+    public void setWomenOver24(int womenOver24) {
+      this.womenOver24 = womenOver24;
     }
 }

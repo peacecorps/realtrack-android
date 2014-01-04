@@ -21,8 +21,9 @@ import com.hackforchange.models.reminders.Reminders;
 import java.util.ArrayList;
 
 /*
- * Presents an activity that lists all the activities associated with a activities
+ * Presents an activity that lists all the activities associated with a project
  */
+@Deprecated
 public class AllActivitiesActivity extends SherlockActivity {
     private ListView activitieslist; //holds a list of the activities
     private ArrayList<Activities> activities_data, filteredactivities_data;

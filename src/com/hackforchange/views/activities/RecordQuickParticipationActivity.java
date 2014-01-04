@@ -1,12 +1,20 @@
 package com.hackforchange.views.activities;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
-import com.actionbarsherlock.app.SherlockActivity;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
@@ -14,238 +22,301 @@ import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
+import com.hackforchange.views.dialogs.PickDateDialog;
+import com.hackforchange.views.dialogs.PickDateDialogListener;
+import com.hackforchange.views.dialogs.PickTimeDialog;
+import com.hackforchange.views.dialogs.PickTimeDialogListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+public class RecordQuickParticipationActivity extends SherlockFragmentActivity implements
+        PickDateDialogListener, PickTimeDialogListener {
+  static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
 
-public class RecordQuickParticipationActivity extends SherlockActivity {
-    static final int DATE_DIALOG = 0, TIME_DIALOG = 1;
-    protected int mYear, mMonth, mDay, mHour, mMinute;
-    private int activitiesId;
-    protected Button submitButton;
-    protected EditText menNumText, womenNumText, notesText;
-    TextView date, time;
-    protected CheckBox menCheckbox, womenCheckbox;
-    private Participation p;
-    private Activities a;
+  protected int mYear, mMonth, mDay, mHour, mMinute;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recordquickparticipation);
+  private int activitiesId;
 
-        // read in the largest participation id yet recorded
-        activitiesId = getIntent().getExtras().getInt("activitiesid");
-    }
+  protected Button submitButton;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+  protected EditText menNumText, men1524NumText, menOver24NumText, womenNumText, women1524NumText,
+          womenOver24NumText, notesText;
 
-        a = new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId);
+  TextView date, time;
 
-        // display title for this activity
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText(a.getTitle());
+  protected CheckBox menCheckbox, men1524Checkbox, menOver24Checkbox, womenCheckbox,
+          women1524Checkbox, womenOver24Checkbox;
 
-        // display date and time for this reminder
+  private Activities a;
 
-        date = (TextView) findViewById(R.id.date);
-        date.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
-        // not doing this means the first click simply focuses the text field
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG);
-            }
-        });
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_recordquickparticipation);
 
-        // entering the reminder time
-        time = (TextView) findViewById(R.id.time);
-        time.setFocusableInTouchMode(false); // do this so the time picker opens up on the very first selection of the text field
-        // not doing this means the first click simply focuses the text field
-        time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("timetodisplay", time.getText().toString());
-                showDialog(TIME_DIALOG, bundle);
-            }
-        });
+    // read in the largest participation id yet recorded
+    activitiesId = getIntent().getExtras().getInt("activitiesid");
+  }
 
-        menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
-        womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
-        menNumText = (EditText) findViewById(R.id.numMen);
-        womenNumText = (EditText) findViewById(R.id.numWomen);
-        notesText = (EditText) findViewById(R.id.notes);
-        submitButton = (Button) findViewById(R.id.submitbutton);
+  @Override
+  public void onResume() {
+    super.onResume();
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
 
-        menCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!menCheckbox.isChecked())
-                    menNumText.setText("");
-            }
-        });
+    a = new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId);
 
-        womenCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!womenCheckbox.isChecked())
-                    womenNumText.setText("");
-            }
-        });
+    // display title for this activity
+    TextView title = (TextView) findViewById(R.id.title);
+    title.setText(a.getTitle());
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Participation p = new Participation();
+    // display date and time for this reminder
 
-                p.setReminderid(0); // this field doesn't matter because we're setting serviced to true; it's here just for the not null constraint
+    date = (TextView) findViewById(R.id.date);
+    date.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first
+                                         // selection of the text field
+    // not doing this means the first click simply focuses the text field
+    date.setFocusable(false);
+    date.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("startdate", a.getStartDate());
+        bundle.putLong("enddate", a.getEndDate());
+        showDatePickerDialog(bundle);
+      }
 
-                DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
-                DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
-                try {
-                    Calendar c = Calendar.getInstance();
-                    // set date
-                    c.setTimeInMillis((dateParser.parse(date.getText().toString())).getTime());
-                    // set time
-                    Date date = timeParser.parse(time.getText().toString());
-                    // the date object we just constructed has only two fields that are of interest to us: the hour and the
-                    // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-                    // to some 1970 date. Hence, in the Calendar object that we constructed, we only extract the hour and
-                    // minute from the date object.
-                    c.set(Calendar.HOUR_OF_DAY, date.getHours());
-                    c.set(Calendar.MINUTE, date.getMinutes());
-                    p.setDate(c.getTimeInMillis());
-                } catch (ParseException e) {
-                    Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+      private void showDatePickerDialog(Bundle bundle) {
+        PickDateDialog pickDateDialog = new PickDateDialog();
+        pickDateDialog.setArguments(bundle);
+        pickDateDialog.show(getSupportFragmentManager(), "datepicker");
+      }
+    });
 
-                p.setActivityid(activitiesId);
+    // entering the reminder time
+    time = (TextView) findViewById(R.id.time);
+    time.setFocusableInTouchMode(false); // do this so the time picker opens up on the very first
+                                         // selection of the text field
+    // not doing this means the first click simply focuses the text field
+    time.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putString("timetodisplay", time.getText().toString());
+        showTimePickerDialog(bundle);
+      }
 
-                // set men, women and serviced
-                if (menCheckbox.isChecked()) {
-                    if (menNumText.getText().length() == 0)
-                        return;
-                    else
-                        p.setMen(Integer.parseInt(menNumText.getText().toString()));
-                } else {
-                    p.setMen(0);
-                }
+      private void showTimePickerDialog(Bundle bundle) {
+        PickTimeDialog pickTimeDialog = new PickTimeDialog();
+        pickTimeDialog.setArguments(bundle);
+        pickTimeDialog.show(getSupportFragmentManager(), "timepicker");
+      }
+    });
 
-                if (womenCheckbox.isChecked()) {
-                    if (womenNumText.getText().length() == 0)
-                        return;
-                    else
-                        p.setWomen(Integer.parseInt(womenNumText.getText().toString()));
-                } else {
-                    p.setWomen(0);
-                }
+    menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
+    men1524Checkbox = (CheckBox) findViewById(R.id.men1524CheckBox);
+    menOver24Checkbox = (CheckBox) findViewById(R.id.menOver24CheckBox);
+    womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
+    women1524Checkbox = (CheckBox) findViewById(R.id.women1524CheckBox);
+    womenOver24Checkbox = (CheckBox) findViewById(R.id.womenOver24CheckBox);
+    menNumText = (EditText) findViewById(R.id.numMen);
+    men1524NumText = (EditText) findViewById(R.id.numMen1524);
+    menOver24NumText = (EditText) findViewById(R.id.numMenOver24);
+    womenNumText = (EditText) findViewById(R.id.numWomen);
+    women1524NumText = (EditText) findViewById(R.id.numWomen1524);
+    womenOver24NumText = (EditText) findViewById(R.id.numWomenOver24);
+    notesText = (EditText) findViewById(R.id.notes);
+    submitButton = (Button) findViewById(R.id.submitbutton);
 
-                if (!menCheckbox.isChecked() && !womenCheckbox.isChecked()) {
-                    Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    menCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!menCheckbox.isChecked())
+          menNumText.setText("");
+      }
+    });
 
-                p.setNotes(notesText.getText().toString());
+    men1524Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!men1524Checkbox.isChecked())
+          men1524NumText.setText("");
+      }
+    });
 
-                // update the serviced flag for this Reminder in the Reminders table
-                // so that the next time the NotificationReceiver checks, this participation
-                // does not show up as unserviced
-                p.setServiced(true);
+    menOver24Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!menOver24Checkbox.isChecked())
+          menOver24NumText.setText("");
+      }
+    });
 
-                pDao.addParticipation(p);
+    womenCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!womenCheckbox.isChecked())
+          womenNumText.setText("");
+      }
+    });
 
-                finish();
-            }
-        });
-    }
+    women1524Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!women1524Checkbox.isChecked())
+          women1524NumText.setText("");
+      }
+    });
 
-    @Override
-    protected Dialog onCreateDialog(int id, Bundle bundle) {
-        switch (id) {
-            case DATE_DIALOG:
-                // get the start date
-                Calendar c = Calendar.getInstance();
-                c.setTime(new Date(a.getStartDate()));
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(a.getStartDate());
-                datePickerDialog.getDatePicker().setMaxDate(a.getEndDate());
-                return datePickerDialog;
-            case TIME_DIALOG:
-                // get the prepopulated date
-                DateFormat parser = new SimpleDateFormat("hh:mm aaa");
-                Date date;
-                c = Calendar.getInstance();
-                String timeToDisplay = bundle.getString("timetodisplay");
-                try {
-                    date = parser.parse(timeToDisplay);
-                    c.setTime(date);
-                } catch (ParseException e) {
-                } finally {
-                    mHour = c.get(Calendar.HOUR_OF_DAY);
-                    mMinute = c.get(Calendar.MINUTE);
-                    return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
-                }
-        }
-        return null;
-    }
+    womenOver24Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!womenOver24Checkbox.isChecked())
+          womenOver24NumText.setText("");
+      }
+    });
 
-    // the callback received when the user "sets" the date in the dialog
-    protected DatePickerDialog.OnDateSetListener mDateSetListener =
-        new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year,
-                                  int monthOfYear, int dayOfMonth) {
-                mYear = year;
-                mMonth = monthOfYear;
-                mDay = dayOfMonth;
-                date.setText(String.format("%02d/%02d/%4d", (mMonth + 1), mDay, mYear)); //sets the chosen date in the text view
-                removeDialog(DATE_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
-                // each time either startDate or endDate is clicked because we prepopulate the date picker with different
-                // dates for startDate and endDate in EditProjectActivity.java's overriden onCreateDialog
-                // http://stackoverflow.com/questions/2222648/change-the-contents-of-an-android-dialog-box-after-creation
-            }
-        };
+    submitButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
 
-    protected TimePickerDialog.OnTimeSetListener mTimeSetListener =
-        new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                mHour = hourOfDay;
-                mMinute = minute;
-                String timeToDisplay = String.format("%02d:%02d %s", ((mHour / 12) > 0 ? ((mHour == 12) ? 12 : (mHour - 12)) : ((mHour == 0) ? 12 : mHour)), mMinute, ((mHour / 12) > 0 ? "PM" : "AM"));
-                time.setText(timeToDisplay); //sets the chosen date in the text view
-                removeDialog(TIME_DIALOG); // remember to remove the dialog or onCreateDialog will NOT be called again! We need it to be called afresh
-                // each time the reminder time field is clicked because we prepopulate the date picker with different
-                // times in RecordQuickParticipationActivity.java's overriden onCreateDialog
-                // http://stackoverflow.com/questions/2222648/change-the-contents-of-an-android-dialog-box-after-creation
-            }
-        };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // provide a back button on the actionbar
-                finish();
-                break;
+        if (!menCheckbox.isChecked() && !men1524Checkbox.isChecked()
+                && !menOver24Checkbox.isChecked() && !womenCheckbox.isChecked()
+                && !women1524Checkbox.isChecked() && !womenOver24Checkbox.isChecked()) {
+          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
+                  Toast.LENGTH_SHORT).show();
+          return;
         }
 
-        return true;
+        Participation p = new Participation();
+
+        p.setReminderid(0); // this field doesn't matter because we're setting serviced to true;
+                            // it's here just for the not null constraint
+
+        DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
+        DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
+        try {
+          Calendar c = Calendar.getInstance();
+          // set date
+          c.setTimeInMillis((dateParser.parse(date.getText().toString())).getTime());
+          // set time
+          Date date = timeParser.parse(time.getText().toString());
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we constructed, we only extract
+          // the hour and
+          // minute from the date object.
+          c.set(Calendar.HOUR_OF_DAY, date.getHours());
+          c.set(Calendar.MINUTE, date.getMinutes());
+          p.setDate(c.getTimeInMillis());
+        }
+        catch (ParseException e) {
+          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        p.setActivityid(activitiesId);
+
+        // set men, women and serviced
+        if (menCheckbox.isChecked()) {
+          if (menNumText.getText().length() == 0)
+            return;
+          else
+            p.setMen(Integer.parseInt(menNumText.getText().toString()));
+        }
+        else {
+          p.setMen(0);
+        }
+
+        if (men1524Checkbox.isChecked()) {
+          if (men1524NumText.getText().length() == 0)
+            return;
+          else
+            p.setMen1524(Integer.parseInt(men1524NumText.getText().toString()));
+        }
+        else {
+          p.setMen1524(0); // TODO: change to correct field
+        }
+
+        if (menOver24Checkbox.isChecked()) {
+          if (menOver24NumText.getText().length() == 0)
+            return;
+          else
+            p.setMenOver24(Integer.parseInt(menOver24NumText.getText().toString()));
+        }
+        else {
+          p.setMenOver24(0); // TODO: change to correct field
+        }
+
+        if (womenCheckbox.isChecked()) {
+          if (womenNumText.getText().length() == 0)
+            return;
+          else
+            p.setWomen(Integer.parseInt(womenNumText.getText().toString()));
+        }
+        else {
+          p.setWomen(0);
+        }
+
+        if (women1524Checkbox.isChecked()) {
+          if (women1524NumText.getText().length() == 0)
+            return;
+          else
+            p.setWomen1524(Integer.parseInt(women1524NumText.getText().toString()));
+        }
+        else {
+          p.setWomen1524(0); // TODO: change to correct field
+        }
+
+        if (womenOver24Checkbox.isChecked()) {
+          if (womenOver24NumText.getText().length() == 0)
+            return;
+          else
+            p.setWomenOver24(Integer.parseInt(womenOver24NumText.getText().toString()));
+        }
+        else {
+          p.setWomenOver24(0); // TODO: change to correct field
+        }
+
+        p.setNotes(notesText.getText().toString());
+
+        // update the serviced flag for this Reminder in the Reminders table
+        // so that the next time the NotificationReceiver checks, this participation
+        // does not show up as unserviced
+        p.setServiced(true);
+
+        pDao.addParticipation(p);
+
+        finish();
+      }
+
+    });
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
     }
+
+    return true;
+  }
+
+  @Override
+  public void setDate(String selectedDate) {
+    date.setText(selectedDate);
+  }
+
+  @Override
+  public void setTime(String selectedTime) {
+    time.setText(selectedTime);
+  }
 }

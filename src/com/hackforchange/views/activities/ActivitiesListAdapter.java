@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Deprecated
 public class ActivitiesListAdapter extends ArrayAdapter<Activities> {
     Context context;
     int layoutResourceId;
