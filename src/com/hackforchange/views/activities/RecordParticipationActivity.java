@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class RecordParticipationActivity extends SherlockActivity {
   private int participationid;
   private long dateTime;
-  protected Button submitButton;
+  protected Button submitButton, dismissButton;
   protected EditText menNumText, men1524NumText, menOver24NumText, womenNumText, women1524NumText, womenOver24NumText, notesText;
   protected CheckBox menCheckbox, men1524Checkbox, menOver24Checkbox, womenCheckbox, women1524Checkbox, womenOver24Checkbox;
   protected Participation p;
@@ -65,6 +65,7 @@ public class RecordParticipationActivity extends SherlockActivity {
     womenOver24NumText = (EditText) findViewById(R.id.numWomenOver24);
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (Button) findViewById(R.id.submitbutton);
+    dismissButton = (Button) findViewById(R.id.dismissButton);
 
     menCheckbox.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -111,6 +112,14 @@ public class RecordParticipationActivity extends SherlockActivity {
       public void onClick(View v) {
         if (!womenOver24Checkbox.isChecked())
           womenOver24NumText.setText("");
+      }
+    });
+    
+    dismissButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        pDao.deleteParticipation(participationid);
+        finish();
       }
     });
 
