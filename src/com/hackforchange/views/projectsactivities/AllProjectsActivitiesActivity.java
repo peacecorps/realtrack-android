@@ -135,7 +135,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
     /**
      * ******************************************************************************************************************
      * populate the projects list
-     * list style defined in layout/row_allprojects.xmlxml
+     * list style defined in layout/row_allprojects.xml
      * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
      * ******************************************************************************************************************
      */
@@ -157,6 +157,14 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
             paHolder.setActivitiesList(activitiesList);
             projectsactivities_data.add(paHolder);
         }
+        
+        ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
+        Project p = new Project();
+        p.setId(-1);
+        p.setTitle("Add a new project...");
+        paHolder.setProject(p);
+        paHolder.setActivitiesList(new ArrayList<Activities>());
+        projectsactivities_data.add(paHolder);
 
         projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this, R.layout.row_allprojects, R.layout.row_allactivities, projectsactivities_data);
         projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
