@@ -1,77 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hackforchange"
-          android:versionCode="1"
-          android:versionName="1.0">
+    package="com.hackforchange"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="8"/>
+    <uses-sdk android:minSdkVersion="8" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-            android:label="@string/app_name"
-            android:icon="@drawable/realtrack"
-            android:theme="@style/Theme.Vrf">
-        <activity android:name=".views.welcome.WelcomeActivity"
-                  android:label="@string/app_name">
+        android:icon="@drawable/realtrack"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Vrf" >
+        <activity
+            android:name="com.hackforchange.views.welcome.WelcomeActivity"
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name=".views.projectsactivities.AllProjectsActivitiesActivity"
-                android:label="@string/allprojectsactivity_label"/>
-        <!--<activity
+            android:name="com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity"
+            android:label="@string/allprojectsactivity_label" />
+        <!--
+            <activity
                 android:name=".views.projects.AllProjectsActivity"
-                android:label="@string/allprojectsactivity_label"></activity>-->
+                android:label="@string/allprojectsactivity_label"></activity>
+        -->
         <activity
-                android:name=".views.projects.AddProjectActivity"
-                android:label="@string/addprojectactivity_label"/>
+            android:name="com.hackforchange.views.projects.AddProjectActivity"
+            android:label="@string/addprojectactivity_label" />
         <activity
-                android:name=".views.projects.DisplayProjectActivity"
-                android:label="@string/displayprojectactivity_label"/>
+            android:name="com.hackforchange.views.projects.DisplayProjectActivity"
+            android:label="@string/displayprojectactivity_label" />
         <activity
-                android:name=".views.projects.EditProjectActivity"
-                android:label="@string/editprojectactivity_label"/>
-        <!--<activity
+            android:name="com.hackforchange.views.projects.EditProjectActivity"
+            android:label="@string/editprojectactivity_label" />
+        <!--
+            <activity
                 android:name=".views.activities.AllActivitiesActivity"
-                android:label="@string/allactivitiesactivity_label"/>-->
+                android:label="@string/allactivitiesactivity_label"/>
+        -->
         <activity
-                android:name=".views.activities.AddActivitiesActivity"
-                android:label="@string/addactivitiesactivity_label"/>
+            android:name="com.hackforchange.views.activities.AddActivitiesActivity"
+            android:label="@string/addactivitiesactivity_label" />
         <activity
-                android:name=".views.activities.DisplayActivitiesActivity"
-                android:label="@string/displayactivitiesactivity_label"/>
+            android:name="com.hackforchange.views.activities.DisplayActivitiesActivity"
+            android:label="@string/displayactivitiesactivity_label" />
         <activity
-                android:name=".views.activities.EditActivitiesActivity"
-                android:label="@string/editactivitiesactivity_label"/>
+            android:name="com.hackforchange.views.activities.EditActivitiesActivity"
+            android:label="@string/editactivitiesactivity_label" />
         <activity
-                android:name=".views.activities.RecordParticipationActivity"
-                android:label="@string/recordparticipationactivity_label"/>
+            android:name="com.hackforchange.views.activities.RecordParticipationActivity"
+            android:label="@string/recordparticipationactivity_label" />
         <activity
-                android:name=".views.activities.RecordQuickParticipationActivity"
-                android:label="@string/recordquickparticipationactivity_label"/>
+            android:name="com.hackforchange.views.activities.RecordQuickParticipationActivity"
+            android:label="@string/recordquickparticipationactivity_label" />
         <activity
-                android:name=".views.activities.PendingParticipationActivity"
-                android:label="@string/pendingparticipationactivity_label"/>
+            android:name="com.hackforchange.views.activities.PendingParticipationActivity"
+            android:label="@string/pendingparticipationactivity_label" />
         <activity
-                android:name=".views.activities.AllParticipationActivity"
-                android:label="@string/allparticipationsactivity_label"/>
+            android:name="com.hackforchange.views.activities.AllParticipationActivity"
+            android:label="@string/allparticipationsactivity_label" />
         <activity
-                android:name=".views.participationsummary.ParticipationSummaryActivity"
-                android:label="@string/allparticipationsactivity_label"/>
+            android:name="com.hackforchange.views.participationsummary.ParticipationSummaryActivity"
+            android:label="@string/allparticipationsactivity_label" />
 
-        <receiver android:name=".reminderalarms.NotificationReceiver">
+        <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".reminderalarms.NotificationService"/>
-        <provider android:name=".providers.CachedFileContentProvider"
-                  android:authorities="com.hackforchange.providers.CachedFileContentProvider"
-                  android:exported="true">
+
+        <service android:name="com.hackforchange.reminderalarms.NotificationService" />
+
+        <provider
+            android:name="com.hackforchange.providers.CachedFileContentProvider"
+            android:authorities="com.hackforchange.providers.CachedFileContentProvider"
+            android:exported="true" >
         </provider>
+
+        <activity
+            android:name="com.hackforchange.views.help.HelpDialog"
+            android:label="@string/title_activity_help" >
+        </activity>
     </application>
+
 </manifest>

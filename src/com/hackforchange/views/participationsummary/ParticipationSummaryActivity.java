@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-@Deprecated
 public class ParticipationSummaryActivity extends SherlockActivity {
     public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
     private ArrayList<Project> projects_data;

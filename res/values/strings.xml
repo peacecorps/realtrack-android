@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">RealTrack</string>
     <string name="allprojectsactivity_label">All Projects</string>
     <string name="addprojectactivity_label">Add Project</string>
@@ -15,4 +16,7 @@
     <string name="allparticipationsactivity_label">Participation Details</string>
     <string name="emptyfieldserrormessage">"All non-optional fields are required"</string>
     <string name="emptyparticipationmessage">"Please enter the number of participants"</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
