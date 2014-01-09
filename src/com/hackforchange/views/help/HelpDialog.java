@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 
@@ -27,6 +28,7 @@ public class HelpDialog extends DialogFragment {
     });
     
     WebView helpContent = (WebView) view.findViewById(R.id.helpContent);
+    helpContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
     helpContent.loadUrl("file:///android_asset/helpContent.html");
     
     return view;
