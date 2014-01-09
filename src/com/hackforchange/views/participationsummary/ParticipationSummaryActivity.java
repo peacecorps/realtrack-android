@@ -37,12 +37,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   private ArrayList<Project> projects_data;
   private StringBuilder emailContent;
   private LinearLayout summaryLayout;
-  File cacheDir, cacheOutputFile, tempOutputFile;
+  File cacheDir, cacheOutputFile, nonAlignedOutputFile;
   String fileName;
   private int maxComms = 0;
   
   private final String ESCAPE_COMMAS = "\"";
-  private final String SPECIAL_DELIMITER = "@_@";
+  private final String COMMUNITY_DELIMITER = "@_@";
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     fileName = "RealTrack_Data_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
     cacheDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
     cacheOutputFile = new File(cacheDir + File.separator + fileName);
-    tempOutputFile = new File(cacheDir + File.separator + "temp.csv");
+    nonAlignedOutputFile = new File(cacheDir + File.separator + "temp.csv");
     updateParticipationSummaryList();
   }
 
@@ -114,7 +114,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
     FileOutputStream fos = null;
     try {
-      fos = new FileOutputStream(tempOutputFile);
+      fos = new FileOutputStream(nonAlignedOutputFile);
     } catch (FileNotFoundException e) {
     }
 
@@ -229,7 +229,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                   dateParser.format(a.getEndDate()) + "," +
                   ESCAPE_COMMAS + a.getNotes() + ESCAPE_COMMAS + "," +
                   ESCAPE_COMMAS + a.getOrgs() + ESCAPE_COMMAS + "," +
-                  SPECIAL_DELIMITER + a.getComms() + SPECIAL_DELIMITER +
+                  COMMUNITY_DELIMITER + a.getComms() + COMMUNITY_DELIMITER +
                   inits + "," +
                   dateParser.format(participation.getDate()) + "," +
                   timeParser.format(participation.getDate()) + "," +
@@ -261,7 +261,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     } catch (IOException e) {
     }
     
-    normalizeCSVColumns();
+    normalizeCSVColumns(); //required if the user enters multiple communities separated by commas
 
   }
 
@@ -271,12 +271,13 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     FileOutputStream fos = null;
     try {
       fos = new FileOutputStream(cacheOutputFile);
-      fis = new FileInputStream(tempOutputFile);
+      fis = new FileInputStream(nonAlignedOutputFile);
       fRead = new BufferedReader(new InputStreamReader(fis));
     } catch (FileNotFoundException e) {
     }
     
     try {
+      //handle CSV column headings
       int numCommasToAdd = maxComms;
       String s = fRead.readLine();
       String[] separatedStrings = s.split("Activity Community 1,");
@@ -286,8 +287,9 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       stringToWrite += separatedStrings[1] + "\n";
       fos.write(stringToWrite.getBytes());
       
+      //handle the actual data
       while(null != (s = fRead.readLine())){
-        separatedStrings = s.split(SPECIAL_DELIMITER);
+        separatedStrings = s.split(COMMUNITY_DELIMITER);
         stringToWrite = separatedStrings[0] + separatedStrings[1];
         int currentComms = findNumberOfCommunities(separatedStrings[1]);
         numCommasToAdd = 1;
