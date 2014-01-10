@@ -305,6 +305,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
     
     try {
+      fis.close();
+      fRead.close();
       fos.close();
     } catch (IOException e) {
     }
