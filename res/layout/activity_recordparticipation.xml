@@ -222,7 +222,7 @@
             android:layout_marginBottom="0dp"
             android:background="@drawable/homelistitem_background"
             android:hint="Enter event details"
-            android:inputType="text|textImeMultiLine|textMultiLine"
+            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
             android:maxLines="6"
             android:minLines="3"
             android:paddingBottom="10dp"

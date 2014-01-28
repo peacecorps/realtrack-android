@@ -255,7 +255,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
-                android:inputType="text|textImeMultiLine|textMultiLine"
+                android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
                 android:hint="Enter event details"
