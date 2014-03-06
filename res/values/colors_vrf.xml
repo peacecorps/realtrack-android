@@ -22,5 +22,6 @@
     <color name="darkgrey">#575757</color>
     <color name="orange">#F08222</color>
     <color name="blue">#0099CC</color>
+    <color name="darkblue">#195063</color>
     <color name="red">#FF645E</color>
 </resources>

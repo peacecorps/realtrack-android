@@ -1,5 +1,10 @@
 package com.hackforchange.views.projectsactivities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -24,11 +31,6 @@ import com.hackforchange.views.activities.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
 import com.hackforchange.views.projects.EditProjectActivity;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   Context context;
@@ -158,8 +160,8 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // handle click on the delete project icon
-      ImageView deleteActivityBtn = (ImageView) row.findViewById(R.id.deleteProjectBtn);
-      deleteActivityBtn.setOnClickListener(new View.OnClickListener() {
+      ImageView deleteProjectBtn = (ImageView) row.findViewById(R.id.deleteProjectBtn);
+      deleteProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           // warn the user first!
@@ -180,6 +182,21 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           .show();
         }
       });
+      
+      LinearLayout projectGroupLinearLayout = (LinearLayout) row.findViewById(R.id.projectGroupLinearLayout);
+      
+      //Fix for Issue #18. Make sure all fields show if the group is expanded.
+      if(isExpanded){
+        holder.startDate.setVisibility(View.VISIBLE);
+        holder.txtTitle.setVisibility(View.VISIBLE);
+        editProjectBtn.setVisibility(View.VISIBLE);
+        deleteProjectBtn.setVisibility(View.VISIBLE);
+        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.blue));
+      }
+      else{
+        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.darkblue));
+      }
+      
     }
     return row;
   }

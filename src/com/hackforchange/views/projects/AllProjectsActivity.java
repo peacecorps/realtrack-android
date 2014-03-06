@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class AllProjectsActivity extends SherlockActivity {
     private ListView projectslist; //holds a list of the projects
     private ArrayList<Project> projects_data, filteredprojects_data;
-    private ProjectListAdapter listAdapter, tempListAdapter;
+    private ProjectListAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
