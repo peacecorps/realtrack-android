@@ -27,7 +27,7 @@ import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
 import com.hackforchange.views.activities.EditActivitiesActivity;
-import com.hackforchange.views.activities.RecordQuickParticipationActivity;
+import com.hackforchange.views.participationsactive.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
 import com.hackforchange.views.projects.EditProjectActivity;

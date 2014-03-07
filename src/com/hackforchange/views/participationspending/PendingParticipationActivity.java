@@ -1,4 +1,4 @@
-package com.hackforchange.views.activities;
+package com.hackforchange.views.participationspending;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
+import com.hackforchange.views.participationsactive.RecordParticipationActivity;
 
 public class PendingParticipationActivity extends SherlockActivity {
     private ArrayList<Participation> unservicedParticipation_data;

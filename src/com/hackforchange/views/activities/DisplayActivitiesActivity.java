@@ -11,10 +11,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
-import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
-import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.reminders.Reminders;
 
 import java.text.DateFormat;
@@ -30,7 +28,6 @@ import java.util.Date;
  * Pressing the back key will exit the activity
  */
 // TODO: participation history graph?
-@Deprecated
 public class DisplayActivitiesActivity extends SherlockActivity {
     public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
     private int activitiesid;
@@ -91,51 +88,6 @@ public class DisplayActivitiesActivity extends SherlockActivity {
         }
         remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
         reminders.setText(remindersText);
-
-        final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-        final ArrayList<Participation> pList = pDao.getAllParticipationsForActivityId(activitiesid);
-
-        /*final Button showParticipation = (Button) findViewById(R.id.showParticipation);
-        final Button deleteParticipation = (Button) findViewById(R.id.deleteParticipation);
-        // if there are no participation records associated as yet with this activity, hide the "Show Participation" button
-        // and the "Delete Participation" button.
-        // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
-        if (pList.size() == 0) {
-            showParticipation.setVisibility(View.GONE);
-            deleteParticipation.setVisibility(View.GONE);
-        } else {
-            showParticipation.setVisibility(View.VISIBLE);
-            // transition to new activity that shows all the activites associated with this project
-            showParticipation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(DisplayActivitiesActivity.this, AllParticipationActivity.class);
-                    i.putExtra("activitiesid", activitiesid);
-                    startActivity(i);
-                }
-            });
-
-            deleteParticipation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(DisplayActivitiesActivity.this)
-                            .setMessage("Are you sure you want to delete all participation records? This CANNOT be undone.")
-                            .setCancelable(false)
-                            .setNegativeButton("No", null)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    for (Participation p : pList) {
-                                        pDao.deleteParticipation(p.getId());
-                                    }
-                                    // hide these buttons because they are no longer meaningful
-                                    showParticipation.setVisibility(View.GONE);
-                                    deleteParticipation.setVisibility(View.GONE);
-                                }
-                            })
-                            .show();
-                }
-            });
-        }*/
     }
 
     //TODO: provide menu option to delete all participation records for an activity in AllParticipationActivity

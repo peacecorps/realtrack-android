@@ -16,7 +16,7 @@ import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.views.activities.RecordParticipationActivity;
+import com.hackforchange.views.participationsactive.RecordParticipationActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

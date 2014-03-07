@@ -54,13 +54,13 @@
             android:name="com.hackforchange.views.activities.EditActivitiesActivity"
             android:label="@string/editactivitiesactivity_label" />
         <activity
-            android:name="com.hackforchange.views.activities.RecordParticipationActivity"
+            android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
             android:label="@string/recordparticipationactivity_label" />
         <activity
-            android:name="com.hackforchange.views.activities.RecordQuickParticipationActivity"
+            android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
             android:label="@string/recordquickparticipationactivity_label" />
         <activity
-            android:name="com.hackforchange.views.activities.PendingParticipationActivity"
+            android:name="com.hackforchange.views.participationspending.PendingParticipationActivity"
             android:label="@string/pendingparticipationactivity_label" />
         <activity
             android:name="com.hackforchange.views.activities.AllParticipationActivity"

@@ -16,9 +16,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.views.activities.PendingParticipationActivity;
+import com.hackforchange.views.activeparticipationsummary.ParticipationSummaryActivity;
 import com.hackforchange.views.help.HelpDialog;
-import com.hackforchange.views.participationsummary.ParticipationSummaryActivity;
+import com.hackforchange.views.participationspending.PendingParticipationActivity;
 import com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity;
 
 // TODO: Add cancel button for editing activity, adding activity.

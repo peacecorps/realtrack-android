@@ -1,4 +1,4 @@
-package com.hackforchange.views.participationsummary;
+package com.hackforchange.views.participationsdonesummaries;
 
 import android.content.Intent;
 import android.net.Uri;

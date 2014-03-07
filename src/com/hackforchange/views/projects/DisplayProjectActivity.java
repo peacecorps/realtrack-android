@@ -10,18 +10,15 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
-import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
-import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /*
- * Presents an activity that displays details of an existing activity
+ * Presents an activity that displays details of an existing project
  * Also lets you edit the project (EditProjectActivity) or delete the project (right from this java file)
  * by choosing buttons in the ActionBar
  * Pressing the back key will exit the activity
@@ -55,37 +52,6 @@ public class DisplayProjectActivity extends SherlockActivity {
         endDate.setText(parser.format(d));
         TextView notes = (TextView) findViewById(R.id.notes);
         notes.setText(p.getNotes());
-
-        ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-        ArrayList<Activities> aList = aDao.getAllActivitiesForProjectId(id);
-        /*Button showActivities = (Button) findViewById(R.id.showActivities);
-
-        // if there are no activities associated as yet with this project, hide the "Show Activities" button
-        // actually, we hide the linearlayout that holds it so that it takes up no space in the layout
-        if (aList.size() == 0) {
-            showActivities.setVisibility(View.GONE);
-        } else {
-            ((Button) findViewById(R.id.showActivities)).setVisibility(View.VISIBLE);
-            // transition to new activity that shows all the activites associated with this project
-            showActivities.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(DisplayProjectActivity.this, AllActivitiesActivity.class);
-                    i.putExtra("projectid", id);
-                    startActivity(i);
-                }
-            });
-        }*/
-
-        /*TextView addActivities = (TextView) findViewById(R.id.addActivities);
-        addActivities.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(DisplayProjectActivity.this, AddActivitiesActivity.class);
-                i.putExtra("projectid", id);
-                startActivity(i);
-            }
-        });*/
     }
 
     // create actionbar menu

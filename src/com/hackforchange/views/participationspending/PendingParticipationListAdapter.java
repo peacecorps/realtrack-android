@@ -1,4 +1,4 @@
-package com.hackforchange.views.activities;
+package com.hackforchange.views.participationspending;
 
 import android.app.Activity;
 import android.content.Context;
