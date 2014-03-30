@@ -5,6 +5,8 @@ This is a project started at the [*Random Hacks of Kindness*](http://www.rhok.or
 
 **RealTrack** is an Android smartphone application designed to facilitate day-to-day data collection by Peace Corps Volunteers (PCV) in the field. This app is based on an [idea](http://www.rhok.org/problems/realtrack-app) suggested by Julia Schulkers, who is a Peace Corps Volunteer in Thailand, for the [Peace Corps Innovation Challenge](innovationchallenge.peacecorps.gov).
 
+
+#### Motivation
 Essentially, the problem we're aiming to tackle is that PCVs currently use a 22-page long pen and paper-based "Activity and Outcome Tracking booklet" to keep track of their day-to-day activities in the field. Data collection is vital to
 
 * gauging the effectiveness of volunteers
@@ -20,11 +22,16 @@ The problem with tracking data on paper is that if the volunteer's tasks are out
 
 Using a smartphone application to track data is a good idea because most volunteers own iOS or Android-based smartphones and carry them with themselves wherever they go. Smartphone apps can also remind you if you forget to make a note or record data on a given day. Smartphones also raise the possibility of making richer records e.g. by using the smartphone's camera to add images to the records being kept.
 
-Here are some of the proposed features of the application:
+#### Features
 
 * Streamlined interface
-* Automatic report generation of data emailed to user on demand (so available on a PC)
-* Reminders to record data for activities making sure the PCV doesn't forget
+* Spreadsheet reports emailed to user on demand (so available on a PC)
+* Daily/weekly reminders to record data for activities
+* Quickly record participation without a reminder
+
+#### Proposed features
+
+* Create a sign-in sheet so PCVs can collect details on participants
 * Recording meetings with local leaders
-* Tweets to engender sense of accomplishment
-* Ability to share images from phone’s gallery
+* Allow PCVs to tweet their accomplishments
+* Ability to share images from phone's gallery
