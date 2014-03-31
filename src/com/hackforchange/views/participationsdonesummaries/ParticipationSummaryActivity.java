@@ -1,11 +1,24 @@
 package com.hackforchange.views.participationsdonesummaries;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -19,21 +32,10 @@ import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.providers.CachedFileContentProvider;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 public class ParticipationSummaryActivity extends SherlockActivity {
+  static final int SENDEMAIL_REQUEST = 1;
   public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+  
   private ArrayList<Project> projects_data;
   private StringBuilder emailContent;
   private LinearLayout summaryLayout;
@@ -91,7 +93,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                 Intent.EXTRA_STREAM,
                 Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
                         + fileName));
-        startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
+        startActivityForResult(Intent.createChooser(sendEmailIntent, "Send mail..."), SENDEMAIL_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         break;
     }
@@ -320,6 +322,23 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         numCommas++;
     }
     return numCommas + 1;
+  }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    deleteTemporaryFiles();
+    finish();
+  }
+
+  private void deleteTemporaryFiles() {
+    cacheOutputFile.delete();
+  }
+  
+  @Override
+  public void onPause() {
+    super.onPause();
+    deleteTemporaryFiles();
   }
 
 }
