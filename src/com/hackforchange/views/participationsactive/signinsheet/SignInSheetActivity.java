@@ -76,4 +76,11 @@ public class SignInSheetActivity extends Activity {
       }
     });
   }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    finish();
+  }
 }

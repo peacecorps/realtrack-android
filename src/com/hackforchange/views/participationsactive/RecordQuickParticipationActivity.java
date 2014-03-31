@@ -470,4 +470,11 @@ PickDateDialogListener, PickTimeDialogListener {
   public void setTime(String selectedTime) {
     time.setText(selectedTime);
   }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    finish();
+  }
 }

@@ -423,4 +423,11 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
+    
+    @Override
+    public void onBackPressed() {
+      super.onBackPressed();
+      overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+      finish();
+    }
 }
