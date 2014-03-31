@@ -76,11 +76,11 @@
 
         <activity
             android:name="com.hackforchange.views.help.HelpDialog"
-            android:label="@string/title_activity_help" >
+            android:label="@string/helpactivity_label" >
         </activity>
         <activity
             android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity"
-            android:label="@string/title_activity_sign_in_sheet_landing" >
+            android:label="@string/signinsheetactivity_label" >
         </activity>
     </application>
 
