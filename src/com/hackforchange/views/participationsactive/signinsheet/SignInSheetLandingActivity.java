@@ -60,6 +60,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     
   }
   
+  // Handle participant returned by SignInSheetActivity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == SIGNIN_REQUEST) {

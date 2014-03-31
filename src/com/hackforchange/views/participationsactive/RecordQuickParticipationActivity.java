@@ -10,6 +10,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -333,7 +334,7 @@ PickDateDialogListener, PickTimeDialogListener {
         // the participation id is only assigned after the participation
         // has been added to its own table)
         for(Participant participant: participantList){
-          participant.setId(participationId);
+          participant.setParticipationid(participationId);
         }
         
         participantDao.addParticipants(participantList);
@@ -344,6 +345,7 @@ PickDateDialogListener, PickTimeDialogListener {
     });
   }
 
+  // Handle participant list returned by SignInSheetLandingActivity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
@@ -354,7 +356,8 @@ PickDateDialogListener, PickTimeDialogListener {
         
         participantList.addAll(currentParticipantList);
         
-        updateParticipantNumbersInDisplay();
+        if(!participantList.isEmpty())
+          updateParticipantNumbersInDisplay();
       }
     }
   }
@@ -386,12 +389,57 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     }
       
+    // set filters on the text fields so the PCV cannot manually enter a number less than the 
+    // current number of participants. Note that even though we reinitialize menUnder15, men1524
+    // etc to 0 in this method, there is no way their values can be less than what they were because
+    // there is no way that a participant once submitted via the sign-in sheet can be removed.
     menUnder15NumText.setText(Integer.toString(menUnder15));
+    menUnder15NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(menUnder15)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(menUnder15>0){
+      menUnder15Checkbox.setChecked(true);
+      menUnder15Checkbox.setEnabled(false);
+    }
+    
     men1524NumText.setText(Integer.toString(men1524));
+    men1524NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(men1524)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(men1524>0){
+      men1524Checkbox.setChecked(true);
+      men1524Checkbox.setEnabled(false);
+    }
+    
     menOver24NumText.setText(Integer.toString(menOver24));
+    menOver24NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(menOver24)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(menOver24>0){
+      menOver24Checkbox.setChecked(true);
+      menOver24Checkbox.setEnabled(false);
+    }
+    
     womenUnder15NumText.setText(Integer.toString(womenUnder15));
+    womenUnder15NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(womenUnder15)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(womenUnder15>0){
+      womenUnder15Checkbox.setChecked(true);
+      womenUnder15Checkbox.setEnabled(false);
+    }
+    
     women1524NumText.setText(Integer.toString(women1524));
+    women1524NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(women1524)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(women1524>0){
+      women1524Checkbox.setChecked(true);
+      women1524Checkbox.setEnabled(false);
+    }
+    
     womenOver24NumText.setText(Integer.toString(womenOver24));
+    womenOver24NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(womenOver24)});
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(womenOver24>0){
+      womenOver24Checkbox.setChecked(true);
+      womenOver24Checkbox.setEnabled(false);
+    }
     
     signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" (currently has "+participantList.size()+" participant(s))");
   }

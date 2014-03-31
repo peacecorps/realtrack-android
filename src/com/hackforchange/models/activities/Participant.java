@@ -3,7 +3,6 @@ package com.hackforchange.models.activities;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.hackforchange.R;
 
 /**
  * ********************************************************************************************************************
@@ -136,8 +135,7 @@ public class Participant implements Parcelable {
     out.writeInt(gender);
   }
 
-  public static final Parcelable.Creator<Participant> CREATOR
-  = new Parcelable.Creator<Participant>() {
+  public static final Parcelable.Creator<Participant> CREATOR = new Parcelable.Creator<Participant>() {
     public Participant createFromParcel(Parcel parcel) {
       return new Participant(parcel);
     }

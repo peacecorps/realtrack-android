@@ -190,33 +190,29 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <RadioGroup
             android:layout_width="0px"
             android:layout_height="fill_parent"
+            android:layout_gravity="center"
             android:layout_weight="0.7"
             android:background="#FFFFFF"
             android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/maleCheckBox"
+            <RadioButton
+                android:id="@+id/maleRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/male"
-                android:textColor="@color/darkgrey"
-                android:textSize="19sp"
-                android:textStyle="bold" />
+                android:checked="true"
+                android:text="@string/male" />
 
-            <CheckBox
-                android:id="@+id/femaleCheckBox"
+            <RadioButton
+                android:id="@+id/femaleRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/female"
-                android:textColor="@color/darkgrey"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:text="@string/female" />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
