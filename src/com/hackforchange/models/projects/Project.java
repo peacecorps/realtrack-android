@@ -1,6 +1,7 @@
 package com.hackforchange.models.projects;
 
 import android.database.sqlite.SQLiteDatabase;
+import com.hackforchange.R;
 
 /**
  * ********************************************************************************************************************

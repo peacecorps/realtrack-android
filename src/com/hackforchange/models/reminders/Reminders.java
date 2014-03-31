@@ -1,6 +1,7 @@
 package com.hackforchange.models.reminders;
 
 import android.database.sqlite.SQLiteDatabase;
+import com.hackforchange.R;
 import com.hackforchange.models.activities.Activities;
 
 /**

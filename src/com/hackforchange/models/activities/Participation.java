@@ -1,6 +1,7 @@
 package com.hackforchange.models.activities;
 
 import android.database.sqlite.SQLiteDatabase;
+import com.hackforchange.R;
 
 /**
  * ********************************************************************************************************************
@@ -21,11 +22,12 @@ public class Participation {
     private long date; // date that the participation is for
     private boolean serviced; // true: participation was recorded. is only be set to true in RecordParticipationActivity
     private String notes;
+    
     // Database table
     public static final String PARTICIPATION_TABLE = "participation";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_REMINDERID = "_reminderid"; // foreign key referencing Reminders.id
-    public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Reminders.id
+    public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Activity.id
     public static final String COLUMN_UPDATED = "updated"; //when this PARTICIPATION was last modified
     public static final String COLUMN_MEN = "men";
     public static final String COLUMN_MEN1524 = "men1524";

@@ -18,5 +18,11 @@
     <string name="emptyparticipationmessage">"Please enter the number of participants"</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_sign_in_sheet_landing">Sign-In Sheet</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
+    <string name="ok">OK</string>
+    <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
+    <string name="done">Done</string>
 
 </resources>

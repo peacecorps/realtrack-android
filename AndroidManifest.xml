@@ -28,7 +28,7 @@
         <!--
             <activity
                 android:name=".views.projects.AllProjectsActivity"
-                android:label="@string/allprojectsactivity_label"></activity>
+                android:label="@string/allprojectsactivity_label"></activity>
         -->
         <activity
             android:name="com.hackforchange.views.projects.AddProjectActivity"
@@ -42,7 +42,7 @@
         <!--
             <activity
                 android:name=".views.activities.AllActivitiesActivity"
-                android:label="@string/allactivitiesactivity_label"/>
+                android:label="@string/allactivitiesactivity_label"/>
         -->
         <activity
             android:name="com.hackforchange.views.activities.AddActivitiesActivity"
@@ -86,6 +86,10 @@
         <activity
             android:name="com.hackforchange.views.help.HelpDialog"
             android:label="@string/title_activity_help" >
+        </activity>
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity"
+            android:label="@string/title_activity_sign_in_sheet_landing" >
         </activity>
     </application>
 

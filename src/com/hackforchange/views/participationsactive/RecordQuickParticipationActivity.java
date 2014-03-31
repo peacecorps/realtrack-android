@@ -5,7 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,31 +21,40 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.activities.ParticipantDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.dialogs.PickDateDialog;
 import com.hackforchange.views.dialogs.PickDateDialogListener;
 import com.hackforchange.views.dialogs.PickTimeDialog;
 import com.hackforchange.views.dialogs.PickTimeDialogListener;
+import com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
 public class RecordQuickParticipationActivity extends SherlockFragmentActivity implements
-        PickDateDialogListener, PickTimeDialogListener {
+PickDateDialogListener, PickTimeDialogListener {
+  static final int ADD_PARTICIPANTS_REQUEST = 1;
+
   protected int mYear, mMonth, mDay, mHour, mMinute;
 
   private int activitiesId;
 
   protected Button submitButton;
 
+  protected Button signinSheetButton;
+
   protected EditText menNumText, men1524NumText, menOver24NumText, womenNumText, women1524NumText,
-          womenOver24NumText, notesText;
+  womenOver24NumText, notesText;
 
   TextView date, time;
 
   protected CheckBox menCheckbox, men1524Checkbox, menOver24Checkbox, womenCheckbox,
-          women1524Checkbox, womenOver24Checkbox;
+  women1524Checkbox, womenOver24Checkbox;
 
   private Activities a;
+  
+  private List <Participant> participantList;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -58,6 +69,7 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+    final ParticipantDAO participantDao = new ParticipantDAO(getApplicationContext());
 
     a = new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId);
 
@@ -69,7 +81,7 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
 
     date = (TextView) findViewById(R.id.date);
     date.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first
-                                         // selection of the text field
+    // selection of the text field
     // not doing this means the first click simply focuses the text field
     date.setFocusable(false);
     date.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +103,7 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
     // entering the reminder time
     time = (TextView) findViewById(R.id.time);
     time.setFocusableInTouchMode(false); // do this so the time picker opens up on the very first
-                                         // selection of the text field
+    // selection of the text field
     // not doing this means the first click simply focuses the text field
     time.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -105,6 +117,17 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
         PickTimeDialog pickTimeDialog = new PickTimeDialog();
         pickTimeDialog.setArguments(bundle);
         pickTimeDialog.show(getSupportFragmentManager(), "timepicker");
+      }
+    });
+
+    // opening the sign-in sheet
+    signinSheetButton  = (Button) findViewById(R.id.openSigninSheetButton);
+    signinSheetButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent i = new Intent(getApplicationContext(), SignInSheetLandingActivity.class);
+        startActivityForResult(i, ADD_PARTICIPANTS_REQUEST);
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
       }
     });
 
@@ -186,7 +209,7 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
         Participation p = new Participation();
 
         p.setReminderid(0); // this field doesn't matter because we're setting serviced to true;
-                            // it's here just for the not null constraint
+        // it's here just for the not null constraint
 
         DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
         DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
@@ -300,12 +323,34 @@ public class RecordQuickParticipationActivity extends SherlockFragmentActivity i
         // does not show up as unserviced
         p.setServiced(true);
 
-        pDao.addParticipation(p);
+        int participationId = pDao.addParticipation(p);
+        
+        // write the participant information
+        // first add the participation id (we had to wait till now because
+        // the participation id is only assigned after the participation
+        // has been added to its own table
+        for(Participant participant: participantList){
+          participant.setId(participationId);
+        }
+        
+        participantDao.addParticipants(participantList);
 
         finish();
       }
 
     });
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == ADD_PARTICIPANTS_REQUEST) {
+      if (resultCode == RESULT_OK) {
+        //TODO: 
+        //participantList = //get list from intent's parcelable
+        //calculate number of men women in diff age groups and display these values in
+        //the correct fields
+      }
+    }
   }
 
   @Override

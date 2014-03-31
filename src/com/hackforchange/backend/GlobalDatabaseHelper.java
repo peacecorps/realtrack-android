@@ -3,6 +3,7 @@ package com.hackforchange.backend;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.hackforchange.R;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
