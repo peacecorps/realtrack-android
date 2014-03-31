@@ -1,7 +1,6 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
 import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +14,8 @@ import com.hackforchange.models.activities.Participant;
  * This class provides a landing page for the sign in sheets
  */
 public class SignInSheetLandingActivity extends SherlockFragmentActivity {
+  static final int SIGNIN_REQUEST = 1;
+  
   private Button okButton;
   private Button doneButton;
   private ArrayList<Participant> participantList;
@@ -38,13 +39,14 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO Auto-generated method stub
-        
+        Intent i = new Intent(getApplicationContext(), SignInSheetActivity.class);
+        startActivityForResult(i, SIGNIN_REQUEST);
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
       }
     });
     
     // go back to RecordQuickParticipationActivity or RecordParticipationActivity
-    // send back the number of participants collected so far
+    // send back the participants collected so far
     doneButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -56,6 +58,19 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       }
     });
     
+  }
+  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    if (requestCode == SIGNIN_REQUEST) {
+      if (resultCode == RESULT_OK) {
+        Bundle resultBundle = intent.getExtras();
+        Participant currentParticipant = resultBundle.getParcelable("participant");
+        
+        if(currentParticipant!=null)
+          participantList.add(currentParticipant);
+      }
+    }
   }
 
 }

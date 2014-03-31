@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/realtrack"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Vrf"
-        android:allowBackup="true" >
+        android:theme="@style/Theme.Vrf" >
         <activity
             android:name="com.hackforchange.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
@@ -80,6 +80,10 @@
         </activity>
         <activity
             android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity"
+            android:label="@string/signinsheetlandingactivity_label" >
+        </activity>
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetActivity"
             android:label="@string/signinsheetactivity_label" >
         </activity>
     </application>

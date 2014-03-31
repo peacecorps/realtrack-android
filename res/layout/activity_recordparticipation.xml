@@ -249,7 +249,7 @@
                 android:padding="15dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="30dp"
-                android:text="Save"
+                android:text="@string/save"
                 android:textColor="@android:color/white"
                 android:textSize="25dp"
                 android:textStyle="bold" />
