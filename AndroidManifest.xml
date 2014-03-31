@@ -12,7 +12,8 @@
     <application
         android:icon="@drawable/realtrack"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Vrf" >
+        android:theme="@style/Theme.Vrf"
+        android:allowBackup="true" >
         <activity
             android:name="com.hackforchange.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
@@ -25,11 +26,6 @@
         <activity
             android:name="com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity"
             android:label="@string/allprojectsactivity_label" />
-        <!--
-            <activity
-                android:name=".views.projects.AllProjectsActivity"
-                android:label="@string/allprojectsactivity_label"></activity>
-        -->
         <activity
             android:name="com.hackforchange.views.projects.AddProjectActivity"
             android:label="@string/addprojectactivity_label" />
@@ -39,11 +35,6 @@
         <activity
             android:name="com.hackforchange.views.projects.EditProjectActivity"
             android:label="@string/editprojectactivity_label" />
-        <!--
-            <activity
-                android:name=".views.activities.AllActivitiesActivity"
-                android:label="@string/allactivitiesactivity_label"/>
-        -->
         <activity
             android:name="com.hackforchange.views.activities.AddActivitiesActivity"
             android:label="@string/addactivitiesactivity_label" />
@@ -66,7 +57,7 @@
             android:name="com.hackforchange.views.activities.AllParticipationActivity"
             android:label="@string/allparticipationsactivity_label" />
         <activity
-            android:name="com.hackforchange.views.participationsummary.ParticipationSummaryActivity"
+            android:name="com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity"
             android:label="@string/allparticipationsactivity_label" />
 
         <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
@@ -80,7 +71,7 @@
         <provider
             android:name="com.hackforchange.providers.CachedFileContentProvider"
             android:authorities="com.hackforchange.providers.CachedFileContentProvider"
-            android:exported="true" >
+            android:exported="false" >
         </provider>
 
         <activity

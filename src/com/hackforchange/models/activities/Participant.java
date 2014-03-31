@@ -3,7 +3,6 @@ package com.hackforchange.models.activities;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.hackforchange.R;
 
 /**
  * ********************************************************************************************************************
@@ -14,7 +13,7 @@ import com.hackforchange.R;
 public class Participant implements Parcelable {
   public static final int MALE = 0;
   public static final int FEMALE = 1;
-  
+
   // Instance properties
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
   private int participationid;
@@ -117,6 +116,10 @@ public class Participant implements Parcelable {
   public void setGender(int gender) {
     this.gender = gender;
   }
+  
+  /*
+   * Methods for Parcelable follow
+   */
 
   @Override
   public int describeContents() {
@@ -130,6 +133,29 @@ public class Participant implements Parcelable {
     out.writeString(village);
     out.writeInt(age);
     out.writeInt(gender);
+  }
+
+  public static final Parcelable.Creator<Participant> CREATOR
+  = new Parcelable.Creator<Participant>() {
+    public Participant createFromParcel(Parcel parcel) {
+      return new Participant(parcel);
+    }
+
+    public Participant[] newArray(int size) {
+      return new Participant[size];
+    }
+  };
+  
+  public Participant(){
+  }
+  
+  private Participant(Parcel parcel){
+    // should be the SAME order as writeToParcel!!
+    name = parcel.readString(); 
+    phoneNumber = parcel.readString();
+    village = parcel.readString();
+    age = parcel.readInt();
+    gender = parcel.readInt();
   }
 
 }

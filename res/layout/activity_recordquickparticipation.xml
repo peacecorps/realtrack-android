@@ -99,15 +99,15 @@
                 android:text="Participation"/>
         
         <Button
-                    android:textSize="20dp"
-                    android:textColor="@android:color/white"
-                    android:background="@color/orange"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Open Sign-In Sheet"
-                    android:textStyle="bold"
-                    android:id="@+id/openSigninSheetButton"/>
+            android:id="@+id/openSigninSheetButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:padding="8dp"
+            android:text="@string/openSigninSheetButtonLabel"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               xmlns:app="http://schemas.android.com/apk/res-auto"

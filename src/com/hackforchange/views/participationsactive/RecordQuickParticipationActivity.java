@@ -3,6 +3,7 @@ package com.hackforchange.views.participationsactive;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,12 +45,12 @@ PickDateDialogListener, PickTimeDialogListener {
 
   protected Button signinSheetButton;
 
-  protected EditText menNumText, men1524NumText, menOver24NumText, womenNumText, women1524NumText,
+  protected EditText menUnder15NumText, men1524NumText, menOver24NumText, womenUnder15NumText, women1524NumText,
   womenOver24NumText, notesText;
 
   TextView date, time;
 
-  protected CheckBox menCheckbox, men1524Checkbox, menOver24Checkbox, womenCheckbox,
+  protected CheckBox menUnder15Checkbox, men1524Checkbox, menOver24Checkbox, womenUnder15Checkbox,
   women1524Checkbox, womenOver24Checkbox;
 
   private Activities a;
@@ -62,6 +63,8 @@ PickDateDialogListener, PickTimeDialogListener {
 
     // read in the largest participation id yet recorded
     activitiesId = getIntent().getExtras().getInt("activitiesid");
+    
+    participantList = new ArrayList<Participant>();
   }
 
   @Override
@@ -131,26 +134,26 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
 
-    menCheckbox = (CheckBox) findViewById(R.id.menCheckBox);
+    menUnder15Checkbox = (CheckBox) findViewById(R.id.menCheckBox);
     men1524Checkbox = (CheckBox) findViewById(R.id.men1524CheckBox);
     menOver24Checkbox = (CheckBox) findViewById(R.id.menOver24CheckBox);
-    womenCheckbox = (CheckBox) findViewById(R.id.womenCheckBox);
+    womenUnder15Checkbox = (CheckBox) findViewById(R.id.womenCheckBox);
     women1524Checkbox = (CheckBox) findViewById(R.id.women1524CheckBox);
     womenOver24Checkbox = (CheckBox) findViewById(R.id.womenOver24CheckBox);
-    menNumText = (EditText) findViewById(R.id.numMen);
+    menUnder15NumText = (EditText) findViewById(R.id.numMen);
     men1524NumText = (EditText) findViewById(R.id.numMen1524);
     menOver24NumText = (EditText) findViewById(R.id.numMenOver24);
-    womenNumText = (EditText) findViewById(R.id.numWomen);
+    womenUnder15NumText = (EditText) findViewById(R.id.numWomen);
     women1524NumText = (EditText) findViewById(R.id.numWomen1524);
     womenOver24NumText = (EditText) findViewById(R.id.numWomenOver24);
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (Button) findViewById(R.id.submitbutton);
 
-    menCheckbox.setOnClickListener(new View.OnClickListener() {
+    menUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!menCheckbox.isChecked())
-          menNumText.setText("");
+        if (!menUnder15Checkbox.isChecked())
+          menUnder15NumText.setText("");
       }
     });
 
@@ -170,11 +173,11 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
 
-    womenCheckbox.setOnClickListener(new View.OnClickListener() {
+    womenUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!womenCheckbox.isChecked())
-          womenNumText.setText("");
+        if (!womenUnder15Checkbox.isChecked())
+          womenUnder15NumText.setText("");
       }
     });
 
@@ -198,8 +201,8 @@ PickDateDialogListener, PickTimeDialogListener {
       @Override
       public void onClick(View v) {
 
-        if (!menCheckbox.isChecked() && !men1524Checkbox.isChecked()
-                && !menOver24Checkbox.isChecked() && !womenCheckbox.isChecked()
+        if (!menUnder15Checkbox.isChecked() && !men1524Checkbox.isChecked()
+                && !menOver24Checkbox.isChecked() && !womenUnder15Checkbox.isChecked()
                 && !women1524Checkbox.isChecked() && !womenOver24Checkbox.isChecked()) {
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
                   Toast.LENGTH_SHORT).show();
@@ -238,14 +241,14 @@ PickDateDialogListener, PickTimeDialogListener {
         p.setActivityid(activitiesId);
 
         // set men, women and serviced
-        if (menCheckbox.isChecked()) {
-          if (menNumText.getText().length() == 0){
+        if (menUnder15Checkbox.isChecked()) {
+          if (menUnder15NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
                     Toast.LENGTH_SHORT).show();
             return;
           }
           else
-            p.setMen(Integer.parseInt(menNumText.getText().toString()));
+            p.setMen(Integer.parseInt(menUnder15NumText.getText().toString()));
         }
         else {
           p.setMen(0);
@@ -277,14 +280,14 @@ PickDateDialogListener, PickTimeDialogListener {
           p.setMenOver24(0);
         }
 
-        if (womenCheckbox.isChecked()) {
-          if (womenNumText.getText().length() == 0){
+        if (womenUnder15Checkbox.isChecked()) {
+          if (womenUnder15NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
                     Toast.LENGTH_SHORT).show();
             return;
           }
           else
-            p.setWomen(Integer.parseInt(womenNumText.getText().toString()));
+            p.setWomen(Integer.parseInt(womenUnder15NumText.getText().toString()));
         }
         else {
           p.setWomen(0);
@@ -326,9 +329,9 @@ PickDateDialogListener, PickTimeDialogListener {
         int participationId = pDao.addParticipation(p);
         
         // write the participant information
-        // first add the participation id (we had to wait till now because
+        // first add the participation id (we have to wait till now because
         // the participation id is only assigned after the participation
-        // has been added to its own table
+        // has been added to its own table)
         for(Participant participant: participantList){
           participant.setId(participationId);
         }
@@ -342,15 +345,55 @@ PickDateDialogListener, PickTimeDialogListener {
   }
 
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
       if (resultCode == RESULT_OK) {
         //TODO: 
-        //participantList = //get list from intent's parcelable
-        //calculate number of men women in diff age groups and display these values in
-        //the correct fields
+        Bundle resultBundle = intent.getExtras();
+        List<Participant> currentParticipantList = resultBundle.getParcelableArrayList("participantList");
+        
+        participantList.addAll(currentParticipantList);
+        
+        updateParticipantNumbersInDisplay();
       }
     }
+  }
+
+  private void updateParticipantNumbersInDisplay() {
+    int menUnder15 = 0;
+    int men1524 = 0;
+    int menOver24 = 0;
+    int womenUnder15 = 0;
+    int women1524 = 0;
+    int womenOver24 = 0;
+    
+    for(Participant p: participantList){
+      if(p.getGender()==Participant.MALE){
+        if(p.getAge()<15)
+          menUnder15++;
+        else if(p.getAge()<25)
+          men1524++;
+        else
+          menOver24++;
+      }
+      else if(p.getGender()==Participant.FEMALE){ //could simply be an else but just being cautious and making sure the value is FEMALE
+        if(p.getAge()<15)
+          womenUnder15++;
+        else if(p.getAge()<25)
+          women1524++;
+        else
+          womenOver24++;
+      }
+    }
+      
+    menUnder15NumText.setText(Integer.toString(menUnder15));
+    men1524NumText.setText(Integer.toString(men1524));
+    menOver24NumText.setText(Integer.toString(menOver24));
+    womenUnder15NumText.setText(Integer.toString(womenUnder15));
+    women1524NumText.setText(Integer.toString(women1524));
+    womenOver24NumText.setText(Integer.toString(womenOver24));
+    
+    signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" (currently has "+participantList.size()+" participant(s))");
   }
 
   @Override

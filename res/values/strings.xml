@@ -23,6 +23,7 @@
     <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
     <string name="ok">OK</string>
     <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
+    <string name="openSigninSheetButtonLabel">Open Sign-In Sheet</string>
     <string name="done">Done</string>
 
 </resources>
