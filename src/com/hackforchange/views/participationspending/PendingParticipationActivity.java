@@ -48,6 +48,7 @@ public class PendingParticipationActivity extends SherlockActivity {
                 newActivity.putExtra("participationid", p.getId());
                 newActivity.putExtra("datetime", p.getDate());
                 startActivity(newActivity);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
             }
         });
     }

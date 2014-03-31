@@ -104,7 +104,8 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
                 break;
             case R.id.action_addproject:
                 Intent intent = new Intent(this, AddProjectActivity.class);
-                this.startActivity(intent);
+                startActivity(intent);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

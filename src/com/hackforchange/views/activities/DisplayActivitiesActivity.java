@@ -140,6 +140,7 @@ public class DisplayActivitiesActivity extends SherlockActivity {
                 Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
                 i.putExtra("activitiesid", activitiesid);
                 startActivity(i);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

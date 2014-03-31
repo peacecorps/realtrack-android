@@ -92,6 +92,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                 Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
                         + fileName));
         startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         break;
     }
 

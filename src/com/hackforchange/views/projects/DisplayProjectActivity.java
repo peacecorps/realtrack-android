@@ -12,7 +12,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.projects.Project;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -95,6 +94,7 @@ public class DisplayProjectActivity extends SherlockActivity {
                 Intent i = new Intent(DisplayProjectActivity.this, EditProjectActivity.class);
                 i.putExtra("projectid", id);
                 startActivity(i);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
