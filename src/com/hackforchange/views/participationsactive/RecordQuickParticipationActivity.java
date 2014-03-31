@@ -350,7 +350,6 @@ PickDateDialogListener, PickTimeDialogListener {
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
       if (resultCode == RESULT_OK) {
-        //TODO: 
         Bundle resultBundle = intent.getExtras();
         List<Participant> currentParticipantList = resultBundle.getParcelableArrayList("participantList");
         

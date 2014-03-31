@@ -59,21 +59,6 @@
         <activity
             android:name="com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity"
             android:label="@string/allparticipationsactivity_label" />
-
-        <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.hackforchange.reminderalarms.NotificationService" />
-
-        <provider
-            android:name="com.hackforchange.providers.CachedFileContentProvider"
-            android:authorities="com.hackforchange.providers.CachedFileContentProvider"
-            android:exported="false" >
-        </provider>
-
         <activity
             android:name="com.hackforchange.views.help.HelpDialog"
             android:label="@string/helpactivity_label" >
@@ -86,6 +71,20 @@
             android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetActivity"
             android:label="@string/signinsheetactivity_label" >
         </activity>
+
+        <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.hackforchange.reminderalarms.NotificationService" />
+
+        <provider
+            android:name="com.hackforchange.providers.CachedFileContentProvider"
+            android:authorities="com.hackforchange.providers.CachedFileContentProvider"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>
