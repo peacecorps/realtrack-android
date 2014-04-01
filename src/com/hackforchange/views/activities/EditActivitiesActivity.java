@@ -12,7 +12,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -261,7 +260,6 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
                             r = new Reminders();
                             r.setActivityid(id);
                             r.setRemindTime(c.getTimeInMillis());
-                            Log.e("burra", date.getDay() + "");
                             if (wednesdayTime.getTag() != null) { // updating an existing reminder
                                 r.setId((Integer) wednesdayTime.getTag()); // retrieve the id of this reminder
                                 rDao.updateReminders(r, getApplicationContext());
