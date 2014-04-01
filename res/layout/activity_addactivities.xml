@@ -13,7 +13,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -32,8 +32,8 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
-                android:hint="Name Your Activity"
-                android:inputType="textCapSentences"
+                android:hint="@string/nameactivityhint"
+                android:inputType="textCapWords"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -41,18 +41,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Start Date"/>
+                android:text="@string/startdate"/>
 
         <EditText
                 android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -69,18 +69,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="End Date"/>
+                android:text="@string/enddate"/>
 
         <EditText
                 android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -97,11 +97,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Reminders (optional)"/>
+                android:text="@string/reminders"/>
 
         <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -117,16 +117,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Monday"
+                    android:text="@string/monday"
                     android:id="@+id/mondayCheckBox"/>
 
             <EditText
                     android:id="@+id/mondayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:clickable="false"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
@@ -137,16 +137,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Tuesday"
+                    android:text="@string/tuesday"
                     android:id="@+id/tuesdayCheckBox"/>
 
             <EditText
                     android:id="@+id/tuesdayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -156,16 +156,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Wednesday"
+                    android:text="@string/wednesday"
                     android:id="@+id/wednesdayCheckBox"/>
 
             <EditText
                     android:id="@+id/wednesdayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -175,16 +175,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Thursday"
+                    android:text="@string/thursday"
                     android:id="@+id/thursdayCheckBox"/>
 
             <EditText
                     android:id="@+id/thursdayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -194,16 +194,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Friday"
+                    android:text="@string/friday"
                     android:id="@+id/fridayCheckBox"/>
 
             <EditText
                     android:id="@+id/fridayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -213,16 +213,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Saturday"
+                    android:text="@string/saturday"
                     android:id="@+id/saturdayCheckBox"/>
 
             <EditText
                     android:id="@+id/saturdayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -232,16 +232,16 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Sunday"
+                    android:text="@string/sunday"
                     android:id="@+id/sundayCheckBox"/>
 
             <EditText
                     android:id="@+id/sundayTime"
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
                     android:background="@android:color/transparent"
                     android:inputType="time"
@@ -254,18 +254,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Notes (optional)"/>
+                android:text="@string/notes"/>
 
         <EditText
                 android:id="@+id/notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -276,7 +276,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="Enter Notes"
+                android:hint="@string/enternotes"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -284,18 +284,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Organizations (optional)"/>
+                android:text="@string/organizations"/>
 
         <EditText
                 android:id="@+id/orgs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -306,7 +306,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="Organizations Involved"
+                android:hint="@string/organizationsinvolved"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -314,18 +314,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Communities (optional)"/>
+                android:text="@string/communities"/>
 
         <EditText
                 android:id="@+id/comms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
                 android:background="@drawable/homelistitem_background"
                 android:layout_marginBottom="0dp"
@@ -336,7 +336,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="Communities Impacted"
+                android:hint="@string/communitiesimpacted"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -344,11 +344,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Initiatives (optional)"/>
+                android:text="@string/initiatives"/>
 
         <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -364,39 +364,39 @@
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="WID"
+                    android:text="@string/wid"
                     android:id="@+id/widCheckBox"
                     android:layout_width="wrap_content"/>
 
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:layout_gravity="fill_horizontal"
-                    android:text="Youth"
+                    android:text="@string/youth"
                     android:id="@+id/youthCheckBox"/>
 
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="Malaria"
+                    android:textSize="19sp"
+                    android:text="@string/malaria"
                     android:id="@+id/malariaCheckBox"/>
 
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="Food Security"
+                    android:textSize="19sp"
+                    android:text="@string/foodsecurity"
                     android:id="@+id/foodSecurityCheckBox"/>
 
             <CheckBox
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:text="ECPA"
+                    android:textSize="19sp"
+                    android:text="@string/ecpa"
                     android:layout_gravity="fill_horizontal"
                     android:layout_columnSpan="2"
                     android:id="@+id/ECPACheckBox"/>
@@ -410,7 +410,7 @@
                 android:gravity="center_horizontal">
 
             <Button
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:textColor="@android:color/white"
                     android:background="@color/blue"
                     android:layout_width="fill_parent"

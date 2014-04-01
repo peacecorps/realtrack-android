@@ -43,7 +43,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Start Date"/>
+                android:text="@string/startdate"/>
 
         <TextView
                 android:id="@+id/startDate"
@@ -68,7 +68,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="End Date"/>
+                android:text="@string/enddate"/>
 
         <TextView
                 android:id="@+id/endDate"

@@ -42,7 +42,7 @@
             android:layout_weight="0.7"
             android:background="@drawable/homelistitem_background"
             android:hint="@string/namehint"
-            android:inputType="textCapSentences"
+            android:inputType="textCapWords"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"

@@ -55,5 +55,29 @@
     <string name="womenover24">Women over 24</string>
     <string name="eventdetails">Event Details (optional)</string>
     <string name="entereventdetails">Enter event details</string>
+    <string name="nameactivityhint">Name Your Activity</string>
+    <string name="startdate">Start Date</string>
+    <string name="enddate">End Date</string>
+    <string name="reminders">Reminders (optional)</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="notes">Notes (optional)</string>
+    <string name="enternotes">Enter Notes</string>
+    <string name="organizations">Organizations (optional)</string>
+    <string name="organizationsinvolved">Organizations Involved</string>
+    <string name="communities">Communities (optional)</string>
+    <string name="communitiesimpacted">Communities Impacted</string>
+    <string name="initiatives">Initiatives (optional)</string>
+    <string name="wid">WID</string>
+    <string name="youth">Youth</string>
+    <string name="malaria">Malaria</string>
+    <string name="foodsecurity">Food Security</string>
+    <string name="ecpa">ECPA</string>
+    <string name="nameprojecthint">Name Your Project</string>
 
 </resources>
