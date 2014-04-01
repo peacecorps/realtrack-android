@@ -79,5 +79,6 @@
     <string name="foodsecurity">Food Security</string>
     <string name="ecpa">ECPA</string>
     <string name="nameprojecthint">Name Your Project</string>
+    <string name="dismiss">Dismiss</string>
 
 </resources>

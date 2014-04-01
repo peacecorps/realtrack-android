@@ -198,7 +198,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.blue));
       }
       else{
-        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.darkblue));
+        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.disabledgrey));
       }
       
     }
