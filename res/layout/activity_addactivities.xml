@@ -26,7 +26,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -54,7 +54,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -82,7 +82,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -111,7 +111,7 @@
                                               app:alignmentMode="alignBounds"
                                               app:columnOrderPreserved="false"
                                               app:columnCount="2"
-                                              android:background="@drawable/homelistitem_background"
+                                              android:background="@drawable/white_background"
                                               android:padding="10dp">
 
             <CheckBox
@@ -267,7 +267,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -297,7 +297,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -327,7 +327,7 @@
                 android:textStyle="bold"
                 android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -358,7 +358,7 @@
                                               app:alignmentMode="alignBounds"
                                               app:columnOrderPreserved="false"
                                               app:columnCount="2"
-                                              android:background="@drawable/homelistitem_background"
+                                              android:background="@drawable/white_background"
                                               android:padding="10dp">
 
             <CheckBox
