@@ -1,10 +1,20 @@
 package com.hackforchange.views.participationsactive;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.hackforchange.R;
@@ -14,12 +24,6 @@ import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * RecordParticipationActivity is different from RecordQuickParticipationActivity in the following ways:

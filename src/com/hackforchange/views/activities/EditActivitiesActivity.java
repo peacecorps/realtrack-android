@@ -1,5 +1,12 @@
 package com.hackforchange.views.activities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,19 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.reminders.Reminders;
 import com.hackforchange.reminderalarms.NotificationService;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /*
  * Presents an activity that lets you edit an EXISTING activities

@@ -2,7 +2,6 @@ package com.hackforchange.views.participationsactive;
 
 import android.text.InputFilter;
 import android.text.Spanned;
-import com.hackforchange.R;
 
 /**
  * Once a certain number of participants have been entered via the sign-in sheet,

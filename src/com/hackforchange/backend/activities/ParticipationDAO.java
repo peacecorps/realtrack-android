@@ -1,15 +1,15 @@
 package com.hackforchange.backend.activities;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import com.hackforchange.R;
+
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.activities.Participation;
-
-import java.util.ArrayList;
 
 /*
  * DAO object to update/delete/add participation

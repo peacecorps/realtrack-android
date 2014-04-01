@@ -1,10 +1,17 @@
 package com.hackforchange.views.activities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -15,12 +22,6 @@ import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.reminders.Reminders;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 /*
  * Presents an activity that displays details of an existing activity
  * Also lets you edit the project (EditActivitiesActivity) or delete the project (right from this java file)
@@ -29,7 +30,9 @@ import java.util.Date;
  */
 // TODO: participation history graph?
 public class DisplayActivitiesActivity extends SherlockActivity {
-    public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+    public final String[] AllInits = {getResources().getString(R.string.wid), getResources().getString(R.string.youth),
+                                      getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+                                      getResources().getString(R.string.foodsecurity)};
     private int activitiesid;
     private Activities a;
     private ArrayList<Reminders> reminders_data;

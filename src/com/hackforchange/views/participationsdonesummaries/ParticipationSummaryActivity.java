@@ -38,7 +38,9 @@ import com.hackforchange.providers.CachedFileContentProvider;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
   static final int SENDEMAIL_REQUEST = 1;
-  public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+  public final String[] AllInits = {getResources().getString(R.string.wid), getResources().getString(R.string.youth),
+                                    getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+                                    getResources().getString(R.string.foodsecurity)};
   
   private ArrayList<Project> projects_data;
   private StringBuilder emailContent;

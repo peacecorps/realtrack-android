@@ -1,6 +1,5 @@
 package com.hackforchange.views.dialogs;
 
-import com.hackforchange.R;
 
 /*
  * Ensures that any activity calling the date picker dialog provides a way for the dialog to

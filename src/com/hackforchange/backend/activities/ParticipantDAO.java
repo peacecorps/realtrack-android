@@ -7,7 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.hackforchange.R;
+
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.activities.Participant;
 

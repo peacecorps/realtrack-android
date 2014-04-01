@@ -3,7 +3,6 @@ package com.hackforchange.models.activities;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.hackforchange.R;
 
 /**
  * ********************************************************************************************************************

@@ -1,9 +1,13 @@
 package com.hackforchange.views.projectsactivities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -15,9 +19,6 @@ import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.projects.AddProjectActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Presents an activity that lists all the projects in the app's database

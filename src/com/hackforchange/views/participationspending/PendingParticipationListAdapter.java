@@ -1,5 +1,10 @@
 package com.hackforchange.views.participationspending;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,17 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 // presents a simple overview of a participation event. Used for the 'Pending' button on the home
 // screen. This is different from AllParticipationsListAdapter because AllParticipationsListAdapter

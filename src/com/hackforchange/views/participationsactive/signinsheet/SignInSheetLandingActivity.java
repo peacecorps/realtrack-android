@@ -1,6 +1,7 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
 import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
