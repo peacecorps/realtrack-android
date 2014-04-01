@@ -38,9 +38,7 @@ import com.hackforchange.providers.CachedFileContentProvider;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
   static final int SENDEMAIL_REQUEST = 1;
-  public final String[] AllInits = {getResources().getString(R.string.wid), getResources().getString(R.string.youth),
-                                    getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
-                                    getResources().getString(R.string.foodsecurity)};
+  public String[] allInits;
   
   private ArrayList<Project> projects_data;
   private StringBuilder emailContent;
@@ -60,6 +58,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   @Override
   public void onResume() {
     super.onResume();
+    allInits = updateInitiativeNames();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
     summaryLayout.removeAllViews();
@@ -71,6 +70,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
     nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
     updateParticipationSummaryList();
+  }
+
+  private String[] updateInitiativeNames() {
+    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
+      getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+      getResources().getString(R.string.foodsecurity)};
   }
 
   // create actionbar menu
@@ -241,7 +246,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           String inits = "";
           for (int i = 0; i < initiativesList.length; i++) {
             if (initiativesList[i].equals("1"))
-              inits += AllInits[i] + "|";
+              inits += allInits[i] + "|";
           }
           inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous pipe character
 
