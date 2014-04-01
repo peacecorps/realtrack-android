@@ -14,6 +14,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * RecordParticipationActivity is different from RecordQuickParticipationActivity in the following ways:
+ * 1. RecordParticipationActivity ALREADY has a participation associated with it (created when
+ *    reminders are served (in NotificationService)). RecordQuickParticipationActivity does not have a pre-existing
+ *    participation. It has to create one.
+ * 2. Because RecordParticipationActivity serves an existing participation, it has a date and time associated with
+ *    it. RecordQuickParticipationActivity does not have a date and time a priori, and must get these from the user.
+ * @author Raj
+ */
 public class RecordParticipationActivity extends SherlockActivity {
   private int participationid;
   private long dateTime;
