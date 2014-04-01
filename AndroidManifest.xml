@@ -19,7 +19,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,7 +46,8 @@
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
             android:label="@string/recordparticipationactivity_label"
-            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity">
+            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"
+            android:exported="true">
             <!-- Back stack for notifications -->
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
