@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.hackforchange.R;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;

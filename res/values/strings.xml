@@ -39,5 +39,21 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="dateformathint">MM/DD/YYYY</string>
+    <string name="time">Time</string>
+    <string name="timeformathint">HH:MM AM/PM</string>
+    <string name="participation">Participation</string>
+    <string name="menunder15">Men under 15</string>
+    <string name="numberofmen">No. of Men</string>
+    <string name="men1524">Men of age 15-24</string>
+    <string name="menover24">Men over 24</string>
+    <string name="womenunder15">Women under 15</string>
+    <string name="numberofwomen">No. of Women</string>
+    <string name="women1524">Women of age 15-24</string>
+    <string name="womenover24">Women over 24</string>
+    <string name="eventdetails">Event Details (optional)</string>
+    <string name="entereventdetails">Enter event details</string>
 
 </resources>

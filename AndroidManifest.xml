@@ -46,7 +46,14 @@
             android:label="@string/editactivitiesactivity_label" />
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
-            android:label="@string/recordparticipationactivity_label" />
+            android:label="@string/recordparticipationactivity_label"
+            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity">
+            <!-- Back stack for notifications -->
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hackforchange.views.welcome.WelcomeActivity" />
+        </activity>
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
             android:label="@string/recordquickparticipationactivity_label" />

@@ -18,7 +18,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Title"/>
+                android:text="@string/title"/>
 
         <TextView
                 android:id="@+id/title"

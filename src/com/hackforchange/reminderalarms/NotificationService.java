@@ -1,9 +1,15 @@
 package com.hackforchange.reminderalarms;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -11,17 +17,13 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.participationsactive.RecordParticipationActivity;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 /*
  * Source: http://it-ride.blogspot.com/2010/10/android-implementing-notification.html
@@ -132,12 +134,17 @@ public class NotificationService extends Service {
                 String dateTime = parser.format(p.getDate()); // will be displayed in RecordParticipationActivity
                 remindersText += dateTime;
 
-                // TODO: think about backstacking
                 // clicking on the notification must take the user to the record participation activity
                 Intent notifIntent = new Intent(getApplicationContext(), RecordParticipationActivity.class);
                 notifIntent.putExtra("participationid", participationid);
                 notifIntent.putExtra("datetime", p.getDate());
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), participationid, notifIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent pendingIntent = TaskStackBuilder.create(getApplicationContext())
+                                        // add all of RecordParticipationActivity's parents to the stack,
+                                        // followed by RecordParticipationActivity itself
+                                        // this works in conjunction with parentActivityName in AndroidManifest.xml
+                                        .addNextIntentWithParentStack(notifIntent)
+                                        .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), participationid, notifIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 // build notification
                 Notification notificationBuilder = new NotificationCompat.Builder(getApplicationContext())

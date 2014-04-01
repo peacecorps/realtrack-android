@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="0px"
                 android:background="@drawable/homelistitem_background"
-                android:text="Date"/>
+                android:text="@string/date"/>
 
         <View
                 android:layout_height="match_parent"
