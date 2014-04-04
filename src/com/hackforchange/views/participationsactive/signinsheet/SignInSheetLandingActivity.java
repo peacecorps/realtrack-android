@@ -61,6 +61,11 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       }
     });
     
+    if(intent.hasExtra("firstOpen")){
+      intent.removeExtra("firstOpen");
+      okButton.performClick();
+    }
+    
   }
   
   // Handle participant returned by SignInSheetActivity
