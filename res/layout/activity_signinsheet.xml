@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dip"
-        android:text="@string/pleasesignin"
         android:textColor="@color/darkgrey"
         android:textSize="25sp"
         android:textStyle="bold" />

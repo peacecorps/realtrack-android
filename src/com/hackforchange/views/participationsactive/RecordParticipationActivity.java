@@ -21,6 +21,7 @@ import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipantDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity;
@@ -66,6 +67,11 @@ public class RecordParticipationActivity extends SherlockActivity {
 
     final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
     p = pDao.getParticipationWithId(participationId);
+    
+    final ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+    final Activities a = aDao.getActivityWithId(p.getActivityid());
+    DateFormat simpleDateParser = new SimpleDateFormat("MM/dd/yyyy");
+    final String participationDate = simpleDateParser.format(c.getTime());
 
     final ParticipantDAO participantDao = new ParticipantDAO(getApplicationContext());
 
@@ -78,13 +84,14 @@ public class RecordParticipationActivity extends SherlockActivity {
     TextView datetime = (TextView) findViewById(R.id.datetime);
     datetime.setText(parser.format(c.getTime()));
 
-
     // opening the sign-in sheet
     signinSheetButton  = (Button) findViewById(R.id.openSigninSheetButton);
     signinSheetButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent i = new Intent(getApplicationContext(), SignInSheetLandingActivity.class);
+        i.putExtra("activitytitle", a.getTitle()); // displayed on SignInSheetActivity
+        i.putExtra("participationdate", participationDate); // displayed on SignInSheetActivity
         i.putExtra("firstOpen", true); //used to jump straight to SignInSheetActivity the very first time
         startActivityForResult(i, ADD_PARTICIPANTS_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);

@@ -138,6 +138,10 @@ PickDateDialogListener, PickTimeDialogListener {
       @Override
       public void onClick(View v) {
         Intent i = new Intent(getApplicationContext(), SignInSheetLandingActivity.class);
+        i.putExtra("activitytitle", a.getTitle()); // displayed on SignInSheetActivity
+        if(date.getText().toString().length()!=0){
+          i.putExtra("participationdate", date.getText().toString()); // displayed on SignInSheetActivity
+        }
         i.putExtra("firstOpen", true); //used to jump straight to SignInSheetActivity the very first time
         startActivityForResult(i, ADD_PARTICIPANTS_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);

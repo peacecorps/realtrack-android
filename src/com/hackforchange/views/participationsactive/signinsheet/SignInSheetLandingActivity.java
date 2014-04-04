@@ -43,6 +43,10 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       @Override
       public void onClick(View view) {
         Intent i = new Intent(getApplicationContext(), SignInSheetActivity.class);
+        i.putExtra("activitytitle", intent.getExtras().getString("activitytitle"));
+        if(intent.hasExtra("participationdate")){
+          i.putExtra("participationdate", intent.getExtras().getString("participationdate"));
+        }
         startActivityForResult(i, SIGNIN_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
       }

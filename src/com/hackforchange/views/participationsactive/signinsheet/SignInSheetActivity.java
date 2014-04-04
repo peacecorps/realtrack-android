@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -17,6 +18,7 @@ public class SignInSheetActivity extends SherlockActivity {
   private Button submitButton;
   private Intent intent; 
   private EditText nameText, phoneText, villageText, ageText;
+  private TextView signInMessage;
   private RadioButton maleRadioButton;
   
   @Override
@@ -30,6 +32,15 @@ public class SignInSheetActivity extends SherlockActivity {
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    
+    String signInMsg = intent.getExtras().getString("activitytitle");
+    
+    if(intent.hasExtra("participationdate")){ //we need to check because there's a chance this is not present (from RQPA if user does not enter date)
+      signInMsg = signInMsg + " " + intent.getExtras().getString("participationdate");
+    }
+    
+    signInMessage = (TextView) findViewById(R.id.pleasesignin);
+    signInMessage.setText(signInMsg);
     
     nameText = (EditText) findViewById(R.id.nameEditText);
     phoneText = (EditText) findViewById(R.id.phoneEditText);
