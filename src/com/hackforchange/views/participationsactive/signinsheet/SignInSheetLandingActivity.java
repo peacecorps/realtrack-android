@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.models.activities.Participant;
 
@@ -32,6 +33,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   @Override
   public void onResume() {
     super.onResume();
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     
     okButton = (Button) findViewById(R.id.okbutton);
     doneButton = (Button) findViewById(R.id.donebutton);
@@ -80,6 +82,20 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     super.onBackPressed();
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
+  }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+
+    return true;
   }
 
 }

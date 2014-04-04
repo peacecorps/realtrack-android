@@ -1,6 +1,5 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +8,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.models.activities.Participant;
 
-public class SignInSheetActivity extends Activity {
+public class SignInSheetActivity extends SherlockActivity {
   private Button submitButton;
   private Intent intent; 
   private EditText nameText, phoneText, villageText, ageText;
@@ -28,6 +29,7 @@ public class SignInSheetActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     
     nameText = (EditText) findViewById(R.id.nameEditText);
     phoneText = (EditText) findViewById(R.id.phoneEditText);
@@ -83,4 +85,19 @@ public class SignInSheetActivity extends Activity {
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
   }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+
+    return true;
+  }
+  
 }
