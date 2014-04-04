@@ -162,5 +162,12 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     else
       endDate.setText(date); //sets the chosen date in the text view
   }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    finish();
+  }
 
 }

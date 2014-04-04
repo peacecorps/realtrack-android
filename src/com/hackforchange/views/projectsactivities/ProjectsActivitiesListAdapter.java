@@ -120,6 +120,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         public void onClick(View v) {
           Intent i = new Intent(context, AddProjectActivity.class);
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
     }
@@ -136,6 +137,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, DisplayProjectActivity.class);
           i.putExtra("projectid", project.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -145,6 +147,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, DisplayProjectActivity.class);
           i.putExtra("projectid", project.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -156,6 +159,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, EditProjectActivity.class);
           i.putExtra("projectid", project.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -194,7 +198,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.blue));
       }
       else{
-        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.darkblue));
+        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.disabledgrey));
       }
       
     }
@@ -235,6 +239,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, AddActivitiesActivity.class);
           i.putExtra("projectid", projectsActivitiesData.get(groupPos).getProject().getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
     } else { // normal activity item
@@ -250,6 +255,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, DisplayActivitiesActivity.class);
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -259,6 +265,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, DisplayActivitiesActivity.class);
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -274,6 +281,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           i.putExtra("largestParticipationId", largestParticipationId);
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 
@@ -285,6 +293,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           Intent i = new Intent(context, EditActivitiesActivity.class);
           i.putExtra("activitiesid", activities.getId());
           context.startActivity(i);
+          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
 

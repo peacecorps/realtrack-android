@@ -15,9 +15,9 @@
             android:background="@color/lightgrey"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textColor="@color/darkgrey"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
@@ -25,13 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/homelistitem_background"
+            android:background="@drawable/white_background"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <TextView
@@ -40,9 +40,9 @@
             android:background="@color/lightgrey"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Date"
+            android:text="@string/date"
             android:textColor="@color/darkgrey"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
@@ -50,13 +50,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/homelistitem_background"
+            android:background="@drawable/white_background"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <TextView
@@ -65,9 +65,20 @@
             android:background="@color/lightgrey"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Participation"
+            android:text="@string/participation"
             android:textColor="@color/darkgrey"
-            android:textSize="25dp"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/openSigninSheetButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:padding="8dp"
+            android:text="@string/openSigninSheetButtonLabel"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <android.support.v7.widget.GridLayout
@@ -75,7 +86,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/homelistitem_background"
+            android:background="@drawable/white_background"
             android:padding="10dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
@@ -86,9 +97,9 @@
             <CheckBox
                 android:id="@+id/menCheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Men under 15"
+                android:text="@string/menunder15"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -96,19 +107,19 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Men"
+                android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/men1524CheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Men of age 15-24"
+                android:text="@string/men1524"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -116,19 +127,19 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Men"
+                android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/menOver24CheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Men over 24"
+                android:text="@string/menover24"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -136,19 +147,19 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Men"
+                android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/womenCheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Women under 15"
+                android:text="@string/womenunder15"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -156,19 +167,19 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Women"
+                android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/women1524CheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Women of age 15-24"
+                android:text="@string/women1524"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -176,19 +187,19 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Women"
+                android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/womenOver24CheckBox"
                 android:layout_gravity="fill_horizontal"
-                android:text="Women over 24"
+                android:text="@string/womenover24"
                 android:textColor="@color/darkgrey"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -196,11 +207,11 @@
                 android:layout_gravity="fill_horizontal"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:hint="No. of Women"
+                android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="#969696"
-                android:textSize="19dp"
+                android:textSize="19sp"
                 android:textStyle="bold" />
         </android.support.v7.widget.GridLayout>
 
@@ -210,9 +221,9 @@
             android:background="@color/lightgrey"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Event Details (optional)"
+            android:text="@string/eventdetails"
             android:textColor="@color/darkgrey"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <EditText
@@ -220,8 +231,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/homelistitem_background"
-            android:hint="Enter event details"
+            android:background="@drawable/white_background"
+            android:hint="@string/entereventdetails"
             android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
             android:maxLines="6"
             android:minLines="3"
@@ -231,7 +242,7 @@
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
             android:textColorHint="#969696"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -243,15 +254,13 @@
 
             <Button
                 android:id="@+id/submitbutton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dip"
                 android:layout_height="wrap_content"
                 android:background="@color/blue"
-                android:padding="15dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="30dp"
-                android:text="Save"
+                android:padding="10dp"
+                android:text="@string/save"
                 android:textColor="@android:color/white"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <View
@@ -261,15 +270,13 @@
 
             <Button
                 android:id="@+id/dismissButton"
-                android:layout_width="wrap_content"
+                android:layout_width="150dip"
                 android:layout_height="wrap_content"
-                android:background="@color/red"
-                android:padding="15dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="20dp"
-                android:text="Dismiss"
+                android:background="@color/orange"
+                android:padding="10dp"
+                android:text="@string/dismiss"
                 android:textColor="@android:color/white"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

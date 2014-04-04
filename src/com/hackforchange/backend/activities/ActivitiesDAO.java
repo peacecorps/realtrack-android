@@ -1,16 +1,17 @@
 package com.hackforchange.backend.activities;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.reminders.Reminders;
 import com.hackforchange.views.activities.EditActivitiesActivity;
-
-import java.util.ArrayList;
 
 /*
  * DAO object to update/delete/add activities

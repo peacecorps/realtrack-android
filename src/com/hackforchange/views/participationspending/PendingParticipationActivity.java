@@ -48,6 +48,7 @@ public class PendingParticipationActivity extends SherlockActivity {
                 newActivity.putExtra("participationid", p.getId());
                 newActivity.putExtra("datetime", p.getDate());
                 startActivity(newActivity);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
             }
         });
     }
@@ -61,5 +62,12 @@ public class PendingParticipationActivity extends SherlockActivity {
                 break;
         }
         return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+      super.onBackPressed();
+      overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+      finish();
     }
 }

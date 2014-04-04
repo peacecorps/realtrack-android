@@ -1,10 +1,15 @@
 package com.hackforchange.views.projects;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -12,10 +17,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.projects.Project;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /*
  * Presents an activity that displays details of an existing project
@@ -95,11 +96,19 @@ public class DisplayProjectActivity extends SherlockActivity {
                 Intent i = new Intent(DisplayProjectActivity.this, EditProjectActivity.class);
                 i.putExtra("projectid", id);
                 startActivity(i);
+                overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
         return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+      super.onBackPressed();
+      overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+      finish();
     }
 }

@@ -98,16 +98,17 @@ public class WelcomeActivity extends SherlockFragmentActivity {
           case 0: // MY PROJECTS
             Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivitiesActivity.class);
             startActivity(newActivity);
+            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
             break;
           case 1: // MY DATA
             newActivity = new Intent(WelcomeActivity.this, ParticipationSummaryActivity.class);
             startActivity(newActivity);
-            // TODO: generate report in xls format
-            // TODO: attach xls to email
+            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
             break;
           case 2: // PENDING
             newActivity = new Intent(WelcomeActivity.this, PendingParticipationActivity.class);
             startActivity(newActivity);
+            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
             break;
         }
       }

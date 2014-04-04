@@ -1,24 +1,5 @@
 package com.hackforchange.views.participationsdonesummaries;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.hackforchange.R;
-import com.hackforchange.backend.activities.ActivitiesDAO;
-import com.hackforchange.backend.activities.ParticipationDAO;
-import com.hackforchange.backend.projects.ProjectDAO;
-import com.hackforchange.models.activities.Activities;
-import com.hackforchange.models.activities.Participation;
-import com.hackforchange.models.projects.Project;
-import com.hackforchange.providers.CachedFileContentProvider;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,14 +12,39 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.hackforchange.R;
+import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.activities.ParticipantDAO;
+import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.activities.Participant;
+import com.hackforchange.models.activities.Participation;
+import com.hackforchange.models.projects.Project;
+import com.hackforchange.providers.CachedFileContentProvider;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
-  public static final String[] AllInits = {"WID", "Youth", "Malaria", "ECPA", "Food Security"};
+  static final int SENDEMAIL_REQUEST = 1;
+  public String[] allInits;
+  
   private ArrayList<Project> projects_data;
   private StringBuilder emailContent;
   private LinearLayout summaryLayout;
-  File cacheDir, cacheOutputFile, nonAlignedOutputFile;
-  String fileName;
+  File cacheDir, cacheParticipationOutputFile, cacheDataOutputFile, nonAlignedDataOutputFile;
+  String dataFileName, participationFileName;
   private int maxComms = 0;
   
   private final String ESCAPE_COMMAS = "\"";
@@ -52,15 +58,24 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   @Override
   public void onResume() {
     super.onResume();
+    allInits = updateInitiativeNames();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
     summaryLayout.removeAllViews();
     DateFormat dateParser = new SimpleDateFormat("MMddyyyy");
-    fileName = "RealTrack_Data_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
+    dataFileName = "RealTrack_Data_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
+    participationFileName = "RealTrack_Participation_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
     cacheDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
-    cacheOutputFile = new File(cacheDir + File.separator + fileName);
-    nonAlignedOutputFile = new File(cacheDir + File.separator + "temp.csv");
+    cacheDataOutputFile = new File(cacheDir + File.separator + dataFileName);
+    cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
+    nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
     updateParticipationSummaryList();
+  }
+
+  private String[] updateInitiativeNames() {
+    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
+      getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+      getResources().getString(R.string.foodsecurity)};
   }
 
   // create actionbar menu
@@ -79,7 +94,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         finish();
         break;
       case R.id.action_exportdata:
-        Intent sendEmailIntent = new Intent(Intent.ACTION_SENDTO);
+        final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
         sendEmailIntent.setType("plain/text");
         String uriText = "mailto:" + Uri.encode("") +
@@ -87,11 +102,15 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                 "&body=" + Uri.encode("Please find the CSV file of your recorded data attached with this email.");
         Uri uri = Uri.parse(uriText);
         sendEmailIntent.setData(uri);
-        sendEmailIntent.putExtra(
-                Intent.EXTRA_STREAM,
-                Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
-                        + fileName));
+        
+        ArrayList<Uri> uris = new ArrayList<Uri>();
+        uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+                + dataFileName));
+        uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+                + participationFileName));
+        sendEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
         startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         break;
     }
 
@@ -101,7 +120,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   private void updateParticipationSummaryList() {
     ProjectDAO projectDAO = new ProjectDAO(getApplicationContext());
     ActivitiesDAO activitiesDAO = new ActivitiesDAO(getApplicationContext());
-    ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
+    ParticipationDAO participationDAO = new ParticipationDAO(getApplicationContext());
+    ParticipantDAO participantDAO = new ParticipantDAO(getApplicationContext());
 
     projects_data = projectDAO.getAllProjects();
     DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy");
@@ -112,13 +132,15 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     emailContent.append("===========\n");
 
 
-    FileOutputStream fos = null;
+    FileOutputStream dataFos = null;
+    FileOutputStream participationFos = null;
     try {
-      fos = new FileOutputStream(nonAlignedOutputFile);
+      dataFos = new FileOutputStream(nonAlignedDataOutputFile);
+      participationFos = new FileOutputStream(cacheParticipationOutputFile);
     } catch (FileNotFoundException e) {
     }
-
-    String csvContent = "Project Title" + "," +
+    
+    String dataCSVContent = "Project Title" + "," +
             "Project Start Date" + "," +
             "Project End Date" + "," +
             "Project Notes" + "," +
@@ -139,8 +161,20 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             "Participation Women over 24" + "," +
             "Participation Event Details" + "\n";
 
+    String participationCSVContent = "Project Title" + "," +
+            "Activity Title" + "," +
+            "Participation Date" + "," +
+            "Participation Time" + "," +
+            "Participant Name" + "," +
+            "Participant Phone Number" + "," +
+            "Participant Village" + "," +
+            "Participant Age" + "," +
+            "Participant Gender" + "," +
+            "Participation Event Details" + "\n";
+
     try {
-      fos.write(csvContent.getBytes());
+      dataFos.write(dataCSVContent.getBytes());
+      participationFos.write(participationCSVContent.getBytes());
     } catch (IOException e) {
     }
 
@@ -168,7 +202,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         emailContent.append("      Start Date: " + dateParser.format(a.getStartDate()) + "\n");
         emailContent.append("      End Date: " + dateParser.format(a.getEndDate()) + "\n");
 
-        ArrayList<Participation> participation_data = participationDao.getAllParticipationsForActivityId(a.getId());
+        ArrayList<Participation> participation_data = participationDAO.getAllParticipationsForActivityId(a.getId());
 
         if (participation_data.size() > 0) {
           if (childProjectView.getParent() == null)
@@ -212,7 +246,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           String inits = "";
           for (int i = 0; i < initiativesList.length; i++) {
             if (initiativesList[i].equals("1"))
-              inits += AllInits[i] + "|";
+              inits += allInits[i] + "|";
           }
           inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous pipe character
 
@@ -220,7 +254,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           if(currentComms > maxComms)
             maxComms = currentComms;
 
-          csvContent = ESCAPE_COMMAS + p.getTitle() + ESCAPE_COMMAS + "," +
+          dataCSVContent = ESCAPE_COMMAS + p.getTitle() + ESCAPE_COMMAS + "," +
                   dateParser.format(p.getStartDate()) + "," +
                   dateParser.format(p.getEndDate()) + "," +
                   ESCAPE_COMMAS + p.getNotes() + ESCAPE_COMMAS + "," +
@@ -241,8 +275,26 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                   participation.getWomenOver24() + "," +
                   ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
           try {
-            fos.write(csvContent.getBytes());
+            dataFos.write(dataCSVContent.getBytes());
           } catch (IOException e) {
+          }
+          
+          List<Participant> participantList = participantDAO.getAllParticipantsForParticipationId(participation.getId());
+          for(Participant participant: participantList){
+            participationCSVContent = ESCAPE_COMMAS + p.getTitle() + ESCAPE_COMMAS + "," +
+                    ESCAPE_COMMAS + a.getTitle() + ESCAPE_COMMAS + "," +
+                    dateParser.format(participation.getDate()) + "," +
+                    timeParser.format(participation.getDate()) + "," +
+                    ESCAPE_COMMAS + participant.getName() + ESCAPE_COMMAS + "," +
+                    ESCAPE_COMMAS + participant.getPhoneNumber() + ESCAPE_COMMAS + "," +
+                    ESCAPE_COMMAS + participant.getVillage() + ESCAPE_COMMAS + "," +
+                    participant.getAge() + "," +
+                    (participant.getGender()==Participant.MALE? "Male" : "Female") + "," +
+                    ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
+            try {
+              participationFos.write(participationCSVContent.getBytes());
+            } catch (IOException e) {
+            }
           }
 
         }
@@ -257,7 +309,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
 
     try {
-      fos.close();
+      dataFos.close();
+      participationFos.close();
     } catch (IOException e) {
     }
     
@@ -270,8 +323,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     FileInputStream fis = null;
     FileOutputStream fos = null;
     try {
-      fos = new FileOutputStream(cacheOutputFile);
-      fis = new FileInputStream(nonAlignedOutputFile);
+      fos = new FileOutputStream(cacheDataOutputFile);
+      fis = new FileInputStream(nonAlignedDataOutputFile);
       fRead = new BufferedReader(new InputStreamReader(fis));
     } catch (FileNotFoundException e) {
     }
@@ -319,6 +372,25 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         numCommas++;
     }
     return numCommas + 1;
+  }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    deleteTemporaryFiles();
+    finish();
+  }
+
+  private void deleteTemporaryFiles() {
+    cacheDataOutputFile.delete();
+    cacheParticipationOutputFile.delete();
+  }
+  
+  @Override
+  public void onPause() {
+    super.onPause();
+    deleteTemporaryFiles();
   }
 
 }

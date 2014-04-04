@@ -1,14 +1,13 @@
 package com.hackforchange.backend.activities;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.models.activities.Participation;
-
-import java.util.ArrayList;
 
 /*
  * DAO object to update/delete/add participation
@@ -196,7 +195,6 @@ public class ParticipationDAO {
             whereClause, null, null, null, null);
         returnData.moveToFirst();
         Participation p = new Participation();
-        Log.e("burra", "pdao get participation with id " + id);
         p.setId(id);
         p.setReminderid(returnData.getInt(1));
         p.setMen(returnData.getInt(2));

@@ -18,7 +18,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Title"/>
+                android:text="@string/title"/>
 
         <TextView
                 android:id="@+id/title"
@@ -27,7 +27,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -43,7 +43,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Start Date"/>
+                android:text="@string/startdate"/>
 
         <TextView
                 android:id="@+id/startDate"
@@ -52,7 +52,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -68,7 +68,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="End Date"/>
+                android:text="@string/enddate"/>
 
         <TextView
                 android:id="@+id/endDate"
@@ -77,7 +77,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -102,7 +102,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -127,7 +127,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -152,7 +152,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -177,7 +177,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -202,7 +202,7 @@
                 android:textStyle="bold"
                 android:textSize="23dp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"

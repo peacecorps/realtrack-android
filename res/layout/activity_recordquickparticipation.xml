@@ -1,283 +1,297 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/globalpattern_background" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/title"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/white_background"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/date"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/white_background"
+            android:hint="@string/dateformathint"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/time"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/white_background"
+            android:hint="@string/timeformathint"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/participation"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/openSigninSheetButton"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/scrollView"
-            android:background="@drawable/globalpattern_background" xmlns:app="http://schemas.android.com/apk/res/com.hackforchange">
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:padding="8dp"
+            android:text="@string/openSigninSheetButtonLabel"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <LinearLayout android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="@color/darkgrey"
-                android:background="@color/lightgrey"
-                android:padding="10dp"
-                android:text="Title"/>
-
-        <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="23dp"
-                android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
-                android:layout_marginBottom="0dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="@color/darkgrey"
-                android:background="@color/lightgrey"
-                android:padding="10dp"
-                android:text="Date"/>
-
-        <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="23dp"
-                android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
-                android:layout_marginBottom="0dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:hint="MM/DD/YYYY"
-                android:textColorHint="#969696"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="@color/darkgrey"
-                android:background="@color/lightgrey"
-                android:padding="10dp"
-                android:text="Time"/>
-
-        <TextView
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="23dp"
-                android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
-                android:layout_marginBottom="0dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:hint="HH:MM AM/PM"
-                android:textColorHint="#969696"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="@color/darkgrey"
-                android:background="@color/lightgrey"
-                android:padding="10dp"
-                android:text="Participation"/>
-
-        <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent"
-                                              app:useDefaultMargins="true"
-                                              app:alignmentMode="alignBounds"
-                                              app:columnOrderPreserved="false"
-                                              app:columnCount="2"
-                                              app:rowCount="6"
-                                              android:background="@drawable/homelistitem_background"
-                                              android:padding="10dp">
+        <android.support.v7.widget.GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/white_background"
+            android:padding="10dp"
+            app:alignmentMode="alignBounds"
+            app:columnCount="2"
+            app:columnOrderPreserved="false"
+            app:rowCount="6"
+            app:useDefaultMargins="true" >
 
             <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Men under 15"
-                    android:id="@+id/menCheckBox"/>
+                android:id="@+id/menCheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/menunder15"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <EditText
-                    android:id="@+id/numMen"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Men"
-                    android:textColorHint="#969696"/>
-            
-            <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Men of age 15-24"
-                    android:id="@+id/men1524CheckBox"/>
-
-            <EditText
-                    android:id="@+id/numMen1524"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Men"
-                    android:textColorHint="#969696"/>
-            
-            <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Men over 24"
-                    android:id="@+id/menOver24CheckBox"/>
-
-            <EditText
-                    android:id="@+id/numMenOver24"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Men"
-                    android:textColorHint="#969696"/>
+                android:id="@+id/numMen"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Women under 15"
-                    android:id="@+id/womenCheckBox"/>
+                android:id="@+id/men1524CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/men1524"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <EditText
-                    android:id="@+id/numWomen"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Women"
-                    android:textColorHint="#969696"/>
+                android:id="@+id/numMen1524"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Women of age 15-24"
-                    android:id="@+id/women1524CheckBox"/>
+                android:id="@+id/menOver24CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/menover24"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <EditText
-                    android:id="@+id/numWomen1524"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Women"
-                    android:textColorHint="#969696"/>
+                android:id="@+id/numMenOver24"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="Women over 24"
-                    android:id="@+id/womenOver24CheckBox"/>
+                android:id="@+id/womenCheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/womenunder15"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
             <EditText
-                    android:id="@+id/numWomenOver24"
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-                    android:clickable="false"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@android:color/transparent"
-                    android:inputType="number"
-                    android:hint="No. of Women"
-                    android:textColorHint="#969696"/>
+                android:id="@+id/numWomen"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/women1524CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/women1524"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/numWomen1524"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/womenOver24CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/womenover24"
+                android:textColor="@color/darkgrey"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/numWomenOver24"
+                android:layout_gravity="fill_horizontal"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696"
+                android:textSize="19sp"
+                android:textStyle="bold" />
         </android.support.v7.widget.GridLayout>
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textColor="@color/darkgrey"
-                android:background="@color/lightgrey"
-                android:padding="10dp"
-                android:text="Event Details (optional)"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/eventdetails"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <EditText
-                android:id="@+id/notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="23dp"
-                android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
-                android:layout_marginBottom="0dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
-                android:maxLines="6"
-                android:minLines="3"
-                android:hint="Enter event details"
-                android:textColorHint="#969696"/>
+            android:id="@+id/notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/white_background"
+            android:hint="@string/entereventdetails"
+            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
+            android:maxLines="6"
+            android:minLines="3"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textSize="23sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp" >
 
             <Button
-                    android:textSize="25dp"
-                    android:textColor="@android:color/white"
-                    android:background="@color/blue"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Save"
-                    android:textStyle="bold"
-                    android:id="@+id/submitbutton"/>
+                android:id="@+id/submitbutton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:padding="10dp"
+                android:text="@string/save"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

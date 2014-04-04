@@ -15,25 +15,25 @@
                 android:textStyle="bold"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:padding="10dp"
-                android:text="Title"/>
+                android:text="@string/title"/>
 
         <EditText
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
-                android:hint="Name Your Project"
-                android:inputType="textCapSentences"
+                android:hint="@string/nameprojecthint"
+                android:inputType="textCapWords"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -41,27 +41,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Start Date"/>
+                android:text="@string/startdate"/>
 
         <EditText
                 android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:inputType="date"
-                android:hint="MM/DD/YYYY"
+                android:hint="@string/dateformathint"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -69,27 +69,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="End Date"/>
+                android:text="@string/enddate"/>
 
         <EditText
                 android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="0dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:inputType="date"
-                android:hint="MM/DD/YYYY"
+                android:hint="@string/dateformathint"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -97,20 +97,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="Notes (optional)"/>
+                android:text="@string/notes"/>
 
         <EditText
                 android:id="@+id/notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="23dp"
+                android:textSize="23sp"
                 android:textColor="@color/darkgrey"
-                android:background="@drawable/homelistitem_background"
+                android:background="@drawable/white_background"
                 android:layout_marginBottom="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -119,7 +119,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="Enter Notes"
+                android:hint="@string/enternotes"
                 android:textColorHint="#969696"/>
 
         <LinearLayout
@@ -130,13 +130,13 @@
                 android:gravity="center_horizontal">
 
             <Button
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     android:textColor="@android:color/white"
                     android:background="@color/blue"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textStyle="bold"
                     android:id="@+id/submitbutton"/>
         </LinearLayout>

@@ -1,15 +1,16 @@
 package com.hackforchange.backend.projects;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.hackforchange.backend.GlobalDatabaseHelper;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
-
-import java.util.ArrayList;
 
 public class ProjectDAO {
   private GlobalDatabaseHelper opener;
@@ -62,7 +63,6 @@ public class ProjectDAO {
 
   public Project getProjectWithId(int id) {
     openDB();
-    ArrayList<Project> output = null;
     String[] columnsToRead = new String[5];
     columnsToRead[0] = Project.COLUMN_TITLE;
     columnsToRead[1] = Project.COLUMN_STARTDATE;

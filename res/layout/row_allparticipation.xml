@@ -3,12 +3,12 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/homelistitem_background">
+              android:background="@drawable/white_background">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/homelistitem_background">
+            android:background="@drawable/white_background">
 
         <TextView
                 android:id="@+id/date"

@@ -1,14 +1,16 @@
 package com.hackforchange.views.projects;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-import com.hackforchange.R;
-import com.hackforchange.backend.projects.ProjectDAO;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import com.hackforchange.R;
+import com.hackforchange.backend.projects.ProjectDAO;
 
 /*
  * Presents an activity that lets you edit an EXISTING project
@@ -72,5 +74,12 @@ public class EditProjectActivity extends AddProjectActivity {
         finish();
       }
     });
+  }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    finish();
   }
 }

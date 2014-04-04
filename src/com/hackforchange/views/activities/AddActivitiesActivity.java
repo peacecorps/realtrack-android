@@ -1,8 +1,18 @@
 package com.hackforchange.views.activities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
@@ -16,12 +26,6 @@ import com.hackforchange.views.dialogs.PickDateDialog;
 import com.hackforchange.views.dialogs.PickDateDialogListener;
 import com.hackforchange.views.dialogs.PickTimeDialog;
 import com.hackforchange.views.dialogs.PickTimeDialogListener;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Add a new activity to an existing project
@@ -595,5 +599,12 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         sundayTime.setText(time); //sets the chosen date in the text view
         break;
     }
+  }
+  
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
+    finish();
   }
 }

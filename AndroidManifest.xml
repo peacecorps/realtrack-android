@@ -10,16 +10,15 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/realtrack"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Vrf"
-        android:allowBackup="true" >
+        android:theme="@style/Theme.Vrf" >
         <activity
             android:name="com.hackforchange.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,7 +45,15 @@
             android:label="@string/editactivitiesactivity_label" />
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
-            android:label="@string/recordparticipationactivity_label" />
+            android:label="@string/recordparticipationactivity_label"
+            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"
+            android:exported="true">
+            <!-- Back stack for notifications -->
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hackforchange.views.welcome.WelcomeActivity" />
+        </activity>
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
             android:label="@string/recordquickparticipationactivity_label" />
@@ -59,6 +66,18 @@
         <activity
             android:name="com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity"
             android:label="@string/allparticipationsactivity_label" />
+        <activity
+            android:name="com.hackforchange.views.help.HelpDialog"
+            android:label="@string/helpactivity_label" >
+        </activity>
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity"
+            android:label="@string/signinsheetlandingactivity_label" >
+        </activity>
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetActivity"
+            android:label="@string/signinsheetactivity_label" >
+        </activity>
 
         <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
             <intent-filter>
@@ -71,13 +90,8 @@
         <provider
             android:name="com.hackforchange.providers.CachedFileContentProvider"
             android:authorities="com.hackforchange.providers.CachedFileContentProvider"
-            android:exported="false" >
+            android:exported="true" >
         </provider>
-
-        <activity
-            android:name="com.hackforchange.views.help.HelpDialog"
-            android:label="@string/title_activity_help" >
-        </activity>
     </application>
 
 </manifest>

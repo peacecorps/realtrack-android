@@ -1,14 +1,14 @@
 package com.hackforchange.providers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 // Source: http://stephendnicholas.com/archives/974
 public class CachedFileContentProvider extends ContentProvider {
