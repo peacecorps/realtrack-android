@@ -21,10 +21,12 @@
     <string name="signinsheetlandingactivity_label">Sign-In Sheet</string>
     <string name="hello_world">Hello world!</string>
     <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
-    <string name="ok">OK</string>
+    <string name="ok">&#xf0a4; OK</string>
     <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
+    <string name="reviewParticipants">Review participants</string>
     <string name="openSigninSheetButtonLabel">&#xf090; Open Sign-In Sheet</string>
-    <string name="done">Done</string>
+    <string name="done">&#xf00c; Done</string>
+    <string name="review">&#xf022; Review</string>
     <string name="signinsheetactivity_label">Please Sign In</string>
     <string name="name">Name</string>
     <string name="namehint">Your Name (required)</string>
@@ -91,5 +93,6 @@
     <string name="fa_calendar">&#xf133;</string>
     <string name="fa_list">&#xf00b;</string>
     <string name="fa_table">&#xf0ce;</string>
+    <string name="reviewsigninactivity_label">Review Participants</string>
 
 </resources>

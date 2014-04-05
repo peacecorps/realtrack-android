@@ -78,6 +78,10 @@
             android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetActivity"
             android:label="@string/signinsheetactivity_label" >
         </activity>
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.ReviewSignInActivity"
+            android:label="@string/reviewsigninactivity_label" >
+        </activity>
 
         <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
             <intent-filter>

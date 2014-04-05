@@ -8,13 +8,13 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Participant;
 
-public class SignInSheetActivity extends SherlockActivity {
+public class SignInSheetActivity extends SherlockFragmentActivity {
   private StyledButton submitButton;
   private Intent intent; 
   private EditText nameText, phoneText, villageText, ageText;

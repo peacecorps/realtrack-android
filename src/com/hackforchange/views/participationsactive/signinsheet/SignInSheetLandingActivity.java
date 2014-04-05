@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
@@ -19,6 +21,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   
   private StyledButton okButton;
   private StyledButton doneButton;
+  private StyledButton reviewButton;
   private ArrayList<Participant> participantList;
   private Intent intent;
   
@@ -35,9 +38,17 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     
     okButton = (StyledButton) findViewById(R.id.okbutton);
-    okButton.setText(getResources().getString(R.string.fa_rightcircledarrow)+" "+"OK");
-    doneButton = (StyledButton) findViewById(R.id.donebutton);
-    doneButton.setText(getResources().getString(R.string.fa_check)+" "+"Done");
+    doneButton = (StyledButton) findViewById(R.id.doneButton);
+    reviewButton = (StyledButton) findViewById(R.id.reviewButton);
+    
+    if(participantList.isEmpty()){
+      reviewButton.setVisibility(View.INVISIBLE);
+      ((TextView) findViewById(R.id.reviewMsg)).setVisibility(View.INVISIBLE);
+    }
+    else{
+      reviewButton.setVisibility(View.VISIBLE);
+      ((TextView) findViewById(R.id.reviewMsg)).setVisibility(View.VISIBLE);
+    }
     
     // go to sign in sheet
     okButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +81,19 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       intent.removeExtra("firstOpen");
       okButton.performClick();
     }
+    
+    // go back to RecordQuickParticipationActivity or RecordParticipationActivity
+    // send back the participants collected so far
+    reviewButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent i = new Intent(getApplicationContext(), ReviewSignInActivity.class);
+        Bundle resultBundle = new Bundle();
+        resultBundle.putParcelableArrayList("participantList", participantList);
+        i.putExtras(resultBundle);
+        startActivity(i);
+      }
+    });
     
   }
   
