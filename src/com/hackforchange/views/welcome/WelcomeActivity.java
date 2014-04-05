@@ -2,11 +2,8 @@ package com.hackforchange.views.welcome;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -17,11 +14,7 @@ import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.help.HelpDialog;
-import com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity;
-import com.hackforchange.views.participationspending.PendingParticipationActivity;
-import com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity;
 
-// TODO: Add cancel button for editing activity, adding activity.
 public class WelcomeActivity extends SherlockFragmentActivity {
   private ListView homeitemslist; //holds a list of homeitems
   private ArrayList<String> homeitems_data;
@@ -44,12 +37,12 @@ public class WelcomeActivity extends SherlockFragmentActivity {
     // 3. New Project
     // 4. Export
     homeitems_data = new ArrayList<String>();
-    homeitems_data.add("My Projects");
-    homeitems_data.add("My Data");
+    homeitems_data.add(getResources().getString(R.string.fa_list)+" My Projects");
+    homeitems_data.add(getResources().getString(R.string.fa_table)+" My Data");
     ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
     unservicedParticipation_data = pDao.getAllUnservicedParticipations();
     if (unservicedParticipation_data.size() != 0) {
-      homeitems_data.add("Pending (" + unservicedParticipation_data.size() + ")");
+      homeitems_data.add(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
     }
 
     // populate the home items list
@@ -91,27 +84,5 @@ public class WelcomeActivity extends SherlockFragmentActivity {
     listAdapter = new HomeItemListAdapter(this, R.layout.row_homeitems, homeitems_data);
     homeitemslist = (ListView) findViewById(R.id.homeitemlistView);
     homeitemslist.setAdapter(listAdapter);
-    homeitemslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-          case 0: // MY PROJECTS
-            Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivitiesActivity.class);
-            startActivity(newActivity);
-            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-            break;
-          case 1: // MY DATA
-            newActivity = new Intent(WelcomeActivity.this, ParticipationSummaryActivity.class);
-            startActivity(newActivity);
-            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-            break;
-          case 2: // PENDING
-            newActivity = new Intent(WelcomeActivity.this, PendingParticipationActivity.class);
-            startActivity(newActivity);
-            overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-            break;
-        }
-      }
-    });
   }
 }

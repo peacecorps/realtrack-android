@@ -1,70 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/projectGroupLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:background="@color/blue"
-        android:orientation="vertical"
-        android:paddingLeft="20dp" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.hackforchange.common.StyledButton
+            android:id="@+id/expandCollapseProjectBtn"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/fa_downchevron"
+            android:textColor="@drawable/blueitem_textcolor"
+            android:textSize="25sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:background="@drawable/white_background"
+            android:layout_weight="0.7"
+            android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="6dp"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
-            android:paddingTop="6dp" >
+            android:paddingLeft="10dip" >
 
             <TextView
                 android:id="@+id/txtTitle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:textColor="@color/darkgrey"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/editProjectBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@drawable/white_background"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@android:drawable/ic_menu_edit" />
-
-            <ImageView
-                android:id="@+id/deleteProjectBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@drawable/white_background"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@android:drawable/ic_menu_delete" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/startDate"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:paddingBottom="1dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="1dp"
-            android:textColor="@color/darkgrey"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+            android:background="@color/white" >
+
+            <com.hackforchange.common.StyledButton
+                android:id="@+id/editProjectBtn"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="0.1"
+                android:background="@drawable/normalitem_background"
+                android:text="@string/fa_edit_pencil"
+                android:textColor="@drawable/normalitem_textcolor"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <com.hackforchange.common.StyledButton
+                android:id="@+id/deleteProjectBtn"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="0.1"
+                android:background="@drawable/normalitem_background"
+                android:text="@string/fa_trash"
+                android:textColor="@drawable/normalitem_textcolor"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:background="@color/lightgrey"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/darkgrey"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipantDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
@@ -51,9 +51,9 @@ PickDateDialogListener, PickTimeDialogListener {
 
   private int activitiesId;
 
-  protected Button submitButton;
+  protected StyledButton submitButton;
 
-  protected Button signinSheetButton;
+  protected StyledButton signinSheetButton;
 
   protected EditText menUnder15NumText, men1524NumText, menOver24NumText, womenUnder15NumText, women1524NumText,
   womenOver24NumText, notesText;
@@ -133,7 +133,7 @@ PickDateDialogListener, PickTimeDialogListener {
     });
 
     // opening the sign-in sheet
-    signinSheetButton  = (Button) findViewById(R.id.openSigninSheetButton);
+    signinSheetButton  = (StyledButton) findViewById(R.id.openSigninSheetButton);
     signinSheetButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -161,7 +161,7 @@ PickDateDialogListener, PickTimeDialogListener {
     women1524NumText = (EditText) findViewById(R.id.numWomen1524);
     womenOver24NumText = (EditText) findViewById(R.id.numWomenOver24);
     notesText = (EditText) findViewById(R.id.notes);
-    submitButton = (Button) findViewById(R.id.submitbutton);
+    submitButton = (StyledButton) findViewById(R.id.submitbutton);
 
     menUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override

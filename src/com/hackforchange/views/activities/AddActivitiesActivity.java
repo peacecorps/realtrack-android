@@ -8,7 +8,6 @@ import java.util.Date;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +18,7 @@ import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.models.reminders.Reminders;
@@ -36,7 +36,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
   protected EditText title, startDate, endDate, notes, orgs, comms;
   protected EditText mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
   protected CheckBox mondayCheckbox, tuesdayCheckbox, wednesdayCheckbox, thursdayCheckbox, fridayCheckbox, saturdayCheckbox, sundayCheckbox;
-  protected Button submitButton;
+  protected StyledButton submitButton;
   protected boolean startOrEnd; // used in OnDateSetListener to distinguish between start date and end date field
   protected String initiatives;
   protected int projectid;
@@ -345,7 +345,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
       }
     });
 
-    submitButton = (Button) findViewById(R.id.submitbutton);
+    submitButton = (StyledButton) findViewById(R.id.submitbutton);
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

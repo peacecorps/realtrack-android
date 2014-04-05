@@ -80,7 +80,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                invalidateOptionsMenu(); // this is needed because Android doesn't remember the Add icon and changes it back
+                supportInvalidateOptionsMenu(); // this is needed because Android doesn't remember the Add icon and changes it back
                 // to the Settings icon when the Search view is closed
                 if (m != null) addProject.setVisible(true);
                 return false;
@@ -130,7 +130,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
             }
         }
         projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this, R.layout.row_allprojects,
-            R.layout.row_allactivities, filteredprojectsactivities_data);
+            R.layout.row_allactivities, projectsActivitiesListView, filteredprojectsactivities_data);
         projectsActivitiesListView.setAdapter(projectsActivitiesListAdapter);
     }
 
@@ -168,9 +168,9 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
         paHolder.setActivitiesList(new ArrayList<Activities>());
         projectsactivities_data.add(paHolder);
 
-        projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this, R.layout.row_allprojects, R.layout.row_allactivities, projectsactivities_data);
-        projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
         projectsActivitiesListView = (ExpandableListView) findViewById(R.id.projectsactivitieslistView);
+        projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this, R.layout.row_allprojects, R.layout.row_allactivities, projectsActivitiesListView, projectsactivities_data);
+        projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
         projectsActivitiesListView.setAdapter(projectsActivitiesListAdapter);
 
         // make sure all groups are expanded by default
@@ -178,7 +178,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
             projectsActivitiesListView.expandGroup(i);
         }
 
-        // hide default arrow group indicator
+        // hide default arrow group indicator because we will provide our own
         projectsActivitiesListView.setGroupIndicator(null);
 
         filteredprojectsactivities_data = new ArrayList<ProjectsActivitiesHolder>(); //used for filtered data

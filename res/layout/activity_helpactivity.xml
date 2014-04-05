@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/closeButton"
-        android:background="@color/blue"
+        android:background="@drawable/blueitem_background"
         android:padding="10dp"
         android:layout_marginTop="2dp"
         android:text="Close"

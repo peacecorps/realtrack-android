@@ -15,51 +15,61 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/white_background"
-            android:orientation="horizontal"
-            android:paddingBottom="6dp"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
-            android:paddingTop="6dp" >
+            android:background="@color/white"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:background="@color/white"
+                android:paddingLeft="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.hackforchange.common.StyledButton
+                android:id="@+id/quickParticipationBtn"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/darkgrey"
+                android:layout_gravity="right"
+                android:layout_weight="0.1"
+                android:background="@drawable/normalitem_background"
+                android:text="@string/fa_users"
+                android:textColor="@drawable/normalitem_textcolor"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/quickParticipationBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@drawable/white_background"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@drawable/quickparticipation" />
-
-            <ImageView
+            <com.hackforchange.common.StyledButton
                 android:id="@+id/editActivityBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/white_background"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@android:drawable/ic_menu_edit" />
+                android:layout_weight="0.1"
+                android:background="@drawable/normalitem_background"
+                android:text="@string/fa_edit_pencil"
+                android:textColor="@drawable/normalitem_textcolor"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-            <ImageView
+            <com.hackforchange.common.StyledButton
                 android:id="@+id/deleteActivityBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/white_background"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:src="@android:drawable/ic_menu_delete" />
+                android:layout_weight="0.1"
+                android:background="@drawable/normalitem_background"
+                android:text="@string/fa_trash"
+                android:textColor="@drawable/normalitem_textcolor"
+                android:textSize="25sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView

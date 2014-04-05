@@ -23,7 +23,7 @@
     <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
     <string name="ok">OK</string>
     <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
-    <string name="openSigninSheetButtonLabel">Open Sign-In Sheet</string>
+    <string name="openSigninSheetButtonLabel">&#xf090; Open Sign-In Sheet</string>
     <string name="done">Done</string>
     <string name="signinsheetactivity_label">Please Sign In</string>
     <string name="name">Name</string>
@@ -38,7 +38,7 @@
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="save">Save</string>
+    <string name="save">&#xf00c; Save</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="dateformathint">MM/DD/YYYY</string>
@@ -47,11 +47,11 @@
     <string name="participation">Participation</string>
     <string name="menunder15">Men under 15</string>
     <string name="numberofmen">No. of Men</string>
-    <string name="men1524">Men of age 15-24</string>
+    <string name="men1524">Men of age 15&#8211;24</string>
     <string name="menover24">Men over 24</string>
     <string name="womenunder15">Women under 15</string>
     <string name="numberofwomen">No. of Women</string>
-    <string name="women1524">Women of age 15-24</string>
+    <string name="women1524">Women of age 15&#8211;24</string>
     <string name="womenover24">Women over 24</string>
     <string name="eventdetails">Event Details (optional)</string>
     <string name="entereventdetails">Enter event details</string>
@@ -79,6 +79,17 @@
     <string name="foodsecurity">Food Security</string>
     <string name="ecpa">ECPA</string>
     <string name="nameprojecthint">Name Your Project</string>
-    <string name="dismiss">Dismiss</string>
+    <string name="dismiss">&#xf00d; Dismiss</string>
+    <string name="fa_users">&#xf0c0;</string>
+    <string name="fa_edit_pencil">&#xf040;</string>
+    <string name="fa_trash">&#xf014;</string>
+    <string name="fa_rightchevron">&#xf054;</string>
+    <string name="fa_downchevron">&#xf078;</string>
+    <string name="fa_rightcircledarrow">&#xf0a9;</string>
+    <string name="fa_righthand">&#xf0a4;</string>
+    <string name="fa_check">&#xf00c;</string>
+    <string name="fa_calendar">&#xf133;</string>
+    <string name="fa_list">&#xf00b;</string>
+    <string name="fa_table">&#xf0ce;</string>
 
 </resources>

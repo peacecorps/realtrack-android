@@ -3,7 +3,6 @@ package com.hackforchange.views.participationsactive.signinsheet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -12,10 +11,11 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Participant;
 
 public class SignInSheetActivity extends SherlockActivity {
-  private Button submitButton;
+  private StyledButton submitButton;
   private Intent intent; 
   private EditText nameText, phoneText, villageText, ageText;
   private TextView signInMessage;
@@ -46,7 +46,7 @@ public class SignInSheetActivity extends SherlockActivity {
     phoneText = (EditText) findViewById(R.id.phoneEditText);
     villageText = (EditText) findViewById(R.id.villageEditText);
     ageText = (EditText) findViewById(R.id.ageEditText);
-    submitButton = (Button) findViewById(R.id.submitbutton);
+    submitButton = (StyledButton) findViewById(R.id.submitbutton);
     maleRadioButton = (RadioButton) findViewById(R.id.maleRadioButton);
     
     // go back to SignInSheetLandingActivity

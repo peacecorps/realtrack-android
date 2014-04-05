@@ -25,14 +25,14 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <Button
+        <com.hackforchange.common.StyledButton
             android:id="@+id/okbutton"
             android:layout_width="150dip"
             android:layout_height="50dip"
             android:layout_gravity="center"
-            android:background="@color/orange"
+            android:background="@drawable/orangeitem_background"
             android:padding="10dip"
-            android:text="@string/ok"
+            android:text="@string/fa_righthand"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -51,14 +51,14 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <Button
+        <com.hackforchange.common.StyledButton
             android:id="@+id/donebutton"
             android:layout_width="150dip"
             android:layout_height="50dip"
             android:layout_gravity="center"
-            android:background="@color/blue"
+            android:background="@drawable/blueitem_background"
             android:padding="10dip"
-            android:text="@string/done"
+            android:text="@string/fa_check"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textStyle="bold" />

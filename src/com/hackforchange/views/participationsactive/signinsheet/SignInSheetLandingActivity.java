@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Participant;
 
 /*
@@ -18,8 +17,8 @@ import com.hackforchange.models.activities.Participant;
 public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   static final int SIGNIN_REQUEST = 1;
   
-  private Button okButton;
-  private Button doneButton;
+  private StyledButton okButton;
+  private StyledButton doneButton;
   private ArrayList<Participant> participantList;
   private Intent intent;
   
@@ -35,8 +34,10 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     
-    okButton = (Button) findViewById(R.id.okbutton);
-    doneButton = (Button) findViewById(R.id.donebutton);
+    okButton = (StyledButton) findViewById(R.id.okbutton);
+    okButton.setText(getResources().getString(R.string.fa_rightcircledarrow)+" "+"OK");
+    doneButton = (StyledButton) findViewById(R.id.donebutton);
+    doneButton.setText(getResources().getString(R.string.fa_check)+" "+"Done");
     
     // go to sign in sheet
     okButton.setOnClickListener(new View.OnClickListener() {

@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="@string/date"/>
 
         <View
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Men &lt; 15"/>
 
         <View
@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Men 15-24"/>
 
         <View
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Men &gt; 24"/>
 
         <View
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Women &lt; 15"/>
 
         <View
@@ -114,7 +114,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Women 15-24"/>
 
         <View
@@ -131,7 +131,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_width="0px"
-                android:background="@drawable/white_background"
+                android:background="@color/white"
                 android:text="Women &gt; 24"/>
     </LinearLayout>
 

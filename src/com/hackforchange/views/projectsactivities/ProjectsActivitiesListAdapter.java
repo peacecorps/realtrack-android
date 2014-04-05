@@ -14,14 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.AddActivitiesActivity;
@@ -39,12 +39,14 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   List<ProjectsActivitiesHolder> projectsActivitiesData = null;
   View row;
   LayoutInflater inflater;
+  ExpandableListView listView;
 
-  public ProjectsActivitiesListAdapter(Context context, int groupLayoutResourceId, int childLayoutResourceId, List<ProjectsActivitiesHolder> projectsActivitiesData) {
+  public ProjectsActivitiesListAdapter(Context context, int groupLayoutResourceId, int childLayoutResourceId, ExpandableListView expandableListView, List<ProjectsActivitiesHolder> projectsActivitiesData) {
     super();
     this.groupLayoutResourceId = groupLayoutResourceId;
     this.childLayoutResourceId = childLayoutResourceId;
     this.context = context;
+    listView = expandableListView;
     this.projectsActivitiesData = projectsActivitiesData;
 
   }
@@ -91,6 +93,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   @Override
   public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     final int groupPos = groupPosition;
+    final boolean isExp = isExpanded;
     row = convertView;
     Holder holder = null;
 
@@ -110,9 +113,11 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.txtTitle.setText(project.getTitle());
 
     if(project.getId() == -1){ //"add new project..." item. hide the date field, the edit activity icon and the delete activity icon
-      row.findViewById(R.id.editProjectBtn).setVisibility(View.GONE);
-      row.findViewById(R.id.deleteProjectBtn).setVisibility(View.GONE);
+      row.findViewById(R.id.editProjectBtn).setVisibility(View.INVISIBLE);
+      row.findViewById(R.id.deleteProjectBtn).setVisibility(View.INVISIBLE);
       row.findViewById(R.id.startDate).setVisibility(View.GONE);
+      
+      ((StyledButton)row.findViewById(R.id.expandCollapseProjectBtn)).setText(context.getResources().getString(R.string.fa_rightchevron));
 
       // handle click on the title text view and show activity details
       holder.txtTitle.setOnClickListener(new View.OnClickListener() {
@@ -150,9 +155,25 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         }
       });
+      
+      // expand and collapse groups
+      final StyledButton expandCollapseProjectBtn = (StyledButton) row.findViewById(R.id.expandCollapseProjectBtn);
+      expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if(isExp){
+            listView.collapseGroup(groupPos);
+            expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+          }
+          else{
+            listView.expandGroup(groupPos);
+            expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+          }
+        }
+      });
 
       // handle click on the edit project icon
-      ImageView editProjectBtn = (ImageView) row.findViewById(R.id.editProjectBtn);
+      StyledButton editProjectBtn = (StyledButton) row.findViewById(R.id.editProjectBtn);
       editProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -164,7 +185,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // handle click on the delete project icon
-      ImageView deleteProjectBtn = (ImageView) row.findViewById(R.id.deleteProjectBtn);
+      StyledButton deleteProjectBtn = (StyledButton) row.findViewById(R.id.deleteProjectBtn);
       deleteProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -186,20 +207,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           .show();
         }
       });
-      
-      LinearLayout projectGroupLinearLayout = (LinearLayout) row.findViewById(R.id.projectGroupLinearLayout);
-      
-      //Fix for Issue #18. Make sure all fields show if the group is expanded.
-      if(isExpanded){
-        holder.startDate.setVisibility(View.VISIBLE);
-        holder.txtTitle.setVisibility(View.VISIBLE);
-        editProjectBtn.setVisibility(View.VISIBLE);
-        deleteProjectBtn.setVisibility(View.VISIBLE);
-        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.blue));
-      }
-      else{
-        projectGroupLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.disabledgrey));
-      }
       
     }
     return row;
@@ -270,7 +277,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // handle click on the quick participation icon
-      ImageView quickParticipationBtn = (ImageView) row.findViewById(R.id.quickParticipationBtn);
+      StyledButton quickParticipationBtn = (StyledButton) row.findViewById(R.id.quickParticipationBtn);
       quickParticipationBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -286,7 +293,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // handle click on the edit activity icon
-      ImageView editActivityBtn = (ImageView) row.findViewById(R.id.editActivityBtn);
+      StyledButton editActivityBtn = (StyledButton) row.findViewById(R.id.editActivityBtn);
       editActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -298,7 +305,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // handle click on the delete activity icon
-      ImageView deleteActivityBtn = (ImageView) row.findViewById(R.id.deleteActivityBtn);
+      StyledButton deleteActivityBtn = (StyledButton) row.findViewById(R.id.deleteActivityBtn);
       deleteActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

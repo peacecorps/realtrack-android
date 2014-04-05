@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/white_background"
+            android:background="@color/white"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/white_background"
+            android:background="@color/white"
             android:hint="@string/dateformathint"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/white_background"
+            android:background="@color/white"
             android:hint="@string/timeformathint"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
@@ -99,11 +99,11 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <Button
+        <com.hackforchange.common.StyledButton
             android:id="@+id/openSigninSheetButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/orange"
+            android:background="@drawable/orangeitem_background"
             android:padding="8dp"
             android:text="@string/openSigninSheetButtonLabel"
             android:textColor="@android:color/white"
@@ -115,7 +115,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/white_background"
+            android:background="@color/white"
             android:padding="10dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
@@ -260,7 +260,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:background="@drawable/white_background"
+            android:background="@color/white"
             android:hint="@string/entereventdetails"
             android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
             android:maxLines="6"
@@ -281,11 +281,11 @@
             android:orientation="horizontal"
             android:padding="10dp" >
 
-            <Button
+            <com.hackforchange.common.StyledButton
                 android:id="@+id/submitbutton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blue"
+                android:background="@drawable/blueitem_background"
                 android:padding="10dp"
                 android:text="@string/save"
                 android:textColor="@android:color/white"

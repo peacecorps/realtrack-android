@@ -7,7 +7,6 @@ import java.util.Date;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,6 +14,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.projects.ProjectDAO;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.dialogs.PickDateDialog;
 import com.hackforchange.views.dialogs.PickDateDialogListener;
@@ -32,7 +32,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
   protected EditText startDate;
   protected EditText endDate;
   protected EditText notes;
-  protected Button submitButton;
+  protected StyledButton submitButton;
   protected boolean startOrEnd; // used to distinguish between start date and end date field
   protected Project p;
 
@@ -110,7 +110,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     title = (EditText) findViewById(R.id.title);
     notes = (EditText) findViewById(R.id.notes);
 
-    submitButton = (Button) findViewById(R.id.submitbutton);
+    submitButton = (StyledButton) findViewById(R.id.submitbutton);
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
