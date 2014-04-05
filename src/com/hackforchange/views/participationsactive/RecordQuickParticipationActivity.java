@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -65,7 +63,7 @@ PickDateDialogListener, PickTimeDialogListener {
 
   private Activities a;
   
-  private List <Participant> participantList;
+  private ArrayList <Participant> participantList;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -139,6 +137,9 @@ PickDateDialogListener, PickTimeDialogListener {
       public void onClick(View v) {
         Intent i = new Intent(getApplicationContext(), SignInSheetLandingActivity.class);
         i.putExtra("activitytitle", a.getTitle()); // displayed on SignInSheetActivity
+        Bundle resultBundle = new Bundle();
+        resultBundle.putParcelableArrayList("participantList", participantList);
+        i.putExtras(resultBundle);
         if(date.getText().toString().length()!=0){
           i.putExtra("participationdate", date.getText().toString()); // displayed on SignInSheetActivity
         }
@@ -364,9 +365,7 @@ PickDateDialogListener, PickTimeDialogListener {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
-        List<Participant> currentParticipantList = resultBundle.getParcelableArrayList("participantList");
-        
-        participantList.addAll(currentParticipantList);
+        participantList = resultBundle.getParcelableArrayList("participantList");
         
         if(!participantList.isEmpty())
           updateParticipantNumbersInDisplay();

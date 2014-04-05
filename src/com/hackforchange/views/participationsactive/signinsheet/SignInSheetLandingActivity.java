@@ -1,7 +1,6 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
 import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,8 +27,9 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signinsheetlanding);
-    participantList = new ArrayList<Participant>();
     intent = getIntent();
+    Bundle resultBundle = intent.getExtras();
+    participantList = resultBundle.getParcelableArrayList("participantList");
   }
 
   @Override

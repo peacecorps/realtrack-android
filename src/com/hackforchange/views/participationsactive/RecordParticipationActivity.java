@@ -4,8 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -94,6 +92,9 @@ public class RecordParticipationActivity extends SherlockActivity {
         Intent i = new Intent(getApplicationContext(), SignInSheetLandingActivity.class);
         i.putExtra("activitytitle", a.getTitle()); // displayed on SignInSheetActivity
         i.putExtra("participationdate", participationDate); // displayed on SignInSheetActivity
+        Bundle resultBundle = new Bundle();
+        resultBundle.putParcelableArrayList("participantList", participantList);
+        i.putExtras(resultBundle);
         i.putExtra("firstOpen", true); //used to jump straight to SignInSheetActivity the very first time
         startActivityForResult(i, ADD_PARTICIPANTS_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
@@ -292,9 +293,7 @@ public class RecordParticipationActivity extends SherlockActivity {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
-        List<Participant> currentParticipantList = resultBundle.getParcelableArrayList("participantList");
-
-        participantList.addAll(currentParticipantList);
+        participantList = resultBundle.getParcelableArrayList("participantList");
 
         if(!participantList.isEmpty())
           updateParticipantNumbersInDisplay();
