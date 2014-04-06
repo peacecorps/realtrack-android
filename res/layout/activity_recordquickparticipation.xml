@@ -99,16 +99,25 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <com.hackforchange.common.StyledButton
-            android:id="@+id/openSigninSheetButton"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/orangeitem_background"
-            android:padding="8dp"
-            android:text="@string/openSigninSheetButtonLabel"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="10dp" >
+
+            <com.hackforchange.common.StyledButton
+                android:id="@+id/openSigninSheetButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orangeitem_background"
+                android:padding="8dp"
+                android:text="@string/openSigninSheetButtonLabel"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
