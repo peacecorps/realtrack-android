@@ -14,6 +14,8 @@
         android:icon="@drawable/realtrack"
         android:label="@string/app_name"
         android:theme="@style/Theme.Vrf" >
+        
+        <!-- ACTIVITIES -->
         <activity
             android:name="com.hackforchange.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
@@ -25,30 +27,36 @@
         </activity>
         <activity
             android:name="com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity"
-            android:label="@string/allprojectsactivity_label" />
+            android:label="@string/allprojectsactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.projects.AddProjectActivity"
-            android:label="@string/addprojectactivity_label" />
+            android:label="@string/addprojectactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.projects.DisplayProjectActivity"
             android:label="@string/displayprojectactivity_label" />
         <activity
             android:name="com.hackforchange.views.projects.EditProjectActivity"
-            android:label="@string/editprojectactivity_label" />
+            android:label="@string/editprojectactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.activities.AddActivitiesActivity"
-            android:label="@string/addactivitiesactivity_label" />
+            android:label="@string/addactivitiesactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.activities.DisplayActivitiesActivity"
             android:label="@string/displayactivitiesactivity_label" />
         <activity
             android:name="com.hackforchange.views.activities.EditActivitiesActivity"
-            android:label="@string/editactivitiesactivity_label" />
+            android:label="@string/editactivitiesactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
             android:exported="true"
             android:label="@string/recordparticipationactivity_label"
-            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity" >
+            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
 
             <!-- Back stack for notifications -->
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -58,13 +66,11 @@
         </activity>
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
-            android:label="@string/recordquickparticipationactivity_label" />
+            android:label="@string/recordquickparticipationactivity_label"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.hackforchange.views.participationspending.PendingParticipationActivity"
             android:label="@string/pendingparticipationactivity_label" />
-        <activity
-            android:name="com.hackforchange.views.activities.AllParticipationActivity"
-            android:label="@string/allparticipationsactivity_label" />
         <activity
             android:name="com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity"
             android:label="@string/allparticipationsactivity_label" />
@@ -91,6 +97,13 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="com.hackforchange.views.participationsactive.signinsheet.SignatureDialog"
+            android:label="@string/title_activity_signature" >
+        </activity>
+        
+        <!-- SERVICES AND PROVIDERS  -->
+
         <service android:name="com.hackforchange.reminderalarms.NotificationService" />
 
         <provider
@@ -98,11 +111,6 @@
             android:authorities="com.hackforchange.providers.CachedFileContentProvider"
             android:exported="true" >
         </provider>
-
-        <activity
-            android:name="com.hackforchange.views.participationsactive.signinsheet.SignatureDialog"
-            android:label="@string/title_activity_signature" >
-        </activity>
     </application>
 
 </manifest>
