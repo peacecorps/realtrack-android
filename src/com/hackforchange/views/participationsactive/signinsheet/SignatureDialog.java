@@ -12,7 +12,7 @@ public class SignatureDialog extends DialogFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.activity_signaturedialog, container, false);
+    View view = inflater.inflate(R.layout.dialog_signature, container, false);
     getDialog().setCanceledOnTouchOutside(false);
     
     /*Button closeButton = (Button) view.findViewById(R.id.closeButton); 
