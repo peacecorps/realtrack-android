@@ -25,7 +25,7 @@ public class Activities {
     public static final String ACTIVITIES_TABLE = "activities";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PROJECTID = "_projectid"; // foreign key referencing Project.id
-    public static final String COLUMN_UPDATED = "updated"; //when this ACTIVITIES was last modified
+    public static final String COLUMN_UPDATED = "updated";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_STARTDATE = "startdate";
     public static final String COLUMN_ENDDATE = "enddate";
@@ -48,7 +48,6 @@ public class Activities {
         + COLUMN_STARTDATE + " integer not null, "
         + COLUMN_ENDDATE + " integer not null, "
         + COLUMN_PROJECTID + " integer not null references " + Project.PROJECT_TABLE + " (" + Project.COLUMN_ID + ") ON DELETE CASCADE "
-        //foreign key constraint. Make sure to delete the activities if the project that owns it is deleted
         + ");";
 
     // used to create the table

@@ -21,7 +21,6 @@ public class ParticipationDAO {
         this.opener = GlobalDatabaseHelper.getInstance(context);
         this.readDatabase = opener.getReadableDatabase();
         this.writeDatabase = opener.getWritableDatabase();
-        this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
         closeDB();
     }
 

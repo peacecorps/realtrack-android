@@ -18,7 +18,7 @@ public class Project {
     // Database table
     public static final String PROJECT_TABLE = "projects";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_UPDATED = "updated"; //when this project was last modified
+    public static final String COLUMN_UPDATED = "updated";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_STARTDATE = "startdate";
     public static final String COLUMN_ENDDATE = "enddate";

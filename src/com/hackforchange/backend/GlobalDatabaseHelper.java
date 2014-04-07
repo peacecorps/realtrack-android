@@ -42,4 +42,13 @@ public class GlobalDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         Participant.onUpgrade(database, oldVersion, newVersion);
     }
+    
+    @Override
+    public void onOpen(SQLiteDatabase database){
+      super.onOpen(database);
+      if (!database.isReadOnly()) {
+          // Enable foreign key constraints
+          database.execSQL("PRAGMA foreign_keys=ON;");
+      }
+    }
 }

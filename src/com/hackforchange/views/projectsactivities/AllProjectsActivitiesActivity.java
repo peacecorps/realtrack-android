@@ -154,6 +154,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
       ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
       paHolder.setProject(p);
       List<Activities> activitiesList = aDao.getAllActivitiesForProjectId(p.getId());
+      
       Activities addNewActivityDummy = new Activities();
       addNewActivityDummy.setTitle("Add a new activity...");
       addNewActivityDummy.setId(-1);

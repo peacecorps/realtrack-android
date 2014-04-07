@@ -19,7 +19,7 @@ public class Reminders {
     public static final String REMINDERS_TABLE = "reminders";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Activity.id
-    public static final String COLUMN_UPDATED = "updated"; //when this reminder was last modified
+    public static final String COLUMN_UPDATED = "updated";
     public static final String COLUMN_REMINDTIME = "remindtime";
 
     // Database creation SQL statement
@@ -30,7 +30,6 @@ public class Reminders {
         + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
         + COLUMN_REMINDTIME + " integer not null, "
         + COLUMN_ACTIVITYID + " integer not null references " + Activities.ACTIVITIES_TABLE + " (" + Activities.COLUMN_ID + ") ON DELETE CASCADE "
-        //foreign key constraint. Make sure to delete the reminders if the activity that owns it is deleted
         + ");";
 
     // used to create the table

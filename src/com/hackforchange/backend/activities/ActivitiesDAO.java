@@ -27,7 +27,6 @@ public class ActivitiesDAO {
     this.opener = GlobalDatabaseHelper.getInstance(context);
     this.readDatabase = opener.getReadableDatabase();
     this.writeDatabase = opener.getWritableDatabase();
-    this.writeDatabase.execSQL("PRAGMA foreign_keys=ON"); // make sure to turn foreign keys constraints on
     closeDB();
   }
 
@@ -187,7 +186,6 @@ public class ActivitiesDAO {
     reminders_data = rDao.getAllRemindersForActivityId(activityId);
     for (Reminders r : reminders_data) {
       EditActivitiesActivity.deleteAlarmsForReminder(context, r.getId());
-      rDao.deleteReminders(r.getId(), context);
     }
   }
 }

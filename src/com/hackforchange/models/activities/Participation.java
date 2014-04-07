@@ -20,9 +20,9 @@ public class Participation {
   // Database table
   public static final String PARTICIPATION_TABLE = "participation";
   public static final String COLUMN_ID = "_id";
-  public static final String COLUMN_REMINDERID = "_reminderid"; // foreign key referencing Reminders.id
+  public static final String COLUMN_REMINDERID = "_reminderid";
   public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Activity.id
-  public static final String COLUMN_UPDATED = "updated"; //when this PARTICIPATION was last modified
+  public static final String COLUMN_UPDATED = "updated";
   public static final String COLUMN_MEN = "men";
   public static final String COLUMN_MEN1524 = "men1524";
   public static final String COLUMN_MENOVER24 = "menOver24";
