@@ -16,7 +16,7 @@ public class HelpDialog extends DialogFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.activity_helpactivity, container, false);
+    View view = inflater.inflate(R.layout.activity_helpdialog, container, false);
     getDialog().setCanceledOnTouchOutside(true);
     
     Button closeButton = (Button) view.findViewById(R.id.closeButton); 

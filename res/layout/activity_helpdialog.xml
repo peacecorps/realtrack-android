@@ -11,20 +11,20 @@
     <WebView
         android:id="@+id/helpContent"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <Button
+    <com.hackforchange.common.StyledButton
         android:id="@+id/closeButton"
-        android:background="@drawable/blueitem_background"
-        android:padding="10dp"
-        android:layout_marginTop="2dp"
-        android:text="Close"
-        android:textColor="@android:color/white"
-        android:textSize="25dp"
-        android:textStyle="bold" 
-        android:layout_width="wrap_content"
+        android:layout_width="150dip"
         android:layout_height="wrap_content"
         android:layout_below="@id/helpContent"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/orangeitem_background"
+        android:padding="10dp"
+        android:text="@string/close"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

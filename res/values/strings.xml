@@ -19,7 +19,6 @@
     <string name="helpactivity_label">HelpActivity</string>
     <string name="action_settings">Settings</string>
     <string name="signinsheetlandingactivity_label">Sign-In Sheet</string>
-    <string name="hello_world">Hello world!</string>
     <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
     <string name="ok">&#xf0a4; OK</string>
     <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
@@ -82,6 +81,7 @@
     <string name="ecpa">ECPA</string>
     <string name="nameprojecthint">Name Your Project</string>
     <string name="dismiss">&#xf00d; Dismiss</string>
+    <string name="close">&#xf00d; Close</string>
     <string name="fa_users">&#xf0c0;</string>
     <string name="fa_edit_pencil">&#xf040;</string>
     <string name="fa_trash">&#xf014;</string>
@@ -94,5 +94,6 @@
     <string name="fa_list">&#xf00b;</string>
     <string name="fa_table">&#xf0ce;</string>
     <string name="reviewsigninactivity_label">Review Participants</string>
+    <string name="title_activity_signature">Please Sign</string>
 
 </resources>
