@@ -1,5 +1,7 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -10,6 +12,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,12 +36,13 @@ public class SignatureView extends View{
   private int mCurSignatureColor;
   private Paint mSignaturePaint;
   private Path mSignaturePath;
-  private final RectF dirtyRectangle;
+  private RectF dirtyRectangle;
   private final static float STROKE_WIDTH = 5f;
   private Canvas mCanvas;
   Bitmap mOffScreenBitmap;
   private float mX, mY;
   private boolean mNothingDrawn;
+  private ArrayList<MotionEvent> pathToRestore, pathToSave;
 
   // stroke width?
   // rotation
@@ -46,6 +51,8 @@ public class SignatureView extends View{
 
   public SignatureView(Context context, AttributeSet attrs) {
     super(context, attrs);
+    
+    setSaveEnabled(true);
 
     setFocusable(true);
     setFocusableInTouchMode(true);
@@ -62,8 +69,6 @@ public class SignatureView extends View{
       styledAttrs.recycle();
     }
 
-    dirtyRectangle = new RectF();
-
     init();
   }
 
@@ -78,6 +83,11 @@ public class SignatureView extends View{
     mSignaturePath = new Path();
 
     mNothingDrawn = true;
+    
+    dirtyRectangle = new RectF();
+    
+    pathToSave = new ArrayList<MotionEvent>();
+    pathToRestore = new ArrayList<MotionEvent>();
   }
 
   @Override
@@ -86,6 +96,12 @@ public class SignatureView extends View{
 
     super.onSizeChanged(w, h, oldw, oldh);
     createNewBitmap(); //don't put this in the constructor because getWidth and getHeight return 0 before layout is finalized
+    
+    if(!pathToRestore.isEmpty()){
+      for(MotionEvent e: pathToRestore)
+        onTouchEvent(e);
+      pathToRestore.clear();
+    }
   }
 
   private void createNewBitmap() {
@@ -102,9 +118,10 @@ public class SignatureView extends View{
 
   @Override
   public boolean onTouchEvent(MotionEvent e){
+    pathToSave.add(MotionEvent.obtain(e)); //important! use obtain or you'll get the same event over and over again in the arraylist
     float x = e.getX();
     float y = e.getY();
-
+    
     switch(e.getAction()){
       case MotionEvent.ACTION_DOWN:
         mNothingDrawn = false;
@@ -271,6 +288,8 @@ public class SignatureView extends View{
   public void eraseSignature(){
     mNothingDrawn = true;
     mSignaturePath.reset();
+    pathToRestore.clear();
+    pathToSave.clear();
     createNewBitmap();
     postInvalidate();
   }
@@ -285,6 +304,33 @@ public class SignatureView extends View{
   private void refreshView(){
     postInvalidate();
     requestLayout();
+  }
+  
+  @Override
+  public Parcelable onSaveInstanceState() {
+    Bundle bundle = new Bundle();
+    bundle.putParcelable("instanceState", super.onSaveInstanceState());
+    bundle.putBoolean("mNothingDrawn", mNothingDrawn);
+    bundle.putInt("mCurSignatureColor", mCurSignatureColor);
+    bundle.putParcelable("mSignatureColor", mSignatureColor);
+    bundle.putParcelableArrayList("pathToRestore", pathToSave);
+    
+    return bundle;
+  }
+
+  @Override
+  public void onRestoreInstanceState(Parcelable state) {
+    if (state instanceof Bundle) {
+      Bundle bundle = (Bundle) state;
+      mNothingDrawn = bundle.getBoolean("mNothingDrawn");
+      mCurSignatureColor = bundle.getInt("mCurSignatureColor");
+      mSignatureColor = bundle.getParcelable("mSignatureColor");
+      pathToRestore = bundle.getParcelableArrayList("pathToRestore");
+      pathToSave.clear();
+      state = bundle.getParcelable("instanceState");
+    }
+    
+    super.onRestoreInstanceState(state);
   }
 
   /**
