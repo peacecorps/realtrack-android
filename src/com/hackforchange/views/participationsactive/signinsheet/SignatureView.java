@@ -17,9 +17,10 @@ import android.view.View;
 import com.hackforchange.R;
 
 /**
- * Custom view that allows the user to "write" a signature using their finger.
+ * Custom view that allows the user to "write" a signature using their finger. Uses cubic Bezier
+ * interpolation for curve smoothing.
  * 
- * <p>Here are two excellent resources on the subject:
+ * <p>Here are two excellent resources:
  * <ul>
  * <li><a href="http://corner.squareup.com/2010/07/smooth-signatures.html">Smooth Signatures</a>
  * <li><a href="http://corner.squareup.com/2012/07/smoother-signatures.html">Smoother Signatures</a>
@@ -36,10 +37,12 @@ public class SignatureView extends View{
   private Canvas mCanvas;
   Bitmap mOffScreenBitmap;
   private float mX, mY;
+  private boolean mNothingDrawn;
 
   // stroke width?
   // rotation
   // velocity-based varying stroke width
+  // save instance state on rotation
 
   public SignatureView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -60,6 +63,7 @@ public class SignatureView extends View{
     }
 
     dirtyRectangle = new RectF();
+
     init();
   }
 
@@ -72,6 +76,8 @@ public class SignatureView extends View{
     mSignaturePaint.setStrokeWidth(STROKE_WIDTH);
 
     mSignaturePath = new Path();
+
+    mNothingDrawn = true;
   }
 
   @Override
@@ -101,6 +107,7 @@ public class SignatureView extends View{
 
     switch(e.getAction()){
       case MotionEvent.ACTION_DOWN:
+        mNothingDrawn = false;
         handleTouchDown(x, y);
         return true;
       case MotionEvent.ACTION_MOVE:
@@ -156,7 +163,7 @@ public class SignatureView extends View{
         s1 = s2; s2 = s3; mX = s3.x; mY = s3.y;
         updateDirtyRectangle(s3.x, s3.y);
       }
-      
+
       mSignaturePath.lineTo(mX, mY); //important! take care of the last point or your lines will turn out shaky
     }
     else{
@@ -262,9 +269,17 @@ public class SignatureView extends View{
   }
 
   public void eraseSignature(){
+    mNothingDrawn = true;
     mSignaturePath.reset();
     createNewBitmap();
     postInvalidate();
+  }
+
+  public Bitmap getSignature(){
+    if(mNothingDrawn)
+      return null;
+    else
+      return Bitmap.createScaledBitmap(mOffScreenBitmap, getWidth()/2, getHeight()/2, false);
   }
 
   private void refreshView(){
@@ -287,7 +302,7 @@ public class SignatureView extends View{
     public float getLength(){
       return (float) Math.sqrt((left.x-right.x)*(left.x-right.x) + (left.y-right.y)*(left.y-right.y));
     }
-    
+
     public PointF getMidPoint(){
       return new PointF((left.x+right.x)/2, (left.y+right.y)/2);
     }

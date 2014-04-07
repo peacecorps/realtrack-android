@@ -14,16 +14,16 @@
     <string name="recordquickparticipationactivity_label">Quick Add Participation</string>
     <string name="pendingparticipationactivity_label">Pending Participations</string>
     <string name="allparticipationsactivity_label">Participation Details</string>
-    <string name="emptyfieldserrormessage">"All non-optional fields are required"</string>
+    <string name="emptyfieldserrormessage">"All non&#8211;optional fields are required"</string>
     <string name="emptyparticipationmessage">"Please enter the number of participants"</string>
     <string name="helpactivity_label">HelpActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="signinsheetlandingactivity_label">Sign-In Sheet</string>
+    <string name="signinsheetlandingactivity_label">Sign&#8211;In Sheet</string>
     <string name="passDeviceToNextParticipant">Please pass the device to the next participant</string>
     <string name="ok">&#xf0a4; OK</string>
     <string name="noMoreParticipants">All participants done\nPlease return device to Peace Corps Volunteer</string>
     <string name="reviewParticipants">Review participants</string>
-    <string name="openSigninSheetButtonLabel">&#xf090; Open Sign-In Sheet</string>
+    <string name="openSigninSheetButtonLabel">&#xf090; Open Sign&#8211;In Sheet</string>
     <string name="done">&#xf00c; Done</string>
     <string name="review">&#xf022; Review</string>
     <string name="signinsheetactivity_label">Please Sign In</string>
@@ -95,5 +95,9 @@
     <string name="fa_table">&#xf0ce;</string>
     <string name="reviewsigninactivity_label">Review Participants</string>
     <string name="title_activity_signature">Please Sign</string>
+    <string name="clear">&#xf021; Clear</string>
+    <string name="pleasesignfirst">Please sign first</string>
+    <string name="sign">&#xf044; Sign</string>
+    <string name="signagain">&#xf044; Re&#8211;Sign</string>
 
 </resources>

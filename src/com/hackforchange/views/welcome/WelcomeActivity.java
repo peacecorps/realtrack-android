@@ -13,7 +13,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.views.participationsactive.signinsheet.SignatureDialog;
+import com.hackforchange.views.help.HelpDialog;
 
 public class WelcomeActivity extends SherlockFragmentActivity {
   private ListView homeitemslist; //holds a list of homeitems
@@ -61,12 +61,9 @@ public class WelcomeActivity extends SherlockFragmentActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_help:
-        SignatureDialog signatureDialog = new SignatureDialog();
-        signatureDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        signatureDialog.show(getSupportFragmentManager(), "signaturedialog");
-        /*HelpDialog helpDialog = new HelpDialog();
+        HelpDialog helpDialog = new HelpDialog();
         helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        helpDialog.show(getSupportFragmentManager(), "helpdialog");*/
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
         break;
       default:
         return super.onOptionsItemSelected(item);
