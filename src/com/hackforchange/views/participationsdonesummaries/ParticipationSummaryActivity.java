@@ -220,13 +220,13 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           Date d = new Date(participation.getDate());
           participationDate.setText(dateParser.format(d));
           TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
-          participationMen.setText(participation.getMen() + "");
+          participationMen.setText(participation.getMenUnder15() + "");
           participationMen = (TextView) childParticipationView.findViewById(R.id.men1524);
           participationMen.setText(participation.getMen1524() + "");
           participationMen = (TextView) childParticipationView.findViewById(R.id.menOver24);
           participationMen.setText(participation.getMenOver24() + "");
           TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
-          participationWomen.setText(participation.getWomen() + "");
+          participationWomen.setText(participation.getWomenUnder15() + "");
           participationWomen = (TextView) childParticipationView.findViewById(R.id.women1524);
           participationWomen.setText(participation.getWomen1524() + "");
           participationWomen = (TextView) childParticipationView.findViewById(R.id.womenOver24);
@@ -235,8 +235,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           participationNotes.setText("Event details: " + participation.getNotes());
           summaryLayout.addView(childParticipationView);
 
-          sumMen += participation.getMen();
-          sumWomen += participation.getWomen();
+          sumMen += participation.getMenUnder15();
+          sumWomen += participation.getWomenUnder15();
           sumMen1524 += participation.getMen1524();
           sumWomen1524 += participation.getWomen1524();
           sumMenOver24 += participation.getMenOver24();
@@ -267,10 +267,10 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                   inits + "," +
                   dateParser.format(participation.getDate()) + "," +
                   timeParser.format(participation.getDate()) + "," +
-                  participation.getMen() + "," +
+                  participation.getMenUnder15() + "," +
                   participation.getMen1524() + "," +
                   participation.getMenOver24() + "," +
-                  participation.getWomen() + "," +
+                  participation.getWomenUnder15() + "," +
                   participation.getWomen1524() + "," +
                   participation.getWomenOver24() + "," +
                   ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";

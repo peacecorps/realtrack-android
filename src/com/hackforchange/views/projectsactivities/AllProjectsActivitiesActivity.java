@@ -15,8 +15,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
+import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.models.activities.Activities;
+import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.projects.AddProjectActivity;
 
@@ -147,20 +149,32 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
   void createAllProjectsActivitiesList() {
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+    ParticipationDAO paDao = new ParticipationDAO(getApplicationContext());
     ArrayList<Project> projects_data = pDao.getAllProjects();
     projectsactivities_data = new ArrayList<ProjectsActivitiesHolder>();
 
     for (Project p : projects_data) {
       ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
       paHolder.setProject(p);
+      List<ActivitiesParticipationHolder> activitiesParticipationHoldersList = new ArrayList<ActivitiesParticipationHolder>();
       List<Activities> activitiesList = aDao.getAllActivitiesForProjectId(p.getId());
       
+      for(Activities a: activitiesList){
+        ActivitiesParticipationHolder activitiesParticipationHolder = new ActivitiesParticipationHolder();
+        activitiesParticipationHolder.setActivity(a);
+        activitiesParticipationHolder.setParticipationList(paDao.getAllParticipationsForActivityId(a.getId()));
+        activitiesParticipationHoldersList.add(activitiesParticipationHolder);
+      }
+      
+      ActivitiesParticipationHolder activitiesParticipationHolder = new ActivitiesParticipationHolder();
       Activities addNewActivityDummy = new Activities();
       addNewActivityDummy.setTitle("Add a new activity...");
       addNewActivityDummy.setId(-1);
       addNewActivityDummy.setProjectid(p.getId());
-      activitiesList.add(addNewActivityDummy);
-      paHolder.setActivitiesList(activitiesList);
+      activitiesParticipationHolder.setActivity(addNewActivityDummy);
+      activitiesParticipationHolder.setParticipationList(new ArrayList<Participation>());
+      activitiesParticipationHoldersList.add(activitiesParticipationHolder);
+      paHolder.setActivitiesParticipationList(activitiesParticipationHoldersList);
       projectsactivities_data.add(paHolder);
     }
 
@@ -169,7 +183,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
     p.setId(-1);
     p.setTitle("Add a new project...");
     paHolder.setProject(p);
-    paHolder.setActivitiesList(new ArrayList<Activities>());
+    paHolder.setActivitiesParticipationList(new ArrayList<ActivitiesParticipationHolder>());
     projectsactivities_data.add(paHolder);
 
     updateProjectsActivitiesList(projectsactivities_data);

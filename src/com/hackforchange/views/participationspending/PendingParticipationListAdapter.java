@@ -71,10 +71,11 @@ public class PendingParticipationListAdapter extends ArrayAdapter<Participation>
 
     return row;
   }
+
+  private class ParticipationHolder {
+    TextView projectTitle;
+    TextView activityTitle;
+    TextView participationDate;
+  }
 }
 
-class ParticipationHolder {
-  TextView projectTitle;
-  TextView activityTitle;
-  TextView participationDate;
-}

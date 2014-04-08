@@ -192,10 +192,10 @@ public class RecordParticipationActivity extends SherlockActivity {
             return;
           }
           else
-            p.setMen(Integer.parseInt(menUnder15NumText.getText().toString()));
+            p.setMenUnder15(Integer.parseInt(menUnder15NumText.getText().toString()));
         }
         else {
-          p.setMen(0);
+          p.setMenUnder15(0);
         }
 
         if (men1524Checkbox.isChecked()) {
@@ -231,10 +231,10 @@ public class RecordParticipationActivity extends SherlockActivity {
             return;
           }
           else
-            p.setWomen(Integer.parseInt(womenUnder15NumText.getText().toString()));
+            p.setWomenUnder15(Integer.parseInt(womenUnder15NumText.getText().toString()));
         }
         else {
-          p.setWomen(0);
+          p.setWomenUnder15(0);
         }
 
         if (women1524Checkbox.isChecked()) {
