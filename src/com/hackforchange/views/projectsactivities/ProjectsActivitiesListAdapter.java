@@ -251,10 +251,10 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
-      holder.activityStartDate.setVisibility(View.INVISIBLE);
       holder.editActivityBtn.setVisibility(View.INVISIBLE);
       holder.deleteActivityBtn.setVisibility(View.INVISIBLE);
       holder.quickParticipationBtn.setVisibility(View.INVISIBLE);
+      holder.activityStartDate.setVisibility(View.GONE);
       holder.participationsLinearLayout.setVisibility(View.GONE);
       holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_plus));
       
