@@ -239,7 +239,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.editActivityBtn = (StyledButton) row.findViewById(R.id.editActivityBtn);
       holder.deleteActivityBtn = (StyledButton) row.findViewById(R.id.deleteActivityBtn);
       holder.quickParticipationBtn = (StyledButton) row.findViewById(R.id.quickParticipationBtn);
-      holder.participationsLinearLayout = (LinearLayout) row.findViewById(R.id.participationsList);
+      holder.participationsLinearLayout = (LinearLayout) row.findViewById(R.id.participationsLinearLayout);
       holder.expandCollapseActivityBtn = (StyledButton)row.findViewById(R.id.expandCollapseActivityBtn);
       holder.isExp = true; //show participationsLinearLayout by default
 
