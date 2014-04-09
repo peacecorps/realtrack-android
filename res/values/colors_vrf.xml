@@ -18,8 +18,8 @@
 
 <resources>
     <color name="pressed_vrf">#CCF86C6C</color>
-    <color name="lightergrey">#DBDBDB</color>
-    <color name="lightgrey">#C2C2C2</color>
+    <color name="lightergrey">#E3E3E3</color>
+    <color name="lightgrey">#CACACA</color>
     <color name="darkgrey">#464646</color>
     <color name="darkergrey">#242424</color>
     <color name="homeitemlightgrey">#FCFCFC</color>

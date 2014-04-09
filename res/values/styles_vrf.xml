@@ -14,6 +14,6 @@
     <style name="ActionBar.Title.Style" parent="@style/TextAppearance.Sherlock.Widget.ActionBar.Title">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">22dp</item>
+        <item name="android:textSize">22sp</item>
     </style>
-</resources>
+</resources>

@@ -4,7 +4,7 @@
     android:versionCode="4"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="11" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -56,7 +56,8 @@
             android:exported="true"
             android:label="@string/recordparticipationactivity_label"
             android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden" >
 
             <!-- Back stack for notifications -->
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -67,7 +68,8 @@
         <activity
             android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
             android:label="@string/recordquickparticipationactivity_label"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.hackforchange.views.participationspending.PendingParticipationActivity"
             android:label="@string/pendingparticipationactivity_label" />

@@ -6,7 +6,7 @@
 	<classpathentry exported="true" kind="lib" path="C:/android/sdk/extras/android/support/v4/android-support-v4.jar" sourcepath="C:/android/sdk/extras/android/support/v4/src"/>
 	<classpathentry exported="true" kind="lib" path="C:/android/sdk/extras/android/support/v7/gridlayout/libs/android-support-v7-gridlayout.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ActionBarSherlock"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gridlayout"/>
 	<classpathentry kind="output" path="bin/classes"/>
