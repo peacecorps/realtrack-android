@@ -11,6 +11,7 @@
     <string name="displayactivitiesactivity_label">Activity Details</string>
     <string name="editactivitiesactivity_label">Edit Activity</string>
     <string name="recordparticipationactivity_label">Record Participation</string>
+    <string name="editparticipationactivity_label">Edit Participation</string>
     <string name="recordquickparticipationactivity_label">Quick Add Participation</string>
     <string name="pendingparticipationactivity_label">Pending Participations</string>
     <string name="allparticipationsactivity_label">Participation Details</string>
@@ -100,5 +101,9 @@
     <string name="pleasesignfirst">Please sign first</string>
     <string name="sign">&#xf044; Sign</string>
     <string name="signagain">&#xf044; Re&#8211;Sign</string>
+    <string name="noparticipationstoexport">No participations to export</string>
+    <string name="addanewactivity">Add a new activity&#8230;</string>
+    <string name="addanewproject">Add a new project&#8230;</string>
+    
 
 </resources>

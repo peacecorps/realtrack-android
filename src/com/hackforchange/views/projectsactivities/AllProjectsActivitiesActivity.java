@@ -168,7 +168,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
       
       ActivitiesParticipationHolder activitiesParticipationHolder = new ActivitiesParticipationHolder();
       Activities addNewActivityDummy = new Activities();
-      addNewActivityDummy.setTitle("Add a new activity...");
+      addNewActivityDummy.setTitle(getResources().getString(R.string.addanewactivity));
       addNewActivityDummy.setId(-1);
       addNewActivityDummy.setProjectid(p.getId());
       activitiesParticipationHolder.setActivity(addNewActivityDummy);
@@ -181,7 +181,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
     ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
     Project p = new Project();
     p.setId(-1);
-    p.setTitle("Add a new project...");
+    p.setTitle(getResources().getString(R.string.addanewproject));
     paHolder.setProject(p);
     paHolder.setActivitiesParticipationList(new ArrayList<ActivitiesParticipationHolder>());
     projectsactivities_data.add(paHolder);

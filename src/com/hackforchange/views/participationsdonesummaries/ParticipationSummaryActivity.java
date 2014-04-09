@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -49,6 +50,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   
   private final String ESCAPE_COMMAS = "\"";
   private final String COMMUNITY_DELIMITER = "@_@";
+  
+  private boolean dataToExportFound;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -94,6 +97,10 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         finish();
         break;
       case R.id.action_exportdata:
+        if(!dataToExportFound){
+          Toast.makeText(getApplicationContext(), getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT).show();
+          break;
+        }
         final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
         sendEmailIntent.setType("plain/text");
@@ -203,6 +210,9 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         emailContent.append("      End Date: " + dateParser.format(a.getEndDate()) + "\n");
 
         ArrayList<Participation> participation_data = participationDAO.getAllParticipationsForActivityId(a.getId());
+        
+        if(!participation_data.isEmpty())
+          dataToExportFound = true;
 
         if (participation_data.size() > 0) {
           if (childProjectView.getParent() == null)

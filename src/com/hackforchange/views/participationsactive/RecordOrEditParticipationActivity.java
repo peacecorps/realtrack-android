@@ -126,6 +126,7 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
     dismissButton = (StyledButton) findViewById(R.id.dismissButton);
     
     if(editParticipation){
+      this.setTitle(getResources().getString(R.string.editparticipationactivity_label));
       participantList = participantDao.getAllParticipantsForParticipationId(participationId);
       ((View) findViewById(R.id.spacer)).setVisibility(View.GONE);
       dismissButton.setVisibility(View.GONE);
