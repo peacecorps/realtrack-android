@@ -32,11 +32,11 @@ import com.hackforchange.views.dialogs.PickTimeDialogListener;
 import com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
 /**
- * RecordQuickParticipationActivity is different from RecordParticipationActivity in the following ways:
- * 1. RecordParticipationActivity ALREADY has a participation associated with it (created when
+ * RecordQuickParticipationActivity is different from RecordOrEditParticipationActivity in the following ways:
+ * 1. RecordOrEditParticipationActivity ALREADY has a participation associated with it (created when
  *    reminders are served (in NotificationService)). RecordQuickParticipationActivity does not have a pre-existing
  *    participation. It has to create one.
- * 2. Because RecordParticipationActivity serves an existing participation, it has a date and time associated with
+ * 2. Because RecordOrEditParticipationActivity serves an existing participation, it has a date and time associated with
  *    it. RecordQuickParticipationActivity does not have a date and time a priori, and must get these from the user.
  * @author Raj
  */

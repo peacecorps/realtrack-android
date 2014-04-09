@@ -21,7 +21,7 @@ import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.backend.reminders.RemindersDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.views.participationsactive.RecordParticipationActivity;
+import com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity;
 
 /*
  * Source: http://it-ride.blogspot.com/2010/10/android-implementing-notification.html
@@ -128,12 +128,12 @@ public class NotificationService extends Service {
         remindersText += dateTime;
 
         // clicking on the notification must take the user to the record participation activity
-        Intent notifIntent = new Intent(getApplicationContext(), RecordParticipationActivity.class);
+        Intent notifIntent = new Intent(getApplicationContext(), RecordOrEditParticipationActivity.class);
         notifIntent.putExtra("participationid", participationid);
         notifIntent.putExtra("datetime", p.getDate());
         PendingIntent pendingIntent = TaskStackBuilder.create(getApplicationContext())
-                // add all of RecordParticipationActivity's parents to the stack,
-                // followed by RecordParticipationActivity itself
+                // add all of RecordOrEditParticipationActivity's parents to the stack,
+                // followed by RecordOrEditParticipationActivity itself
                 // this works in conjunction with parentActivityName in AndroidManifest.xml
                 .addNextIntentWithParentStack(notifIntent)
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

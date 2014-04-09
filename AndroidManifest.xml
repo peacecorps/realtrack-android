@@ -52,7 +52,7 @@
             android:label="@string/editactivitiesactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.participationsactive.RecordParticipationActivity"
+            android:name="com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity"
             android:exported="true"
             android:label="@string/recordparticipationactivity_label"
             android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"

@@ -14,7 +14,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
 import com.hackforchange.models.activities.Participation;
-import com.hackforchange.views.participationsactive.RecordParticipationActivity;
+import com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity;
 
 public class PendingParticipationActivity extends SherlockActivity {
     private ArrayList<Participation> unservicedParticipation_data;
@@ -44,7 +44,7 @@ public class PendingParticipationActivity extends SherlockActivity {
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.cancel(p.getId());
                 // clicking on the item must take the user to the record participation activity
-                Intent newActivity = new Intent(PendingParticipationActivity.this, RecordParticipationActivity.class);
+                Intent newActivity = new Intent(PendingParticipationActivity.this, RecordOrEditParticipationActivity.class);
                 newActivity.putExtra("participationid", p.getId());
                 newActivity.putExtra("datetime", p.getDate());
                 startActivity(newActivity);

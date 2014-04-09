@@ -64,7 +64,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       }
     });
     
-    // go back to RecordQuickParticipationActivity or RecordParticipationActivity
+    // go back to RecordQuickParticipationActivity or RecordOrEditParticipationActivity
     // send back the participants collected so far
     doneButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -82,7 +82,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       okButton.performClick();
     }
     
-    // go back to RecordQuickParticipationActivity or RecordParticipationActivity
+    // go back to RecordQuickParticipationActivity or RecordOrEditParticipationActivity
     // send back the participants collected so far
     reviewButton.setOnClickListener(new View.OnClickListener() {
       @Override

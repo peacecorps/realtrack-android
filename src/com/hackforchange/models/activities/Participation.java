@@ -14,7 +14,7 @@ public class Participation {
   private int women1524; // number of women that participated
   private int womenOver24; // number of women that participated
   private long date; // date that the participation is for
-  private boolean serviced; // true: participation was recorded. is only be set to true in RecordParticipationActivity
+  private boolean serviced; // true: participation was recorded. is only be set to true in RecordOrEditParticipationActivity
   private String notes;
 
   // Database table

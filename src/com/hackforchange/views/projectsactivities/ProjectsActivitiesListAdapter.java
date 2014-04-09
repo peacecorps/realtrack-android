@@ -29,7 +29,7 @@ import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
 import com.hackforchange.views.activities.EditActivitiesActivity;
-import com.hackforchange.views.participationsactive.RecordParticipationActivity;
+import com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity;
 import com.hackforchange.views.participationsactive.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
@@ -393,7 +393,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         editParticipationBtn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Intent i = new Intent(context, RecordParticipationActivity.class);
+            Intent i = new Intent(context, RecordOrEditParticipationActivity.class);
             i.putExtra("participationid", p.getId());
             i.putExtra("datetime", p.getDate());
             i.putExtra("editparticipation", true);
