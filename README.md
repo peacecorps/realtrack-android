@@ -29,7 +29,8 @@ Using a smartphone application to track data is a good idea because most volunte
 * Daily/weekly reminders to record data for activities
 * Quickly record participations without a reminder
 * Review and change participation details from within the app
-* Sign-in sheets for participants with a digital signature
+* Sign-in sheets with digital signatures for event participants
+* Signatures collected can be exported to PDF
 
 #### Notes for Users
 RealTrack conceptualizes a PCVs data tracking in terms of the following hierarchy (from high-level to low):
@@ -56,7 +57,6 @@ Note that both these projects should be set up as *library projects* in Eclipse.
 
 #### Proposed features
 
-* Create a sign-in sheet so PCVs can collect details on participants
 * Recording meetings with local leaders
 * Allow PCVs to tweet their accomplishments
 * Ability to share images from phone's gallery
