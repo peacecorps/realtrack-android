@@ -17,6 +17,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
@@ -28,6 +29,7 @@ import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
 import com.hackforchange.views.activities.EditActivitiesActivity;
+import com.hackforchange.views.participationsactive.RecordParticipationActivity;
 import com.hackforchange.views.participationsactive.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
@@ -374,10 +376,8 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
                                                           // have the old activity + participation information
       final List<Participation> participationList = participationDAO.getAllParticipationsForActivityId(activity.getId());
       
-      if(participationList.isEmpty()){
-        holder.isExp = false;
-        holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
-      }
+      if(participationList.isEmpty())
+        collapseChild(holder);
       
       for(final Participation p: participationList){
         // the false in the method call below ensures we don't attach the inflated layout right away. if we did, since all the
@@ -388,25 +388,21 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         // handle click on the title and show participation details
         final TextView participationDetails = (TextView) participationLinearLayout.findViewById(R.id.participationDetails);
         participationDetails.setText(parser.format(d)+":  "+p.getTotalParticipants()+" participants");
-        participationDetails.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            //TODO open participation details
-          }
-        });
-        
-        final Participation pFinal = p;
         
         StyledButton editParticipationBtn = (StyledButton) participationLinearLayout.findViewById(R.id.editParticipationBtn);
         editParticipationBtn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            //TODO edit participation
+            Intent i = new Intent(context, RecordParticipationActivity.class);
+            i.putExtra("participationid", p.getId());
+            i.putExtra("datetime", p.getDate());
+            i.putExtra("editparticipation", true);
+            context.startActivity(i);
+            ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
           }
         });
         
-        final ChildViewHolder finalHolder = holder;
-        
+        final ChildViewHolder holderFinal = holder;
         StyledButton deleteParticipationBtn = (StyledButton) participationLinearLayout.findViewById(R.id.deleteParticipationBtn);
         deleteParticipationBtn.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -419,7 +415,10 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
               public void onClick(DialogInterface dialog, int id) {
                 participationDAO.deleteParticipation(p.getId());
-                finalHolder.participationsLinearLayout.removeView(participationLinearLayout);
+                participationList.remove(p);
+                holderFinal.participationsLinearLayout.removeView(participationLinearLayout);
+                if(participationList.isEmpty())
+                  collapseChild(holderFinal);
               }
             })
             .show();
@@ -435,14 +434,12 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         @Override
         public void onClick(View v) {
           if(holderFinal.isExp){ //"collapse"
-            holderFinal.isExp = false;
+            collapseChild(holderFinal);
             holderFinal.participationsLinearLayout.setVisibility(View.GONE);
-            holderFinal.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
           }
           else if(!participationList.isEmpty()){ //"expand". Only if there actually are participations
-            holderFinal.isExp = true;
+            expandChild(holderFinal);
             holderFinal.participationsLinearLayout.setVisibility(View.VISIBLE);
-            holderFinal.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
           }
         }
       });
@@ -454,6 +451,16 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {
     return false; //must be true if you want child to be clickable!
+  }
+  
+  private void expandChild(ChildViewHolder holder) {
+    holder.isExp = true;
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+  }
+
+  private void collapseChild(ChildViewHolder holder) {
+    holder.isExp = false;
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
   }
 
   private class ParentViewHolder {

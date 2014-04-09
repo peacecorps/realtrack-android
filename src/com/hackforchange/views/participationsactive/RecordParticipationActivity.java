@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -45,6 +44,11 @@ public class RecordParticipationActivity extends SherlockActivity {
   protected CheckBox menUnder15Checkbox, men1524Checkbox, menOver24Checkbox, womenUnder15Checkbox, women1524Checkbox, womenOver24Checkbox;
   protected Participation p;
   private ArrayList<Participant> participantList;
+  
+  private int menUnder15ManuallyEntered, men1524ManuallyEntered, menOver24ManuallyEntered, womenUnder15ManuallyEntered, women1524ManuallyEntered, womenOver24ManuallyEntered;
+  private int menUnder15FromSignInSheet, men1524FromSignInSheet, menOver24FromSignInSheet, womenUnder15FromSignInSheet, women1524FromSignInSheet, womenOver24FromSignInSheet;
+  
+  private boolean editParticipation; //true if coming in from ProjectsActivitiesListAdapter
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -55,8 +59,8 @@ public class RecordParticipationActivity extends SherlockActivity {
 
     // also note the date and time
     dateTime = getIntent().getExtras().getLong("datetime");
-
-    participantList = new ArrayList<Participant>();
+    
+    editParticipation = getIntent().getExtras().getBoolean("editparticipation");
   }
 
   @Override
@@ -116,12 +120,33 @@ public class RecordParticipationActivity extends SherlockActivity {
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (StyledButton) findViewById(R.id.submitbutton);
     dismissButton = (StyledButton) findViewById(R.id.dismissButton);
+    
+    if(editParticipation){
+      participantList = participantDao.getAllParticipantsForParticipationId(participationId);
+      ((View) findViewById(R.id.spacer)).setVisibility(View.GONE);
+      dismissButton.setVisibility(View.GONE);
+    }
+    
+    updateParticipantNumbersInDisplay();
 
     menUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (!menUnder15Checkbox.isChecked())
           menUnder15NumText.setText("");
+      }
+    });
+    
+    menUnder15NumText.addTextChangedListener(new AbstractTextValidator(menUnder15NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<menUnder15FromSignInSheet){
+          editText.setText(Integer.toString(menUnder15FromSignInSheet));
+          return;
+        }
+        if(Integer.parseInt(enteredValue)!=menUnder15FromSignInSheet)
+          menUnder15ManuallyEntered = Integer.parseInt(enteredValue)-menUnder15FromSignInSheet;
       }
     });
 
@@ -132,12 +157,36 @@ public class RecordParticipationActivity extends SherlockActivity {
           men1524NumText.setText("");
       }
     });
+    
+    men1524NumText.addTextChangedListener(new AbstractTextValidator(men1524NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<men1524FromSignInSheet){
+          editText.setText(Integer.toString(men1524FromSignInSheet));
+          return;
+        }
+        men1524ManuallyEntered = Integer.parseInt(enteredValue)-men1524FromSignInSheet;
+      }
+    });
 
     menOver24Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (!menOver24Checkbox.isChecked())
           menOver24NumText.setText("");
+      }
+    });
+    
+    menOver24NumText.addTextChangedListener(new AbstractTextValidator(menOver24NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<menOver24FromSignInSheet){
+          editText.setText(Integer.toString(menOver24FromSignInSheet));
+          return;
+        }
+        menOver24ManuallyEntered = Integer.parseInt(enteredValue)-menOver24FromSignInSheet;
       }
     });
 
@@ -149,11 +198,35 @@ public class RecordParticipationActivity extends SherlockActivity {
       }
     });
 
+    womenUnder15NumText.addTextChangedListener(new AbstractTextValidator(womenUnder15NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<womenUnder15FromSignInSheet){
+          editText.setText(Integer.toString(womenUnder15FromSignInSheet));
+          return;
+        }
+        womenUnder15ManuallyEntered = Integer.parseInt(enteredValue)-womenUnder15FromSignInSheet;
+      }
+    });
+    
     women1524Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (!women1524Checkbox.isChecked())
           women1524NumText.setText("");
+      }
+    });
+    
+    women1524NumText.addTextChangedListener(new AbstractTextValidator(women1524NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<women1524FromSignInSheet){
+          editText.setText(Integer.toString(women1524FromSignInSheet));
+          return;
+        }
+        women1524ManuallyEntered = Integer.parseInt(enteredValue)-women1524FromSignInSheet;
       }
     });
 
@@ -162,6 +235,18 @@ public class RecordParticipationActivity extends SherlockActivity {
       public void onClick(View v) {
         if (!womenOver24Checkbox.isChecked())
           womenOver24NumText.setText("");
+      }
+    });
+    
+    womenOver24NumText.addTextChangedListener(new AbstractTextValidator(womenOver24NumText) {
+      @Override
+      public void validate(EditText editText) {
+        String enteredValue = editText.getText().toString();
+        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<womenOver24FromSignInSheet){
+          editText.setText(Integer.toString(womenOver24FromSignInSheet));
+          return;
+        }
+        womenOver24ManuallyEntered = Integer.parseInt(enteredValue)-womenOver24FromSignInSheet;
       }
     });
 
@@ -274,11 +359,17 @@ public class RecordParticipationActivity extends SherlockActivity {
         // first add the participation id (we don't really have to wait until now as we did in
         // RecordQuickParticipationActivity but we do it all the same to keep things uniform between
         // both the classes)
-        for(Participant participant: participantList){
-          participant.setParticipationid(participationId);
+        for(int i=0;i<participantList.size();++i){
+          Participant participant = participantList.get(i);
+          if(participant.getId()!=-1){ //the -1 indicates this is a participant not already in the database
+            participantList.remove(i--);
+          }
+          else{
+            participant.setParticipationid(participationId);
+          }
         }
-
-        participantDao.addParticipants(participantList);
+        
+        participantDao.addParticipants(participantList); // the -1 we set into the id won't affect the actual database write because we ignore the id field of the participant object there
 
         pDao.updateParticipation(p);
 
@@ -294,88 +385,97 @@ public class RecordParticipationActivity extends SherlockActivity {
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
         participantList = resultBundle.getParcelableArrayList("participantList");
-
-        if(!participantList.isEmpty())
-          updateParticipantNumbersInDisplay();
+        updateParticipantNumbersInDisplay();
       }
     }
   }
 
   private void updateParticipantNumbersInDisplay() {
-    int menUnder15 = 0;
-    int men1524 = 0;
-    int menOver24 = 0;
-    int womenUnder15 = 0;
-    int women1524 = 0;
-    int womenOver24 = 0;
-
+    menUnder15FromSignInSheet = 0;
+    men1524FromSignInSheet = 0;
+    menOver24FromSignInSheet = 0;
+    womenUnder15FromSignInSheet = 0;
+    women1524FromSignInSheet = 0;
+    womenOver24FromSignInSheet = 0;
+    
     for(Participant p: participantList){
       if(p.getGender()==Participant.MALE){
         if(p.getAge()<15)
-          menUnder15++;
+          menUnder15FromSignInSheet++;
         else if(p.getAge()<25)
-          men1524++;
+          men1524FromSignInSheet++;
         else
-          menOver24++;
+          menOver24FromSignInSheet++;
       }
       else if(p.getGender()==Participant.FEMALE){ //could simply be an else but just being cautious and making sure the value is FEMALE
         if(p.getAge()<15)
-          womenUnder15++;
+          womenUnder15FromSignInSheet++;
         else if(p.getAge()<25)
-          women1524++;
+          women1524FromSignInSheet++;
         else
-          womenOver24++;
+          womenOver24FromSignInSheet++;
       }
     }
-
-    // set filters on the text fields so the PCV cannot manually enter a number less than the 
-    // current number of participants. Note that even though we reinitialize menUnder15, men1524
-    // etc to 0 in this method, there is no way their values can be less than what they were because
-    // there is no way that a participant once submitted via the sign-in sheet can be removed.
-    menUnder15NumText.setText(Integer.toString(menUnder15));
-    menUnder15NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(menUnder15)});
+    
+    if(editParticipation){
+      menUnder15ManuallyEntered = p.getMenUnder15() - menUnder15FromSignInSheet;
+      men1524ManuallyEntered = p.getMen1524() - men1524FromSignInSheet;
+      menOver24ManuallyEntered = p.getMenOver24() - menOver24FromSignInSheet;
+      womenUnder15ManuallyEntered = p.getWomenUnder15() - womenUnder15FromSignInSheet;
+      women1524ManuallyEntered = p.getWomen1524() - women1524FromSignInSheet;
+      womenOver24ManuallyEntered = p.getWomenOver24() - womenOver24FromSignInSheet;
+      editParticipation = false; //makes sure we only do the above once
+    }
+      
+    // Note that even though we reinitialize menUnder15, men1524
+    // etc to 0 in this method, there is no way their values can be less than what they were the last time around
+    // there is no way that a participant once submitted via the sign-in sheet can be removed i.e., these values
+    // are strictly increasing.
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(menUnder15>0){
+    int totalMenUnder15 = menUnder15FromSignInSheet+menUnder15ManuallyEntered;
+    if(totalMenUnder15>0){
+      menUnder15NumText.setText(Integer.toString(totalMenUnder15));
       menUnder15Checkbox.setChecked(true);
       menUnder15Checkbox.setEnabled(false);
     }
-
-    men1524NumText.setText(Integer.toString(men1524));
-    men1524NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(men1524)});
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(men1524>0){
+    int totalMen1524 = men1524FromSignInSheet+men1524ManuallyEntered;
+    if(totalMen1524>0){
+      men1524NumText.setText(Integer.toString(totalMen1524));
       men1524Checkbox.setChecked(true);
       men1524Checkbox.setEnabled(false);
     }
-
-    menOver24NumText.setText(Integer.toString(menOver24));
-    menOver24NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(menOver24)});
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(menOver24>0){
+    int totalMenOver24 = menOver24FromSignInSheet+menOver24ManuallyEntered;
+    if(totalMenOver24>0){
+      menOver24NumText.setText(Integer.toString(totalMenOver24));
       menOver24Checkbox.setChecked(true);
       menOver24Checkbox.setEnabled(false);
     }
-
-    womenUnder15NumText.setText(Integer.toString(womenUnder15));
-    womenUnder15NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(womenUnder15)});
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(womenUnder15>0){
+    int totalWomenUnder15 = womenUnder15FromSignInSheet+womenUnder15ManuallyEntered;
+    if(totalWomenUnder15>0){
+      womenUnder15NumText.setText(Integer.toString(totalWomenUnder15));
       womenUnder15Checkbox.setChecked(true);
       womenUnder15Checkbox.setEnabled(false);
     }
-
-    women1524NumText.setText(Integer.toString(women1524));
-    women1524NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(women1524)});
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(women1524>0){
+    int totalWomen1524 = women1524FromSignInSheet+women1524ManuallyEntered;
+    if(totalWomen1524>0){
+      women1524NumText.setText(Integer.toString(totalWomen1524));
       women1524Checkbox.setChecked(true);
       women1524Checkbox.setEnabled(false);
     }
-
-    womenOver24NumText.setText(Integer.toString(womenOver24));
-    womenOver24NumText.setFilters(new InputFilter[]{new MinNumMenWomenInputFilter(womenOver24)});
+    
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(womenOver24>0){
+    int totalWomenOver24 = womenOver24FromSignInSheet+womenOver24ManuallyEntered;
+    if(totalWomenOver24>0){
+      womenOver24NumText.setText(Integer.toString(totalWomenOver24));
       womenOver24Checkbox.setChecked(true);
       womenOver24Checkbox.setEnabled(false);
     }
