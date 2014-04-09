@@ -26,14 +26,14 @@ public class MinNumMenWomenInputFilter implements InputFilter {
     String currentVal = dest.toString().substring(0, dstart) + dest.toString().substring(dend, dest.toString().length());
     currentVal = currentVal.substring(0, dstart) + source.toString() + currentVal.substring(dstart, currentVal.length());
     
-    if(currentVal.isEmpty())
-      return dest.toString();
+    if(currentVal.length()==0)
+      return dest.toString().substring(dstart,dend);
     
     int currentNumMenWomen = Integer.parseInt(currentVal);
     if(currentNumMenWomen>=min)
       return null; //accept the newly entered value
     else
-      return dest.toString();
+      return dest.toString().substring(dstart,dend);
   }
 
 }

@@ -78,6 +78,8 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
       @Override
       public void onClick(View view) {
         Participant p = new Participant();
+        p.setId(-1);  //the -1 indicates this is a participant not already in the database. Comes in handy if we're editing an existing participation in RecordParticipationActivity
+                      //it plays no role in RecordQuickParticipationActivity because the only use case for that activity is adding a new participation
 
         if (nameText.getText().length() == 0){
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,

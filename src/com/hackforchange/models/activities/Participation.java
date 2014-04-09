@@ -7,10 +7,10 @@ public class Participation {
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
   private int reminderid; // which reminder this participation is for. This is NOT a foreign key!!
   private int activityid; // which activity this participation is for. This is a foreign key that points to Activities.id
-  private int men; // number of men that participated
+  private int menUnder15; // number of men that participated
   private int men1524; // number of men that participated
   private int menOver24; // number of men that participated
-  private int women; // number of women that participated
+  private int womenUnder15; // number of women that participated
   private int women1524; // number of women that participated
   private int womenOver24; // number of women that participated
   private long date; // date that the participation is for
@@ -81,12 +81,12 @@ public class Participation {
     this.reminderid = reminderid;
   }
 
-  public int getMen() {
-    return men;
+  public int getMenUnder15() {
+    return menUnder15;
   }
 
-  public void setMen(int men) {
-    this.men = men;
+  public void setMenUnder15(int menUnder15) {
+    this.menUnder15 = menUnder15;
   }
 
   public long getDate() {
@@ -97,12 +97,12 @@ public class Participation {
     this.date = date;
   }
 
-  public int getWomen() {
-    return women;
+  public int getWomenUnder15() {
+    return womenUnder15;
   }
 
-  public void setWomen(int women) {
-    this.women = women;
+  public void setWomenUnder15(int womenUnder15) {
+    this.womenUnder15 = womenUnder15;
   }
 
   public boolean isServiced() {
@@ -159,5 +159,9 @@ public class Participation {
 
   public void setWomenOver24(int womenOver24) {
     this.womenOver24 = womenOver24;
+  }
+
+  public int getTotalParticipants() {
+    return menUnder15 + men1524 + menOver24 + womenUnder15 + women1524 + womenOver24;
   }
 }

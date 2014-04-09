@@ -93,6 +93,7 @@
     <string name="fa_calendar">&#xf133;</string>
     <string name="fa_list">&#xf00b;</string>
     <string name="fa_table">&#xf0ce;</string>
+    <string name="fa_plus">&#xf067;</string>
     <string name="reviewsigninactivity_label">Review Participants</string>
     <string name="title_activity_signature">Please Sign</string>
     <string name="clear">&#xf021; Clear</string>

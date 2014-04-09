@@ -133,6 +133,7 @@ public class Participant implements Parcelable {
     out.writeString(village);
     out.writeInt(age);
     out.writeInt(gender);
+    out.writeInt(id);
   }
 
   public static final Parcelable.Creator<Participant> CREATOR = new Parcelable.Creator<Participant>() {
@@ -155,6 +156,7 @@ public class Participant implements Parcelable {
     village = parcel.readString();
     age = parcel.readInt();
     gender = parcel.readInt();
+    id = parcel.readInt();
   }
 
 }

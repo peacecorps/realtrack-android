@@ -26,11 +26,10 @@
             android:layout_weight="0.7"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dip" >
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/projectTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/darkgrey"
@@ -70,7 +69,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/startDate"
+        android:id="@+id/projectStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
