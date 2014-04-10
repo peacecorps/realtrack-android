@@ -52,7 +52,7 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_recordparticipation);
+    setContentView(R.layout.activity_recordoreditparticipation);
 
     // read in the ID of the activities for which we're recording participation
     participationId = getIntent().getExtras().getInt("participationid");
@@ -129,6 +129,7 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
       this.setTitle(getResources().getString(R.string.editparticipationactivity_label));
       participantList = participantDao.getAllParticipantsForParticipationId(participationId);
       ((View) findViewById(R.id.spacer)).setVisibility(View.GONE);
+      notesText.setText(p.getNotes());
       dismissButton.setVisibility(View.GONE);
     }
     

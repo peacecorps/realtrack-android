@@ -19,21 +19,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hackforchange.R;
-import com.hackforchange.backend.activities.ActivitiesDAO;
 import com.hackforchange.backend.activities.ParticipationDAO;
-import com.hackforchange.backend.projects.ProjectDAO;
 import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Activities;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.views.activities.AddActivitiesActivity;
 import com.hackforchange.views.activities.DisplayActivitiesActivity;
-import com.hackforchange.views.activities.EditActivitiesActivity;
 import com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity;
 import com.hackforchange.views.participationsactive.RecordQuickParticipationActivity;
 import com.hackforchange.views.projects.AddProjectActivity;
 import com.hackforchange.views.projects.DisplayProjectActivity;
-import com.hackforchange.views.projects.EditProjectActivity;
 
 public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   private Context context;
@@ -110,8 +106,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder = new ParentViewHolder();
       holder.projectTitle = (TextView) row.findViewById(R.id.projectTitle);
       holder.projectStartDate = (TextView) row.findViewById(R.id.projectStartDate);
-      holder.editProjectBtn = (TextView) row.findViewById(R.id.editProjectBtn);
-      holder.deleteProjectBtn = (TextView) row.findViewById(R.id.deleteProjectBtn);
       holder.expandCollapseProjectBtn = (StyledButton)row.findViewById(R.id.expandCollapseProjectBtn);
 
       row.setTag(holder);
@@ -122,8 +116,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.projectTitle.setText(project.getTitle());
 
     if(project.getId() == -1){ //"add new project..." item.
-      holder.editProjectBtn.setVisibility(View.INVISIBLE);
-      holder.deleteProjectBtn.setVisibility(View.INVISIBLE);
       holder.projectStartDate.setVisibility(View.GONE);
       holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_plus));
       
@@ -186,49 +178,14 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           }
         }
       });
-
-      // handle click on the edit project icon
-      holder.editProjectBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Intent i = new Intent(context, EditProjectActivity.class);
-          i.putExtra("projectid", project.getId());
-          context.startActivity(i);
-          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        }
-      });
-
-      // handle click on the delete project icon
-      holder.deleteProjectBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          // warn the user first!
-          new AlertDialog.Builder(context)
-          .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
-          .setCancelable(false)
-          .setNegativeButton("No", null)
-          .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-              ProjectDAO pDao = new ProjectDAO(context);
-              pDao.deleteProject(project.getId());
-
-              // make sure the list gets updated in the display
-              projectsActivitiesData.remove(groupPos);
-              notifyDataSetChanged();
-            }
-          })
-          .show();
-        }
-      });
-
     }
+    
     return row;
   }
 
   @Override
   public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
     final int groupPos = groupPosition;
-    final int childPos = childPosition;
     row = convertView;
     ChildViewHolder holder = null;
 
@@ -238,8 +195,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder = new ChildViewHolder();
       holder.activityTitle = (TextView) row.findViewById(R.id.activityTitle);
       holder.activityStartDate = (TextView) row.findViewById(R.id.activityStartDate);
-      holder.editActivityBtn = (StyledButton) row.findViewById(R.id.editActivityBtn);
-      holder.deleteActivityBtn = (StyledButton) row.findViewById(R.id.deleteActivityBtn);
       holder.quickParticipationBtn = (StyledButton) row.findViewById(R.id.quickParticipationBtn);
       holder.participationsLinearLayout = (LinearLayout) row.findViewById(R.id.participationsLinearLayout);
       holder.expandCollapseActivityBtn = (StyledButton)row.findViewById(R.id.expandCollapseActivityBtn);
@@ -253,8 +208,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
-      holder.editActivityBtn.setVisibility(View.INVISIBLE);
-      holder.deleteActivityBtn.setVisibility(View.INVISIBLE);
       holder.quickParticipationBtn.setVisibility(View.INVISIBLE);
       holder.activityStartDate.setVisibility(View.GONE);
       holder.participationsLinearLayout.setVisibility(View.GONE);
@@ -316,41 +269,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           i.putExtra("activitiesid", activity.getId());
           context.startActivity(i);
           ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        }
-      });
-
-      // handle click on the edit activity icon
-      holder.editActivityBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Intent i = new Intent(context, EditActivitiesActivity.class);
-          i.putExtra("activitiesid", activity.getId());
-          context.startActivity(i);
-          ((AllProjectsActivitiesActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        }
-      });
-
-      // handle click on the delete activity icon
-      holder.deleteActivityBtn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          // warn the user first!
-          new AlertDialog.Builder(context)
-          .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
-          .setCancelable(false)
-          .setNegativeButton("No", null)
-          .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-              ActivitiesDAO aDao = new ActivitiesDAO(context);
-              int activityId = activity.getId();
-              aDao.deleteActivities(activityId);
-
-              // make sure the list gets updated in the display
-              projectsActivitiesData.get(groupPos).getActivitiesParticipationList().remove(childPos);
-              notifyDataSetChanged();
-            }
-          })
-          .show();
         }
       });
       
@@ -465,8 +383,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
 
   private class ParentViewHolder {
     StyledButton expandCollapseProjectBtn;
-    TextView deleteProjectBtn;
-    TextView editProjectBtn;
     TextView projectTitle;
     TextView projectStartDate;
   }
@@ -475,8 +391,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     LinearLayout participationsLinearLayout;
     boolean isExp;
     StyledButton expandCollapseActivityBtn;
-    StyledButton editActivityBtn;
-    StyledButton deleteActivityBtn;
     StyledButton quickParticipationBtn;
     TextView activityTitle;
     TextView activityStartDate;

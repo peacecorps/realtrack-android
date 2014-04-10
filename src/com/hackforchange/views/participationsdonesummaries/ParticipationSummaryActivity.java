@@ -14,8 +14,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,117 +39,207 @@ import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.providers.CachedFileContentProvider;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
   static final int SENDEMAIL_REQUEST = 1;
-  public String[] allInits;
+  private static final int PROGRESS_DIALOG = 2;
   
-  private ArrayList<Project> projects_data;
-  private StringBuilder emailContent;
   private LinearLayout summaryLayout;
-  File cacheDir, cacheParticipationOutputFile, cacheDataOutputFile, nonAlignedDataOutputFile;
-  String dataFileName, participationFileName;
+
   private int maxComms = 0;
-  
+
   private final String ESCAPE_COMMAS = "\"";
   private final String COMMUNITY_DELIMITER = "@_@";
-  
+
   private boolean dataToExportFound;
+  private DataHolder dataHolder;
+
+  DateFormat dateParser, timeParser;
+  private File nonAlignedDataOutputFile;
+  private File signInReportsOutputFile;
+  private File cacheParticipationOutputFile;
+  private File cacheDataOutputFile;
+  public String signInReportsFileName;
+  public String participationFileName;
+  public String dataFileName;
+
+  private SendEmailTask sendEmailTask;
+  private ProgressDialog progressDialog;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_participationsummary);
+    dateParser = new SimpleDateFormat("MM/dd/yyyy");
+    timeParser = new SimpleDateFormat("hh:mm aaa");
+    
+    SendEmailTask task = (SendEmailTask) getLastNonConfigurationInstance();
+    if(task!=null){
+      sendEmailTask = task;
+      sendEmailTask.reAttach(this);
+      if(sendEmailTask.getStatus()==Status.RUNNING){
+        showDialog(PROGRESS_DIALOG);
+        signInReportsFileName = sendEmailTask.signInReportsFileName;
+        participationFileName = sendEmailTask.participationFileName;
+        dataFileName = sendEmailTask.dataFileName;
+      }
+    }
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    allInits = updateInitiativeNames();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
-    summaryLayout.removeAllViews();
-    DateFormat dateParser = new SimpleDateFormat("MMddyyyy");
-    dataFileName = "RealTrack_Data_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
-    participationFileName = "RealTrack_Participation_Report_" + dateParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
-    cacheDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
-    cacheDataOutputFile = new File(cacheDir + File.separator + dataFileName);
-    cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
-    nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
-    updateParticipationSummaryList();
+    dataHolder = createDataHolder();
+    updateDisplay(dataHolder);
   }
 
-  private String[] updateInitiativeNames() {
-    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
-      getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
-      getResources().getString(R.string.foodsecurity)};
-  }
-
-  // create actionbar menu
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getSupportMenuInflater();
-    inflater.inflate(R.menu.participationsummarymenu, menu);
-
-    return true;
-  }
-
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        // provide a back button on the actionbar
-        finish();
-        break;
-      case R.id.action_exportdata:
-        if(!dataToExportFound){
-          Toast.makeText(getApplicationContext(), getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT).show();
-          break;
-        }
-        final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-        sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-        sendEmailIntent.setType("plain/text");
-        String uriText = "mailto:" + Uri.encode("") +
-                "?subject=" + Uri.encode("RealTrack Data Report") +
-                "&body=" + Uri.encode("Please find the CSV file of your recorded data attached with this email.");
-        Uri uri = Uri.parse(uriText);
-        sendEmailIntent.setData(uri);
-        
-        ArrayList<Uri> uris = new ArrayList<Uri>();
-        uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
-                + dataFileName));
-        uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
-                + participationFileName));
-        sendEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-        startActivity(Intent.createChooser(sendEmailIntent, "Send mail..."));
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        break;
-    }
-
-    return true;
-  }
-
-  private void updateParticipationSummaryList() {
+  private DataHolder createDataHolder() {
     ProjectDAO projectDAO = new ProjectDAO(getApplicationContext());
     ActivitiesDAO activitiesDAO = new ActivitiesDAO(getApplicationContext());
     ParticipationDAO participationDAO = new ParticipationDAO(getApplicationContext());
     ParticipantDAO participantDAO = new ParticipantDAO(getApplicationContext());
 
-    projects_data = projectDAO.getAllProjects();
-    DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy");
-    DateFormat timeParser = new SimpleDateFormat("hh:mm aaa");
+    DataHolder dHolder = new DataHolder();
+    List<ProjectHolder> pHolder_data = new ArrayList<ProjectHolder>();
 
-    emailContent = new StringBuilder();
-    emailContent.append("Data Report\n");
-    emailContent.append("===========\n");
+    List<Project> projects_data = projectDAO.getAllProjects();
 
+    for(Project p: projects_data){
+      ProjectHolder pHolder = new ProjectHolder();
+      pHolder.p = p;
+      List<ActivityHolder> aHolder_data = new ArrayList<ActivityHolder>();
+
+      List<Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
+      for(Activities a: activities_data){
+        ActivityHolder aHolder = new ActivityHolder();
+        aHolder.a = a;
+        List<ParticipationHolder> paHolder_data = new ArrayList<ParticipationHolder>();
+
+        List<Participation> participation_data =participationDAO.getAllParticipationsForActivityId(a.getId());
+        for(Participation pa: participation_data){
+          ParticipationHolder paHolder = new ParticipationHolder();
+          paHolder.p = pa;
+          paHolder.participantList = participantDAO.getAllParticipantsForParticipationId(pa.getId());
+          paHolder_data.add(paHolder);
+        }
+        aHolder.participationHolderList = paHolder_data;
+
+        aHolder_data.add(aHolder);
+      }
+      pHolder.activityHolderList = aHolder_data;
+
+      pHolder_data.add(pHolder);
+    }
+    dHolder.pHolder_data = pHolder_data;
+
+    return dHolder;
+  }
+
+  private void updateDisplay(DataHolder dHolder) {
+    summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
+    summaryLayout.removeAllViews();
+
+    for (ProjectHolder pHolder : dHolder.pHolder_data) {
+      Project p = pHolder.p;
+
+      View childProjectView = getLayoutInflater().inflate(R.layout.row_projectsummary, null);
+      TextView projectTitle = (TextView) childProjectView.findViewById(R.id.txtTitle);
+      projectTitle.setText(p.getTitle());
+
+      for (ActivityHolder aHolder : pHolder.activityHolderList) {
+        Activities a = aHolder.a;
+        View childActivityView = getLayoutInflater().inflate(R.layout.row_activitiessummary, null);
+        TextView activityTitle = (TextView) childActivityView.findViewById(R.id.txtTitle);
+        activityTitle.setText(a.getTitle());
+
+        if (aHolder.participationHolderList.size() > 0) {
+          if (childProjectView.getParent() == null)
+            summaryLayout.addView(childProjectView);
+          summaryLayout.addView(childActivityView);
+        }
+
+        if(!aHolder.participationHolderList.isEmpty())
+          dataToExportFound = true;
+
+        for (ParticipationHolder paHolder : aHolder.participationHolderList) {
+          Participation participation = paHolder.p;
+
+          View childParticipationView = getLayoutInflater().inflate(R.layout.row_allparticipation, null);
+          TextView participationDate = (TextView) childParticipationView.findViewById(R.id.date);
+          Date d = new Date(participation.getDate());
+          participationDate.setText(dateParser.format(d));
+          TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
+          participationMen.setText(Integer.toString(participation.getMenUnder15()));
+          participationMen = (TextView) childParticipationView.findViewById(R.id.men1524);
+          participationMen.setText(Integer.toString(participation.getMen1524()));
+          participationMen = (TextView) childParticipationView.findViewById(R.id.menOver24);
+          participationMen.setText(Integer.toString(participation.getMenOver24()));
+          TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
+          participationWomen.setText(Integer.toString(participation.getWomenUnder15()));
+          participationWomen = (TextView) childParticipationView.findViewById(R.id.women1524);
+          participationWomen.setText(Integer.toString(participation.getWomen1524()));
+          participationWomen = (TextView) childParticipationView.findViewById(R.id.womenOver24);
+          participationWomen.setText(Integer.toString(participation.getWomenOver24()));
+          TextView participationNotes = (TextView) childParticipationView.findViewById(R.id.notes);
+          participationNotes.setText("Event details: " + participation.getNotes());
+
+          summaryLayout.addView(childParticipationView);
+        }
+      }
+    }
+  }
+
+  private String[] updateInitiativeNames() {
+    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
+            getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+            getResources().getString(R.string.foodsecurity)};
+  }
+
+  public void prepareEmailInBackground() {
+    DateFormat dateForFileNameParser = new SimpleDateFormat("MMddyyyy");
+    dataFileName = "RealTrack_Data_Report_" + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
+    participationFileName = "RealTrack_Participation_Report_" + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
+    signInReportsFileName = "RealTrack_SignIn_Report_" + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".pdf";
+    File cacheDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
+    cacheDataOutputFile = new File(cacheDir + File.separator + dataFileName);
+    cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
+    signInReportsOutputFile = new File(cacheDir + File.separator + signInReportsFileName);
+    nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
+    
+    //will be used in case this activity is destroyed and recreated e.g. on rotation, keyboard popup etc
+    sendEmailTask.dataFileName = dataFileName;
+    sendEmailTask.participationFileName = participationFileName;
+    sendEmailTask.signInReportsFileName = signInReportsFileName;
+    
+    createEmail(dataHolder);
+  }
+
+  private void createEmail(DataHolder dHolder){
+    String[] allInits = updateInitiativeNames();
 
     FileOutputStream dataFos = null;
     FileOutputStream participationFos = null;
+    FileOutputStream signinFos = null;
+    Document signinDocument = null;
     try {
       dataFos = new FileOutputStream(nonAlignedDataOutputFile);
       participationFos = new FileOutputStream(cacheParticipationOutputFile);
-    } catch (FileNotFoundException e) {
+      signinFos = new FileOutputStream(signInReportsOutputFile);
+      signinDocument = new Document();
+      PdfWriter.getInstance(signinDocument, signinFos);
+      signinDocument.open();
+      signinDocument.addTitle("RealTrack Sign-In Report");
+    } catch (Exception e) {
     }
-    
+
     String dataCSVContent = "Project Title" + "," +
             "Project Start Date" + "," +
             "Project End Date" + "," +
@@ -185,72 +278,16 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     } catch (IOException e) {
     }
 
-    for (Project p : projects_data) {
-      View childProjectView = getLayoutInflater().inflate(R.layout.row_projectsummary, null);
-      TextView projectTitle = (TextView) childProjectView.findViewById(R.id.txtTitle);
-      projectTitle.setText(p.getTitle());
+    for (ProjectHolder pHolder : dHolder.pHolder_data) {
+      Project p = pHolder.p;
 
-      emailContent.append("----------------------" + "\n");
-      emailContent.append("Project: " + p.getTitle() + "\n");
-      emailContent.append("----------------------" + "\n");
-      emailContent.append("  Start Date: " + dateParser.format(p.getStartDate()) + "\n");
-      emailContent.append("  End Date: " + dateParser.format(p.getEndDate()) + "\n");
+      for (ActivityHolder aHolder : pHolder.activityHolderList) {
+        Activities a = aHolder.a;
 
-      ArrayList<Activities> activities_data = activitiesDAO.getAllActivitiesForProjectId(p.getId());
+        for (ParticipationHolder paHolder : aHolder.participationHolderList) {
+          Participation participation = paHolder.p;
 
-      for (Activities a : activities_data) {
-        View childActivityView = getLayoutInflater().inflate(R.layout.row_activitiessummary, null);
-        TextView activityTitle = (TextView) childActivityView.findViewById(R.id.txtTitle);
-        activityTitle.setText(a.getTitle());
-
-        emailContent.append("    ----------------------" + "\n");
-        emailContent.append("    Activity: " + a.getTitle() + "\n");
-        emailContent.append("    ----------------------" + "\n");
-        emailContent.append("      Start Date: " + dateParser.format(a.getStartDate()) + "\n");
-        emailContent.append("      End Date: " + dateParser.format(a.getEndDate()) + "\n");
-
-        ArrayList<Participation> participation_data = participationDAO.getAllParticipationsForActivityId(a.getId());
-        
-        if(!participation_data.isEmpty())
-          dataToExportFound = true;
-
-        if (participation_data.size() > 0) {
-          if (childProjectView.getParent() == null)
-            summaryLayout.addView(childProjectView);
-          summaryLayout.addView(childActivityView);
-        }
-
-        int sumMen = 0, sumWomen = 0;
-        int sumMen1524 = 0, sumWomen1524 = 0;
-        int sumMenOver24 = 0, sumWomenOver24 = 0;
-        
-        for (Participation participation : participation_data) {
-          View childParticipationView = getLayoutInflater().inflate(R.layout.row_allparticipation, null);
-          TextView participationDate = (TextView) childParticipationView.findViewById(R.id.date);
           Date d = new Date(participation.getDate());
-          participationDate.setText(dateParser.format(d));
-          TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
-          participationMen.setText(participation.getMenUnder15() + "");
-          participationMen = (TextView) childParticipationView.findViewById(R.id.men1524);
-          participationMen.setText(participation.getMen1524() + "");
-          participationMen = (TextView) childParticipationView.findViewById(R.id.menOver24);
-          participationMen.setText(participation.getMenOver24() + "");
-          TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
-          participationWomen.setText(participation.getWomenUnder15() + "");
-          participationWomen = (TextView) childParticipationView.findViewById(R.id.women1524);
-          participationWomen.setText(participation.getWomen1524() + "");
-          participationWomen = (TextView) childParticipationView.findViewById(R.id.womenOver24);
-          participationWomen.setText(participation.getWomenOver24() + "");
-          TextView participationNotes = (TextView) childParticipationView.findViewById(R.id.notes);
-          participationNotes.setText("Event details: " + participation.getNotes());
-          summaryLayout.addView(childParticipationView);
-
-          sumMen += participation.getMenUnder15();
-          sumWomen += participation.getWomenUnder15();
-          sumMen1524 += participation.getMen1524();
-          sumWomen1524 += participation.getWomen1524();
-          sumMenOver24 += participation.getMenOver24();
-          sumWomenOver24 += participation.getWomenOver24();
 
           String[] initiativesList = a.getInitiatives().split("\\|");
           String inits = "";
@@ -288,9 +325,47 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             dataFos.write(dataCSVContent.getBytes());
           } catch (IOException e) {
           }
-          
-          List<Participant> participantList = participantDAO.getAllParticipantsForParticipationId(participation.getId());
-          for(Participant participant: participantList){
+
+          Paragraph projectParagraph = null;
+          PdfPTable table = null;
+
+          if(!paHolder.participantList.isEmpty()){
+            projectParagraph = new Paragraph();
+            addNewLines(projectParagraph, 1);
+            projectParagraph.add(new Paragraph("Project Title: " + p.getTitle()));
+            addNewLines(projectParagraph, 1);
+            projectParagraph.add(new Paragraph("Activity Title: " + a.getTitle()));
+            addNewLines(projectParagraph, 1);
+            projectParagraph.add(new Paragraph("Sign-In Sheet for: " + dateParser.format(d)+" " + timeParser.format(d)));
+            projectParagraph.add(new Paragraph("Event details: " + participation.getNotes()));
+            addNewLines(projectParagraph, 2);
+
+            table = new PdfPTable(5);
+
+            PdfPCell c1 = new PdfPCell(new Phrase("Name"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase("Phone"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase("Village"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase("Age"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase("Gender"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(c1);
+
+            table.setHeaderRows(1);
+          }
+
+          for(Participant participant: paHolder.participantList){
             participationCSVContent = ESCAPE_COMMAS + p.getTitle() + ESCAPE_COMMAS + "," +
                     ESCAPE_COMMAS + a.getTitle() + ESCAPE_COMMAS + "," +
                     dateParser.format(participation.getDate()) + "," +
@@ -301,31 +376,45 @@ public class ParticipationSummaryActivity extends SherlockActivity {
                     participant.getAge() + "," +
                     (participant.getGender()==Participant.MALE? "Male" : "Female") + "," +
                     ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
+
+            table.addCell(participant.getName());
+            table.addCell(participant.getPhoneNumber());
+            table.addCell(participant.getVillage());
+            table.addCell(Integer.toString(participant.getAge()));
+            table.addCell(participant.getGender()==Participant.MALE? "Male" : "Female");
+
             try {
               participationFos.write(participationCSVContent.getBytes());
             } catch (IOException e) {
             }
           }
 
+          if(projectParagraph != null){
+            projectParagraph.add(table);
+            try {
+              signinDocument.add(projectParagraph);
+              signinDocument.newPage();
+            }
+            catch (DocumentException e) {
+            }
+          }
         }
-        emailContent.append("      Total Participation: " + (sumMen + sumWomen) + "\n");
-        emailContent.append("        Men under 15: " + sumMen + "\n");
-        emailContent.append("        Men 15-24: " + sumMen1524 + "\n");
-        emailContent.append("        Men over 24: " + sumMenOver24 + "\n");
-        emailContent.append("        Women under 15: " + sumWomen + "\n");
-        emailContent.append("        Women 15-24: " + sumWomen1524 + "\n");
-        emailContent.append("        Women over 24: " + sumWomenOver24 + "\n");
       }
     }
 
     try {
       dataFos.close();
       participationFos.close();
+      signinDocument.close();
     } catch (IOException e) {
     }
-    
-    normalizeCSVColumns(); //required if the user enters multiple communities separated by commas
 
+    normalizeCSVColumns(); //required if the user enters multiple communities separated by commas
+  }
+
+  private void addNewLines(Paragraph paragraph, int numLinesToAdd) {
+    for(int i=0;i<numLinesToAdd;++i)
+      paragraph.add(new Paragraph(""));
   }
 
   private void normalizeCSVColumns() {
@@ -338,7 +427,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       fRead = new BufferedReader(new InputStreamReader(fis));
     } catch (FileNotFoundException e) {
     }
-    
+
     try {
       //handle CSV column headings
       int numCommasToAdd = maxComms;
@@ -349,7 +438,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         stringToWrite += "Activity Community "+(i+1)+",";
       stringToWrite += separatedStrings[1] + "\n";
       fos.write(stringToWrite.getBytes());
-      
+
       //handle the actual data
       while(null != (s = fRead.readLine())){
         separatedStrings = s.split(COMMUNITY_DELIMITER);
@@ -366,7 +455,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
     catch (IOException e) {
     }
-    
+
     try {
       fis.close();
       fRead.close();
@@ -383,7 +472,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
     return numCommas + 1;
   }
-  
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();
@@ -393,14 +482,120 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   }
 
   private void deleteTemporaryFiles() {
-    cacheDataOutputFile.delete();
-    cacheParticipationOutputFile.delete();
+    deleteFileIfNotNull(cacheDataOutputFile);
+    deleteFileIfNotNull(cacheParticipationOutputFile);
+    deleteFileIfNotNull(nonAlignedDataOutputFile);
+    deleteFileIfNotNull(signInReportsOutputFile);
+  }
+
+  private void deleteFileIfNotNull(File fileToDelete){
+    if(fileToDelete != null) fileToDelete.delete();
+  }
+
+  private class DataHolder{
+    List<ProjectHolder> pHolder_data;
+  }
+
+  private class ProjectHolder{
+    Project p;
+    List<ActivityHolder> activityHolderList;
+  }
+
+  private class ActivityHolder{
+    Activities a;
+    List<ParticipationHolder> participationHolderList;
+  }
+
+  private class ParticipationHolder{
+    Participation p;
+    List<Participant> participantList;
+  }
+
+  //create actionbar menu
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.participationsummarymenu, menu);
+
+    return true;
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      case R.id.action_exportdata:
+        if(!dataToExportFound){
+          Toast.makeText(getApplicationContext(), getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT).show();
+          break;
+        }
+        showDialog(PROGRESS_DIALOG);
+        
+        if(sendEmailTask == null || sendEmailTask.getStatus()==Status.FINISHED)
+          sendEmailTask = new SendEmailTask(this);
+        sendEmailTask.execute();
+        break;
+    }
+
+    return true;
+  }
+
+  /**
+   * Callback for SendEmailTask
+   * @param dataFileName 
+   * @param participationFileName 
+   * @param signInReportsFileName 
+   */
+  public void sendEmail(){
+    if(progressDialog.isShowing())
+      progressDialog.dismiss();
+    
+    final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+    sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+    sendEmailIntent.setType("plain/text");
+    String uriText = "mailto:" + Uri.encode("") +
+            "?subject=" + Uri.encode("RealTrack Data Report") +
+            "&body=" + Uri.encode("Please find your data attached with this email.");
+    Uri uri = Uri.parse(uriText);
+    sendEmailIntent.setData(uri);
+
+    ArrayList<Uri> uris = new ArrayList<Uri>();
+    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+            + dataFileName));
+    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+            + participationFileName));
+    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+            + signInReportsFileName));
+    sendEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+
+    startActivityForResult(Intent.createChooser(sendEmailIntent, "Send mail..."), ParticipationSummaryActivity.SENDEMAIL_REQUEST);
+    overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    if (requestCode == SENDEMAIL_REQUEST) {
+      deleteTemporaryFiles(); //delete files irrespective of whether REQUEST_OK or not
+    }
+  }
+
+  @Override
+  public Object onRetainNonConfigurationInstance() {
+    return sendEmailTask;
   }
   
   @Override
-  public void onPause() {
-    super.onPause();
-    deleteTemporaryFiles();
+  protected Dialog onCreateDialog(int id) {
+    switch(id){
+      case PROGRESS_DIALOG:
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Generating Reports");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+    return super.onCreateDialog(id);
   }
 
 }

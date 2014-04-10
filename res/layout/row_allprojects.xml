@@ -10,28 +10,6 @@
         android:background="@color/white" >
 
         <com.hackforchange.common.StyledButton
-            android:id="@+id/deleteProjectBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/normalitem_background"
-            android:text="@string/fa_trash"
-            android:textColor="@drawable/normalitem_textcolor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.hackforchange.common.StyledButton
-            android:id="@+id/editProjectBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/deleteProjectBtn"
-            android:background="@drawable/normalitem_background"
-            android:text="@string/fa_edit_pencil"
-            android:textColor="@drawable/normalitem_textcolor"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <com.hackforchange.common.StyledButton
             android:id="@+id/expandCollapseProjectBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -47,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/expandCollapseProjectBtn"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="@color/darkgrey"
             android:gravity="center_vertical"

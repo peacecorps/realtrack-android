@@ -106,6 +106,10 @@
     <string name="noparticipationstoexport">No participations to export</string>
     <string name="addanewactivity">Add a new activity&#8230;</string>
     <string name="addanewproject">Add a new project&#8230;</string>
-    
-
+    <string name="menunder15summary">Men &lt; 15</string>
+    <string name="men1524summary">Men 15&#8211;24</string>
+    <string name="menover24summary">Men &gt; 24</string>
+    <string name="womenunder15summary">Women &lt; 15</string>
+    <string name="women1524summary">Women 15&#8211;24</string>
+    <string name="womenover24summary">Women &gt; 24</string>
 </resources>
