@@ -64,7 +64,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
 
   @Override
   public int getChildrenCount(int groupPosition) {
-    return projectsActivitiesData.get(groupPosition).getActivitiesParticipationList().size();
+    return projectsActivitiesData.get(groupPosition).getActivitiesList().size();
   }
 
   @Override
@@ -74,7 +74,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
 
   @Override
   public Object getChild(int groupPosition, int childPosition) {
-    return projectsActivitiesData.get(groupPosition).getActivitiesParticipationList().get(childPosition);
+    return projectsActivitiesData.get(groupPosition).getActivitiesList().get(childPosition);
   }
 
   @Override
@@ -204,7 +204,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     } else
       holder = (ChildViewHolder) row.getTag();
 
-    final Activities activity = ((ActivitiesParticipationHolder) getChild(groupPosition, childPosition)).getActivity();
+    final Activities activity = (Activities) getChild(groupPosition, childPosition);
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
@@ -394,47 +394,5 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     StyledButton quickParticipationBtn;
     TextView activityTitle;
     TextView activityStartDate;
-  }
-}
-
-class ProjectsActivitiesHolder {
-  Project project;
-  List<ActivitiesParticipationHolder> activitiesParticipationList;
-
-  Project getProject() {
-    return project;
-  }
-
-  void setProject(Project project) {
-    this.project = project;
-  }
-
-  List<ActivitiesParticipationHolder> getActivitiesParticipationList() {
-    return activitiesParticipationList;
-  }
-
-  void setActivitiesParticipationList(List<ActivitiesParticipationHolder> activitiesParticipationList) {
-    this.activitiesParticipationList = activitiesParticipationList;
-  }
-}
-
-class ActivitiesParticipationHolder {
-  Activities activity;
-  List<Participation> participationList;
-  
-  public Activities getActivity() {
-    return activity;
-  }
-  
-  public void setActivity(Activities activity) {
-    this.activity = activity;
-  }
-  
-  public List<Participation> getParticipationList() {
-    return participationList;
-  }
-  
-  public void setParticipationList(List<Participation> participationList) {
-    this.participationList = participationList;
   }
 }
