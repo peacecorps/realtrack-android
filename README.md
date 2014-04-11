@@ -24,13 +24,13 @@ Using a smartphone application to track data is a good idea because most volunte
 
 #### Features
 
-* Streamlined interface
-* Spreadsheet reports emailed to user on demand
+* Streamlined and clean interface
 * Daily/weekly reminders to record data for activities
 * Quickly record participations without a reminder
-* Review and change participation details from within the app
-* Sign-in sheets with digital signatures for event participants
-* Signatures collected can be exported to PDF
+* Spreadsheet reports emailed to user on demand
+* Review and change participation details from within app
+* Sign-in sheets with finger-drawn signatures for event participants
+* PDF export of signatures that can be emailed as proof of participant involvement
 
 #### Notes for Users
 RealTrack conceptualizes a PCVs data tracking in terms of the following hierarchy (from high-level to low):
