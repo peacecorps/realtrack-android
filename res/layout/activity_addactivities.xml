@@ -101,7 +101,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="@string/reminders"/>
+                android:text="@string/remindersoptional"/>
 
         <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -288,7 +288,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="@string/organizations"/>
+                android:text="@string/organizationsoptional"/>
 
         <EditText
                 android:id="@+id/orgs"
@@ -318,7 +318,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="@string/communities"/>
+                android:text="@string/communitiesoptional"/>
 
         <EditText
                 android:id="@+id/comms"
@@ -336,7 +336,7 @@
                 android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
                 android:maxLines="6"
                 android:minLines="3"
-                android:hint="@string/communitiesimpacted"
+                android:hint="@string/communitiesimpactedoptional"
                 android:textColorHint="#969696"/>
 
         <TextView
@@ -348,7 +348,7 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
-                android:text="@string/initiatives"/>
+                android:text="@string/initiativesoptional"/>
 
         <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               xmlns:app="http://schemas.android.com/apk/res-auto"

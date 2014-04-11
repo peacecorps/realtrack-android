@@ -62,7 +62,7 @@
     <string name="nameactivityhint">Name Your Activity</string>
     <string name="startdate">Start Date</string>
     <string name="enddate">End Date</string>
-    <string name="reminders">Reminders (optional)</string>
+    <string name="remindersoptional">Reminders (optional)</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -72,11 +72,11 @@
     <string name="sunday">Sunday</string>
     <string name="notes">Notes (optional)</string>
     <string name="enternotes">Enter Notes</string>
-    <string name="organizations">Organizations (optional)</string>
+    <string name="organizationsoptional">Organizations (optional)</string>
     <string name="organizationsinvolved">Organizations Involved</string>
-    <string name="communities">Communities (optional)</string>
-    <string name="communitiesimpacted">Communities Impacted</string>
-    <string name="initiatives">Initiatives (optional)</string>
+    <string name="communitiesoptional">Communities (optional)</string>
+    <string name="communitiesimpactedoptional">Communities Impacted</string>
+    <string name="initiativesoptional">Initiatives (optional)</string>
     <string name="wid">WID</string>
     <string name="youth">Youth</string>
     <string name="malaria">Malaria</string>
@@ -113,4 +113,8 @@
     <string name="women1524summary">Women 15&#8211;24</string>
     <string name="womenover24summary">Women &gt; 24</string>
     <string name="emdash">&#8211;</string>
+    <string name="initiatives">Initiatives</string>
+    <string name="communities">Communities</string>
+    <string name="organizations">Organizations</string>
+    <string name="reminders">Reminders</string>
 </resources>
