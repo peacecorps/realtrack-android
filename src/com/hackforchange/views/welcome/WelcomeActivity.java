@@ -1,9 +1,14 @@
 package com.hackforchange.views.welcome;
 
 import java.util.ArrayList;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.ListView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -11,19 +16,22 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.hackforchange.R;
 import com.hackforchange.backend.activities.ParticipationDAO;
+import com.hackforchange.common.StyledButton;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.views.help.HelpDialog;
+import com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity;
+import com.hackforchange.views.participationspending.PendingParticipationActivity;
+import com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity;
 
 /**
  * This is the home screen of the app.
  * @author Raj
  */
-public class WelcomeActivity extends SherlockFragmentActivity {
-  private ListView homeItemsListView;
+public class WelcomeActivity extends SherlockFragmentActivity implements OnClickListener{
   private ArrayList<String> homeitems_data;
-  private HomeItemListAdapter listAdapter;
   private ArrayList<Participation> unservicedParticipation_data;
-
+  private LinearLayout welcomeActivityLinearLayout;
+  
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,10 +42,13 @@ public class WelcomeActivity extends SherlockFragmentActivity {
   public void onResume() {
     super.onResume();
     
+    welcomeActivityLinearLayout = (LinearLayout) findViewById(R.id.welcomeactivitylinearlayout);
+    welcomeActivityLinearLayout.removeAllViews();
+
     homeitems_data = new ArrayList<String>();
     homeitems_data.add(getResources().getString(R.string.fa_list)+" My Projects");
     homeitems_data.add(getResources().getString(R.string.fa_table)+" My Data");
-    
+
     ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
     unservicedParticipation_data = pDao.getAllUnservicedParticipations();
     if (unservicedParticipation_data.size() != 0) {
@@ -72,8 +83,36 @@ public class WelcomeActivity extends SherlockFragmentActivity {
   }
 
   void updateHomeItemsList() {
-    listAdapter = new HomeItemListAdapter(this, R.layout.row_homeitems, homeitems_data);
-    homeItemsListView = (ListView) findViewById(R.id.homeitemlistView);
-    homeItemsListView.setAdapter(listAdapter);
+    LayoutInflater inflater = getLayoutInflater();
+
+    for(int i=0;i<homeitems_data.size();++i){
+      StyledButton homeItemBtn = (StyledButton) inflater.inflate(R.layout.row_homeitems, welcomeActivityLinearLayout, false);
+      homeItemBtn.setId(i);
+      homeItemBtn.setOnClickListener(this);
+      homeItemBtn.setText(homeitems_data.get(i));
+      welcomeActivityLinearLayout.addView(homeItemBtn);
+    }
+  }
+
+  @Override
+  public void onClick(View v) {
+    int pos = v.getId();
+    switch (pos) {
+      case 0: // MY PROJECTS
+        Intent newActivity = new Intent(this, AllProjectsActivitiesActivity.class);
+        this.startActivity(newActivity);
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        break;
+      case 1: // MY DATA
+        newActivity = new Intent(this, ParticipationSummaryActivity.class);
+        this.startActivity(newActivity);
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        break;
+      case 2: // PENDING
+        newActivity = new Intent(this, PendingParticipationActivity.class);
+        this.startActivity(newActivity);
+        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        break;
+    }
   }
 }
