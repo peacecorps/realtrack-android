@@ -140,7 +140,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
       Date startDate = new Date(project.getStartDate());
       Date endDate = new Date(project.getEndDate());
-      holder.projectStartDate.setText(parser.format(startDate) + " to " + parser.format(endDate));
+      holder.projectStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
 
       // handle click on the title and show participation details
       holder.projectTitle.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +234,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     else { // normal activity item
       Date startDate = new Date(activity.getStartDate());
       Date endDate = new Date(activity.getEndDate());
-      holder.activityStartDate.setText(parser.format(startDate) + " to " + parser.format(endDate));
+      holder.activityStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
 
       // handle click on the title and show activity details
       holder.activityTitle.setOnClickListener(new View.OnClickListener() {

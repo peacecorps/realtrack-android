@@ -27,7 +27,7 @@
             android:id="@+id/submitbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/blueitem_background"
+            android:background="@drawable/greenitem_background"
             android:padding="10dp"
             android:text="@string/save"
             android:textColor="@android:color/white"

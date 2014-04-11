@@ -112,4 +112,5 @@
     <string name="womenunder15summary">Women &lt; 15</string>
     <string name="women1524summary">Women 15&#8211;24</string>
     <string name="womenover24summary">Women &gt; 24</string>
+    <string name="emdash">&#8211;</string>
 </resources>

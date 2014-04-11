@@ -39,7 +39,7 @@
                 android:id="@+id/doneButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blueitem_background"
+                android:background="@drawable/greenitem_background"
                 android:padding="10dp"
                 android:text="@string/done"
                 android:textColor="@android:color/white"

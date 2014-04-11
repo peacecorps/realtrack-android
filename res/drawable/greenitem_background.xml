@@ -26,7 +26,7 @@
                 android:width="1dp"
                 android:color="@color/darkgreen" />
             <corners
-                android:radius="7dp" />
+                android:radius="4dp" />
             <padding
                 android:left="10dp"
                 android:top="10dp"

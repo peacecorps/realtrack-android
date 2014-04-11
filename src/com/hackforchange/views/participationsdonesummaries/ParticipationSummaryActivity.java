@@ -143,6 +143,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     return dHolder;
   }
 
+  /**
+   * Only updates UI elements. Does not create any email related items.
+   * @param dHolder DataHolder object containing details of current state of projects, 
+   *                activities, participations, and participants.
+   */
   private void updateDisplay(DataHolder dHolder) {
     summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
     summaryLayout.removeAllViews();
@@ -222,6 +227,10 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     createEmail(dataHolder);
   }
 
+  /**
+   * Creates files to email.
+   * @param dHolder
+   */
   private void createEmail(DataHolder dHolder){
     String[] allInits = updateInitiativeNames();
 
@@ -237,6 +246,10 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       PdfWriter.getInstance(signinDocument, signinFos);
       signinDocument.open();
       signinDocument.addTitle("RealTrack Sign-In Report");
+      Paragraph reportHeader = new Paragraph("RealTrack Sign-In Report"); 
+      reportHeader.add(new Paragraph("Report generated on: "+(new SimpleDateFormat("MM/dd/yyyy HH:mm").format(new Date()))));
+      addNewLines(reportHeader, 2);
+      signinDocument.add(reportHeader);
     } catch (Exception e) {
     }
 
@@ -492,6 +505,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     if(fileToDelete != null) fileToDelete.delete();
   }
 
+  /**
+   * Class encapsulating details of current state of projects, 
+   * activities, participations, and participants.
+   * @author Raj
+   */
   private class DataHolder{
     List<ProjectHolder> pHolder_data;
   }

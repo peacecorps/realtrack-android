@@ -312,7 +312,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/blueitem_background"
+                android:background="@drawable/greenitem_background"
                 android:padding="10dp"
                 android:text="@string/save"
                 android:textColor="@android:color/white"
