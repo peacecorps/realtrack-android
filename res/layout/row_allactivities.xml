@@ -17,19 +17,19 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/greenitem_background"
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
+            android:background="@drawable/greenitem_background"
             android:text="@string/fa_users"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <com.hackforchange.common.StyledButton
             android:id="@+id/expandCollapseActivityBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:background="@color/white"
+            android:background="@null"
             android:gravity="center"
             android:text="@string/fa_downchevron"
             android:textColor="@drawable/greenitem_textcolor"
@@ -38,31 +38,32 @@
         <TextView
             android:id="@+id/activityTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/expandCollapseActivityBtn"
             android:layout_toLeftOf="@id/quickParticipationBtn"
+            android:layout_toRightOf="@id/expandCollapseActivityBtn"
+            android:background="@null"
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
-    
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@color/lightgrey"/>
+        android:background="@color/lightgrey" />
 
     <TextView
         android:id="@+id/activityStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/grey_white_gradient_with_bottom_border"
         android:gravity="center_vertical"
         android:paddingBottom="1dp"
         android:paddingLeft="10dp"
         android:paddingTop="1dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:textColor="@color/darkgrey"
         android:textSize="16sp"
         android:textStyle="bold" />
