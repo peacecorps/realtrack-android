@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,17 +40,26 @@ import com.hackforchange.models.activities.Participant;
 import com.hackforchange.models.activities.Participation;
 import com.hackforchange.models.projects.Project;
 import com.hackforchange.providers.CachedFileContentProvider;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
 public class ParticipationSummaryActivity extends SherlockActivity {
   static final int SENDEMAIL_REQUEST = 1;
+  private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
   private static final int PROGRESS_DIALOG = 2;
   
   private LinearLayout summaryLayout;
@@ -242,14 +252,15 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       dataFos = new FileOutputStream(nonAlignedDataOutputFile);
       participationFos = new FileOutputStream(cacheParticipationOutputFile);
       signinFos = new FileOutputStream(signInReportsOutputFile);
-      signinDocument = new Document();
+      signinDocument = new Document(PageSize.A4);
       PdfWriter.getInstance(signinDocument, signinFos);
       signinDocument.open();
       signinDocument.addTitle("RealTrack Sign-In Report");
-      Paragraph reportHeader = new Paragraph("RealTrack Sign-In Report"); 
-      reportHeader.add(new Paragraph("Report generated on: "+(new SimpleDateFormat("MM/dd/yyyy HH:mm").format(new Date()))));
-      addNewLines(reportHeader, 2);
+      Paragraph reportHeader = new Paragraph("RealTrack Sign-In Report", TITLE_FONT); 
+      reportHeader.add(new Paragraph("Report generated on: "+(new SimpleDateFormat("MM/dd/yyyy hh:mm aaa").format(new Date()))));
       signinDocument.add(reportHeader);
+      LineSeparator ls = new LineSeparator();
+      signinDocument.add(new Chunk(ls));
     } catch (Exception e) {
     }
 
@@ -346,36 +357,48 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             projectParagraph = new Paragraph();
             addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Project Title: " + p.getTitle()));
-            addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Activity Title: " + a.getTitle()));
-            addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Sign-In Sheet for: " + dateParser.format(d)+" " + timeParser.format(d)));
             projectParagraph.add(new Paragraph("Event details: " + participation.getNotes()));
-            addNewLines(projectParagraph, 2);
+            projectParagraph.add(new Paragraph("Sign-in Sheet:"));
+            addNewLines(projectParagraph, 1);
 
-            table = new PdfPTable(5);
+            table = new PdfPTable(new float[] { 2, 2, 2, 1, 1, 3 });
+            table.setWidthPercentage(100f);
 
             PdfPCell c1 = new PdfPCell(new Phrase("Name"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
 
             c1 = new PdfPCell(new Phrase("Phone"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
 
             c1 = new PdfPCell(new Phrase("Village"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
 
             c1 = new PdfPCell(new Phrase("Age"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
-
+            
             c1 = new PdfPCell(new Phrase("Gender"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(c1);
+
+            c1 = new PdfPCell(new Phrase("Signature"));
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+            c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
 
             table.setHeaderRows(1);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_CENTER);
           }
 
           for(Participant participant: paHolder.participantList){
@@ -395,6 +418,23 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             table.addCell(participant.getVillage());
             table.addCell(Integer.toString(participant.getAge()));
             table.addCell(participant.getGender()==Participant.MALE? "Male" : "Female");
+            try {
+              Image signatureImage = Image.getInstance(participant.getSignaturePath());
+              PdfPCell imageCell = new PdfPCell(signatureImage);
+              imageCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+              imageCell.setVerticalAlignment(Element.ALIGN_CENTER);
+              imageCell.setFixedHeight(50);
+              table.addCell(imageCell);
+            }
+            catch (BadElementException e1) {
+              table.addCell("Signature not found");
+            }
+            catch (MalformedURLException e1) {
+              table.addCell("Signature not found");
+            }
+            catch (IOException e1) {
+              table.addCell("Signature not found");
+            }
 
             try {
               participationFos.write(participationCSVContent.getBytes());
@@ -427,7 +467,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
   private void addNewLines(Paragraph paragraph, int numLinesToAdd) {
     for(int i=0;i<numLinesToAdd;++i)
-      paragraph.add(new Paragraph(""));
+      paragraph.add(new Paragraph(" "));
   }
 
   private void normalizeCSVColumns() {

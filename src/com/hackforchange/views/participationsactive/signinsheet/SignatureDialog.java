@@ -37,6 +37,7 @@ public class SignatureDialog extends SherlockDialogFragment {
         try {
           mSignInSheetActivity = (SignInSheetActivity) getActivity();
           mSignInSheetActivity.setScaledBitmap(signatureBitmap);
+          mSignInSheetActivity.makeButtonsVisibleIfSignatureAvailable();
           getDialog().dismiss();
         } catch (ClassCastException e) {
           throw new ClassCastException("This class can only be called from SignInSheetActivity");

@@ -24,9 +24,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
   private RadioButton maleRadioButton;
   private Bitmap signatureBitmap;
   private View spacer;
-  
-  // save bitmap to sd card
-  // in summary activity, use excel api to write image to worksheet
+  SignatureDialog signatureDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,9 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
     signButton = (StyledButton) findViewById(R.id.signbutton);
     maleRadioButton = (RadioButton) findViewById(R.id.maleRadioButton);
     spacer = findViewById(R.id.spacer);
-    
+
+    makeButtonsVisibleIfSignatureAvailable();
+
     signButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -66,7 +66,8 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
                   Toast.LENGTH_SHORT).show();
           return;
         }
-        SignatureDialog signatureDialog = new SignatureDialog();
+        signatureDialog = new SignatureDialog();
+        signatureDialog.setRetainInstance(true);
         signatureDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         signatureDialog.show(getSupportFragmentManager(), "signaturedialog");
       }
@@ -79,9 +80,9 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
       public void onClick(View view) {
         Participant p = new Participant();
         p.setId(-1);  // the -1 indicates this is a participant NOT already in the database. Comes in handy if we're
-                      // editing an existing participation in RecordOrEditParticipationActivity
-                      // it plays no role in RecordQuickParticipationActivity because the only use case for
-                      // that activity is adding a new participation
+        // editing an existing participation in RecordOrEditParticipationActivity
+        // it plays no role in RecordQuickParticipationActivity because the only use case for
+        // that activity is adding a new participation
 
         if (nameText.getText().length() == 0){
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
@@ -107,7 +108,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
           p.setGender(Participant.MALE);
         else
           p.setGender(Participant.FEMALE);
-        
+
         p.setSignatureBitmap(signatureBitmap);
 
         Bundle resultBundle = new Bundle();
@@ -146,9 +147,29 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
    */
   public void setScaledBitmap(Bitmap signatureBitmap) {
     this.signatureBitmap = signatureBitmap;
-    signButton.setText(getResources().getString(R.string.signagain));
-    submitButton.setVisibility(View.VISIBLE);
-    spacer.setVisibility(View.VISIBLE);
+  }
+
+  void makeButtonsVisibleIfSignatureAvailable() {
+    if(signatureBitmap!=null){
+      signButton.setText(getResources().getString(R.string.signagain));
+      submitButton.setVisibility(View.VISIBLE);
+      spacer.setVisibility(View.VISIBLE);
+    }
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle out) {
+    super.onSaveInstanceState(out);
+    if(signatureBitmap!=null)
+      out.putParcelable("signatureBitmap", signatureBitmap);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle in) {
+    super.onRestoreInstanceState(in);
+    Bitmap savedSignatureBitmap = (Bitmap) in.getParcelable("signatureBitmap");
+    if(savedSignatureBitmap!=null)
+      setScaledBitmap(savedSignatureBitmap);
   }
 
 }
