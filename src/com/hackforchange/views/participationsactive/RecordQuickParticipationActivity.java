@@ -422,7 +422,7 @@ PickDateDialogListener, PickTimeDialogListener {
         // the participation id is only assigned after the participation
         // has been added to its own table)
         for(Participant participant: participantList){
-          participant.setParticipationid(participationId);
+          participant.setParticipationId(participationId);
         }
         
         participantDao.addParticipants(participantList);

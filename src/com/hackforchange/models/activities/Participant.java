@@ -1,6 +1,7 @@
 package com.hackforchange.models.activities;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,6 +23,8 @@ public class Participant implements Parcelable {
   private String village;
   private int age;
   private int gender; 
+  private String signaturePath;
+  private Bitmap signatureBitmap;
 
   // Database table
   public static final String PARTICIPANT_TABLE = "participants";
@@ -33,6 +36,7 @@ public class Participant implements Parcelable {
   public static final String COLUMN_VILLAGE = "village"; //optional
   public static final String COLUMN_AGE = "age"; //required
   public static final String COLUMN_GENDER = "sex"; //required
+  public static final String COLUMN_SIGNATUREPATH = "signaturepath"; //required
 
   // Database creation SQL statement
   private static final String DATABASE_CREATE = "create table if not exists "
@@ -45,6 +49,7 @@ public class Participant implements Parcelable {
           + COLUMN_VILLAGE + " string, "
           + COLUMN_AGE + " integer not null, "
           + COLUMN_GENDER + " integer not null, "
+          + COLUMN_SIGNATUREPATH + " string, "
           + COLUMN_PARTICIPATIONID + " integer not null references " + Participation.PARTICIPATION_TABLE + " (" + Participation.COLUMN_ID + ") ON DELETE CASCADE"
           + ");";
 
@@ -69,11 +74,11 @@ public class Participant implements Parcelable {
     this.id = id;
   }
 
-  public int getParticipationid() {
+  public int getParticipationId() {
     return participationid;
   }
 
-  public void setParticipationid(int participationid) {
+  public void setParticipationId(int participationid) {
     this.participationid = participationid;
   }
 
@@ -116,6 +121,22 @@ public class Participant implements Parcelable {
   public void setGender(int gender) {
     this.gender = gender;
   }
+
+  public String getSignaturePath() {
+    return signaturePath;
+  }
+
+  public void setSignaturePath(String signaturePath) {
+    this.signaturePath = signaturePath;
+  }
+
+  public Bitmap getSignatureBitmap() {
+    return signatureBitmap;
+  }
+
+  public void setSignatureBitmap(Bitmap signatureBitmap) {
+    this.signatureBitmap = signatureBitmap;
+  }
   
   /*
    * Methods for Parcelable follow
@@ -134,6 +155,8 @@ public class Participant implements Parcelable {
     out.writeInt(age);
     out.writeInt(gender);
     out.writeInt(id);
+    out.writeString(signaturePath);
+    out.writeParcelable(signatureBitmap, 0);
   }
 
   public static final Parcelable.Creator<Participant> CREATOR = new Parcelable.Creator<Participant>() {
@@ -157,6 +180,8 @@ public class Participant implements Parcelable {
     age = parcel.readInt();
     gender = parcel.readInt();
     id = parcel.readInt();
+    signaturePath = parcel.readString();
+    signatureBitmap = parcel.readParcelable(Bitmap.class.getClassLoader());
   }
 
 }

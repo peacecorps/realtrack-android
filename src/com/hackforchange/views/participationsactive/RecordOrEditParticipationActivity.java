@@ -73,8 +73,8 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
     Calendar c = Calendar.getInstance();
     c.setTimeInMillis(dateTime);
 
-    final ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-    p = pDao.getParticipationWithId(participationId);
+    final ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
+    p = participationDao.getParticipationWithId(participationId);
     
     final ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     final Activities a = aDao.getActivityWithId(p.getActivityid());
@@ -259,7 +259,7 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
     dismissButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        pDao.deleteParticipation(participationId);
+        participationDao.deleteParticipation(participationId);
         finish();
       }
     });
@@ -371,13 +371,14 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
             participantList.remove(i--);
           }
           else{
-            participant.setParticipationid(participationId);
+            participant.setParticipationId(participationId);
           }
         }
         
-        participantDao.addParticipants(participantList); // the -1 we set into the id won't affect the actual database write because we ignore the id field of the participant object there
+        participantDao.addParticipants(participantList); // the -1 we set into the id won't affect the actual database write
+                                                         // because we ignore the id field of the participant object there
 
-        pDao.updateParticipation(p);
+        participationDao.updateParticipation(p);
 
         finish();
       }
