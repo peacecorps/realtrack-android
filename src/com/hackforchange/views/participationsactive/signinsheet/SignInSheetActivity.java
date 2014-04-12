@@ -67,7 +67,6 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
           return;
         }
         signatureDialog = new SignatureDialog();
-        signatureDialog.setRetainInstance(true);
         signatureDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         signatureDialog.show(getSupportFragmentManager(), "signaturedialog");
       }

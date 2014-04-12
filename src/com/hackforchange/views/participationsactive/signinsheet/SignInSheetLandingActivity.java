@@ -1,6 +1,7 @@
 package com.hackforchange.views.participationsactive.signinsheet;
 
 import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -130,6 +131,19 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
     }
 
     return true;
+  }
+  
+
+  @Override
+  protected void onSaveInstanceState(Bundle out) {
+    super.onSaveInstanceState(out);
+    out.putParcelableArrayList("participantList", participantList);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle in) {
+    super.onRestoreInstanceState(in);
+    participantList= in.getParcelableArrayList("participantList");
   }
 
 }
