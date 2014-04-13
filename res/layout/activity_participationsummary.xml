@@ -3,7 +3,8 @@
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/globalpattern_background" >
+    android:background="@drawable/globalpattern_background"
+    android:fillViewport="true" >
 
     <LinearLayout
         android:id="@+id/projectsummarylayout"

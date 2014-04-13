@@ -15,14 +15,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer.FillOutsideLine;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,8 +90,11 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
   private SendEmailTask sendEmailTask;
   private ProgressDialog progressDialog;
-
-  private LayoutInflater inflater;
+  
+  private XYSeries mCurrentSeries;
+  private XYMultipleSeriesDataset mDataset;
+  private GraphicalView mChartView;
+  private XYMultipleSeriesRenderer mRenderer;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -106,12 +115,61 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
   }
 
+  private void testGraph(LinearLayout view) {
+    mDataset = new XYMultipleSeriesDataset();
+    mCurrentSeries = new XYSeries("");
+    mDataset.addSeries(mCurrentSeries);
+    mRenderer = new XYMultipleSeriesRenderer();
+    XYSeriesRenderer renderer = new XYSeriesRenderer();
+    renderer.setFillPoints(false);
+    renderer.setDisplayChartValues(false);
+    renderer.setColor(getResources().getColor(R.color.blue));
+    
+    FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
+    fill.setColor(getResources().getColor(R.color.blue));
+    renderer.addFillOutsideLine(fill);
+    
+    mRenderer.setClickEnabled(false);
+    mRenderer.setShowLegend(false);
+    mRenderer.setAntialiasing(true);
+    mRenderer.setAxisTitleTextSize(20f);
+    mRenderer.setXLabelsColor(getResources().getColor(R.color.darkgrey));
+    mRenderer.setYLabelsColor(0, getResources().getColor(R.color.darkgrey));
+    mRenderer.setLabelsTextSize(15f);
+    mRenderer.setXLabelsPadding(2f);
+    mRenderer.setYLabelsPadding(10f);
+    mRenderer.setXTitle("Weeks");
+    mRenderer.setYTitle("Participants");
+    
+    mRenderer.setInScroll(true);
+    
+    mRenderer.setMarginsColor(getResources().getColor(R.color.white));
+    
+    mRenderer.addSeriesRenderer(renderer);
+    
+    mRenderer.setZoomEnabled(false);
+    mRenderer.setPanEnabled(false);
+    
+    mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+    LinearLayout graphView = (LinearLayout) view.findViewById(R.id.activityGraph);
+    graphView.addView(mChartView);
+    mCurrentSeries.add(1, 2);
+    mCurrentSeries.add(2, 3);
+    mCurrentSeries.add(3, 0.5);
+    mCurrentSeries.add(5, 2.5);
+    mCurrentSeries.add(6, 3.5);
+    mCurrentSeries.add(7, 2.85);
+    mCurrentSeries.add(8, 3.25);
+    mCurrentSeries.add(9, 4.25);
+    mCurrentSeries.add(10, 3.75);
+    mRenderer.setRange(new double[] { 1, 10.5, 0, 4.75 });
+    mChartView.repaint();
+  }
+
   @Override
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    inflater = getLayoutInflater();
     dataHolder = createDataHolder();
     updateDisplay(dataHolder);
   }
@@ -177,12 +235,14 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
       for (ActivityHolder aHolder : pHolder.activityHolderList) {
         Activities a = aHolder.a;
-        View activitySummaryView = getLayoutInflater().inflate(R.layout.row_activitysummary, null);
+        LinearLayout activitySummaryView = (LinearLayout) getLayoutInflater().inflate(R.layout.row_activitysummary, null);
 
         if(!aHolder.participationHolderList.isEmpty())
           dataToExportFound = true;
 
         int sumParticipants = 0;
+        XYMultipleSeriesRenderer renderer = null;
+        XYMultipleSeriesDataset dataset = null;
 
         for (ParticipationHolder paHolder : aHolder.participationHolderList) {
           Participation participation = paHolder.pa;
@@ -201,6 +261,9 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           numEvents.setText("["+aHolder.participationHolderList.size()+"] event(s)");
           TextView totalParticipants = (TextView) activitySummaryView.findViewById(R.id.totalParticipants);
           totalParticipants.setText("["+sumParticipants+"] participants");
+          
+          testGraph(activitySummaryView);
+          
           projectSummaryLinearLayout.addView(activitySummaryView);
         }
       }
