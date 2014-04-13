@@ -12,6 +12,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -90,17 +92,21 @@ public class ParticipationSummaryActivity extends SherlockActivity {
 
   private SendEmailTask sendEmailTask;
   private ProgressDialog progressDialog;
-  
+
   private XYSeries mCurrentSeries;
   private XYMultipleSeriesDataset mDataset;
   private GraphicalView mChartView;
   private XYMultipleSeriesRenderer mRenderer;
+  private Calendar activityCal, participationCal;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_participationsummary);
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
+    
+    participationCal = Calendar.getInstance();
+    activityCal = Calendar.getInstance();
 
     SendEmailTask task = (SendEmailTask) getLastNonConfigurationInstance();
     if(task!=null){
@@ -115,65 +121,33 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     }
   }
 
-  private void testGraph(LinearLayout view) {
-    mDataset = new XYMultipleSeriesDataset();
-    mCurrentSeries = new XYSeries("");
-    mDataset.addSeries(mCurrentSeries);
-    mRenderer = new XYMultipleSeriesRenderer();
-    XYSeriesRenderer renderer = new XYSeriesRenderer();
-    renderer.setFillPoints(false);
-    renderer.setDisplayChartValues(false);
-    renderer.setColor(getResources().getColor(R.color.blue));
-    
-    FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
-    fill.setColor(getResources().getColor(R.color.blue));
-    renderer.addFillOutsideLine(fill);
-    
-    mRenderer.setClickEnabled(false);
-    mRenderer.setShowLegend(false);
-    mRenderer.setAntialiasing(true);
-    mRenderer.setAxisTitleTextSize(20f);
-    mRenderer.setXLabelsColor(getResources().getColor(R.color.darkgrey));
-    mRenderer.setYLabelsColor(0, getResources().getColor(R.color.darkgrey));
-    mRenderer.setLabelsTextSize(15f);
-    mRenderer.setXLabelsPadding(2f);
-    mRenderer.setYLabelsPadding(10f);
-    mRenderer.setXTitle("Weeks");
-    mRenderer.setYTitle("Participants");
-    mRenderer.setYLabels(3);
-    mRenderer.setMargins(new int[]{5, 45, 5, 5});
-    
-    mRenderer.setInScroll(true);
-    
-    mRenderer.setMarginsColor(getResources().getColor(R.color.white));
-    
-    mRenderer.addSeriesRenderer(renderer);
-    
-    mRenderer.setZoomEnabled(false);
-    mRenderer.setPanEnabled(false);
-    
-    mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
-    LinearLayout graphView = (LinearLayout) view.findViewById(R.id.activityGraph);
-    graphView.addView(mChartView);
-    mCurrentSeries.add(1, 2);
-    mCurrentSeries.add(2, 3);
-    mCurrentSeries.add(3, 0.5);
-    mCurrentSeries.add(5, 2.5);
-    mCurrentSeries.add(6, 3.5);
-    mCurrentSeries.add(7, 2.85);
-    mCurrentSeries.add(8, 3.25);
-    mCurrentSeries.add(9, 4.25);
-    mCurrentSeries.add(10, 3.75);
-    mRenderer.setRange(new double[] { 1, 10.5, 0, 4.75 });
-    mChartView.repaint();
-  }
-
   @Override
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     dataHolder = createDataHolder();
-    updateDisplay(dataHolder);
+    if(mChartView==null)
+      updateDisplay(dataHolder);
+    else
+      mChartView.repaint();
+  }
+  
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    // save the current data, for instance when changing screen orientation
+    outState.putSerializable("dataset", mDataset);
+    outState.putSerializable("renderer", mRenderer);
+    outState.putSerializable("current_series", mCurrentSeries);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedState) {
+    super.onRestoreInstanceState(savedState);
+    // restore the current data, for instance when changing the screen orientation
+    mDataset = (XYMultipleSeriesDataset) savedState.getSerializable("dataset");
+    mRenderer = (XYMultipleSeriesRenderer) savedState.getSerializable("renderer");
+    mCurrentSeries = (XYSeries) savedState.getSerializable("current_series");
   }
 
   private DataHolder createDataHolder() {
@@ -239,22 +213,55 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         Activities a = aHolder.a;
         LinearLayout activitySummaryView = (LinearLayout) getLayoutInflater().inflate(R.layout.row_activitysummary, null);
 
-        if(!aHolder.participationHolderList.isEmpty())
+        if(!aHolder.participationHolderList.isEmpty()){
           dataToExportFound = true;
 
-        int sumParticipants = 0;
-        XYMultipleSeriesRenderer renderer = null;
-        XYMultipleSeriesDataset dataset = null;
-
-        for (ParticipationHolder paHolder : aHolder.participationHolderList) {
-          Participation participation = paHolder.pa;
-          sumParticipants += participation.getTotalParticipants();
-        }
-
-        if (aHolder.participationHolderList.size() > 0) {
           if(!projectTitleAdded){
             projectSummaryLinearLayout.addView(projectTitle);
             projectTitleAdded = true;
+          }
+
+          int sumParticipants = 0;
+          mCurrentSeries = new XYSeries("");
+
+          activityCal.setTimeInMillis(a.getStartDate());
+          activityCal.add(Calendar.DAY_OF_WEEK, 7);
+          mCurrentSeries.add(0, 0);
+          int weekNum = 1;
+
+          // sort the participation list first because there's no guarantee participations were added
+          // to the database in the order of their dates e.g. a quick add participation could easily
+          // be out of order
+          Collections.sort(aHolder.participationHolderList, new Comparator<ParticipationHolder>(){
+            @Override
+            public int compare(ParticipationHolder pa1, ParticipationHolder pa2) {
+              long date1 = pa1.pa.getDate();
+              long date2 = pa2.pa.getDate();
+              if(date1 == date2)
+                return 0;
+              else if(date1 > date2)
+                return 1;
+              else
+                return -1;
+            }
+          });
+
+          for (int i=0; i<aHolder.participationHolderList.size(); ++i) {
+            Participation participation = aHolder.participationHolderList.get(i).pa;
+            
+            participationCal.setTimeInMillis(participation.getDate());
+            if(participationCal.before(activityCal)){
+              sumParticipants += participation.getTotalParticipants();
+              if(weekNum==mCurrentSeries.getMaxX())
+                mCurrentSeries.remove(mCurrentSeries.getItemCount()-1);
+              mCurrentSeries.add(weekNum, sumParticipants);
+            } else {
+              //sumParticipants += participation.getTotalParticipants();
+              //mCurrentSeries.add(++weekNum, sumParticipants);
+              activityCal.add(Calendar.DAY_OF_WEEK, 7);
+              weekNum++;
+              i--;
+            }
           }
 
           TextView activityTitle = (TextView) activitySummaryView.findViewById(R.id.activityTitle);
@@ -263,13 +270,66 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           numEvents.setText("["+aHolder.participationHolderList.size()+"] event(s)");
           TextView totalParticipants = (TextView) activitySummaryView.findViewById(R.id.totalParticipants);
           totalParticipants.setText("["+sumParticipants+"] participants");
-          
-          testGraph(activitySummaryView);
-          
+
+          createGraph(activitySummaryView, mCurrentSeries);
+
           projectSummaryLinearLayout.addView(activitySummaryView);
         }
       }
     }
+  }
+
+  private void createGraph(LinearLayout view, XYSeries mCurrentSeries) {
+    mRenderer = getMultipleSeriesRenderer();
+    mRenderer.addSeriesRenderer(getSeriesRenderer());
+    mDataset = getMultipleSeriesDataset(mCurrentSeries);
+    mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+    LinearLayout graphView = (LinearLayout) view.findViewById(R.id.activityGraph);
+    graphView.addView(mChartView);
+  }
+
+  private XYMultipleSeriesDataset getMultipleSeriesDataset(XYSeries mCurrentSeries) {
+    mDataset = new XYMultipleSeriesDataset();
+    mDataset.addSeries(mCurrentSeries);
+    return mDataset;
+  }
+
+  private XYMultipleSeriesRenderer getMultipleSeriesRenderer() {
+    mRenderer = new XYMultipleSeriesRenderer();
+    mRenderer.setClickEnabled(false);
+    mRenderer.setShowLegend(false);
+    mRenderer.setAntialiasing(true);
+    mRenderer.setAxisTitleTextSize(20f);
+    mRenderer.setXLabelsColor(getResources().getColor(R.color.darkgrey));
+    mRenderer.setYLabelsColor(0, getResources().getColor(R.color.darkgrey));
+    mRenderer.setLabelsTextSize(15f);
+    mRenderer.setXLabelsPadding(2f);
+    mRenderer.setYLabelsPadding(10f);
+    mRenderer.setXTitle("Weeks");
+    mRenderer.setYTitle("Participants");
+    mRenderer.setYLabels(3);
+
+    mRenderer.setInScroll(true);
+
+    mRenderer.setMargins(new int[]{25, 45, 25, 25});
+    mRenderer.setMarginsColor(getResources().getColor(R.color.white));
+
+    mRenderer.setZoomEnabled(false);
+    mRenderer.setPanEnabled(false);
+    return mRenderer;
+  }
+
+  private XYSeriesRenderer getSeriesRenderer() {
+    XYSeriesRenderer renderer = new XYSeriesRenderer();
+    renderer.setFillPoints(false);
+    renderer.setDisplayChartValues(false);
+    renderer.setColor(getResources().getColor(R.color.blue));
+    
+    FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
+    fill.setColor(getResources().getColor(R.color.blue));
+    renderer.addFillOutsideLine(fill);
+    
+    return renderer;
   }
 
   private String[] updateInitiativeNames() {

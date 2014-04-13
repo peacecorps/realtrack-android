@@ -60,6 +60,8 @@
         android:layout_height="80dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:background="@color/white"
         android:orientation="horizontal" />
 

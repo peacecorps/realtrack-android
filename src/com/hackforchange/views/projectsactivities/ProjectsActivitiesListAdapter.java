@@ -141,6 +141,13 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       Date startDate = new Date(project.getStartDate());
       Date endDate = new Date(project.getEndDate());
       holder.projectStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
+      
+      // make sure these views show or else scrolling down all the way and then scrolling up screws them up
+      holder.projectStartDate.setVisibility(View.VISIBLE);
+      if(isExp)
+        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+      else
+        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
 
       // handle click on the title and show participation details
       holder.projectTitle.setOnClickListener(new View.OnClickListener() {
