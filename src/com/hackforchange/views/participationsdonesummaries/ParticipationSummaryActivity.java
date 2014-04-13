@@ -140,6 +140,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     mRenderer.setYLabelsPadding(10f);
     mRenderer.setXTitle("Weeks");
     mRenderer.setYTitle("Participants");
+    mRenderer.setYLabels(3);
+    mRenderer.setMargins(new int[]{5, 45, 5, 5});
     
     mRenderer.setInScroll(true);
     
