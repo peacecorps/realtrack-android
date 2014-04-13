@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/projectTitle"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/darkgrey"
-        android:paddingLeft="3dp"
-        android:textColor="@color/lightgrey"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+    android:background="@color/lightergrey"
+    android:paddingBottom="1dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="1dp"
+    android:textColor="@color/darkgrey"
+    android:textSize="18sp"
+    android:textStyle="bold" />

@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,8 +62,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   static final int SENDEMAIL_REQUEST = 1;
   private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
   private static final int PROGRESS_DIALOG = 2;
-  
-  private LinearLayout summaryLayout;
+
+  private LinearLayout projectSummaryLinearLayout;
 
   private int maxComms = 0;
 
@@ -84,12 +85,14 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   private SendEmailTask sendEmailTask;
   private ProgressDialog progressDialog;
 
+  private LayoutInflater inflater;
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_participationsummary);
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
-    
+
     SendEmailTask task = (SendEmailTask) getLastNonConfigurationInstance();
     if(task!=null){
       sendEmailTask = task;
@@ -107,6 +110,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    inflater = getLayoutInflater();
     dataHolder = createDataHolder();
     updateDisplay(dataHolder);
   }
@@ -136,7 +141,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         List<Participation> participation_data =participationDAO.getAllParticipationsForActivityId(a.getId());
         for(Participation pa: participation_data){
           ParticipationHolder paHolder = new ParticipationHolder();
-          paHolder.p = pa;
+          paHolder.pa = pa;
           paHolder.participantList = participantDAO.getAllParticipantsForParticipationId(pa.getId());
           paHolder_data.add(paHolder);
         }
@@ -159,54 +164,44 @@ public class ParticipationSummaryActivity extends SherlockActivity {
    *                activities, participations, and participants.
    */
   private void updateDisplay(DataHolder dHolder) {
-    summaryLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
-    summaryLayout.removeAllViews();
+    projectSummaryLinearLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
+    projectSummaryLinearLayout.removeAllViews();
 
     for (ProjectHolder pHolder : dHolder.pHolder_data) {
       Project p = pHolder.p;
 
-      View childProjectView = getLayoutInflater().inflate(R.layout.row_projectsummary, null);
-      TextView projectTitle = (TextView) childProjectView.findViewById(R.id.txtTitle);
+      TextView projectTitle = (TextView) getLayoutInflater().inflate(R.layout.row_projectsummary, null);;
       projectTitle.setText(p.getTitle());
+
+      boolean projectTitleAdded = false;
 
       for (ActivityHolder aHolder : pHolder.activityHolderList) {
         Activities a = aHolder.a;
-        View childActivityView = getLayoutInflater().inflate(R.layout.row_activitiessummary, null);
-        TextView activityTitle = (TextView) childActivityView.findViewById(R.id.txtTitle);
-        activityTitle.setText(a.getTitle());
-
-        if (aHolder.participationHolderList.size() > 0) {
-          if (childProjectView.getParent() == null)
-            summaryLayout.addView(childProjectView);
-          summaryLayout.addView(childActivityView);
-        }
+        View activitySummaryView = getLayoutInflater().inflate(R.layout.row_activitysummary, null);
 
         if(!aHolder.participationHolderList.isEmpty())
           dataToExportFound = true;
 
+        int sumParticipants = 0;
+
         for (ParticipationHolder paHolder : aHolder.participationHolderList) {
-          Participation participation = paHolder.p;
+          Participation participation = paHolder.pa;
+          sumParticipants += participation.getTotalParticipants();
+        }
 
-          View childParticipationView = getLayoutInflater().inflate(R.layout.row_allparticipation, null);
-          TextView participationDate = (TextView) childParticipationView.findViewById(R.id.date);
-          Date d = new Date(participation.getDate());
-          participationDate.setText(dateParser.format(d));
-          TextView participationMen = (TextView) childParticipationView.findViewById(R.id.men);
-          participationMen.setText(Integer.toString(participation.getMenUnder15()));
-          participationMen = (TextView) childParticipationView.findViewById(R.id.men1524);
-          participationMen.setText(Integer.toString(participation.getMen1524()));
-          participationMen = (TextView) childParticipationView.findViewById(R.id.menOver24);
-          participationMen.setText(Integer.toString(participation.getMenOver24()));
-          TextView participationWomen = (TextView) childParticipationView.findViewById(R.id.women);
-          participationWomen.setText(Integer.toString(participation.getWomenUnder15()));
-          participationWomen = (TextView) childParticipationView.findViewById(R.id.women1524);
-          participationWomen.setText(Integer.toString(participation.getWomen1524()));
-          participationWomen = (TextView) childParticipationView.findViewById(R.id.womenOver24);
-          participationWomen.setText(Integer.toString(participation.getWomenOver24()));
-          TextView participationNotes = (TextView) childParticipationView.findViewById(R.id.notes);
-          participationNotes.setText("Event details: " + participation.getNotes());
+        if (aHolder.participationHolderList.size() > 0) {
+          if(!projectTitleAdded){
+            projectSummaryLinearLayout.addView(projectTitle);
+            projectTitleAdded = true;
+          }
 
-          summaryLayout.addView(childParticipationView);
+          TextView activityTitle = (TextView) activitySummaryView.findViewById(R.id.activityTitle);
+          activityTitle.setText(a.getTitle());
+          TextView numEvents = (TextView) activitySummaryView.findViewById(R.id.numEvents);
+          numEvents.setText("["+aHolder.participationHolderList.size()+"] event(s)");
+          TextView totalParticipants = (TextView) activitySummaryView.findViewById(R.id.totalParticipants);
+          totalParticipants.setText("["+sumParticipants+"] participants");
+          projectSummaryLinearLayout.addView(activitySummaryView);
         }
       }
     }
@@ -228,12 +223,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
     signInReportsOutputFile = new File(cacheDir + File.separator + signInReportsFileName);
     nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
-    
+
     //will be used in case this activity is destroyed and recreated e.g. on rotation, keyboard popup etc
     sendEmailTask.dataFileName = dataFileName;
     sendEmailTask.participationFileName = participationFileName;
     sendEmailTask.signInReportsFileName = signInReportsFileName;
-    
+
     createEmail(dataHolder);
   }
 
@@ -309,7 +304,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         Activities a = aHolder.a;
 
         for (ParticipationHolder paHolder : aHolder.participationHolderList) {
-          Participation participation = paHolder.p;
+          Participation participation = paHolder.pa;
 
           Date d = new Date(participation.getDate());
 
@@ -385,7 +380,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
             c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table.addCell(c1);
-            
+
             c1 = new PdfPCell(new Phrase("Gender"));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
             c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -565,7 +560,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   }
 
   private class ParticipationHolder{
-    Participation p;
+    Participation pa;
     List<Participant> participantList;
   }
 
@@ -590,7 +585,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           break;
         }
         showDialog(PROGRESS_DIALOG);
-        
+
         if(sendEmailTask == null || sendEmailTask.getStatus()==Status.FINISHED)
           sendEmailTask = new SendEmailTask(this);
         sendEmailTask.execute();
@@ -609,7 +604,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   public void sendEmail(){
     if(progressDialog.isShowing())
       progressDialog.dismiss();
-    
+
     final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
     sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
     sendEmailIntent.setType("plain/text");
@@ -643,7 +638,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   public Object onRetainNonConfigurationInstance() {
     return sendEmailTask;
   }
-  
+
   @Override
   protected Dialog onCreateDialog(int id) {
     switch(id){
