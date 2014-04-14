@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/projectTitle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/lightergrey"
-    android:paddingBottom="1dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="1dp"
-    android:textColor="@color/darkgrey"
-    android:textSize="20sp"
-    android:textStyle="bold" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <com.hackforchange.common.StyledButton
+            android:id="@+id/expandCollapseProjectBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/fa_downchevron"
+            android:textColor="@drawable/greenitem_textcolor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/projectTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/expandCollapseProjectBtn"
+            android:gravity="center_vertical"
+            android:textColor="@color/darkgrey"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightgrey" />
+
+</LinearLayout>

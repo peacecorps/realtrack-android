@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/globalpattern_background"
-    android:fillViewport="true" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@drawable/globalpattern_background">
 
-    <LinearLayout
-        android:id="@+id/projectsummarylayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-
-</ScrollView>
+    <ExpandableListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/projectsummaryListView"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"/>
+</LinearLayout>

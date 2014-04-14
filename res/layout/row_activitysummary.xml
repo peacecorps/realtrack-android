@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activitySummaryLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="10dp" >
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/lightgrey" />
-
-    <TextView
-        android:id="@+id/activityTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="1dp"
+    
+    <RelativeLayout
         android:paddingLeft="10dp"
-        android:paddingTop="1dp"
-        android:textColor="@color/darkgrey"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <com.hackforchange.common.StyledButton
+            android:id="@+id/expandCollapseActivityBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/fa_downchevron"
+            android:textColor="@drawable/greenitem_textcolor"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/expandCollapseActivityBtn"
+            android:background="@null"
+            android:textColor="@color/darkgrey"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -40,7 +60,7 @@
             android:gravity="left"
             android:paddingLeft="5dp"
             android:textColor="@color/darkgrey"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/totalParticipants"
@@ -51,13 +71,13 @@
             android:gravity="right"
             android:paddingRight="5dp"
             android:textColor="@color/darkgrey"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/activityGraph"
+        android:id="@+id/activityGraphLinearLayout"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:paddingLeft="3dp"

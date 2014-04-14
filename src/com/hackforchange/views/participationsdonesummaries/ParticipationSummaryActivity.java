@@ -12,27 +12,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer.FillOutsideLine;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -71,14 +64,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
   private static final int PROGRESS_DIALOG = 2;
 
-  private LinearLayout projectSummaryLinearLayout;
-
   private int maxComms = 0;
 
   private final String ESCAPE_COMMAS = "\"";
   private final String COMMUNITY_DELIMITER = "@_@";
 
-  private boolean dataToExportFound;
+  private boolean dataToExportFound, signaturesToExportFound;
   private DataHolder dataHolder;
 
   DateFormat dateParser, timeParser;
@@ -97,7 +88,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   private XYMultipleSeriesDataset mDataset;
   private GraphicalView mChartView;
   private XYMultipleSeriesRenderer mRenderer;
-  private Calendar activityCal, participationCal;
+  private ParticipationSummaryListAdapter projectsActivitiesListAdapter;
+  private ExpandableListView projectsummaryExpandableListView;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -105,9 +97,6 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
     
-    participationCal = Calendar.getInstance();
-    activityCal = Calendar.getInstance();
-
     SendEmailTask task = (SendEmailTask) getLastNonConfigurationInstance();
     if(task!=null){
       sendEmailTask = task;
@@ -172,8 +161,9 @@ public class ParticipationSummaryActivity extends SherlockActivity {
         aHolder.a = a;
         List<ParticipationHolder> paHolder_data = new ArrayList<ParticipationHolder>();
 
-        List<Participation> participation_data =participationDAO.getAllParticipationsForActivityId(a.getId());
+        List<Participation> participation_data = participationDAO.getAllParticipationsForActivityId(a.getId());
         for(Participation pa: participation_data){
+          dataToExportFound = true;
           ParticipationHolder paHolder = new ParticipationHolder();
           paHolder.pa = pa;
           paHolder.participantList = participantDAO.getAllParticipantsForParticipationId(pa.getId());
@@ -198,138 +188,19 @@ public class ParticipationSummaryActivity extends SherlockActivity {
    *                activities, participations, and participants.
    */
   private void updateDisplay(DataHolder dHolder) {
-    projectSummaryLinearLayout = (LinearLayout) findViewById(R.id.projectsummarylayout);
-    projectSummaryLinearLayout.removeAllViews();
+    projectsummaryExpandableListView = (ExpandableListView) findViewById(R.id.projectsummaryListView);
+    
+    projectsActivitiesListAdapter = new ParticipationSummaryListAdapter(this, R.layout.row_projectsummary, R.layout.row_activitysummary, projectsummaryExpandableListView, dHolder.pHolder_data);
+    projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
+    projectsummaryExpandableListView.setAdapter(projectsActivitiesListAdapter);
 
-    for (ProjectHolder pHolder : dHolder.pHolder_data) {
-      Project p = pHolder.p;
-
-      TextView projectTitle = (TextView) getLayoutInflater().inflate(R.layout.row_projectsummary, null);;
-      projectTitle.setText(p.getTitle());
-
-      boolean projectTitleAdded = false;
-
-      for (ActivityHolder aHolder : pHolder.activityHolderList) {
-        Activities a = aHolder.a;
-        LinearLayout activitySummaryView = (LinearLayout) getLayoutInflater().inflate(R.layout.row_activitysummary, null);
-
-        if(!aHolder.participationHolderList.isEmpty()){
-          dataToExportFound = true;
-
-          if(!projectTitleAdded){
-            projectSummaryLinearLayout.addView(projectTitle);
-            projectTitleAdded = true;
-          }
-
-          int sumParticipants = 0;
-          mCurrentSeries = new XYSeries("");
-
-          activityCal.setTimeInMillis(a.getStartDate());
-          activityCal.add(Calendar.DAY_OF_WEEK, 7);
-          mCurrentSeries.add(0, 0);
-          int weekNum = 1;
-
-          // sort the participation list first because there's no guarantee participations were added
-          // to the database in the order of their dates e.g. a quick add participation could easily
-          // be out of order
-          Collections.sort(aHolder.participationHolderList, new Comparator<ParticipationHolder>(){
-            @Override
-            public int compare(ParticipationHolder pa1, ParticipationHolder pa2) {
-              long date1 = pa1.pa.getDate();
-              long date2 = pa2.pa.getDate();
-              if(date1 == date2)
-                return 0;
-              else if(date1 > date2)
-                return 1;
-              else
-                return -1;
-            }
-          });
-
-          for (int i=0; i<aHolder.participationHolderList.size(); ++i) {
-            Participation participation = aHolder.participationHolderList.get(i).pa;
-            
-            participationCal.setTimeInMillis(participation.getDate());
-            if(participationCal.before(activityCal)){
-              sumParticipants += participation.getTotalParticipants();
-              if(weekNum==mCurrentSeries.getMaxX())
-                mCurrentSeries.remove(mCurrentSeries.getItemCount()-1);
-              mCurrentSeries.add(weekNum, sumParticipants);
-            } else {
-              //sumParticipants += participation.getTotalParticipants();
-              //mCurrentSeries.add(++weekNum, sumParticipants);
-              activityCal.add(Calendar.DAY_OF_WEEK, 7);
-              weekNum++;
-              i--;
-            }
-          }
-
-          TextView activityTitle = (TextView) activitySummaryView.findViewById(R.id.activityTitle);
-          activityTitle.setText(a.getTitle());
-          TextView numEvents = (TextView) activitySummaryView.findViewById(R.id.numEvents);
-          numEvents.setText("["+aHolder.participationHolderList.size()+"] event(s)");
-          TextView totalParticipants = (TextView) activitySummaryView.findViewById(R.id.totalParticipants);
-          totalParticipants.setText("["+sumParticipants+"] participants");
-
-          createGraph(activitySummaryView, mCurrentSeries);
-
-          projectSummaryLinearLayout.addView(activitySummaryView);
-        }
-      }
+    // make sure all groups are expanded by default
+    for (int i = 0; i < dHolder.pHolder_data.size(); i++) {
+      projectsummaryExpandableListView.expandGroup(i);
     }
-  }
 
-  private void createGraph(LinearLayout view, XYSeries mCurrentSeries) {
-    mRenderer = getMultipleSeriesRenderer();
-    mRenderer.addSeriesRenderer(getSeriesRenderer());
-    mDataset = getMultipleSeriesDataset(mCurrentSeries);
-    mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
-    LinearLayout graphView = (LinearLayout) view.findViewById(R.id.activityGraph);
-    graphView.addView(mChartView);
-  }
-
-  private XYMultipleSeriesDataset getMultipleSeriesDataset(XYSeries mCurrentSeries) {
-    mDataset = new XYMultipleSeriesDataset();
-    mDataset.addSeries(mCurrentSeries);
-    return mDataset;
-  }
-
-  private XYMultipleSeriesRenderer getMultipleSeriesRenderer() {
-    mRenderer = new XYMultipleSeriesRenderer();
-    mRenderer.setClickEnabled(false);
-    mRenderer.setShowLegend(false);
-    mRenderer.setAntialiasing(true);
-    mRenderer.setAxisTitleTextSize(20f);
-    mRenderer.setXLabelsColor(getResources().getColor(R.color.darkgrey));
-    mRenderer.setYLabelsColor(0, getResources().getColor(R.color.darkgrey));
-    mRenderer.setLabelsTextSize(15f);
-    mRenderer.setXLabelsPadding(2f);
-    mRenderer.setYLabelsPadding(10f);
-    mRenderer.setXTitle("Weeks");
-    mRenderer.setYTitle("Participants");
-    mRenderer.setYLabels(3);
-
-    mRenderer.setInScroll(true);
-
-    mRenderer.setMargins(new int[]{25, 45, 25, 25});
-    mRenderer.setMarginsColor(getResources().getColor(R.color.white));
-
-    mRenderer.setZoomEnabled(false);
-    mRenderer.setPanEnabled(false);
-    return mRenderer;
-  }
-
-  private XYSeriesRenderer getSeriesRenderer() {
-    XYSeriesRenderer renderer = new XYSeriesRenderer();
-    renderer.setFillPoints(false);
-    renderer.setDisplayChartValues(false);
-    renderer.setColor(getResources().getColor(R.color.blue));
-    
-    FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
-    fill.setColor(getResources().getColor(R.color.blue));
-    renderer.addFillOutsideLine(fill);
-    
-    return renderer;
+    // hide default arrow group indicator because we will provide our own
+    projectsummaryExpandableListView.setGroupIndicator(null);
   }
 
   private String[] updateInitiativeNames() {
@@ -474,6 +345,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           PdfPTable table = null;
 
           if(!paHolder.participantList.isEmpty()){
+            signaturesToExportFound = true;
             projectParagraph = new Paragraph();
             addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Project Title: " + p.getTitle()));
@@ -674,17 +546,17 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     List<ProjectHolder> pHolder_data;
   }
 
-  private class ProjectHolder{
+  class ProjectHolder{
     Project p;
     List<ActivityHolder> activityHolderList;
   }
 
-  private class ActivityHolder{
+  class ActivityHolder{
     Activities a;
     List<ParticipationHolder> participationHolderList;
   }
 
-  private class ParticipationHolder{
+  class ParticipationHolder{
     Participation pa;
     List<Participant> participantList;
   }
@@ -742,10 +614,12 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     ArrayList<Uri> uris = new ArrayList<Uri>();
     uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
             + dataFileName));
-    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
-            + participationFileName));
-    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
-            + signInReportsFileName));
+    if(signaturesToExportFound){
+      uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+              + participationFileName));
+      uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+              + signInReportsFileName));
+    }
     sendEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 
     startActivityForResult(Intent.createChooser(sendEmailIntent, "Send mail..."), ParticipationSummaryActivity.SENDEMAIL_REQUEST);
