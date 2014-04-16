@@ -156,7 +156,7 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
       List<Activities> activitiesList = aDao.getAllActivitiesForProjectId(p.getId());
       
       Activities addNewActivityDummy = new Activities();
-      addNewActivityDummy.setTitle(getResources().getString(R.string.addanewactivity));
+      addNewActivityDummy.setTitle(getResources().getString(R.string.newrepeating)+" "+p.getTitle()+" "+getResources().getString(R.string.activityellipses));
       addNewActivityDummy.setId(-1);
       addNewActivityDummy.setProjectid(p.getId());
       activitiesList.add(addNewActivityDummy);
@@ -167,7 +167,10 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
     ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
     Project p = new Project();
     p.setId(-1);
-    p.setTitle(getResources().getString(R.string.addanewproject));
+    if(projects_data.isEmpty())
+      p.setTitle(getResources().getString(R.string.addyourprimaryproject));
+    else
+      p.setTitle(getResources().getString(R.string.addasecondaryproject));
     paHolder.setProject(p);
     paHolder.setActivitiesList(new ArrayList<Activities>());
     projectsactivities_data.add(paHolder);

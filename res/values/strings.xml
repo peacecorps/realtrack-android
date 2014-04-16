@@ -12,7 +12,7 @@
     <string name="editactivitiesactivity_label">Edit Activity</string>
     <string name="recordparticipationactivity_label">Record Participation</string>
     <string name="editparticipationactivity_label">Edit Participation</string>
-    <string name="recordquickparticipationactivity_label">Quick Add Participation</string>
+    <string name="recordquickparticipationactivity_label">Record Event Participation</string>
     <string name="pendingparticipationactivity_label">Pending Participations</string>
     <string name="allparticipationsactivity_label">Participation Details</string>
     <string name="emptyfieldserrormessage">"All non&#8211;optional fields are required"</string>
@@ -104,8 +104,11 @@
     <string name="sign">&#xf044; Sign</string>
     <string name="signagain">&#xf044; Re&#8211;Sign</string>
     <string name="noparticipationstoexport">No participations to export</string>
-    <string name="addanewactivity">Add a new activity&#8230;</string>
+    <string name="newrepeating">New repeating</string>
+    <string name="activityellipses">activity&#8230;</string>
     <string name="addanewproject">Add a new project&#8230;</string>
+    <string name="addyourprimaryproject">Add your primary project&#8230;</string>
+    <string name="addasecondaryproject">Add a secondary project&#8230;</string>
     <string name="menunder15summary">Men &lt; 15</string>
     <string name="men1524summary">Men 15&#8211;24</string>
     <string name="menover24summary">Men &gt; 24</string>

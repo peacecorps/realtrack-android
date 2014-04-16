@@ -109,6 +109,7 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
       row = inflater.inflate(groupLayoutResourceId, parent, false);
 
       holder = new ParentViewHolder();
+      holder.projectSummaryLayout = (LinearLayout) row.findViewById(R.id.projectSummaryLayout);
       holder.projectTitle = (TextView) row.findViewById(R.id.projectTitle);
       holder.expandCollapseProjectBtn = (StyledButton)row.findViewById(R.id.expandCollapseProjectBtn);
 
@@ -116,8 +117,24 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     } else
       holder = (ParentViewHolder) row.getTag();
 
-    final Project project = ((ProjectHolder) getGroup(groupPosition)).p;
+    ProjectHolder pHolder = (ProjectHolder) getGroup(groupPosition);
+    final Project project = pHolder.p;
     holder.projectTitle.setText(project.getTitle());
+    
+    // hide this group if it has no participations
+    boolean hasParticipations = false;
+    
+    for(ActivityHolder aHolder: pHolder.activityHolderList){
+      if(!aHolder.participationHolderList.isEmpty()){
+        hasParticipations = true;
+        break;
+      }
+    }
+    
+    if(!hasParticipations){
+      holder.projectSummaryLayout.removeAllViews();
+      return row;
+    }
 
     // make sure these views show or else scrolling down all the way and then scrolling up screws them up
     if(isExp)
@@ -146,7 +163,6 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
 
   @Override
   public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-    final int groupPos = groupPosition;
     row = convertView;
     ChildViewHolder holder = null;
 
@@ -315,6 +331,7 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
   }
 
   private class ParentViewHolder {
+    LinearLayout projectSummaryLayout;
     StyledButton expandCollapseProjectBtn;
     TextView projectTitle;
   }
