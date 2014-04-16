@@ -3,7 +3,7 @@
     <item>
         <bitmap
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:src="@drawable/lined_paper"
+            android:src="@drawable/light_grey"
             android:tileMode="repeat" />
     </item>
     <item>

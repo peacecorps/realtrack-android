@@ -104,8 +104,8 @@
     <string name="sign">&#xf044; Sign</string>
     <string name="signagain">&#xf044; Re&#8211;Sign</string>
     <string name="noparticipationstoexport">No participations to export</string>
-    <string name="newrepeating">New repeating</string>
-    <string name="activityellipses">activity&#8230;</string>
+    <string name="newrepeating">New Repeating</string>
+    <string name="activityellipses">Activity&#8230;</string>
     <string name="addanewproject">Add a new project&#8230;</string>
     <string name="addyourprimaryproject">Add your primary project&#8230;</string>
     <string name="addasecondaryproject">Add a secondary project&#8230;</string>
@@ -120,4 +120,5 @@
     <string name="communities">Communities</string>
     <string name="organizations">Organizations</string>
     <string name="reminders">Reminders</string>
+    <string name="pleasesignhere">Please Sign Here</string>
 </resources>

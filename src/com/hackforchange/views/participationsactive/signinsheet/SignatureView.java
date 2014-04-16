@@ -6,12 +6,16 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -34,7 +38,6 @@ import com.hackforchange.R;
 public class SignatureView extends View{
   private ColorStateList mSignatureColor;
   private int mCurSignatureColor;
-  private Paint mSignaturePaint;
   private Path mSignaturePath;
   private RectF dirtyRectangle;
   private final static float STROKE_WIDTH = 5f;
@@ -43,6 +46,14 @@ public class SignatureView extends View{
   private float mX, mY;
   private boolean mNothingDrawn;
   private ArrayList<MotionEvent> pathToRestore, pathToSave;
+  private int xStart;
+  private int xEnd;
+  private int yStart;
+  private int yEnd;
+  private final static ShapeDrawable mHorizLine = new ShapeDrawable(new RectShape());;
+  private Paint mSignaturePaint;
+  private Bitmap mXmarkBitmap;
+  private Paint mTextPaint;
 
   // stroke width?
   // rotation
@@ -88,6 +99,15 @@ public class SignatureView extends View{
     
     pathToSave = new ArrayList<MotionEvent>();
     pathToRestore = new ArrayList<MotionEvent>();
+    
+    mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mTextPaint.setColor(getResources().getColor(R.color.lightgrey));
+    mTextPaint.setTextAlign(Align.CENTER);
+    mTextPaint.setTextSize(25f);
+    
+    mHorizLine.getPaint().setColor(getResources().getColor(R.color.lightgrey));
+    
+    mXmarkBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.xmark);
   }
 
   @Override
@@ -102,6 +122,10 @@ public class SignatureView extends View{
         onTouchEvent(e);
       pathToRestore.clear();
     }
+    
+    xStart = 10; xEnd = getWidth()-10;
+    yStart = getHeight()-45; yEnd = getHeight()-43;
+    mHorizLine.setBounds(xStart, yStart, xEnd, yEnd);
   }
 
   private void createNewBitmap() {
@@ -112,6 +136,9 @@ public class SignatureView extends View{
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
+    mHorizLine.draw(canvas);
+    canvas.drawText(getResources().getString(R.string.pleasesignhere), getWidth()/2, yEnd+25, mTextPaint);
+    canvas.drawBitmap(mXmarkBitmap, xStart, yStart-mXmarkBitmap.getHeight(), mTextPaint);
     canvas.drawBitmap(mOffScreenBitmap, 0, 0, mSignaturePaint);
   }
 
