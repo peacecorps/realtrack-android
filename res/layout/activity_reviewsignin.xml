@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:padding="10dp" >
 
-            <com.hackforchange.common.StyledButton
+            <com.realtrackandroid.common.StyledButton
                 android:id="@+id/doneButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

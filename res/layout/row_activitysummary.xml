@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white" >
 
-        <com.hackforchange.common.StyledButton
+        <com.realtrackandroid.common.StyledButton
             android:id="@+id/expandCollapseActivityBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

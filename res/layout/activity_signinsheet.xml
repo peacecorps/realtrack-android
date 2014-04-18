@@ -229,7 +229,7 @@
             android:orientation="horizontal"
             android:padding="10dp" >
 
-            <com.hackforchange.common.StyledButton
+            <com.realtrackandroid.common.StyledButton
                 android:id="@+id/signbutton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                 android:layout_height="match_parent"
                 android:visibility="gone" />
 
-            <com.hackforchange.common.StyledButton
+            <com.realtrackandroid.common.StyledButton
                 android:id="@+id/submitbutton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"

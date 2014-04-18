@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hackforchange"
+    package="com.realtrackandroid"
     android:versionCode="4"
     android:versionName="1.0" >
 
@@ -17,7 +17,7 @@
         
         <!-- ACTIVITIES -->
         <activity
-            android:name="com.hackforchange.views.welcome.WelcomeActivity"
+            android:name="com.realtrackandroid.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,36 +26,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hackforchange.views.projectsactivities.AllProjectsActivitiesActivity"
+            android:name="com.realtrackandroid.views.projectsactivities.AllProjectsActivitiesActivity"
             android:label="@string/allprojectsactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.projects.AddProjectActivity"
+            android:name="com.realtrackandroid.views.projects.AddProjectActivity"
             android:label="@string/addprojectactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.projects.DisplayProjectActivity"
+            android:name="com.realtrackandroid.views.projects.DisplayProjectActivity"
             android:label="@string/displayprojectactivity_label" />
         <activity
-            android:name="com.hackforchange.views.projects.EditProjectActivity"
+            android:name="com.realtrackandroid.views.projects.EditProjectActivity"
             android:label="@string/editprojectactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.activities.AddActivitiesActivity"
+            android:name="com.realtrackandroid.views.activities.AddActivitiesActivity"
             android:label="@string/addactivitiesactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.activities.DisplayActivitiesActivity"
+            android:name="com.realtrackandroid.views.activities.DisplayActivitiesActivity"
             android:label="@string/displayactivitiesactivity_label" />
         <activity
-            android:name="com.hackforchange.views.activities.EditActivitiesActivity"
+            android:name="com.realtrackandroid.views.activities.EditActivitiesActivity"
             android:label="@string/editactivitiesactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.hackforchange.views.participationsactive.RecordOrEditParticipationActivity"
+            android:name="com.realtrackandroid.views.participationsactive.RecordOrEditParticipationActivity"
             android:exported="true"
             android:label="@string/recordparticipationactivity_label"
-            android:parentActivityName="com.hackforchange.views.welcome.WelcomeActivity"
+            android:parentActivityName="com.realtrackandroid.views.welcome.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateHidden" >
 
@@ -63,54 +63,54 @@
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hackforchange.views.welcome.WelcomeActivity" />
+                android:value="com.realtrackandroid.views.welcome.WelcomeActivity" />
         </activity>
         <activity
-            android:name="com.hackforchange.views.participationsactive.RecordQuickParticipationActivity"
+            android:name="com.realtrackandroid.views.participationsactive.RecordQuickParticipationActivity"
             android:label="@string/recordquickparticipationactivity_label"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.hackforchange.views.participationspending.PendingParticipationActivity"
+            android:name="com.realtrackandroid.views.participationspending.PendingParticipationActivity"
             android:label="@string/pendingparticipationactivity_label" />
         <activity
-            android:name="com.hackforchange.views.participationsdonesummaries.ParticipationSummaryActivity"
+            android:name="com.realtrackandroid.views.participationsdonesummaries.ParticipationSummaryActivity"
             android:label="@string/allparticipationsactivity_label" />
         <activity
-            android:name="com.hackforchange.views.help.HelpDialog"
+            android:name="com.realtrackandroid.views.help.HelpDialog"
             android:label="@string/helpactivity_label" >
         </activity>
         <activity
-            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetLandingActivity"
+            android:name="com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity"
             android:label="@string/signinsheetlandingactivity_label" >
         </activity>
         <activity
-            android:name="com.hackforchange.views.participationsactive.signinsheet.SignInSheetActivity"
+            android:name="com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetActivity"
             android:label="@string/signinsheetactivity_label" >
         </activity>
         <activity
-            android:name="com.hackforchange.views.participationsactive.signinsheet.ReviewSignInActivity"
+            android:name="com.realtrackandroid.views.participationsactive.signinsheet.ReviewSignInActivity"
             android:label="@string/reviewsigninactivity_label" >
         </activity>
 
-        <receiver android:name="com.hackforchange.reminderalarms.NotificationReceiver" >
+        <receiver android:name="com.realtrackandroid.reminderalarms.NotificationReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="com.hackforchange.views.participationsactive.signinsheet.SignatureDialog"
+            android:name="com.realtrackandroid.views.participationsactive.signinsheet.SignatureDialog"
             android:label="@string/title_activity_signature" >
         </activity>
         
         <!-- SERVICES AND PROVIDERS  -->
 
-        <service android:name="com.hackforchange.reminderalarms.NotificationService" />
+        <service android:name="com.realtrackandroid.reminderalarms.NotificationService" />
 
         <provider
-            android:name="com.hackforchange.providers.CachedFileContentProvider"
-            android:authorities="com.hackforchange.providers.CachedFileContentProvider"
+            android:name="com.realtrackandroid.providers.CachedFileContentProvider"
+            android:authorities="com.realtrackandroid.providers.CachedFileContentProvider"
             android:exported="true" >
         </provider>
     </application>

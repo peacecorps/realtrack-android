@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HelpDialog" >
 
-    <com.hackforchange.common.StyledButton
+    <com.realtrackandroid.common.StyledButton
         android:id="@+id/closeButton"
         android:layout_width="150dip"
         android:layout_height="wrap_content"
