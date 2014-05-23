@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -45,15 +46,15 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
     super.onResume();
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-    if(!prefs.getBoolean("name", false)) {
-//      SharedPreferences.Editor editor = prefs.edit();
-//      editor.putBoolean("name", true);
-//      editor.commit();
+    if(!prefs.contains("name")) {
       Intent i = new Intent(this, CollectPCVInfoActivity.class);
       this.startActivity(i);
       this.finish();
     }
     else {
+      TextView greetingTextView = (TextView) findViewById(R.id.greetingTextView);
+      greetingTextView.setText("Hello, "+prefs.getString("name", "User"));
+      
       welcomeActivityLinearLayout = (LinearLayout) findViewById(R.id.welcomeactivitylinearlayout);
       welcomeActivityLinearLayout.removeAllViews();
 
@@ -70,8 +71,6 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
       // populate the home items list
       updateHomeItemsList();
     }
-
-
   }
 
   // create actionbar menu
