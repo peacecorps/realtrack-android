@@ -121,4 +121,11 @@
     <string name="organizations">Organizations</string>
     <string name="reminders">Reminders</string>
     <string name="pleasesignhere">Please Sign Here</string>
+    <string name="collectpcvactivity_label">Welcome</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="select">Select&#8230;</string>
+    <string name="sector">Sector</string>
+    <string name="post">Post</string>
+    <string name="welcome">Welcome</string>
+
 </resources>

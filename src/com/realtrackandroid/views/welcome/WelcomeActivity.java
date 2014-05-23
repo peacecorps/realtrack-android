@@ -3,7 +3,9 @@ package com.realtrackandroid.views.welcome;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
   private ArrayList<String> homeitems_data;
   private ArrayList<Participation> unservicedParticipation_data;
   private LinearLayout welcomeActivityLinearLayout;
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,22 +43,35 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
   @Override
   public void onResume() {
     super.onResume();
-    
-    welcomeActivityLinearLayout = (LinearLayout) findViewById(R.id.welcomeactivitylinearlayout);
-    welcomeActivityLinearLayout.removeAllViews();
 
-    homeitems_data = new ArrayList<String>();
-    homeitems_data.add(getResources().getString(R.string.fa_list)+" My Projects");
-    homeitems_data.add(getResources().getString(R.string.fa_table)+" My Data");
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    if(!prefs.getBoolean("name", false)) {
+//      SharedPreferences.Editor editor = prefs.edit();
+//      editor.putBoolean("name", true);
+//      editor.commit();
+      Intent i = new Intent(this, CollectPCVInfoActivity.class);
+      this.startActivity(i);
+      this.finish();
+    }
+    else {
+      welcomeActivityLinearLayout = (LinearLayout) findViewById(R.id.welcomeactivitylinearlayout);
+      welcomeActivityLinearLayout.removeAllViews();
 
-    ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
-    unservicedParticipation_data = pDao.getAllUnservicedParticipations();
-    if (unservicedParticipation_data.size() != 0) {
-      homeitems_data.add(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
+      homeitems_data = new ArrayList<String>();
+      homeitems_data.add(getResources().getString(R.string.fa_list)+" My Projects");
+      homeitems_data.add(getResources().getString(R.string.fa_table)+" My Data");
+
+      ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
+      unservicedParticipation_data = pDao.getAllUnservicedParticipations();
+      if (unservicedParticipation_data.size() != 0) {
+        homeitems_data.add(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
+      }
+
+      // populate the home items list
+      updateHomeItemsList();
     }
 
-    // populate the home items list
-    updateHomeItemsList();
+
   }
 
   // create actionbar menu
