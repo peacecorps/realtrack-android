@@ -127,5 +127,6 @@
     <string name="sector">Sector</string>
     <string name="post">Post</string>
     <string name="welcome">Welcome</string>
+    <string name="cannotentersmallernumber">Number entered cannot be less than the number of people currently signed in</string>
 
 </resources>

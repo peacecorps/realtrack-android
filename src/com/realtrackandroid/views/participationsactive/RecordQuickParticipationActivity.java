@@ -9,7 +9,9 @@ import java.util.Date;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -175,18 +177,6 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    menUnder15NumText.addTextChangedListener(new AbstractTextValidator(menUnder15NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<menUnder15FromSignInSheet){
-          editText.setText(Integer.toString(menUnder15FromSignInSheet));
-          return;
-        }
-        menUnder15ManuallyEntered = Integer.parseInt(enteredValue)-menUnder15FromSignInSheet;
-      }
-    });
-
     men1524Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -195,18 +185,6 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    men1524NumText.addTextChangedListener(new AbstractTextValidator(men1524NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<men1524FromSignInSheet){
-          editText.setText(Integer.toString(men1524FromSignInSheet));
-          return;
-        }
-        men1524ManuallyEntered = Integer.parseInt(enteredValue)-men1524FromSignInSheet;
-      }
-    });
-
     menOver24Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -215,18 +193,6 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    menOver24NumText.addTextChangedListener(new AbstractTextValidator(menOver24NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<menOver24FromSignInSheet){
-          editText.setText(Integer.toString(menOver24FromSignInSheet));
-          return;
-        }
-        menOver24ManuallyEntered = Integer.parseInt(enteredValue)-menOver24FromSignInSheet;
-      }
-    });
-
     womenUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -235,18 +201,6 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    womenUnder15NumText.addTextChangedListener(new AbstractTextValidator(womenUnder15NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<womenUnder15FromSignInSheet){
-          editText.setText(Integer.toString(womenUnder15FromSignInSheet));
-          return;
-        }
-        womenUnder15ManuallyEntered = Integer.parseInt(enteredValue)-womenUnder15FromSignInSheet;
-      }
-    });
-
     women1524Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -255,18 +209,6 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    women1524NumText.addTextChangedListener(new AbstractTextValidator(women1524NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<women1524FromSignInSheet){
-          editText.setText(Integer.toString(women1524FromSignInSheet));
-          return;
-        }
-        women1524ManuallyEntered = Integer.parseInt(enteredValue)-women1524FromSignInSheet;
-      }
-    });
-
     womenOver24Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -275,21 +217,12 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
     
-    womenOver24NumText.addTextChangedListener(new AbstractTextValidator(womenOver24NumText) {
-      @Override
-      public void validate(EditText editText) {
-        String enteredValue = editText.getText().toString();
-        if(enteredValue.length()==0 || Integer.parseInt(enteredValue)<womenOver24FromSignInSheet){
-          editText.setText(Integer.toString(womenOver24FromSignInSheet));
-          return;
-        }
-        womenOver24ManuallyEntered = Integer.parseInt(enteredValue)-womenOver24FromSignInSheet;
-      }
-    });
-
     submitButton.setOnClickListener(new View.OnClickListener() {
+      private boolean errorsFound;
+      
       @Override
       public void onClick(View v) {
+        errorsFound = false;
 
         if (!menUnder15Checkbox.isChecked() && !men1524Checkbox.isChecked()
                 && !menOver24Checkbox.isChecked() && !womenUnder15Checkbox.isChecked()
@@ -337,8 +270,10 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(menUnder15NumText, menUnder15FromSignInSheet);
             p.setMenUnder15(Integer.parseInt(menUnder15NumText.getText().toString()));
+          }
         }
         else {
           p.setMenUnder15(0);
@@ -350,8 +285,10 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(men1524NumText, men1524FromSignInSheet);
             p.setMen1524(Integer.parseInt(men1524NumText.getText().toString()));
+          }
         }
         else {
           p.setMen1524(0);
@@ -363,8 +300,10 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(menOver24NumText, menOver24FromSignInSheet);
             p.setMenOver24(Integer.parseInt(menOver24NumText.getText().toString()));
+          }
         }
         else {
           p.setMenOver24(0);
@@ -376,8 +315,10 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(womenUnder15NumText, womenUnder15FromSignInSheet);
             p.setWomenUnder15(Integer.parseInt(womenUnder15NumText.getText().toString()));
+          }
         }
         else {
           p.setWomenUnder15(0);
@@ -389,8 +330,10 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(women1524NumText, women1524FromSignInSheet);
             p.setWomen1524(Integer.parseInt(women1524NumText.getText().toString()));
+          }
         }
         else {
           p.setWomen1524(0);
@@ -402,11 +345,19 @@ PickDateDialogListener, PickTimeDialogListener {
                     Toast.LENGTH_SHORT).show();
             return;
           }
-          else
+          else{
+            checkEnteredValue(womenOver24NumText, womenOver24FromSignInSheet);
             p.setWomenOver24(Integer.parseInt(womenOver24NumText.getText().toString()));
+          }
         }
         else {
           p.setWomenOver24(0);
+        }
+        
+        if(errorsFound){
+          Toast.makeText(getApplicationContext(), R.string.cannotentersmallernumber,
+                  Toast.LENGTH_SHORT).show();
+          return;
         }
 
         p.setNotes(notesText.getText().toString());
@@ -429,6 +380,28 @@ PickDateDialogListener, PickTimeDialogListener {
         participantDao.addParticipants(participantList);
 
         finish();
+      }
+      
+      private void checkEnteredValue(EditText editText, int numSignedIn) {
+        editText.setTextColor(getResources().getColor(android.R.color.black));
+        int enteredValue = Integer.parseInt(editText.getText().toString());
+        if(numSignedIn!=0 && enteredValue < numSignedIn){
+          editText.setText(Integer.toString(numSignedIn)); // put back at least the number of people signed in
+          
+          // change the text color to signal an error so that the user can see it easily
+          editText.setTextColor(getResources().getColor(R.color.orange));
+          
+          // restore the text color when the user tries to type in a possible correction
+          final EditText fEditText = editText;
+          editText.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+              fEditText.setTextColor(getResources().getColor(android.R.color.black));
+              return false;
+            }
+          });
+          errorsFound = true;
+        }
       }
 
     });
@@ -524,7 +497,7 @@ PickDateDialogListener, PickTimeDialogListener {
       womenOver24Checkbox.setEnabled(false);
     }
     
-    signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" (currently has "+participantList.size()+" participant(s))");
+    signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" ("+participantList.size()+" participant(s))");
   }
 
   @Override
