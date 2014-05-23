@@ -14,7 +14,7 @@ import android.os.ParcelFileDescriptor;
 public class CachedFileContentProvider extends ContentProvider {
 
     // The authority is the symbolic name for the provider class
-    public static final String AUTHORITY = "com.hackforchange.providers.CachedFileContentProvider";
+    public static final String AUTHORITY = CachedFileContentProvider.class.getCanonicalName();
 
     // UriMatcher used to match against incoming requests
     private UriMatcher uriMatcher;
