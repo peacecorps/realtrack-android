@@ -129,5 +129,7 @@
     <string name="welcome">Welcome</string>
     <string name="cannotentersmallernumber">Number entered cannot be less than the number of people currently signed in.</string>
     <string name="frameworkinfoactivity_label">Project Framework</string>
+    <string name="howtouse">How to Use</string>
+    <string name="projectframework">Project Framework</string>
 
 </resources>

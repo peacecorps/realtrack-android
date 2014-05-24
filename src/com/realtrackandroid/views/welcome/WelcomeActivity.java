@@ -22,6 +22,7 @@ import com.realtrackandroid.backend.activities.ParticipationDAO;
 import com.realtrackandroid.common.StyledButton;
 import com.realtrackandroid.models.activities.Participation;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 import com.realtrackandroid.views.participationsdonesummaries.ParticipationSummaryActivity;
 import com.realtrackandroid.views.participationspending.PendingParticipationActivity;
 import com.realtrackandroid.views.projectsactivities.AllProjectsActivitiesActivity;
@@ -86,12 +87,14 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
         FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
         frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
-        /*HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        helpDialog.show(getSupportFragmentManager(), "helpdialog");*/
         break;
       default:
         return super.onOptionsItemSelected(item);
