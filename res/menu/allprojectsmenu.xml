@@ -10,4 +10,22 @@
             android:showAsAction="ifRoom"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Add Project"/>
+    
+    <item
+        android:id="@+id/action_helpGroup"
+        android:icon="@android:drawable/ic_menu_help"
+        android:showAsAction="always"
+        android:title="@string/howtouse">
+        <menu>
+            <item
+                android:id="@+id/action_help"
+                android:showAsAction="always"
+                android:title="@string/howtouse"/>
+            <item
+                android:id="@+id/action_framework"
+                android:showAsAction="always"
+                android:title="@string/projectframework"/>
+        </menu>
+    </item>
+    
 </menu>

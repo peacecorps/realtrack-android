@@ -1,20 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_helpGroup"
+        android:id="@+id/action_help"
         android:icon="@android:drawable/ic_menu_help"
         android:showAsAction="always"
-        android:title="@string/howtouse">
-        <menu>
-            <item
-                android:id="@+id/action_help"
-                android:showAsAction="always"
-                android:title="@string/howtouse"/>
-            <item
-                android:id="@+id/action_framework"
-                android:showAsAction="always"
-                android:title="@string/projectframework"/>
-        </menu>
+        android:title="@string/help">
     </item>
 
 </menu>

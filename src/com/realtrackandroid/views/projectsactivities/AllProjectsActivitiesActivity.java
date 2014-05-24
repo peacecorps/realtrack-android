@@ -5,10 +5,11 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -18,13 +19,15 @@ import com.realtrackandroid.backend.activities.ActivitiesDAO;
 import com.realtrackandroid.backend.projects.ProjectDAO;
 import com.realtrackandroid.models.activities.Activities;
 import com.realtrackandroid.models.projects.Project;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 import com.realtrackandroid.views.projects.AddProjectActivity;
 
 /*
  * Presents an activity that lists all the projects in the app's database
  * Pressing the back key will exit the activity and take you back to the home screen (WelcomeActivity)
  */
-public class AllProjectsActivitiesActivity extends SherlockActivity {
+public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
   protected ExpandableListView projectsActivitiesListView; //holds a list of the projects
   List<ProjectsActivitiesHolder> projectsactivities_data, filteredprojectsactivities_data;
   private ProjectsActivitiesListAdapter projectsActivitiesListAdapter;
@@ -111,6 +114,16 @@ public class AllProjectsActivitiesActivity extends SherlockActivity {
         Intent intent = new Intent(this, AddProjectActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       default:
         return super.onOptionsItemSelected(item);
