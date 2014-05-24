@@ -19,7 +19,6 @@
 
     <style name="Theme.Vrf.FullscreenTheme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Solid.Vrf</item>
         <item name="android:windowBackground">@null</item>
     </style>
 </resources>

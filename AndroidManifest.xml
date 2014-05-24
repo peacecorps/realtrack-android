@@ -92,31 +92,28 @@
             android:name="com.realtrackandroid.views.participationsactive.signinsheet.ReviewSignInActivity"
             android:label="@string/reviewsigninactivity_label" >
         </activity>
-
-        <receiver android:name="com.realtrackandroid.reminderalarms.NotificationReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name="com.realtrackandroid.views.participationsactive.signinsheet.SignatureDialog"
             android:label="@string/title_activity_signature" >
         </activity>
-
         <activity
             android:name="com.realtrackandroid.views.welcome.CollectPCVInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/collectpcvactivity_label" >
         </activity>
         <activity
-            android:name="com.realtrackandroid.views.help.FrameworkInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="com.realtrackandroid.views.help.FrameworkInfoDialog"
             android:label="@string/frameworkinfoactivity_label"
-            android:theme="@style/Theme.Vrf.FullscreenTheme" >
+            android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
 
         <!-- SERVICES AND PROVIDERS -->
+
+        <receiver android:name="com.realtrackandroid.reminderalarms.NotificationReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.realtrackandroid.reminderalarms.NotificationService" />
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +21,7 @@ import com.realtrackandroid.R;
 import com.realtrackandroid.backend.activities.ParticipationDAO;
 import com.realtrackandroid.common.StyledButton;
 import com.realtrackandroid.models.activities.Participation;
-import com.realtrackandroid.views.help.FrameworkInfoActivity;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.participationsdonesummaries.ParticipationSummaryActivity;
 import com.realtrackandroid.views.participationspending.PendingParticipationActivity;
 import com.realtrackandroid.views.projectsactivities.AllProjectsActivitiesActivity;
@@ -85,10 +86,9 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_help:
-        // temporarily for testing only
-        Intent i = new Intent(this, FrameworkInfoActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         /*HelpDialog helpDialog = new HelpDialog();
         helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         helpDialog.show(getSupportFragmentManager(), "helpdialog");*/

@@ -35,14 +35,11 @@ public class HelpDialog extends DialogFragment {
     return view;
   }
   
-  
   @Override
   public void onStart() {
     super.onStart();
-
-    if (getDialog() == null) {
+    if (getDialog() == null)
       return;
-    }
     
     getDialog().getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
   }
