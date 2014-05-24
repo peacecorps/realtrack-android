@@ -116,7 +116,14 @@
 
         <activity
             android:name="com.realtrackandroid.views.welcome.CollectPCVInfoActivity"
-            android:label="@string/collectpcvactivity_label">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/collectpcvactivity_label" >
+        </activity>
+        <activity
+            android:name="com.realtrackandroid.views.help.FrameworkInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/frameworkinfoactivity_label"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 

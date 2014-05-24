@@ -64,16 +64,16 @@ public class IndicatorsDAO {
       return allSectors;
     }
     
-    public List<String> getAllSectorsForPost(String post){
+    public List<String> getAllProjectsForPost(String post){
       openDB();
-      List<String> allSectors = null;
-      String queryString = "select distinct " + Indicators.COLUMN_SECTOR + " from " + Indicators.INDICATORS_TABLE +
+      List<String> allProjects = null;
+      String queryString = "select distinct " + Indicators.COLUMN_PROJECT + " from " + Indicators.INDICATORS_TABLE +
                            " where " + Indicators.COLUMN_POST + " = '" + post + "'" +
-                           " order by " + Indicators.COLUMN_SECTOR + " asc";
+                           " order by " + Indicators.COLUMN_PROJECT + " asc";
       Cursor returnData = readDatabase.rawQuery(queryString, null);
-      allSectors = extractStrings(returnData);
+      allProjects = extractStrings(returnData);
       closeDB();
-      return allSectors;
+      return allProjects;
     }
     
     private ArrayList<String> extractStrings(Cursor returnData) {
@@ -94,20 +94,19 @@ public class IndicatorsDAO {
       return output;
     }
 
-    public List<Indicators> getAllIndicatorsForPostAndSector(String post, String sector) {
+    public List<Indicators> getAllIndicatorsForPostAndProject(String post, String project) {
         openDB();
         ArrayList<Indicators> output = null;
-        String[] columnsToRead = new String[3];
+        String[] columnsToRead = new String[6];
         columnsToRead[0] = Indicators.COLUMN_POST;
         columnsToRead[1] = Indicators.COLUMN_SECTOR;
         columnsToRead[2] = Indicators.COLUMN_PROJECT;
         columnsToRead[3] = Indicators.COLUMN_GOAL;
         columnsToRead[4] = Indicators.COLUMN_OBJECTIVE;
         columnsToRead[5] = Indicators.COLUMN_INDICATOR;
-        String whereClause = Indicators.COLUMN_POST + "=" + post + " and " + Indicators.COLUMN_SECTOR + "=" + sector; // order in ascending order of remind time
-        String orderbyClause = Indicators.COLUMN_INDICATOR + " asc";
+        String whereClause = Indicators.COLUMN_POST + " = '" + post + "' and " + Indicators.COLUMN_PROJECT + " = '" + project + "'";
         Cursor returnData = readDatabase.query(Indicators.INDICATORS_TABLE, columnsToRead,
-            whereClause, null, null, null, orderbyClause);
+            whereClause, null, null, null, null);
         output = extractIndicators(returnData);
         closeDB();
         return output;

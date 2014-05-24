@@ -23,9 +23,11 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
@@ -250,6 +252,9 @@ public class ParticipationSummaryActivity extends SherlockActivity {
       signinDocument.addTitle("RealTrack Sign-In Report");
       Paragraph reportHeader = new Paragraph("RealTrack Sign-In Report", TITLE_FONT); 
       reportHeader.add(new Paragraph("Report generated on: "+(new SimpleDateFormat("MM/dd/yyyy hh:mm aaa").format(new Date()))));
+      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+      if(prefs.contains(getString(R.string.name)))
+        reportHeader.add(new Paragraph("PCV Name: "+prefs.getString(getString(R.string.name), "")));
       signinDocument.add(reportHeader);
       LineSeparator ls = new LineSeparator();
       signinDocument.add(new Chunk(ls));

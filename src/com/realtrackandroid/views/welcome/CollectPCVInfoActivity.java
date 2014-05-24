@@ -24,15 +24,19 @@ import com.realtrackandroid.common.StyledButton;
  * @author Raj
  */
 public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSelectedListener {
-  private List<String> sectorList;
+  private List<String> projectList;
   private IndicatorsDAO iDao;
-  private ArrayAdapter<String> sectorDataAdapter;
+  private ArrayAdapter<String> projectDataAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_collectpcvinfo);
-
+  }
+  
+  @Override
+  public void onResume() {
+    super.onResume();
     iDao = new IndicatorsDAO(this);
 
     final EditText nameEditText = (EditText) findViewById(R.id.nameEditText);
@@ -45,12 +49,12 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
     postSpinner.setAdapter(postDataAdapter);
     postSpinner.setOnItemSelectedListener(this);
 
-    final Spinner sectorSpinner = (Spinner) findViewById(R.id.sectorSpinner);
-    sectorList = iDao.getAllSectors();
-    sectorDataAdapter = new ArrayAdapter<String>(this,
-            android.R.layout.simple_spinner_item, sectorList);
-    sectorDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    sectorSpinner.setAdapter(sectorDataAdapter);
+    final Spinner projectSpinner = (Spinner) findViewById(R.id.projectSpinner);
+    projectList = iDao.getAllSectors();
+    projectDataAdapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_spinner_item, projectList);
+    projectDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    projectSpinner.setAdapter(projectDataAdapter);
 
     StyledButton submitButton = (StyledButton) findViewById(R.id.submitbutton);
     submitButton.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +67,9 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CollectPCVInfoActivity.this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", nameEditText.getText().toString());
-        editor.putString("post", postSpinner.getSelectedItem().toString());
-        editor.putString("sector", sectorSpinner.getSelectedItem().toString());
+        editor.putString(getString(R.string.name), nameEditText.getText().toString());
+        editor.putString(getString(R.string.post), postSpinner.getSelectedItem().toString());
+        editor.putString(getString(R.string.project), projectSpinner.getSelectedItem().toString());
         editor.commit();
         overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
         Intent i = new Intent(CollectPCVInfoActivity.this, WelcomeActivity.class);
@@ -82,10 +86,10 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
       case R.id.postSpinner:
         // if the post changes, update the associated sectors
         String selectedPost = parent.getItemAtPosition(position).toString();
-        List<String> newSectors = iDao.getAllSectorsForPost(selectedPost);
-        sectorList.clear();
-        sectorList.addAll(newSectors);
-        sectorDataAdapter.notifyDataSetChanged();
+        List<String> newProjects = iDao.getAllProjectsForPost(selectedPost);
+        projectList.clear();
+        projectList.addAll(newProjects);
+        projectDataAdapter.notifyDataSetChanged();
         break;
     }
   }

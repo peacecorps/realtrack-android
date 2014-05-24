@@ -114,13 +114,13 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:text="@string/sector"
+            android:text="@string/project"
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/sectorSpinner"
+            android:id="@+id/projectSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7" />
