@@ -3,9 +3,4 @@
    <declare-styleable name="SignatureView">
        <attr name="signatureColor" format="color|reference" />
    </declare-styleable>
-   
-   <declare-styleable name="ButtonBarContainerTheme">
-        <attr name="buttonBarStyle" format="reference" />
-        <attr name="buttonBarButtonStyle" format="reference" />
-    </declare-styleable>
 </resources>

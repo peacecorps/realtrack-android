@@ -1,22 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FrameworkInfoActivity" >
+    android:background="@color/white" >
 
-    <ScrollView
+    <TextView
+        android:id="@+id/frameworkContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" >
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/darkgrey"
+        android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/frameworkContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/darkgrey"
-            android:textSize="50sp" />
-
-    </ScrollView>
-
-</FrameLayout>
+</ScrollView>

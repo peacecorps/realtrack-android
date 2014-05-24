@@ -104,16 +104,6 @@
             android:label="@string/title_activity_signature" >
         </activity>
 
-        <!-- SERVICES AND PROVIDERS -->
-
-        <service android:name="com.realtrackandroid.reminderalarms.NotificationService" />
-
-        <provider
-            android:name="com.realtrackandroid.providers.CachedFileContentProvider"
-            android:authorities="com.realtrackandroid.providers.CachedFileContentProvider"
-            android:exported="true" >
-        </provider>
-
         <activity
             android:name="com.realtrackandroid.views.welcome.CollectPCVInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -123,8 +113,18 @@
             android:name="com.realtrackandroid.views.help.FrameworkInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/frameworkinfoactivity_label"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/Theme.Vrf.FullscreenTheme" >
         </activity>
+
+        <!-- SERVICES AND PROVIDERS -->
+
+        <service android:name="com.realtrackandroid.reminderalarms.NotificationService" />
+
+        <provider
+            android:name="com.realtrackandroid.providers.CachedFileContentProvider"
+            android:authorities="com.realtrackandroid.providers.CachedFileContentProvider"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>

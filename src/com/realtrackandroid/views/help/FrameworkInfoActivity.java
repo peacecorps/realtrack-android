@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.realtrackandroid.R;
@@ -24,6 +25,8 @@ public class FrameworkInfoActivity extends SherlockActivity {
     super.onResume();
     IndicatorsDAO iDao = new IndicatorsDAO(this);
     
+    TextView frameworkContent = (TextView) findViewById(R.id.frameworkContent);
+    
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     String post = prefs.getString(getString(R.string.post), "");
     String project = prefs.getString(getString(R.string.project), "");
@@ -32,7 +35,14 @@ public class FrameworkInfoActivity extends SherlockActivity {
     
     StringBuilder sb = new StringBuilder();
     sb.append("Project Framework");
+    addNewline(sb);
     sb.append(project+", "+post);
+    
+    frameworkContent.setText(sb.toString());
+  }
+
+  private void addNewline(StringBuilder sb) {
+    sb.append("\n");
   }
   
   @Override
