@@ -1,16 +1,15 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-            android:id="@+id/action_search"
-            android:showAsAction="always"
-            android:title="Search"
-            android:actionViewClass="com.actionbarsherlock.widget.SearchView"/>
+        android:id="@+id/action_search"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
+        android:showAsAction="always"
+        android:title="Search"/>
     <item
-            android:id="@+id/action_addproject"
-            android:showAsAction="ifRoom"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="Add Project"/>
-    
+        android:id="@+id/action_addproject"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="ifRoom"
+        android:title="Add Project"/>
     <item
         android:id="@+id/action_helpGroup"
         android:icon="@android:drawable/ic_menu_help"
@@ -27,5 +26,5 @@
                 android:title="@string/projectframework"/>
         </menu>
     </item>
-    
+
 </menu>

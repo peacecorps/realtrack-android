@@ -10,9 +10,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -21,6 +22,8 @@ import com.realtrackandroid.backend.activities.ActivitiesDAO;
 import com.realtrackandroid.backend.reminders.RemindersDAO;
 import com.realtrackandroid.models.activities.Activities;
 import com.realtrackandroid.models.reminders.Reminders;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 
 /*
  * Presents an activity that displays details of an existing activity
@@ -28,8 +31,7 @@ import com.realtrackandroid.models.reminders.Reminders;
  * by choosing buttons in the ActionBar
  * Pressing the back key will exit the activity
  */
-// TODO: participation history graph?
-public class DisplayActivitiesActivity extends SherlockActivity {
+public class DisplayActivitiesActivity extends SherlockFragmentActivity {
   public String[] allInits;
   private int activitiesid;
   private Activities a;
@@ -91,11 +93,11 @@ public class DisplayActivitiesActivity extends SherlockActivity {
     remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
     reminders.setText(remindersText);
   }
-  
+
   private String[] updateInitiativeNames() {
     return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
-      getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
-      getResources().getString(R.string.foodsecurity)};
+            getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+            getResources().getString(R.string.foodsecurity)};
   }
 
   //TODO: provide menu option to delete all participation records for an activity in AllParticipationActivity
@@ -149,6 +151,16 @@ public class DisplayActivitiesActivity extends SherlockActivity {
         i.putExtra("activitiesid", activitiesid);
         startActivity(i);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       default:
         return super.onOptionsItemSelected(item);

@@ -28,10 +28,11 @@ import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -61,8 +62,10 @@ import com.realtrackandroid.models.activities.Participant;
 import com.realtrackandroid.models.activities.Participation;
 import com.realtrackandroid.models.projects.Project;
 import com.realtrackandroid.providers.CachedFileContentProvider;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 
-public class ParticipationSummaryActivity extends SherlockActivity {
+public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   static final int SENDEMAIL_REQUEST = 1;
   private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
   private static final int PROGRESS_DIALOG = 2;
@@ -99,8 +102,8 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     setContentView(R.layout.activity_participationsummary);
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
-    
-    SendEmailTask task = (SendEmailTask) getLastNonConfigurationInstance();
+
+    SendEmailTask task = (SendEmailTask) getLastCustomNonConfigurationInstance();
     if(task!=null){
       sendEmailTask = task;
       sendEmailTask.reAttach(this);
@@ -123,7 +126,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
     else
       mChartView.repaint();
   }
-  
+
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -192,7 +195,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
    */
   private void updateDisplay(DataHolder dHolder) {
     projectsummaryExpandableListView = (ExpandableListView) findViewById(R.id.projectsummaryListView);
-    
+
     projectsActivitiesListAdapter = new ParticipationSummaryListAdapter(this, R.layout.row_projectsummary, R.layout.row_activitysummary, projectsummaryExpandableListView, dHolder.pHolder_data);
     projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
     projectsummaryExpandableListView.setAdapter(projectsActivitiesListAdapter);
@@ -593,6 +596,18 @@ public class ParticipationSummaryActivity extends SherlockActivity {
           sendEmailTask = new SendEmailTask(this);
         sendEmailTask.execute();
         break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
     }
 
     return true;
@@ -640,7 +655,7 @@ public class ParticipationSummaryActivity extends SherlockActivity {
   }
 
   @Override
-  public Object onRetainNonConfigurationInstance() {
+  public Object onRetainCustomNonConfigurationInstance() {
     return sendEmailTask;
   }
 

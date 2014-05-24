@@ -1,7 +1,25 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <item
-            android:id="@+id/action_exportdata"
-            android:showAsAction="ifRoom"
-            android:icon="@android:drawable/sym_action_email"
-            android:title="Email"/>
+        android:id="@+id/action_exportdata"
+        android:icon="@android:drawable/sym_action_email"
+        android:showAsAction="ifRoom"
+        android:title="Email"/>
+    <item
+        android:id="@+id/action_helpGroup"
+        android:icon="@android:drawable/ic_menu_help"
+        android:showAsAction="always"
+        android:title="@string/howtouse">
+        <menu>
+            <item
+                android:id="@+id/action_help"
+                android:showAsAction="always"
+                android:title="@string/howtouse"/>
+            <item
+                android:id="@+id/action_framework"
+                android:showAsAction="always"
+                android:title="@string/projectframework"/>
+        </menu>
+    </item>
+
 </menu>
