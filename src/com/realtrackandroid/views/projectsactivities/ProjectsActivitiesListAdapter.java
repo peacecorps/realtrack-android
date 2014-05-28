@@ -215,11 +215,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
-      holder.quickParticipationBtn.setVisibility(View.INVISIBLE);
-      holder.activityStartDate.setVisibility(View.GONE);
-      holder.participationsLinearLayout.setVisibility(View.GONE);
-      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_plus));
-      
       final ChildViewHolder holderFinal = holder;
       holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -242,6 +237,11 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       Date startDate = new Date(activity.getStartDate());
       Date endDate = new Date(activity.getEndDate());
       holder.activityStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
+      
+      holder.quickParticipationBtn.setVisibility(View.VISIBLE);
+      holder.activityStartDate.setVisibility(View.VISIBLE);
+      holder.participationsLinearLayout.setVisibility(View.VISIBLE);
+      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
 
       // handle click on the title and show activity details
       holder.activityTitle.setOnClickListener(new View.OnClickListener() {
