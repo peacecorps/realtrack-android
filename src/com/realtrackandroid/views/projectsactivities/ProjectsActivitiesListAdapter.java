@@ -118,7 +118,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     if(project.getId() == -1){ //"add new project..." item.
       holder.projectStartDate.setVisibility(View.GONE);
       holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_plus));
-      
       final ParentViewHolder holderFinal = holder;
       holder.expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -140,10 +139,9 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
       Date startDate = new Date(project.getStartDate());
       Date endDate = new Date(project.getEndDate());
+      holder.projectStartDate.setVisibility(View.VISIBLE);
       holder.projectStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
       
-      // make sure these views show or else scrolling down all the way and then scrolling up screws them up
-      holder.projectStartDate.setVisibility(View.VISIBLE);
       if(isExp)
         holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
       else
@@ -215,6 +213,10 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
+      holder.quickParticipationBtn.setVisibility(View.INVISIBLE);
+      holder.participationsLinearLayout.setVisibility(View.GONE);
+      holder.activityStartDate.setVisibility(View.GONE);
+      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_plus));
       final ChildViewHolder holderFinal = holder;
       holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override

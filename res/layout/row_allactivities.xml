@@ -22,7 +22,6 @@
             android:background="@drawable/greenitem_background"
             android:text="@string/fa_users"
             android:textColor="@color/white"
-            android:visibility="invisible"
             android:textSize="18sp" />
 
         <com.realtrackandroid.common.StyledButton
@@ -32,7 +31,6 @@
             android:layout_alignParentLeft="true"
             android:background="@null"
             android:gravity="center"
-            android:text="@string/fa_plus"
             android:textColor="@drawable/greenitem_textcolor"
             android:textSize="18sp" />
 
@@ -67,14 +65,12 @@
         android:paddingTop="1dp"
         android:textColor="@color/darkgrey"
         android:textSize="16sp"
-        android:visibility="gone"
         android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/participationsLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:orientation="vertical" >
     </LinearLayout>
 
