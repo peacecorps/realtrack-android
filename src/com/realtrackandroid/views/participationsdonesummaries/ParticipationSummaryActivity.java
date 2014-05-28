@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -624,7 +625,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
       progressDialog.dismiss();
 
     final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-    sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+    //sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
     sendEmailIntent.setType("plain/text");
     String uriText = "mailto:" + Uri.encode("") +
             "?subject=" + Uri.encode("RealTrack Data Report") +
@@ -642,6 +643,15 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
               + signInReportsFileName));
     }
     sendEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+
+    //stupid workaround to get GMail to work with SEND_MULTIPLE 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+      sendEmailIntent.setType(null);
+      final Intent restrictIntent = new Intent(Intent.ACTION_SENDTO);
+      Uri data = Uri.parse("mailto:?to=some@email.com");
+      restrictIntent.setData(data);
+      sendEmailIntent.setSelector(restrictIntent);
+    }
 
     startActivityForResult(Intent.createChooser(sendEmailIntent, "Send mail..."), ParticipationSummaryActivity.SENDEMAIL_REQUEST);
     overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
