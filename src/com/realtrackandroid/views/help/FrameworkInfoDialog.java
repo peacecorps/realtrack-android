@@ -34,7 +34,7 @@ public class FrameworkInfoDialog extends DialogFragment {
     
     WebView helpContent = (WebView) view.findViewById(R.id.helpContent);
     helpContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-    helpContent.loadData(createFrameworkContent(post, project, indicatorList), "text/html", "UTF-8");
+    helpContent.loadDataWithBaseURL(null,createFrameworkContent(post, project, indicatorList), "text/html", "charset=ISO-8859-1", null);
 
     Button closeButton = (Button) view.findViewById(R.id.closeButton);
     closeButton.setOnClickListener(new View.OnClickListener() {
@@ -69,34 +69,41 @@ public class FrameworkInfoDialog extends DialogFragment {
     sb.append("</div><br>");
     String _goal = "";
     String _objective = "";
-    String _indicator = "";
+    String _type = "";
     
-    //the list is already sorted on goals
+    //the list is sorted on goals, then objectives, then type
     for(Indicators i: indicatorList){
       String goal = i.getGoal();
       String objective = i.getObjective();
-      String indicator = i.getIndicator();
+      String type = i.getType();
       if(!goal.equals(_goal)){
         sb.append("</ul>"); //closes the last OBJECTIVE list
         sb.append("<strong>"+goal+"</strong>");
         sb.append("<ul>"); //opens the next OBJECTIVE list
         addNewline(sb);
         _goal = goal;
+        _objective = "";
       }
       if(!objective.equals(_objective)){
         sb.append("</ul>"); //closes the last INDICATORS list
         sb.append("<li><strong>"+objective+"</strong></li>");
-        sb.append("<br>Example Indicators:");
+        sb.append("<ul>"); //opens the next INDICATORS list
+        _objective = objective;
+        _type = "";
+      }
+      if(!type.equals(_type)){
+        sb.append("</ul>"); //closes the last INDICATORS list
+        if(type.equals("Output"))
+          sb.append("<span style='font-weight:bold;color:orange;'>"+type+" Indicators:</span>");
+        else
+          sb.append("<span style='font-weight:bold;color:green;'>"+type+" Indicators:</span>");
         addNewline(sb);
         sb.append("<ul>"); //opens the next INDICATORS list
         addNewline(sb);
-        _objective = objective;
+        _type = type;
       }
-      if(!indicator.equals(_indicator)){
-        sb.append("<li>"+indicator);
-        addNewline(sb);
-        _objective = objective;
-      }
+      sb.append("<li>"+i.getIndicator());
+      addNewline(sb);
     }
     
     sb.append("</body>" +

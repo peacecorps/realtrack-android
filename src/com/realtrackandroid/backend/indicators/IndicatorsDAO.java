@@ -97,16 +97,18 @@ public class IndicatorsDAO {
     public List<Indicators> getAllIndicatorsForPostAndProject(String post, String project) {
         openDB();
         ArrayList<Indicators> output = null;
-        String[] columnsToRead = new String[6];
+        String[] columnsToRead = new String[7];
         columnsToRead[0] = Indicators.COLUMN_POST;
         columnsToRead[1] = Indicators.COLUMN_SECTOR;
         columnsToRead[2] = Indicators.COLUMN_PROJECT;
         columnsToRead[3] = Indicators.COLUMN_GOAL;
         columnsToRead[4] = Indicators.COLUMN_OBJECTIVE;
         columnsToRead[5] = Indicators.COLUMN_INDICATOR;
+        columnsToRead[6] = Indicators.COLUMN_TYPE;
         String whereClause = Indicators.COLUMN_POST + " = '" + post + "' and " + Indicators.COLUMN_PROJECT + " = '" + project + "'";
+        String orderByClause = Indicators.COLUMN_GOAL + ", " + Indicators.COLUMN_OBJECTIVE + ", " + Indicators.COLUMN_TYPE + " desc"; //outputs BEFORE outcomes
         Cursor returnData = readDatabase.query(Indicators.INDICATORS_TABLE, columnsToRead,
-            whereClause, null, null, null, null);
+            whereClause, null, null, null, orderByClause);
         output = extractIndicators(returnData);
         closeDB();
         return output;
@@ -128,6 +130,7 @@ public class IndicatorsDAO {
             i.setGoal(returnData.getString(3));
             i.setObjective(returnData.getString(4));
             i.setIndicator(returnData.getString(5));
+            i.setType(returnData.getString(6));
             output.add(count, i);
             // Advance the Cursor
             returnData.moveToNext();

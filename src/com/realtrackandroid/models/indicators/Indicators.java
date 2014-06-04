@@ -2,12 +2,13 @@ package com.realtrackandroid.models.indicators;
 
 public class Indicators {
     // Instance properties
-    private String post; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private String sector; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private String project; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private String goal; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private String objective; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private String indicator; // which activity this reminder is for. This is a foreign key that points to Activities.id
+    private String post;
+    private String sector;
+    private String project;
+    private String goal;
+    private String objective;
+    private String indicator;
+    private String type;
 
     // Database table
     public static final String INDICATORS_TABLE = "indicators";
@@ -17,6 +18,7 @@ public class Indicators {
     public static final String COLUMN_GOAL = "goal";
     public static final String COLUMN_OBJECTIVE = "objective";
     public static final String COLUMN_INDICATOR = "indicator";
+    public static final String COLUMN_TYPE = "type";
     
     // Getters and Setters follow
     public Indicators() {
@@ -69,5 +71,13 @@ public class Indicators {
 
     public void setIndicator(String indicator) {
       this.indicator = indicator;
+    }
+
+    public String getType() {
+      return type;
+    }
+
+    public void setType(String type) {
+      this.type = type;
     }
 }
