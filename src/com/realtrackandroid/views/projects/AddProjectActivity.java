@@ -6,11 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.projects.ProjectDAO;
@@ -18,6 +21,8 @@ import com.realtrackandroid.common.StyledButton;
 import com.realtrackandroid.models.projects.Project;
 import com.realtrackandroid.views.dialogs.PickDateDialog;
 import com.realtrackandroid.views.dialogs.PickDateDialogListener;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 
 /*
  * Presents an activity that lets you add a new project
@@ -140,6 +145,15 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
       }
     });
   }
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.addprojectmenu, menu);
+
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+    return true;
+  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,6 +161,16 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
       case android.R.id.home:
         // provide a back button on the actionbar
         finish();
+        break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       default:
         return super.onOptionsItemSelected(item);

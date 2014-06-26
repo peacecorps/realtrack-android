@@ -9,6 +9,7 @@ import java.util.Date;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.activities.ActivitiesDAO;
@@ -32,6 +34,8 @@ import com.realtrackandroid.views.dialogs.PickDateDialog;
 import com.realtrackandroid.views.dialogs.PickDateDialogListener;
 import com.realtrackandroid.views.dialogs.PickTimeDialog;
 import com.realtrackandroid.views.dialogs.PickTimeDialogListener;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 import com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
 /**
@@ -502,6 +506,9 @@ PickDateDialogListener, PickTimeDialogListener {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.recordquickparticipationmenu, menu);
+    
     getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
@@ -513,6 +520,18 @@ PickDateDialogListener, PickTimeDialogListener {
         // provide a back button on the actionbar
         finish();
         break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
     }
 
     return true;

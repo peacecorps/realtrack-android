@@ -7,12 +7,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.activities.ActivitiesDAO;
@@ -26,6 +29,8 @@ import com.realtrackandroid.views.dialogs.PickDateDialog;
 import com.realtrackandroid.views.dialogs.PickDateDialogListener;
 import com.realtrackandroid.views.dialogs.PickTimeDialog;
 import com.realtrackandroid.views.dialogs.PickTimeDialogListener;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 
 /**
  * Add a new activity to an existing project
@@ -559,6 +564,16 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         // provide a back button on the actionbar
         finish();
         break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
+        break;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -599,6 +614,15 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         sundayTime.setText(time); //sets the chosen date in the text view
         break;
     }
+  }
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.addactivitymenu, menu);
+
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+    return true;
   }
   
   @Override

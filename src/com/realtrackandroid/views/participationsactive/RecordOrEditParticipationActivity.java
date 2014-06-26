@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -15,7 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.activities.ActivitiesDAO;
 import com.realtrackandroid.backend.activities.ParticipantDAO;
@@ -24,6 +28,8 @@ import com.realtrackandroid.common.StyledButton;
 import com.realtrackandroid.models.activities.Activities;
 import com.realtrackandroid.models.activities.Participant;
 import com.realtrackandroid.models.activities.Participation;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 import com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
 /**
@@ -35,7 +41,7 @@ import com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLa
  *    it. RecordQuickParticipationActivity does not have a date and time a priori, and must get these from the user.
  * @author Raj
  */
-public class RecordOrEditParticipationActivity extends SherlockActivity {
+public class RecordOrEditParticipationActivity extends SherlockFragmentActivity {
   static final int ADD_PARTICIPANTS_REQUEST = 1;
 
   private int participationId;
@@ -462,6 +468,39 @@ public class RecordOrEditParticipationActivity extends SherlockActivity {
     }
 
     signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" ("+participantList.size()+" participant(s))");
+  }
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getSupportMenuInflater();
+    inflater.inflate(R.menu.recordquickparticipationmenu, menu);
+    
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+
+    return true;
   }
 
   @Override
