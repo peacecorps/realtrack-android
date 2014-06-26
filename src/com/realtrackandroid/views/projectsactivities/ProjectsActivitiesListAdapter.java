@@ -289,8 +289,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
        * nest scrollable views, period. Second, we need to update the height of the children
        * on participation adds/deletes or activities adds/deletes or the children won't redraw
        * to fit in the new data. This is updating the height requires some jugglery with
-       * onMeasure and MeasureSpec. It can be done but it feels like I'm not flowing
-       * with the Android Tao.
+       * onMeasure and MeasureSpec.
        * 
        * Dynamically adding views is a much simpler solution. Plus, reading the participations
        * afresh every time does away with the PITA of managing the same backing data for nested
@@ -301,7 +300,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
        * -------------------------------------------------------------------------------*/
       holder.participationsLinearLayout.removeAllViews(); // required because child views are reused. So if you collapse a Project and re-expand it, it'll already
                                                           // have the old activity + participation information
-      final List<Participation> participationList = participationDAO.getAllParticipationsForActivityId(activity.getId());
+      final List<Participation> participationList = participationDAO.getServicedParticipationsForActivityId(activity.getId());
       
       if(participationList.isEmpty())
         collapseChild(holder);

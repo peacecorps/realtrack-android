@@ -117,8 +117,33 @@ public class ParticipationDAO {
         closeDB();
         return output;
     }
-
+    
     public ArrayList<Participation> getAllParticipationsForActivityId(int activityid) {
+      openDB();
+      ArrayList<Participation> output = null;
+      String[] columnsToRead = new String[12];
+      columnsToRead[0] = Participation.COLUMN_ID;
+      columnsToRead[1] = Participation.COLUMN_REMINDERID;
+      columnsToRead[2] = Participation.COLUMN_MEN;
+      columnsToRead[3] = Participation.COLUMN_MEN1524;
+      columnsToRead[4] = Participation.COLUMN_MENOVER24;
+      columnsToRead[5] = Participation.COLUMN_WOMEN;
+      columnsToRead[6] = Participation.COLUMN_WOMEN1524;
+      columnsToRead[7] = Participation.COLUMN_WOMENOVER24;
+      columnsToRead[8] = Participation.COLUMN_DATE;
+      columnsToRead[9] = Participation.COLUMN_ISSERVICED;
+      columnsToRead[10] = Participation.COLUMN_ACTIVITYID;
+      columnsToRead[11] = Participation.COLUMN_NOTES;
+      
+      String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid;
+      Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
+              whereClause, null, null, null, null);
+      output = extractParticipation(returnData);
+      closeDB();
+      return output;
+    }
+
+    public ArrayList<Participation> getServicedParticipationsForActivityId(int activityid) {
         openDB();
         ArrayList<Participation> output = null;
         String[] columnsToRead = new String[12];
@@ -135,7 +160,8 @@ public class ParticipationDAO {
         columnsToRead[10] = Participation.COLUMN_ACTIVITYID;
         columnsToRead[11] = Participation.COLUMN_NOTES;
 
-        String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid;
+        String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid + " and " +
+                Participation.COLUMN_ISSERVICED + '=' +"'true'";
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
             whereClause, null, null, null, null);
         output = extractParticipation(returnData);
