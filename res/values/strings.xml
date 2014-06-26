@@ -132,5 +132,9 @@
     <string name="howtouse">How to Use</string>
     <string name="help">Help</string>
     <string name="projectframework">Project Framework</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="search">Search</string>
+    <string name="addproject">Add Project</string>
 
 </resources>

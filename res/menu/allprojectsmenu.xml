@@ -4,12 +4,12 @@
         android:id="@+id/action_search"
         android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:showAsAction="always"
-        android:title="Search"/>
+        android:title="@string/search"/>
     <item
         android:id="@+id/action_addproject"
         android:icon="@android:drawable/ic_menu_add"
         android:showAsAction="ifRoom"
-        android:title="Add Project"/>
+        android:title="@string/addproject"/>
     <item
         android:id="@+id/action_helpGroup"
         android:icon="@android:drawable/ic_menu_help"

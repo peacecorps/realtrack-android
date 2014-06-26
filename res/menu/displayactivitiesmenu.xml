@@ -4,12 +4,12 @@
         android:id="@+id/action_editactivity"
         android:icon="@android:drawable/ic_menu_edit"
         android:showAsAction="always"
-        android:title="Edit"/>
+        android:title="@string/edit"/>
     <item
         android:id="@+id/action_deleteactivity"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="ifRoom"
-        android:title="Delete"/>
+        android:title="@string/delete"/>
     <item
         android:id="@+id/action_helpGroup"
         android:icon="@android:drawable/ic_menu_help"
