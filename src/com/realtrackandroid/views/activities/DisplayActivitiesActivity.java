@@ -95,12 +95,9 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
   }
 
   private String[] updateInitiativeNames() {
-    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
-            getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+    return new String[]{getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
             getResources().getString(R.string.foodsecurity)};
   }
-
-  //TODO: provide menu option to delete all participation records for an activity in AllParticipationActivity
 
   // create actionbar menu
   @Override

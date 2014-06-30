@@ -35,7 +35,6 @@ import com.realtrackandroid.views.help.HelpDialog;
 /**
  * Add a new activity to an existing project
  */
-// TODO: Make sure required text fields are not empty
 public class AddActivitiesActivity extends SherlockFragmentActivity implements PickDateDialogListener, PickTimeDialogListener {
   protected int mYear, mMonth, mDay, mHour, mMinute, dayOfWeek;
   protected EditText title, startDate, endDate, notes, orgs, comms;
@@ -381,12 +380,10 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         a.setOrgs(orgs.getText().toString());
         a.setComms(comms.getText().toString());
 
-        // store initiatives in compact form "x|x|x|x|x" where the first x is WID, second is Youth etc
+        // store initiatives in compact form "x|x|x" where the first x is WID, second is Youth etc
         // this order MUST match the DisplayActivitiesActivity.AllInits array
         // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
-        initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked() ? "1" : "0") + "|" +
-                (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked() ? "1" : "0") + "|" +
-                (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked() ? "1" : "0") + "|" +
+        initiatives = (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked() ? "1" : "0") + "|" +
                 (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked() ? "1" : "0") + "|" +
                 (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked() ? "1" : "0");
         a.setInitiatives(initiatives);

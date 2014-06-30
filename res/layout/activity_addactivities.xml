@@ -365,23 +365,6 @@
                     android:textColor="@color/darkgrey"
                     android:textStyle="bold"
                     android:textSize="19sp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="@string/wid"
-                    android:id="@+id/widCheckBox"
-                    android:layout_width="wrap_content"/>
-
-            <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19sp"
-                    android:layout_gravity="fill_horizontal"
-                    android:text="@string/youth"
-                    android:id="@+id/youthCheckBox"/>
-
-            <CheckBox
-                    android:textColor="@color/darkgrey"
-                    android:textStyle="bold"
-                    android:textSize="19sp"
                     android:text="@string/malaria"
                     android:id="@+id/malariaCheckBox"/>
 
@@ -398,7 +381,6 @@
                     android:textSize="19sp"
                     android:text="@string/ecpa"
                     android:layout_gravity="fill_horizontal"
-                    android:layout_columnSpan="2"
                     android:id="@+id/ECPACheckBox"/>
         </android.support.v7.widget.GridLayout>
 

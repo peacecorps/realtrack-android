@@ -68,18 +68,12 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
             if (initiativesList[i].equals("1")) {
                 switch (i) {
                     case 0:
-                        ((CheckBox) findViewById(R.id.widCheckBox)).setChecked(true);
-                        break;
-                    case 1:
-                        ((CheckBox) findViewById(R.id.youthCheckBox)).setChecked(true);
-                        break;
-                    case 2:
                         ((CheckBox) findViewById(R.id.malariaCheckBox)).setChecked(true);
                         break;
-                    case 3:
+                    case 1:
                         ((CheckBox) findViewById(R.id.ECPACheckBox)).setChecked(true);
                         break;
-                    case 4:
+                    case 2:
                         ((CheckBox) findViewById(R.id.foodSecurityCheckBox)).setChecked(true);
                         break;
                 }
@@ -164,9 +158,7 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
                 // store initiatives in compact form "x|x|x|x|x" where the first x is WID, second is Youth etc
                 // this order MUST match the DisplayActivitiesActivity.AllInits array
                 // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
-                initiatives = (((CheckBox) findViewById(R.id.widCheckBox)).isChecked() ? "1" : "0") + "|" +
-                    (((CheckBox) findViewById(R.id.youthCheckBox)).isChecked() ? "1" : "0") + "|" +
-                    (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked() ? "1" : "0") + "|" +
+                initiatives = (((CheckBox) findViewById(R.id.malariaCheckBox)).isChecked() ? "1" : "0") + "|" +
                     (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked() ? "1" : "0") + "|" +
                     (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked() ? "1" : "0");
                 a.setInitiatives(initiatives);
