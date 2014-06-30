@@ -607,6 +607,12 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
+      case R.id.action_glossary:
+        HelpDialog glossaryDialog = new HelpDialog();
+        glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
+        glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
+        break;
       default:
         return super.onOptionsItemSelected(item);
     }
