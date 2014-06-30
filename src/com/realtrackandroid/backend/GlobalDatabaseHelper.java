@@ -15,7 +15,7 @@ import com.realtrackandroid.models.reminders.Reminders;
  */
 public class GlobalDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "database.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     private static GlobalDatabaseHelper gHelper;
 
     private GlobalDatabaseHelper(Context context) {
@@ -40,7 +40,7 @@ public class GlobalDatabaseHelper extends SQLiteOpenHelper {
     // Method is called during an upgrade of the database,
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        Participant.onUpgrade(database, oldVersion, newVersion);
+      Participant.onUpgrade(database, oldVersion, newVersion);
     }
     
     @Override

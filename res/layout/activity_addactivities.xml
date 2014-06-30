@@ -288,6 +288,36 @@
                 android:textColor="@color/darkgrey"
                 android:background="@color/lightgrey"
                 android:padding="10dp"
+                android:text="@string/cohort"/>
+
+        <EditText
+                android:id="@+id/cohort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="23sp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/white"
+                android:layout_marginBottom="0dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:inputType="text|textCapWords"
+                android:maxLines="6"
+                android:minLines="3"
+                android:hint="@string/entercohort"
+                android:textColorHint="#969696"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@color/darkgrey"
+                android:background="@color/lightgrey"
+                android:padding="10dp"
                 android:text="@string/organizationsoptional"/>
 
         <EditText

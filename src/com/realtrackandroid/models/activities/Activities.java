@@ -20,6 +20,7 @@ public class Activities {
     private String orgs; // organizations associated with this activity; optional
     private String comms; // communities associated with this activity; optional
     private String initiatives; // initiatives associated with this activity; optional
+    private String cohort; // initiatives associated with this activity; optional
 
     // Database table
     public static final String ACTIVITIES_TABLE = "activities";
@@ -33,6 +34,7 @@ public class Activities {
     public static final String COLUMN_ORGS = "orgs";
     public static final String COLUMN_COMMS = "comms";
     public static final String COLUMN_INITIATIVES = "initiatives";
+    public static final String COLUMN_COHORT = "cohort";
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table if not exists "
@@ -47,7 +49,8 @@ public class Activities {
         + COLUMN_INITIATIVES + " text, " // notes are optional
         + COLUMN_STARTDATE + " integer not null, "
         + COLUMN_ENDDATE + " integer not null, "
-        + COLUMN_PROJECTID + " integer not null references " + Project.PROJECT_TABLE + " (" + Project.COLUMN_ID + ") ON DELETE CASCADE "
+        + COLUMN_PROJECTID + " integer not null references " + Project.PROJECT_TABLE + " (" + Project.COLUMN_ID + ") ON DELETE CASCADE, "
+        + COLUMN_COHORT + " text "
         + ");";
 
     // used to create the table
@@ -137,6 +140,14 @@ public class Activities {
 
     public void setInitiatives(String initiatives) {
         this.initiatives = initiatives;
+    }
+
+    public String getCohort() {
+      return cohort;
+    }
+
+    public void setCohort(String cohort) {
+      this.cohort = cohort;
     }
 
 }

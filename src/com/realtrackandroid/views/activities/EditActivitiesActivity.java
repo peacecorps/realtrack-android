@@ -59,6 +59,7 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
         d = new Date(a.getEndDate());
         super.endDate.setText(parser.format(d));
         super.notes.setText(a.getNotes());
+        super.cohort.setText(a.getCohort());
         super.orgs.setText(a.getOrgs());
         super.comms.setText(a.getComms());
 
@@ -152,6 +153,7 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
                 }
 
                 a.setNotes(notes.getText().toString());
+                a.setCohort(cohort.getText().toString());
                 a.setOrgs(orgs.getText().toString());
                 a.setComms(comms.getText().toString());
 

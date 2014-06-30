@@ -71,7 +71,9 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="notes">Notes (optional)</string>
+    <string name="cohort">Reporting Cohort (optional)</string>
     <string name="enternotes">Enter Notes</string>
+    <string name="entercohort">Enter Group Name</string>
     <string name="organizationsoptional">Organizations (optional)</string>
     <string name="organizationsinvolved">Organizations Involved</string>
     <string name="communitiesoptional">Communities (optional)</string>

@@ -63,6 +63,8 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
     notes.setText(a.getNotes());
+    TextView cohort = (TextView) findViewById(R.id.cohort);
+    cohort.setText(a.getCohort());
     TextView orgs = (TextView) findViewById(R.id.orgs);
     orgs.setText(a.getOrgs());
     TextView comms = (TextView) findViewById(R.id.comms);

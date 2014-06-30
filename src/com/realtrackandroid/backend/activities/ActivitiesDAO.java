@@ -51,7 +51,7 @@ public class ActivitiesDAO {
   public ArrayList<Activities> getAllActivitiesForProjectId(int projectid) {
     openDB();
     ArrayList<Activities> output = null;
-    String[] columnsToRead = new String[8];
+    String[] columnsToRead = new String[9];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
     columnsToRead[2] = Activities.COLUMN_ENDDATE;
@@ -60,6 +60,7 @@ public class ActivitiesDAO {
     columnsToRead[5] = Activities.COLUMN_ORGS;
     columnsToRead[6] = Activities.COLUMN_COMMS;
     columnsToRead[7] = Activities.COLUMN_INITIATIVES;
+    columnsToRead[8] = Activities.COLUMN_COHORT;
     String whereClause = Activities.COLUMN_PROJECTID + '=' + projectid;
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
             whereClause, null, null, null, null);
@@ -86,6 +87,7 @@ public class ActivitiesDAO {
       a.setOrgs(returnData.getString(5));
       a.setComms(returnData.getString(6));
       a.setInitiatives(returnData.getString(7));
+      a.setCohort(returnData.getString(8));
       output.add(count, a);
       // Advance the Cursor
       returnData.moveToNext();
@@ -98,7 +100,7 @@ public class ActivitiesDAO {
 
   public Activities getActivityWithId(int id) {
     openDB();
-    String[] columnsToRead = new String[9];
+    String[] columnsToRead = new String[10];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
     columnsToRead[2] = Activities.COLUMN_ENDDATE;
@@ -108,6 +110,7 @@ public class ActivitiesDAO {
     columnsToRead[6] = Activities.COLUMN_COMMS;
     columnsToRead[7] = Activities.COLUMN_INITIATIVES;
     columnsToRead[8] = Activities.COLUMN_PROJECTID;
+    columnsToRead[9] = Activities.COLUMN_COHORT;
     String whereClause = Activities.COLUMN_ID + '=' + id;
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
             whereClause, null, null, null, null);
@@ -122,6 +125,7 @@ public class ActivitiesDAO {
     a.setComms(returnData.getString(6));
     a.setInitiatives(returnData.getString(7));
     a.setProjectid(returnData.getInt(8));
+    a.setCohort(returnData.getString(9));
     closeDB();
     // Return the constructed Activities object
     return a;
@@ -137,6 +141,7 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_ORGS, activity.getOrgs());
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
+    newValue.put(Activities.COLUMN_COHORT, activity.getCohort());
     newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
 
     // Insert the item into the database
@@ -162,6 +167,7 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_ORGS, activity.getOrgs());
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
+    newValue.put(Activities.COLUMN_COHORT, activity.getCohort());
     newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
     String whereClause = Activities.COLUMN_ID + '=' + activity.getId();
     // Update the item into the database

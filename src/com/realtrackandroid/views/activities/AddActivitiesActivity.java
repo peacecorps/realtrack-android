@@ -37,7 +37,7 @@ import com.realtrackandroid.views.help.HelpDialog;
  */
 public class AddActivitiesActivity extends SherlockFragmentActivity implements PickDateDialogListener, PickTimeDialogListener {
   protected int mYear, mMonth, mDay, mHour, mMinute, dayOfWeek;
-  protected EditText title, startDate, endDate, notes, orgs, comms;
+  protected EditText title, startDate, endDate, notes, cohort, orgs, comms;
   protected EditText mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
   protected CheckBox mondayCheckbox, tuesdayCheckbox, wednesdayCheckbox, thursdayCheckbox, fridayCheckbox, saturdayCheckbox, sundayCheckbox;
   protected StyledButton submitButton;
@@ -283,6 +283,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
 
     title = (EditText) findViewById(R.id.title);
     notes = (EditText) findViewById(R.id.notes);
+    cohort = (EditText) findViewById(R.id.cohort);
     orgs = (EditText) findViewById(R.id.orgs);
     comms = (EditText) findViewById(R.id.comms);
 
@@ -377,6 +378,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         }
 
         a.setNotes(notes.getText().toString());
+        a.setCohort(cohort.getText().toString());
         a.setOrgs(orgs.getText().toString());
         a.setComms(comms.getText().toString());
 
