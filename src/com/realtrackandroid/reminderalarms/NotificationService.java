@@ -105,8 +105,8 @@ public class NotificationService extends Service {
       p = new Participation();
       p.setReminderid(reminderid);
       p.setActivityid((new RemindersDAO(getApplicationContext()).getReminderWithId(reminderid)).getActivityid());
-      p.setMenUnder15(0);
-      p.setWomenUnder15(0);
+      p.setMen09(0);
+      p.setWomen09(0);
       p.setDate(Calendar.getInstance().getTimeInMillis());
       p.setServiced(false); // every new participation is un-serviced, by default
       pDao.addParticipation(p);

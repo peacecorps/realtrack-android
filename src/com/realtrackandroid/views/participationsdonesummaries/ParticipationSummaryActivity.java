@@ -339,12 +339,12 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
                   inits + "," +
                   dateParser.format(participation.getDate()) + "," +
                   timeParser.format(participation.getDate()) + "," +
-                  participation.getMenUnder15() + "," +
-                  participation.getMen1524() + "," +
-                  participation.getMenOver24() + "," +
-                  participation.getWomenUnder15() + "," +
-                  participation.getWomen1524() + "," +
-                  participation.getWomenOver24() + "," +
+                  participation.getMen09() + "," +
+                  participation.getMen1824() + "," +
+                  participation.getMenOver25() + "," +
+                  participation.getWomen09() + "," +
+                  participation.getWomen1824() + "," +
+                  participation.getWomenOver25() + "," +
                   ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
           try {
             dataFos.write(dataCSVContent.getBytes());

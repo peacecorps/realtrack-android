@@ -7,12 +7,14 @@ public class Participation {
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
   private int reminderid; // which reminder this participation is for. This is NOT a foreign key!!
   private int activityid; // which activity this participation is for. This is a foreign key that points to Activities.id
-  private int menUnder15; // number of men that participated
-  private int men1524; // number of men that participated
-  private int menOver24; // number of men that participated
-  private int womenUnder15; // number of women that participated
-  private int women1524; // number of women that participated
-  private int womenOver24; // number of women that participated
+  private int men09; // number of men that participated
+  private int men1017; // number of men that participated
+  private int men1824; // number of men that participated
+  private int menOver25; // number of men that participated
+  private int women09; // number of women that participated
+  private int women1017; // number of women that participated
+  private int women1824; // number of women that participated
+  private int womenOver25; // number of women that participated
   private long date; // date that the participation is for
   private boolean serviced; // true: participation was recorded. is only be set to true in RecordOrEditParticipationActivity
   private String notes;
@@ -23,12 +25,14 @@ public class Participation {
   public static final String COLUMN_REMINDERID = "_reminderid";
   public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Activity.id
   public static final String COLUMN_UPDATED = "updated";
-  public static final String COLUMN_MEN = "men";
-  public static final String COLUMN_MEN1524 = "men1524";
-  public static final String COLUMN_MENOVER24 = "menOver24";
-  public static final String COLUMN_WOMEN = "women";
-  public static final String COLUMN_WOMEN1524 = "women1524";
-  public static final String COLUMN_WOMENOVER24 = "womenOver24";
+  public static final String COLUMN_MEN09 = "men09";
+  public static final String COLUMN_MEN1017 = "men1017";
+  public static final String COLUMN_MEN1824 = "men1824";
+  public static final String COLUMN_MENOVER25 = "menOver25";
+  public static final String COLUMN_WOMEN09 = "women09";
+  public static final String COLUMN_WOMEN1017 = "women1017";
+  public static final String COLUMN_WOMEN1824 = "women1824";
+  public static final String COLUMN_WOMENOVER25 = "womenOver25";
   public static final String COLUMN_DATE = "date";
   public static final String COLUMN_ISSERVICED = "isserviced";
   public static final String COLUMN_NOTES = "notes";
@@ -39,12 +43,14 @@ public class Participation {
           + "("
           + COLUMN_ID + " integer primary key autoincrement, "
           + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
-          + COLUMN_MEN + " integer not null, "
-          + COLUMN_MEN1524 + " integer not null, "
-          + COLUMN_MENOVER24 + " integer not null, "
-          + COLUMN_WOMEN + " integer not null, "
-          + COLUMN_WOMEN1524 + " integer not null, "
-          + COLUMN_WOMENOVER24 + " integer not null, "
+          + COLUMN_MEN09 + " integer not null, "
+          + COLUMN_MEN1017 + " integer not null, "
+          + COLUMN_MEN1824 + " integer not null, "
+          + COLUMN_MENOVER25 + " integer not null, "
+          + COLUMN_WOMEN09 + " integer not null, "
+          + COLUMN_WOMEN1017 + " integer not null, "
+          + COLUMN_WOMEN1824 + " integer not null, "
+          + COLUMN_WOMENOVER25 + " integer not null, "
           + COLUMN_ISSERVICED + " string not null, "
           + COLUMN_DATE + " integer not null, "
           + COLUMN_REMINDERID + " integer not null, "
@@ -81,28 +87,12 @@ public class Participation {
     this.reminderid = reminderid;
   }
 
-  public int getMenUnder15() {
-    return menUnder15;
-  }
-
-  public void setMenUnder15(int menUnder15) {
-    this.menUnder15 = menUnder15;
-  }
-
   public long getDate() {
     return date;
   }
 
   public void setDate(long date) {
     this.date = date;
-  }
-
-  public int getWomenUnder15() {
-    return womenUnder15;
-  }
-
-  public void setWomenUnder15(int womenUnder15) {
-    this.womenUnder15 = womenUnder15;
   }
 
   public boolean isServiced() {
@@ -128,40 +118,72 @@ public class Participation {
   public void setNotes(String notes) {
     this.notes = notes;
   }
-
-  public int getMen1524() {
-    return men1524;
+  
+  public int getMen09() {
+    return men09;
+  }
+  
+  public void setMen09(int men09) {
+    this.men09 = men09;
+  }
+  
+  public int getMen1017() {
+    return men1017;
+  }
+  
+  public void setMen1017(int men1017) {
+    this.men1017 = men1017;
   }
 
-  public void setMen1524(int men1524) {
-    this.men1524 = men1524;
+  public int getMen1824() {
+    return men1824;
   }
 
-  public int getMenOver24() {
-    return menOver24;
+  public void setMen1824(int men1824) {
+    this.men1824 = men1824;
   }
 
-  public void setMenOver24(int menOver24) {
-    this.menOver24 = menOver24;
+  public int getMenOver25() {
+    return menOver25;
   }
 
-  public int getWomen1524() {
-    return women1524;
+  public void setMenOver25(int menOver25) {
+    this.menOver25 = menOver25;
   }
 
-  public void setWomen1524(int women1524) {
-    this.women1524 = women1524;
+  public int getWomen1824() {
+    return women1824;
+  }
+  
+  public int getWomen09() {
+    return women09;
+  }
+  
+  public void setWomen09(int women09) {
+    this.women09 = women09;
+  }
+  
+  public int getWomen1017() {
+    return women1017;
+  }
+  
+  public void setWomen1017(int women1017) {
+    this.women1017 = women1017;
   }
 
-  public int getWomenOver24() {
-    return womenOver24;
+  public void setWomen1824(int women1824) {
+    this.women1824 = women1824;
   }
 
-  public void setWomenOver24(int womenOver24) {
-    this.womenOver24 = womenOver24;
+  public int getWomenOver25() {
+    return womenOver25;
+  }
+
+  public void setWomenOver25(int womenOver25) {
+    this.womenOver25 = womenOver25;
   }
 
   public int getTotalParticipants() {
-    return menUnder15 + men1524 + menOver24 + womenUnder15 + women1524 + womenOver24;
+    return men09 + men1017 + men1824 + menOver25 + women09 + women1017 + women1824 + womenOver25;
   }
 }

@@ -59,27 +59,27 @@ PickDateDialogListener, PickTimeDialogListener {
 
   protected StyledButton signinSheetButton;
 
-  protected EditText menUnder15NumText, men1524NumText, menOver24NumText, womenUnder15NumText, women1524NumText,
-  womenOver24NumText, notesText;
+  protected EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText, women09NumText, women1017NumText, women1824NumText,
+  womenOver25NumText, notesText;
 
   TextView date, time;
 
-  protected CheckBox menUnder15Checkbox, men1524Checkbox, menOver24Checkbox, womenUnder15Checkbox,
-  women1524Checkbox, womenOver24Checkbox;
+  protected CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox, women09Checkbox, women1017Checkbox,
+  women1824Checkbox, womenOver25Checkbox;
 
   private Activities a;
-  
+
   private ArrayList <Participant> participantList;
-  
-  private int menUnder15ManuallyEntered, men1524ManuallyEntered, menOver24ManuallyEntered, womenUnder15ManuallyEntered, women1524ManuallyEntered, womenOver24ManuallyEntered;
-  private int menUnder15FromSignInSheet, men1524FromSignInSheet, menOver24FromSignInSheet, womenUnder15FromSignInSheet, women1524FromSignInSheet, womenOver24FromSignInSheet;
+
+  private int men09FromSignInSheet, men1017FromSignInSheet, men1824FromSignInSheet, menOver25FromSignInSheet, 
+              women09FromSignInSheet, women1017FromSignInSheet, women1824FromSignInSheet, womenOver25FromSignInSheet;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recordquickparticipation);
 
     activitiesId = getIntent().getExtras().getInt("activitiesid");
-    
+
     participantList = new ArrayList<Participant>();
   }
 
@@ -158,79 +158,99 @@ PickDateDialogListener, PickTimeDialogListener {
       }
     });
 
-    menUnder15Checkbox = (CheckBox) findViewById(R.id.menCheckBox);
-    men1524Checkbox = (CheckBox) findViewById(R.id.men1524CheckBox);
-    menOver24Checkbox = (CheckBox) findViewById(R.id.menOver24CheckBox);
-    womenUnder15Checkbox = (CheckBox) findViewById(R.id.womenCheckBox);
-    women1524Checkbox = (CheckBox) findViewById(R.id.women1524CheckBox);
-    womenOver24Checkbox = (CheckBox) findViewById(R.id.womenOver24CheckBox);
-    menUnder15NumText = (EditText) findViewById(R.id.numMen);
-    men1524NumText = (EditText) findViewById(R.id.numMen1524);
-    menOver24NumText = (EditText) findViewById(R.id.numMenOver24);
-    womenUnder15NumText = (EditText) findViewById(R.id.numWomen);
-    women1524NumText = (EditText) findViewById(R.id.numWomen1524);
-    womenOver24NumText = (EditText) findViewById(R.id.numWomenOver24);
+    men09Checkbox = (CheckBox) findViewById(R.id.men09CheckBox);
+    men1017Checkbox = (CheckBox) findViewById(R.id.men1017CheckBox);
+    men1824Checkbox = (CheckBox) findViewById(R.id.men1824CheckBox);
+    menOver25Checkbox = (CheckBox) findViewById(R.id.menOver25CheckBox);
+    women09Checkbox = (CheckBox) findViewById(R.id.women09CheckBox);
+    women1017Checkbox = (CheckBox) findViewById(R.id.women1017CheckBox);
+    women1824Checkbox = (CheckBox) findViewById(R.id.women1824CheckBox);
+    womenOver25Checkbox = (CheckBox) findViewById(R.id.womenOver25CheckBox);
+    men09NumText = (EditText) findViewById(R.id.numMen09);
+    men1017NumText = (EditText) findViewById(R.id.numMen1017);
+    men1824NumText = (EditText) findViewById(R.id.numMen1824);
+    menOver25NumText = (EditText) findViewById(R.id.numMenOver25);
+    women09NumText = (EditText) findViewById(R.id.numWomen09);
+    women1017NumText = (EditText) findViewById(R.id.numWomen1017);
+    women1824NumText = (EditText) findViewById(R.id.numWomen1824);
+    womenOver25NumText = (EditText) findViewById(R.id.numWomenOver25);
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (StyledButton) findViewById(R.id.submitbutton);
+    
+    men09Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!men09Checkbox.isChecked())
+          men09NumText.setText("");
+      }
+    });
 
-    menUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
+    men1017Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!menUnder15Checkbox.isChecked())
-          menUnder15NumText.setText("");
+        if (!men1017Checkbox.isChecked())
+          men1017NumText.setText("");
+      }
+    });
+
+    men1824Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!men1824Checkbox.isChecked())
+          men1824NumText.setText("");
+      }
+    });
+
+    menOver25Checkbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!menOver25Checkbox.isChecked())
+          menOver25NumText.setText("");
       }
     });
     
-    men1524Checkbox.setOnClickListener(new View.OnClickListener() {
+    women09Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!men1524Checkbox.isChecked())
-          men1524NumText.setText("");
+        if (!women09Checkbox.isChecked())
+          women09NumText.setText("");
       }
     });
-    
-    menOver24Checkbox.setOnClickListener(new View.OnClickListener() {
+
+    women1017Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!menOver24Checkbox.isChecked())
-          menOver24NumText.setText("");
+        if (!women1017Checkbox.isChecked())
+          women1017NumText.setText("");
       }
     });
-    
-    womenUnder15Checkbox.setOnClickListener(new View.OnClickListener() {
+
+    women1824Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!womenUnder15Checkbox.isChecked())
-          womenUnder15NumText.setText("");
+        if (!women1824Checkbox.isChecked())
+          women1824NumText.setText("");
       }
     });
-    
-    women1524Checkbox.setOnClickListener(new View.OnClickListener() {
+
+    womenOver25Checkbox.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!women1524Checkbox.isChecked())
-          women1524NumText.setText("");
+        if (!womenOver25Checkbox.isChecked())
+          womenOver25NumText.setText("");
       }
     });
-    
-    womenOver24Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!womenOver24Checkbox.isChecked())
-          womenOver24NumText.setText("");
-      }
-    });
-    
+
     submitButton.setOnClickListener(new View.OnClickListener() {
       private boolean errorsFound;
-      
+
       @Override
       public void onClick(View v) {
         errorsFound = false;
 
-        if (!menUnder15Checkbox.isChecked() && !men1524Checkbox.isChecked()
-                && !menOver24Checkbox.isChecked() && !womenUnder15Checkbox.isChecked()
-                && !women1524Checkbox.isChecked() && !womenOver24Checkbox.isChecked()) {
+        if (!men09Checkbox.isChecked() && !men1017Checkbox.isChecked() && !men1824Checkbox.isChecked()
+                && !menOver25Checkbox.isChecked() && !women09Checkbox.isChecked() && !women1017Checkbox.isChecked()
+                && !women1824Checkbox.isChecked() && !womenOver25Checkbox.isChecked()) {
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
                   Toast.LENGTH_SHORT).show();
           return;
@@ -268,96 +288,126 @@ PickDateDialogListener, PickTimeDialogListener {
         p.setActivityid(activitiesId);
 
         // set men, women and serviced
-        if (menUnder15Checkbox.isChecked()) {
-          if (menUnder15NumText.getText().length() == 0){
+        if (men09Checkbox.isChecked()) {
+          if (men09NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
                     Toast.LENGTH_SHORT).show();
             return;
           }
           else{
-            checkEnteredValue(menUnder15NumText, menUnder15FromSignInSheet);
-            p.setMenUnder15(Integer.parseInt(menUnder15NumText.getText().toString()));
+            checkEnteredValueNotLessThanSigninSheetValue(men09NumText, men09FromSignInSheet);
+            p.setMen09(Integer.parseInt(men09NumText.getText().toString()));
           }
         }
         else {
-          p.setMenUnder15(0);
-        }
-
-        if (men1524Checkbox.isChecked()) {
-          if (men1524NumText.getText().length() == 0){
-            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
-                    Toast.LENGTH_SHORT).show();
-            return;
-          }
-          else{
-            checkEnteredValue(men1524NumText, men1524FromSignInSheet);
-            p.setMen1524(Integer.parseInt(men1524NumText.getText().toString()));
-          }
-        }
-        else {
-          p.setMen1524(0);
-        }
-
-        if (menOver24Checkbox.isChecked()) {
-          if (menOver24NumText.getText().length() == 0){
-            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
-                    Toast.LENGTH_SHORT).show();
-            return;
-          }
-          else{
-            checkEnteredValue(menOver24NumText, menOver24FromSignInSheet);
-            p.setMenOver24(Integer.parseInt(menOver24NumText.getText().toString()));
-          }
-        }
-        else {
-          p.setMenOver24(0);
-        }
-
-        if (womenUnder15Checkbox.isChecked()) {
-          if (womenUnder15NumText.getText().length() == 0){
-            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
-                    Toast.LENGTH_SHORT).show();
-            return;
-          }
-          else{
-            checkEnteredValue(womenUnder15NumText, womenUnder15FromSignInSheet);
-            p.setWomenUnder15(Integer.parseInt(womenUnder15NumText.getText().toString()));
-          }
-        }
-        else {
-          p.setWomenUnder15(0);
-        }
-
-        if (women1524Checkbox.isChecked()) {
-          if (women1524NumText.getText().length() == 0){
-            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
-                    Toast.LENGTH_SHORT).show();
-            return;
-          }
-          else{
-            checkEnteredValue(women1524NumText, women1524FromSignInSheet);
-            p.setWomen1524(Integer.parseInt(women1524NumText.getText().toString()));
-          }
-        }
-        else {
-          p.setWomen1524(0);
-        }
-
-        if (womenOver24Checkbox.isChecked()) {
-          if (womenOver24NumText.getText().length() == 0){
-            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
-                    Toast.LENGTH_SHORT).show();
-            return;
-          }
-          else{
-            checkEnteredValue(womenOver24NumText, womenOver24FromSignInSheet);
-            p.setWomenOver24(Integer.parseInt(womenOver24NumText.getText().toString()));
-          }
-        }
-        else {
-          p.setWomenOver24(0);
+          p.setMen09(0);
         }
         
+        if (men1017Checkbox.isChecked()) {
+          if (men1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(men1017NumText, men1017FromSignInSheet);
+            p.setMen1017(Integer.parseInt(men1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setMen1017(0);
+        }
+
+        if (men1824Checkbox.isChecked()) {
+          if (men1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(men1824NumText, men1824FromSignInSheet);
+            p.setMen1824(Integer.parseInt(men1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setMen1824(0);
+        }
+
+        if (menOver25Checkbox.isChecked()) {
+          if (menOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(menOver25NumText, menOver25FromSignInSheet);
+            p.setMenOver25(Integer.parseInt(menOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setMenOver25(0);
+        }
+        
+        if (women09Checkbox.isChecked()) {
+          if (women09NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(women09NumText, women09FromSignInSheet);
+            p.setWomen09(Integer.parseInt(women09NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setWomen09(0);
+        }
+
+        if (women1017Checkbox.isChecked()) {
+          if (women1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(women1017NumText, women1017FromSignInSheet);
+            p.setWomen1017(Integer.parseInt(women1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setWomen1017(0);
+        }
+
+        if (women1824Checkbox.isChecked()) {
+          if (women1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(women1824NumText, women1824FromSignInSheet);
+            p.setWomen1824(Integer.parseInt(women1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setWomen1824(0);
+        }
+
+        if (womenOver25Checkbox.isChecked()) {
+          if (womenOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            checkEnteredValueNotLessThanSigninSheetValue(womenOver25NumText, womenOver25FromSignInSheet);
+            p.setWomenOver25(Integer.parseInt(womenOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setWomenOver25(0);
+        }
+
         if(errorsFound){
           Toast.makeText(getApplicationContext(), R.string.cannotentersmallernumber,
                   Toast.LENGTH_SHORT).show();
@@ -372,7 +422,7 @@ PickDateDialogListener, PickTimeDialogListener {
         p.setServiced(true);
 
         int participationId = pDao.addParticipation(p);
-        
+
         // write the participant information
         // first add the participation id (we have to wait till now because
         // the participation id is only assigned after the participation
@@ -380,21 +430,21 @@ PickDateDialogListener, PickTimeDialogListener {
         for(Participant participant: participantList){
           participant.setParticipationId(participationId);
         }
-        
+
         participantDao.addParticipants(participantList);
 
         finish();
       }
-      
-      private void checkEnteredValue(EditText editText, int numSignedIn) {
+
+      private void checkEnteredValueNotLessThanSigninSheetValue(EditText editText, int numSignedIn) {
         editText.setTextColor(getResources().getColor(android.R.color.black));
         int enteredValue = Integer.parseInt(editText.getText().toString());
         if(numSignedIn!=0 && enteredValue < numSignedIn){
           editText.setText(Integer.toString(numSignedIn)); // put back at least the number of people signed in
-          
+
           // change the text color to signal an error so that the user can see it easily
           editText.setTextColor(getResources().getColor(R.color.orange));
-          
+
           // restore the text color when the user tries to type in a possible correction
           final EditText fEditText = editText;
           editText.setOnKeyListener(new OnKeyListener() {
@@ -418,7 +468,7 @@ PickDateDialogListener, PickTimeDialogListener {
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
         participantList = resultBundle.getParcelableArrayList("participantList");
-        
+
         updateParticipantNumbersInDisplay();
       }
     }
@@ -427,80 +477,100 @@ PickDateDialogListener, PickTimeDialogListener {
   private void updateParticipantNumbersInDisplay() {
     if(participantList.isEmpty())
       return;
-    
-    menUnder15FromSignInSheet = 0;
-    men1524FromSignInSheet = 0;
-    menOver24FromSignInSheet = 0;
-    womenUnder15FromSignInSheet = 0;
-    women1524FromSignInSheet = 0;
-    womenOver24FromSignInSheet = 0;
-    
+
+    men09FromSignInSheet = 0;
+    men1017FromSignInSheet = 0;
+    men1824FromSignInSheet = 0;
+    menOver25FromSignInSheet = 0;
+    women09FromSignInSheet = 0;
+    women1017FromSignInSheet = 0;
+    women1824FromSignInSheet = 0;
+    womenOver25FromSignInSheet = 0;
+
     for(Participant p: participantList){
       if(p.getGender()==Participant.MALE){
-        if(p.getAge()<15)
-          menUnder15FromSignInSheet++;
+        if(p.getAge()<10)
+          men09FromSignInSheet++;
+        else if(p.getAge()<18)
+          men1017FromSignInSheet++;
         else if(p.getAge()<25)
-          men1524FromSignInSheet++;
+          men1824FromSignInSheet++;
         else
-          menOver24FromSignInSheet++;
+          menOver25FromSignInSheet++;
       }
       else if(p.getGender()==Participant.FEMALE){ //could simply be an else but just being cautious and making sure the value is FEMALE
-        if(p.getAge()<15)
-          womenUnder15FromSignInSheet++;
+        if(p.getAge()<10)
+          women09FromSignInSheet++;
+        else if(p.getAge()<18)
+          women1017FromSignInSheet++;
         else if(p.getAge()<25)
-          women1524FromSignInSheet++;
+          women1824FromSignInSheet++;
         else
-          womenOver24FromSignInSheet++;
+          womenOver25FromSignInSheet++;
       }
     }
-      
+
     // set filters on the text fields so the PCV cannot manually enter a number less than the 
     // current number of participants. Note that even though we reinitialize menUnder15, men1524
     // etc to 0 in this method, there is no way their values can be less than what they were because
     // there is no way that a participant once submitted via the sign-in sheet can be removed.
     
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(menUnder15FromSignInSheet>0){
-      menUnder15NumText.setText(Integer.toString(menUnder15FromSignInSheet+menUnder15ManuallyEntered));
-      menUnder15Checkbox.setChecked(true);
-      menUnder15Checkbox.setEnabled(false);
+    if(men09FromSignInSheet>0){
+      men09NumText.setText(Integer.toString(men09FromSignInSheet));
+      men09Checkbox.setChecked(true);
+      men09Checkbox.setEnabled(false);
+    }
+
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(men1017FromSignInSheet>0){
+      men1017NumText.setText(Integer.toString(men1017FromSignInSheet));
+      men1017Checkbox.setChecked(true);
+      men1017Checkbox.setEnabled(false);
+    }
+
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(men1824FromSignInSheet>0){
+      men1824NumText.setText(Integer.toString(men1824FromSignInSheet));
+      men1824Checkbox.setChecked(true);
+      men1824Checkbox.setEnabled(false);
+    }
+
+    // prevent the PCV from disabling this checkbox if at least one participant is in this category
+    if(menOver25FromSignInSheet>0){
+      menOver25NumText.setText(Integer.toString(menOver25FromSignInSheet));
+      menOver25Checkbox.setChecked(true);
+      menOver25Checkbox.setEnabled(false);
     }
     
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(men1524FromSignInSheet>0){
-      men1524NumText.setText(Integer.toString(men1524FromSignInSheet+men1524ManuallyEntered));
-      men1524Checkbox.setChecked(true);
-      men1524Checkbox.setEnabled(false);
+    if(women09FromSignInSheet>0){
+      women09NumText.setText(Integer.toString(women09FromSignInSheet));
+      women09Checkbox.setChecked(true);
+      women09Checkbox.setEnabled(false);
     }
-    
+
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(menOver24FromSignInSheet>0){
-      menOver24NumText.setText(Integer.toString(menOver24FromSignInSheet+menOver24ManuallyEntered));
-      menOver24Checkbox.setChecked(true);
-      menOver24Checkbox.setEnabled(false);
+    if(women1017FromSignInSheet>0){
+      women1017NumText.setText(Integer.toString(women1017FromSignInSheet));
+      women1017Checkbox.setChecked(true);
+      women1017Checkbox.setEnabled(false);
     }
-    
+
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(womenUnder15FromSignInSheet>0){
-      womenUnder15NumText.setText(Integer.toString(womenUnder15FromSignInSheet+womenUnder15ManuallyEntered));
-      womenUnder15Checkbox.setChecked(true);
-      womenUnder15Checkbox.setEnabled(false);
+    if(women1824FromSignInSheet>0){
+      women1824NumText.setText(Integer.toString(women1824FromSignInSheet));
+      women1824Checkbox.setChecked(true);
+      women1824Checkbox.setEnabled(false);
     }
-    
+
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(women1524FromSignInSheet>0){
-      women1524NumText.setText(Integer.toString(women1524FromSignInSheet+women1524ManuallyEntered));
-      women1524Checkbox.setChecked(true);
-      women1524Checkbox.setEnabled(false);
+    if(womenOver25FromSignInSheet>0){
+      womenOver25NumText.setText(Integer.toString(womenOver25FromSignInSheet));
+      womenOver25Checkbox.setChecked(true);
+      womenOver25Checkbox.setEnabled(false);
     }
-    
-    // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(womenOver24FromSignInSheet>0){
-      womenOver24NumText.setText(Integer.toString(womenOver24FromSignInSheet+womenOver24ManuallyEntered));
-      womenOver24Checkbox.setChecked(true);
-      womenOver24Checkbox.setEnabled(false);
-    }
-    
+
     signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" ("+participantList.size()+" participant(s))");
   }
 
@@ -508,7 +578,7 @@ PickDateDialogListener, PickTimeDialogListener {
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.recordquickparticipationmenu, menu);
-    
+
     getSupportActionBar().setDisplayShowTitleEnabled(true);
     return true;
   }
@@ -552,7 +622,7 @@ PickDateDialogListener, PickTimeDialogListener {
   public void setTime(String selectedTime) {
     time.setText(selectedTime);
   }
-  
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();
