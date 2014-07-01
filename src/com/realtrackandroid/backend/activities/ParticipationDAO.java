@@ -46,7 +46,7 @@ public class ParticipationDAO {
     public ArrayList<Participation> getAllUnservicedParticipations() {
         openDB();
         ArrayList<Participation> output = null;
-        String[] columnsToRead = new String[14];
+        String[] columnsToRead = new String[22];
         columnsToRead[0] = Participation.COLUMN_ID;
         columnsToRead[1] = Participation.COLUMN_REMINDERID;
         columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -61,6 +61,14 @@ public class ParticipationDAO {
         columnsToRead[11] = Participation.COLUMN_NOTES;
         columnsToRead[12] = Participation.COLUMN_MEN1017;
         columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+        columnsToRead[14] = Participation.COLUMN_SPMEN09;
+        columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+        columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+        columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+        columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+        columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+        columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+        columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
 
         String whereClause = Participation.COLUMN_ISSERVICED + '=' + "'false'";
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -73,7 +81,7 @@ public class ParticipationDAO {
     public ArrayList<Participation> getAllUnservicedParticipationsForReminderId(int reminderid) {
         openDB();
         ArrayList<Participation> output = null;
-        String[] columnsToRead = new String[14];
+        String[] columnsToRead = new String[22];
         columnsToRead[0] = Participation.COLUMN_ID;
         columnsToRead[1] = Participation.COLUMN_REMINDERID;
         columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -88,6 +96,14 @@ public class ParticipationDAO {
         columnsToRead[11] = Participation.COLUMN_NOTES;
         columnsToRead[12] = Participation.COLUMN_MEN1017;
         columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+        columnsToRead[14] = Participation.COLUMN_SPMEN09;
+        columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+        columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+        columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+        columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+        columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+        columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+        columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
 
         String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid + " and " + Participation.COLUMN_ISSERVICED + '=' + "'false'";
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -100,7 +116,7 @@ public class ParticipationDAO {
     public ArrayList<Participation> getAllParticipationsForReminderId(int reminderid) {
         openDB();
         ArrayList<Participation> output = null;
-        String[] columnsToRead = new String[14];
+        String[] columnsToRead = new String[22];
         columnsToRead[0] = Participation.COLUMN_ID;
         columnsToRead[1] = Participation.COLUMN_REMINDERID;
         columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -115,6 +131,14 @@ public class ParticipationDAO {
         columnsToRead[11] = Participation.COLUMN_NOTES;
         columnsToRead[12] = Participation.COLUMN_MEN1017;
         columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+        columnsToRead[14] = Participation.COLUMN_SPMEN09;
+        columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+        columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+        columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+        columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+        columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+        columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+        columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
 
         String whereClause = Participation.COLUMN_REMINDERID + '=' + reminderid;
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -127,7 +151,7 @@ public class ParticipationDAO {
     public ArrayList<Participation> getAllParticipationsForActivityId(int activityid) {
       openDB();
       ArrayList<Participation> output = null;
-      String[] columnsToRead = new String[14];
+      String[] columnsToRead = new String[22];
       columnsToRead[0] = Participation.COLUMN_ID;
       columnsToRead[1] = Participation.COLUMN_REMINDERID;
       columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -142,6 +166,14 @@ public class ParticipationDAO {
       columnsToRead[11] = Participation.COLUMN_NOTES;
       columnsToRead[12] = Participation.COLUMN_MEN1017;
       columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+      columnsToRead[14] = Participation.COLUMN_SPMEN09;
+      columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+      columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+      columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+      columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+      columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+      columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+      columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
       
       String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid;
       Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
@@ -154,7 +186,7 @@ public class ParticipationDAO {
     public ArrayList<Participation> getServicedParticipationsForActivityId(int activityid) {
         openDB();
         ArrayList<Participation> output = null;
-        String[] columnsToRead = new String[14];
+        String[] columnsToRead = new String[22];
         columnsToRead[0] = Participation.COLUMN_ID;
         columnsToRead[1] = Participation.COLUMN_REMINDERID;
         columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -169,6 +201,14 @@ public class ParticipationDAO {
         columnsToRead[11] = Participation.COLUMN_NOTES;
         columnsToRead[12] = Participation.COLUMN_MEN1017;
         columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+        columnsToRead[14] = Participation.COLUMN_SPMEN09;
+        columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+        columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+        columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+        columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+        columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+        columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+        columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
 
         String whereClause = Participation.COLUMN_ACTIVITYID + '=' + activityid + " and " +
                 Participation.COLUMN_ISSERVICED + '=' +"'true'";
@@ -215,12 +255,20 @@ public class ParticipationDAO {
       p.setNotes(returnData.getString(11));
       p.setMen1017(returnData.getInt(12));
       p.setWomen1017(returnData.getInt(13));
+      p.setSpMen09(returnData.getInt(14));
+      p.setSpMen1017(returnData.getInt(15));
+      p.setSpMen1824(returnData.getInt(16));
+      p.setSpMenOver25(returnData.getInt(17));
+      p.setSpWomen09(returnData.getInt(18));
+      p.setSpWomen1017(returnData.getInt(19));
+      p.setSpWomen1824(returnData.getInt(20));
+      p.setSpWomenOver25(returnData.getInt(21));
       return p;
     }
 
     public Participation getParticipationWithId(int id) {
         openDB();
-        String[] columnsToRead = new String[14];
+        String[] columnsToRead = new String[22];
         columnsToRead[0] = Participation.COLUMN_ID;
         columnsToRead[1] = Participation.COLUMN_REMINDERID;
         columnsToRead[2] = Participation.COLUMN_MEN09;
@@ -235,6 +283,14 @@ public class ParticipationDAO {
         columnsToRead[11] = Participation.COLUMN_NOTES;
         columnsToRead[12] = Participation.COLUMN_MEN1017;
         columnsToRead[13] = Participation.COLUMN_WOMEN1017;
+        columnsToRead[14] = Participation.COLUMN_SPMEN09;
+        columnsToRead[15] = Participation.COLUMN_SPMEN1017;
+        columnsToRead[16] = Participation.COLUMN_SPMEN1824;
+        columnsToRead[17] = Participation.COLUMN_SPMENOVER25;
+        columnsToRead[18] = Participation.COLUMN_SPWOMEN09;
+        columnsToRead[19] = Participation.COLUMN_SPWOMEN1017;
+        columnsToRead[20] = Participation.COLUMN_SPWOMEN1824;
+        columnsToRead[21] = Participation.COLUMN_SPWOMENOVER25;
         String whereClause = Participation.COLUMN_ID + '=' + id;
         Cursor returnData = readDatabase.query(Participation.PARTICIPATION_TABLE, columnsToRead,
             whereClause, null, null, null, null);
@@ -254,6 +310,14 @@ public class ParticipationDAO {
         p.setNotes(returnData.getString(11));
         p.setMen1017(returnData.getInt(12));
         p.setWomen1017(returnData.getInt(13));
+        p.setSpMen09(returnData.getInt(14));
+        p.setSpMen1017(returnData.getInt(15));
+        p.setSpMen1824(returnData.getInt(16));
+        p.setSpMenOver25(returnData.getInt(17));
+        p.setSpWomen09(returnData.getInt(18));
+        p.setSpWomen1017(returnData.getInt(19));
+        p.setSpWomen1824(returnData.getInt(20));
+        p.setSpWomenOver25(returnData.getInt(21));
         closeDB();
         // Return the constructed Participation object
         return p;
@@ -261,7 +325,7 @@ public class ParticipationDAO {
 
     public int addParticipation(Participation participation) {
         openDB();
-        ContentValues newValue = new ContentValues(13);
+        ContentValues newValue = new ContentValues(21);
         newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
         newValue.put(Participation.COLUMN_ACTIVITYID, participation.getActivityid());
         newValue.put(Participation.COLUMN_MEN09, participation.getMen09());
@@ -272,6 +336,14 @@ public class ParticipationDAO {
         newValue.put(Participation.COLUMN_WOMEN1017, participation.getWomen1017());
         newValue.put(Participation.COLUMN_WOMEN1824, participation.getWomen1824());
         newValue.put(Participation.COLUMN_WOMENOVER25, participation.getWomenOver25());
+        newValue.put(Participation.COLUMN_SPMEN09, participation.getSpMen09());
+        newValue.put(Participation.COLUMN_SPMEN1017, participation.getSpMen1017());
+        newValue.put(Participation.COLUMN_SPMEN1824, participation.getSpMen1824());
+        newValue.put(Participation.COLUMN_SPMENOVER25, participation.getSpMenOver25());
+        newValue.put(Participation.COLUMN_SPWOMEN09, participation.getSpWomen09());
+        newValue.put(Participation.COLUMN_SPWOMEN1017, participation.getSpWomen1017());
+        newValue.put(Participation.COLUMN_SPWOMEN1824, participation.getSpWomen1824());
+        newValue.put(Participation.COLUMN_SPWOMENOVER25, participation.getSpWomenOver25());
         newValue.put(Participation.COLUMN_NOTES, participation.getNotes());
         //DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
         //newValue.put(Participation.COLUMN_DATE, parser.format(participation.getDate()));
@@ -305,7 +377,7 @@ public class ParticipationDAO {
 
     public void updateParticipation(Participation participation) {
         openDB();
-        ContentValues newValue = new ContentValues(13);
+        ContentValues newValue = new ContentValues(21);
         newValue.put(Participation.COLUMN_REMINDERID, participation.getReminderid());
         newValue.put(Participation.COLUMN_MEN09, participation.getMen09());
         newValue.put(Participation.COLUMN_MEN1017, participation.getMen1017());
@@ -315,6 +387,14 @@ public class ParticipationDAO {
         newValue.put(Participation.COLUMN_WOMEN1017, participation.getWomen1017());
         newValue.put(Participation.COLUMN_WOMEN1824, participation.getWomen1824());
         newValue.put(Participation.COLUMN_WOMENOVER25, participation.getWomenOver25());
+        newValue.put(Participation.COLUMN_SPMEN09, participation.getSpMen09());
+        newValue.put(Participation.COLUMN_SPMEN1017, participation.getSpMen1017());
+        newValue.put(Participation.COLUMN_SPMEN1824, participation.getSpMen1824());
+        newValue.put(Participation.COLUMN_SPMENOVER25, participation.getSpMenOver25());
+        newValue.put(Participation.COLUMN_SPWOMEN09, participation.getSpWomen09());
+        newValue.put(Participation.COLUMN_SPWOMEN1017, participation.getSpWomen1017());
+        newValue.put(Participation.COLUMN_SPWOMEN1824, participation.getSpWomen1824());
+        newValue.put(Participation.COLUMN_SPWOMENOVER25, participation.getSpWomenOver25());
         newValue.put(Participation.COLUMN_DATE, participation.getDate());
         newValue.put(Participation.COLUMN_ISSERVICED, participation.isServiced() ? "true" : "false");
         newValue.put(Participation.COLUMN_ACTIVITYID, participation.getActivityid());

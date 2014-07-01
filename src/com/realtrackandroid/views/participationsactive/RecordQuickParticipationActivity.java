@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -59,18 +58,25 @@ PickDateDialogListener, PickTimeDialogListener {
 
   protected StyledButton signinSheetButton;
 
-  protected EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText, women09NumText, women1017NumText, women1824NumText,
-  womenOver25NumText, notesText;
-
   TextView date, time;
-
-  protected CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox, women09Checkbox, women1017Checkbox,
-  women1824Checkbox, womenOver25Checkbox;
-
+  
   private Activities a;
-
+  
   private ArrayList <Participant> participantList;
+  
+  protected EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText,
+                     women09NumText, women1017NumText, women1824NumText, womenOver25NumText, notesText;
+  
+  protected EditText spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
+                     spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText,
+                     spnotesText;
 
+  protected CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
+                     women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox;
+
+  protected CheckBox spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
+                     spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox;
+  
   private int men09FromSignInSheet, men1017FromSignInSheet, men1824FromSignInSheet, menOver25FromSignInSheet, 
               women09FromSignInSheet, women1017FromSignInSheet, women1824FromSignInSheet, womenOver25FromSignInSheet;
 
@@ -174,73 +180,54 @@ PickDateDialogListener, PickTimeDialogListener {
     women1017NumText = (EditText) findViewById(R.id.numWomen1017);
     women1824NumText = (EditText) findViewById(R.id.numWomen1824);
     womenOver25NumText = (EditText) findViewById(R.id.numWomenOver25);
+    
+    spmen09Checkbox = (CheckBox) findViewById(R.id.spmen09CheckBox);
+    spmen1017Checkbox = (CheckBox) findViewById(R.id.spmen1017CheckBox);
+    spmen1824Checkbox = (CheckBox) findViewById(R.id.spmen1824CheckBox);
+    spmenOver25Checkbox = (CheckBox) findViewById(R.id.spmenOver25CheckBox);
+    spwomen09Checkbox = (CheckBox) findViewById(R.id.spwomen09CheckBox);
+    spwomen1017Checkbox = (CheckBox) findViewById(R.id.spwomen1017CheckBox);
+    spwomen1824Checkbox = (CheckBox) findViewById(R.id.spwomen1824CheckBox);
+    spwomenOver25Checkbox = (CheckBox) findViewById(R.id.spwomenOver25CheckBox);
+    spmen09NumText = (EditText) findViewById(R.id.numSpMen09);
+    spmen1017NumText = (EditText) findViewById(R.id.numSpMen1017);
+    spmen1824NumText = (EditText) findViewById(R.id.numSpMen1824);
+    spmenOver25NumText = (EditText) findViewById(R.id.numSpMenOver25);
+    spwomen09NumText = (EditText) findViewById(R.id.numSpWomen09);
+    spwomen1017NumText = (EditText) findViewById(R.id.numSpWomen1017);
+    spwomen1824NumText = (EditText) findViewById(R.id.numSpWomen1824);
+    spwomenOver25NumText = (EditText) findViewById(R.id.numSpWomenOver25);
+    
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (StyledButton) findViewById(R.id.submitbutton);
     
-    men09Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men09Checkbox.isChecked())
-          men09NumText.setText("");
-      }
-    });
-
-    men1017Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men1017Checkbox.isChecked())
-          men1017NumText.setText("");
-      }
-    });
-
-    men1824Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men1824Checkbox.isChecked())
-          men1824NumText.setText("");
-      }
-    });
-
-    menOver25Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!menOver25Checkbox.isChecked())
-          menOver25NumText.setText("");
-      }
-    });
+    CheckBox[] checkBoxArray = {men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
+                                women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox, 
+                                spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
+                                spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox};
     
-    women09Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women09Checkbox.isChecked())
-          women09NumText.setText("");
-      }
-    });
-
-    women1017Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women1017Checkbox.isChecked())
-          women1017NumText.setText("");
-      }
-    });
-
-    women1824Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women1824Checkbox.isChecked())
-          women1824NumText.setText("");
-      }
-    });
-
-    womenOver25Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!womenOver25Checkbox.isChecked())
-          womenOver25NumText.setText("");
-      }
-    });
-
+    EditText[] numTextArray = {men09NumText, men1017NumText, men1824NumText, menOver25NumText,
+                               women09NumText, women1017NumText, women1824NumText, womenOver25NumText,
+                               spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
+                               spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText};
+    
+    for (int i=0; i<checkBoxArray.length; ++i){
+      final CheckBox c = checkBoxArray[i];
+      final EditText e = numTextArray[i];
+      c.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if (!c.isChecked()){
+            e.setEnabled(false);
+            e.setText("");
+          }
+          else{
+            e.setEnabled(true);
+          }
+        }
+      });
+    }
+    
     submitButton.setOnClickListener(new View.OnClickListener() {
       private boolean errorsFound;
 
@@ -317,7 +304,7 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setMen1017(0);
         }
-
+        
         if (men1824Checkbox.isChecked()) {
           if (men1824NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
@@ -332,7 +319,7 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setMen1824(0);
         }
-
+        
         if (menOver25Checkbox.isChecked()) {
           if (menOver25NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
@@ -362,7 +349,7 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setWomen09(0);
         }
-
+        
         if (women1017Checkbox.isChecked()) {
           if (women1017NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
@@ -377,7 +364,7 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setWomen1017(0);
         }
-
+        
         if (women1824Checkbox.isChecked()) {
           if (women1824NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
@@ -392,7 +379,7 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setWomen1824(0);
         }
-
+        
         if (womenOver25Checkbox.isChecked()) {
           if (womenOver25NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
@@ -407,7 +394,119 @@ PickDateDialogListener, PickTimeDialogListener {
         else {
           p.setWomenOver25(0);
         }
-
+        
+        if (spmen09Checkbox.isChecked()) {
+          if (spmen09NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen09(Integer.parseInt(spmen09NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen09(0);
+        }
+        
+        if (spmen1017Checkbox.isChecked()) {
+          if (spmen1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen1017(Integer.parseInt(spmen1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen1017(0);
+        }
+        
+        if (spmen1824Checkbox.isChecked()) {
+          if (spmen1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen1824(Integer.parseInt(spmen1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen1824(0);
+        }
+        
+        if (spmenOver25Checkbox.isChecked()) {
+          if (spmenOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMenOver25(Integer.parseInt(spmenOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMenOver25(0);
+        }
+        
+        if (spwomen09Checkbox.isChecked()) {
+          if (spwomen09NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen09(Integer.parseInt(spwomen09NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen09(0);
+        }
+        
+        if (spwomen1017Checkbox.isChecked()) {
+          if (spwomen1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen1017(Integer.parseInt(spwomen1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen1017(0);
+        }
+        
+        if (spwomen1824Checkbox.isChecked()) {
+          if (spwomen1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen1824(Integer.parseInt(spwomen1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen1824(0);
+        }
+        
+        if (spwomenOver25Checkbox.isChecked()) {
+          if (spwomenOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomenOver25(Integer.parseInt(spwomenOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomenOver25(0);
+        }
+        
         if(errorsFound){
           Toast.makeText(getApplicationContext(), R.string.cannotentersmallernumber,
                   Toast.LENGTH_SHORT).show();
@@ -469,12 +568,12 @@ PickDateDialogListener, PickTimeDialogListener {
         Bundle resultBundle = intent.getExtras();
         participantList = resultBundle.getParcelableArrayList("participantList");
 
-        updateParticipantNumbersInDisplay();
+        updateParticipantCountsFromSigninSheet();
       }
     }
   }
 
-  private void updateParticipantNumbersInDisplay() {
+  private void updateParticipantCountsFromSigninSheet() {
     if(participantList.isEmpty())
       return;
 

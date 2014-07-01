@@ -15,6 +15,14 @@ public class Participation {
   private int women1017; // number of women that participated
   private int women1824; // number of women that participated
   private int womenOver25; // number of women that participated
+  private int spMen09; // number of male service providers that participated
+  private int spMen1017; // number of male service providers that participated
+  private int spMen1824; // number of male service providers that participated
+  private int spMenOver25; // number of male service providers that participated
+  private int spWomen09; // number of female service providers that participated
+  private int spWomen1017; // number of female service providers that participated
+  private int spWomen1824; // number of female service providers that participated
+  private int spWomenOver25; // number of female service providers that participated
   private long date; // date that the participation is for
   private boolean serviced; // true: participation was recorded. is only be set to true in RecordOrEditParticipationActivity
   private String notes;
@@ -33,6 +41,14 @@ public class Participation {
   public static final String COLUMN_WOMEN1017 = "women1017";
   public static final String COLUMN_WOMEN1824 = "women1824";
   public static final String COLUMN_WOMENOVER25 = "womenOver25";
+  public static final String COLUMN_SPMEN09 = "spmen09";
+  public static final String COLUMN_SPMEN1017 = "spmen1017";
+  public static final String COLUMN_SPMEN1824 = "spmen1824";
+  public static final String COLUMN_SPMENOVER25 = "spmenOver25";
+  public static final String COLUMN_SPWOMEN09 = "spwomen09";
+  public static final String COLUMN_SPWOMEN1017 = "spwomen1017";
+  public static final String COLUMN_SPWOMEN1824 = "spwomen1824";
+  public static final String COLUMN_SPWOMENOVER25 = "spwomenOver25";
   public static final String COLUMN_DATE = "date";
   public static final String COLUMN_ISSERVICED = "isserviced";
   public static final String COLUMN_NOTES = "notes";
@@ -51,6 +67,14 @@ public class Participation {
           + COLUMN_WOMEN1017 + " integer not null, "
           + COLUMN_WOMEN1824 + " integer not null, "
           + COLUMN_WOMENOVER25 + " integer not null, "
+          + COLUMN_SPMEN09 + " integer not null, "
+          + COLUMN_SPMEN1017 + " integer not null, "
+          + COLUMN_SPMEN1824 + " integer not null, "
+          + COLUMN_SPMENOVER25 + " integer not null, "
+          + COLUMN_SPWOMEN09 + " integer not null, "
+          + COLUMN_SPWOMEN1017 + " integer not null, "
+          + COLUMN_SPWOMEN1824 + " integer not null, "
+          + COLUMN_SPWOMENOVER25 + " integer not null, "
           + COLUMN_ISSERVICED + " string not null, "
           + COLUMN_DATE + " integer not null, "
           + COLUMN_REMINDERID + " integer not null, "
@@ -185,5 +209,69 @@ public class Participation {
 
   public int getTotalParticipants() {
     return men09 + men1017 + men1824 + menOver25 + women09 + women1017 + women1824 + womenOver25;
+  }
+
+  public int getSpMen09() {
+    return spMen09;
+  }
+
+  public void setSpMen09(int spMen09) {
+    this.spMen09 = spMen09;
+  }
+
+  public int getSpMen1017() {
+    return spMen1017;
+  }
+
+  public void setSpMen1017(int spMen1017) {
+    this.spMen1017 = spMen1017;
+  }
+
+  public int getSpMen1824() {
+    return spMen1824;
+  }
+
+  public void setSpMen1824(int spMen1824) {
+    this.spMen1824 = spMen1824;
+  }
+
+  public int getSpMenOver25() {
+    return spMenOver25;
+  }
+
+  public void setSpMenOver25(int spMenOver25) {
+    this.spMenOver25 = spMenOver25;
+  }
+
+  public int getSpWomen09() {
+    return spWomen09;
+  }
+
+  public void setSpWomen09(int spWomen09) {
+    this.spWomen09 = spWomen09;
+  }
+
+  public int getSpWomen1017() {
+    return spWomen1017;
+  }
+
+  public void setSpWomen1017(int spWomen1017) {
+    this.spWomen1017 = spWomen1017;
+  }
+
+  public int getSpWomen1824() {
+    return spWomen1824;
+  }
+
+  public void setSpWomen1824(int spWomen1824) {
+    this.spWomen1824 = spWomen1824;
+  }
+
+  public int getSpWomenOver25() {
+    return spWomenOver25;
+  }
+
+  public void setSpWomenOver25(int spWomenOver25) {
+    this.spWomenOver25 = spWomenOver25;
   }
 }

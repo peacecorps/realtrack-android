@@ -49,13 +49,21 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
   protected StyledButton dismissButton;
   private StyledButton submitButton;
   private StyledButton signinSheetButton;
-  protected EditText men09NumText, men1017NumText, men1824NumText, menOver25umText,
-                     women09NumText, women1017NumText, women1824NumText, womenOver25NumText,
-                     notesText;
-  protected CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
-                     women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox;
   protected Participation p;
   private ArrayList<Participant> participantList;
+
+  protected EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText,
+                     women09NumText, women1017NumText, women1824NumText, womenOver25NumText, notesText;
+  
+  protected EditText spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
+                     spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText,
+                     spnotesText;
+
+  protected CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
+                     women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox;
+
+  protected CheckBox spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
+                     spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox;
   
   private int men09ManuallyEntered, men1017ManuallyEntered, men1824ManuallyEntered, menOver25ManuallyEntered,
               women09ManuallyEntered, women1017ManuallyEntered, women1824ManuallyEntered, womenOver25ManuallyEntered;
@@ -85,8 +93,8 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
   @Override
   public void onResume() {
     super.onResume();
-    Calendar c = Calendar.getInstance();
-    c.setTimeInMillis(dateTime);
+    Calendar cal = Calendar.getInstance();
+    cal.setTimeInMillis(dateTime);
 
     final ParticipationDAO participationDao = new ParticipationDAO(getApplicationContext());
     p = participationDao.getParticipationWithId(participationId);
@@ -94,7 +102,7 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     final ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     final Activities a = aDao.getActivityWithId(p.getActivityid());
     DateFormat simpleDateParser = new SimpleDateFormat("MM/dd/yyyy");
-    final String participationDate = simpleDateParser.format(c.getTime());
+    final String participationDate = simpleDateParser.format(cal.getTime());
 
     final ParticipantDAO participantDao = new ParticipantDAO(getApplicationContext());
 
@@ -105,7 +113,7 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     // display date and time for this reminder
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
     TextView datetime = (TextView) findViewById(R.id.datetime);
-    datetime.setText(parser.format(c.getTime()));
+    datetime.setText(parser.format(cal.getTime()));
 
     // opening the sign-in sheet
     signinSheetButton  = (StyledButton) findViewById(R.id.openSigninSheetButton);
@@ -135,11 +143,29 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     men09NumText = (EditText) findViewById(R.id.numMen09);
     men1017NumText = (EditText) findViewById(R.id.numMen1017);
     men1824NumText = (EditText) findViewById(R.id.numMen1824);
-    menOver25umText = (EditText) findViewById(R.id.numMenOver25);
+    menOver25NumText = (EditText) findViewById(R.id.numMenOver25);
     women09NumText = (EditText) findViewById(R.id.numWomen09);
     women1017NumText = (EditText) findViewById(R.id.numWomen1017);
     women1824NumText = (EditText) findViewById(R.id.numWomen1824);
     womenOver25NumText = (EditText) findViewById(R.id.numWomenOver25);
+    
+    spmen09Checkbox = (CheckBox) findViewById(R.id.spmen09CheckBox);
+    spmen1017Checkbox = (CheckBox) findViewById(R.id.spmen1017CheckBox);
+    spmen1824Checkbox = (CheckBox) findViewById(R.id.spmen1824CheckBox);
+    spmenOver25Checkbox = (CheckBox) findViewById(R.id.spmenOver25CheckBox);
+    spwomen09Checkbox = (CheckBox) findViewById(R.id.spwomen09CheckBox);
+    spwomen1017Checkbox = (CheckBox) findViewById(R.id.spwomen1017CheckBox);
+    spwomen1824Checkbox = (CheckBox) findViewById(R.id.spwomen1824CheckBox);
+    spwomenOver25Checkbox = (CheckBox) findViewById(R.id.spwomenOver25CheckBox);
+    spmen09NumText = (EditText) findViewById(R.id.numSpMen09);
+    spmen1017NumText = (EditText) findViewById(R.id.numSpMen1017);
+    spmen1824NumText = (EditText) findViewById(R.id.numSpMen1824);
+    spmenOver25NumText = (EditText) findViewById(R.id.numSpMenOver25);
+    spwomen09NumText = (EditText) findViewById(R.id.numSpWomen09);
+    spwomen1017NumText = (EditText) findViewById(R.id.numSpWomen1017);
+    spwomen1824NumText = (EditText) findViewById(R.id.numSpWomen1824);
+    spwomenOver25NumText = (EditText) findViewById(R.id.numSpWomenOver25);
+    
     notesText = (EditText) findViewById(R.id.notes);
     submitButton = (StyledButton) findViewById(R.id.submitbutton);
     dismissButton = (StyledButton) findViewById(R.id.dismissButton);
@@ -149,74 +175,38 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
       participantList = participantDao.getAllParticipantsForParticipationId(participationId);
       ((View) findViewById(R.id.spacer)).setVisibility(View.GONE);
       notesText.setText(p.getNotes());
+      updateServiceProviderCounts();
       dismissButton.setVisibility(View.GONE);
     }
     
-    updateParticipantNumbersInDisplay();
+    updateParticipantCounts();
     
-    men09Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men09Checkbox.isChecked())
-          men09NumText.setText("");
-      }
-    });
+    CheckBox[] checkBoxArray = {men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
+                                women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox, 
+                                spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
+                                spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox};
 
-    men1017Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men1017Checkbox.isChecked())
-          men1017NumText.setText("");
-      }
-    });
+    EditText[] numTextArray = {men09NumText, men1017NumText, men1824NumText, menOver25NumText,
+                               women09NumText, women1017NumText, women1824NumText, womenOver25NumText,
+                               spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
+                               spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText};
     
-    men1824Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!men1824Checkbox.isChecked())
-          men1824NumText.setText("");
-      }
-    });
-    
-    menOver25Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!menOver25Checkbox.isChecked())
-          menOver25umText.setText("");
-      }
-    });
-    
-    women09Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women09Checkbox.isChecked())
-          women09NumText.setText("");
-      }
-    });
-    
-    women1017Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women1017Checkbox.isChecked())
-          women1017NumText.setText("");
-      }
-    });
-
-    women1824Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!women1824Checkbox.isChecked())
-          women1824NumText.setText("");
-      }
-    });
-    
-    womenOver25Checkbox.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!womenOver25Checkbox.isChecked())
-          womenOver25NumText.setText("");
-      }
-    });
+    for (int i=0; i<checkBoxArray.length; ++i){
+      final CheckBox c = checkBoxArray[i];
+      final EditText e = numTextArray[i];
+      c.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if (!c.isChecked()){
+            e.setEnabled(false);
+            e.setText("");
+          }
+          else{
+            e.setEnabled(true);
+          }
+        }
+      });
+    }
     
     dismissButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -288,14 +278,14 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
         }
 
         if (menOver25Checkbox.isChecked()) {
-          if (menOver25umText.getText().length() == 0){
+          if (menOver25NumText.getText().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
                     Toast.LENGTH_SHORT).show();
             return;
           }
           else{
-            checkEnteredValueNotLessThanSigninSheetValue(menOver25umText, menOver25FromSignInSheet);
-            p.setMenOver25(Integer.parseInt(menOver25umText.getText().toString()));
+            checkEnteredValueNotLessThanSigninSheetValue(menOver25NumText, menOver25FromSignInSheet);
+            p.setMenOver25(Integer.parseInt(menOver25NumText.getText().toString()));
           }
         }
         else {
@@ -362,6 +352,118 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
           p.setWomenOver25(0);
         }
         
+        if (spmen09Checkbox.isChecked()) {
+          if (spmen09NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen09(Integer.parseInt(spmen09NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen09(0);
+        }
+        
+        if (spmen1017Checkbox.isChecked()) {
+          if (spmen1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen1017(Integer.parseInt(spmen1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen1017(0);
+        }
+        
+        if (spmen1824Checkbox.isChecked()) {
+          if (spmen1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMen1824(Integer.parseInt(spmen1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMen1824(0);
+        }
+        
+        if (spmenOver25Checkbox.isChecked()) {
+          if (spmenOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpMenOver25(Integer.parseInt(spmenOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpMenOver25(0);
+        }
+        
+        if (spwomen09Checkbox.isChecked()) {
+          if (spwomen09NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen09(Integer.parseInt(spwomen09NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen09(0);
+        }
+        
+        if (spwomen1017Checkbox.isChecked()) {
+          if (spwomen1017NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen1017(Integer.parseInt(spwomen1017NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen1017(0);
+        }
+        
+        if (spwomen1824Checkbox.isChecked()) {
+          if (spwomen1824NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomen1824(Integer.parseInt(spwomen1824NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomen1824(0);
+        }
+        
+        if (spwomenOver25Checkbox.isChecked()) {
+          if (spwomenOver25NumText.getText().length() == 0){
+            Toast.makeText(getApplicationContext(), R.string.emptyparticipationmessage,
+                    Toast.LENGTH_SHORT).show();
+            return;
+          }
+          else{
+            p.setSpWomenOver25(Integer.parseInt(spwomenOver25NumText.getText().toString()));
+          }
+        }
+        else {
+          p.setSpWomenOver25(0);
+        }
+        
         if(errorsFound){
           Toast.makeText(getApplicationContext(), R.string.cannotentersmallernumber,
                   Toast.LENGTH_SHORT).show();
@@ -421,6 +523,41 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     });
   }
 
+  private void updateServiceProviderCounts() {
+    if(p.getSpMen09()>0){
+      spmen09NumText.setText(Integer.toString(p.getSpMen09()));
+      spmen09Checkbox.setChecked(true);
+    }
+    if(p.getSpMen1017()>0){
+      spmen1017NumText.setText(Integer.toString(p.getSpMen1017()));
+      spmen1017Checkbox.setChecked(true);
+    }
+    if(p.getSpMen1824()>0){
+      spmen1824NumText.setText(Integer.toString(p.getSpMen1824()));
+      spmen1824Checkbox.setChecked(true);
+    }
+    if(p.getSpMenOver25()>0){
+      spmenOver25NumText.setText(Integer.toString(p.getSpMenOver25()));
+      spmenOver25Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen09()>0){
+      spwomen09NumText.setText(Integer.toString(p.getSpWomen09()));
+      spwomen09Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen1017()>0){
+      spwomen1017NumText.setText(Integer.toString(p.getSpWomen1017()));
+      spwomen1017Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen1824()>0){
+      spwomen1824NumText.setText(Integer.toString(p.getSpWomen1824()));
+      spwomen1824Checkbox.setChecked(true);
+    }
+    if(p.getSpWomenOver25()>0){
+      spwomenOver25NumText.setText(Integer.toString(p.getSpWomenOver25()));
+      spwomenOver25Checkbox.setChecked(true);
+    }
+  }
+
   //Handle participant list returned by SignInSheetLandingActivity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -428,12 +565,12 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
         participantList = resultBundle.getParcelableArrayList("participantList");
-        updateParticipantNumbersInDisplay();
+        updateParticipantCounts();
       }
     }
   }
 
-  private void updateParticipantNumbersInDisplay() {
+  private void updateParticipantCounts() {
     men09FromSignInSheet = 0;
     men1017FromSignInSheet = 0;
     men1824FromSignInSheet = 0;
@@ -510,7 +647,7 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     int totalMenOver25 = menOver25FromSignInSheet+menOver25ManuallyEntered;
     if(totalMenOver25>0){
-      menOver25umText.setText(Integer.toString(totalMenOver25));
+      menOver25NumText.setText(Integer.toString(totalMenOver25));
       menOver25Checkbox.setChecked(true);
       menOver25Checkbox.setEnabled(false);
     }

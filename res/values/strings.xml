@@ -47,13 +47,15 @@
     <string name="time">Time</string>
     <string name="timeformathint">HH:MM AM/PM</string>
     <string name="participation">Participation</string>
-    <string name="men">Men</string>
+    <string name="men">Individuals (Men)</string>
+    <string name="spmen">Service Providers (Men)</string>
     <string name="men09">0&#8211;9</string>
     <string name="men1017">10&#8211;17</string>
     <string name="men1824">18&#8211;24</string>
     <string name="menover25">Over 25</string>
     <string name="numberofmen">No. of Men</string>
-    <string name="women">Women</string>
+    <string name="women">Individuals (Women)</string>
+    <string name="spwomen">Service Providers (Women)</string>
     <string name="women09">0&#8211;9</string>
     <string name="women1017">10&#8211;17</string>
     <string name="women1824">18&#8211;24</string>
