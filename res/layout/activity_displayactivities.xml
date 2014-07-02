@@ -215,6 +215,31 @@
             android:background="@color/lightgrey"
             android:gravity="center_vertical"
             android:padding="10dp"
+            android:text="@string/cspp"
+            android:textColor="@color/darkgrey"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cspp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:gravity="center_vertical"
+            android:padding="10dp"
             android:text="@string/initiatives"
             android:textColor="@color/darkgrey"
             android:textSize="25sp"

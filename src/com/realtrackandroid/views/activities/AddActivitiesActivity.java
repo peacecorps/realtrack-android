@@ -42,7 +42,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
   protected CheckBox mondayCheckbox, tuesdayCheckbox, wednesdayCheckbox, thursdayCheckbox, fridayCheckbox, saturdayCheckbox, sundayCheckbox;
   protected StyledButton submitButton;
   protected boolean startOrEnd; // used in OnDateSetListener to distinguish between start date and end date field
-  protected String initiatives;
+  protected String initiatives, cspp;
   protected int projectid;
   private long projectStartDate, projectEndDate;
   // used because we reuse the same listener for both fields
@@ -381,7 +381,7 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         a.setCohort(cohort.getText().toString());
         a.setOrgs(orgs.getText().toString());
         a.setComms(comms.getText().toString());
-
+        
         // store initiatives in compact form "x|x|x" where the first x is WID, second is Youth etc
         // this order MUST match the DisplayActivitiesActivity.AllInits array
         // If x == 1, this activity has the corresponding initiative, if 0 then it doesn't.
@@ -389,6 +389,16 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
                 (((CheckBox) findViewById(R.id.ECPACheckBox)).isChecked() ? "1" : "0") + "|" +
                 (((CheckBox) findViewById(R.id.foodSecurityCheckBox)).isChecked() ? "1" : "0");
         a.setInitiatives(initiatives);
+
+        // store cspp in compact form "x|x|x"
+        // If x == 1, this activity has the corresponding cspp, if 0 then it doesn't.
+        cspp = (((CheckBox) findViewById(R.id.gendereqCheckBox)).isChecked() ? "1" : "0") + "|" +
+                (((CheckBox) findViewById(R.id.hivaidsCheckBox)).isChecked() ? "1" : "0") + "|" +
+                (((CheckBox) findViewById(R.id.technologyfordevelopmentCheckBox)).isChecked() ? "1" : "0") + "|" +
+                (((CheckBox) findViewById(R.id.youthasresourcesCheckBox)).isChecked() ? "1" : "0") + "|" +
+                (((CheckBox) findViewById(R.id.volunteerismCheckBox)).isChecked() ? "1" : "0") + "|" +
+                (((CheckBox) findViewById(R.id.peoplewithdisabilitiesCheckBox)).isChecked() ? "1" : "0");
+        a.setCspp(cspp);
 
         // don't forget to save the associated project
         a.setProjectid(projectid);

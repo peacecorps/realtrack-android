@@ -32,7 +32,7 @@ import com.realtrackandroid.views.help.HelpDialog;
  * Pressing the back key will exit the activity
  */
 public class DisplayActivitiesActivity extends SherlockFragmentActivity {
-  public String[] allInits;
+  public String[] allInits, allCspps;
   private int activitiesid;
   private Activities a;
   private ArrayList<Reminders> reminders_data;
@@ -49,6 +49,7 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
   public void onResume() {
     super.onResume();
     allInits = updateInitiativeNames();
+    allCspps = updateCsppNames();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     a = aDao.getActivityWithId(activitiesid);
@@ -69,8 +70,9 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     orgs.setText(a.getOrgs());
     TextView comms = (TextView) findViewById(R.id.comms);
     comms.setText(a.getComms());
+    
     TextView initiatives = (TextView) findViewById(R.id.initiatives);
-
+    
     // convert initiatives back to human-readable form
     String[] initiativesList = a.getInitiatives().split("\\|");
     String inits = "";
@@ -80,6 +82,18 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     }
     inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous newline character
     initiatives.setText(inits);
+    
+    TextView csppTextView = (TextView) findViewById(R.id.cspp);
+
+    // convert initiatives back to human-readable form
+    String[] csppList = a.getCspp().split("\\|");
+    String cspp = "";
+    for (int i = 0; i < csppList.length; i++) {
+      if (csppList[i].equals("1"))
+        cspp += allCspps[i] + "\n";
+    }
+    cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last superfluous newline character
+    csppTextView.setText(cspp);
 
     // display reminders
     TextView reminders = (TextView) findViewById(R.id.reminders);
@@ -94,6 +108,15 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     }
     remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
     reminders.setText(remindersText);
+  }
+  
+  private String[] updateCsppNames() {
+    return new String[]{getResources().getString(R.string.genderequalityandwomensempowerment),
+            getResources().getString(R.string.hivaids),
+            getResources().getString(R.string.technologyfordevelopment),
+            getResources().getString(R.string.youthasresources),
+            getResources().getString(R.string.volunteerism),
+            getResources().getString(R.string.peoplewithdisabilities)};
   }
 
   private String[] updateInitiativeNames() {

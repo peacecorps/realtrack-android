@@ -51,7 +51,7 @@ public class ActivitiesDAO {
   public ArrayList<Activities> getAllActivitiesForProjectId(int projectid) {
     openDB();
     ArrayList<Activities> output = null;
-    String[] columnsToRead = new String[9];
+    String[] columnsToRead = new String[10];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
     columnsToRead[2] = Activities.COLUMN_ENDDATE;
@@ -61,6 +61,7 @@ public class ActivitiesDAO {
     columnsToRead[6] = Activities.COLUMN_COMMS;
     columnsToRead[7] = Activities.COLUMN_INITIATIVES;
     columnsToRead[8] = Activities.COLUMN_COHORT;
+    columnsToRead[9] = Activities.COLUMN_CSPP;
     String whereClause = Activities.COLUMN_PROJECTID + '=' + projectid;
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
             whereClause, null, null, null, null);
@@ -88,6 +89,7 @@ public class ActivitiesDAO {
       a.setComms(returnData.getString(6));
       a.setInitiatives(returnData.getString(7));
       a.setCohort(returnData.getString(8));
+      a.setCspp(returnData.getString(9));
       output.add(count, a);
       // Advance the Cursor
       returnData.moveToNext();
@@ -100,7 +102,7 @@ public class ActivitiesDAO {
 
   public Activities getActivityWithId(int id) {
     openDB();
-    String[] columnsToRead = new String[10];
+    String[] columnsToRead = new String[11];
     columnsToRead[0] = Activities.COLUMN_TITLE;
     columnsToRead[1] = Activities.COLUMN_STARTDATE;
     columnsToRead[2] = Activities.COLUMN_ENDDATE;
@@ -111,6 +113,7 @@ public class ActivitiesDAO {
     columnsToRead[7] = Activities.COLUMN_INITIATIVES;
     columnsToRead[8] = Activities.COLUMN_PROJECTID;
     columnsToRead[9] = Activities.COLUMN_COHORT;
+    columnsToRead[10] = Activities.COLUMN_CSPP;
     String whereClause = Activities.COLUMN_ID + '=' + id;
     Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
             whereClause, null, null, null, null);
@@ -126,6 +129,7 @@ public class ActivitiesDAO {
     a.setInitiatives(returnData.getString(7));
     a.setProjectid(returnData.getInt(8));
     a.setCohort(returnData.getString(9));
+    a.setCspp(returnData.getString(10));
     closeDB();
     // Return the constructed Activities object
     return a;
@@ -133,7 +137,7 @@ public class ActivitiesDAO {
 
   public int addActivities(Activities activity) {
     openDB();
-    ContentValues newValue = new ContentValues(8);
+    ContentValues newValue = new ContentValues(9);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
     newValue.put(Activities.COLUMN_ENDDATE, activity.getEndDate());
@@ -142,6 +146,7 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
     newValue.put(Activities.COLUMN_COHORT, activity.getCohort());
+    newValue.put(Activities.COLUMN_CSPP, activity.getCspp());
     newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
 
     // Insert the item into the database
@@ -159,7 +164,7 @@ public class ActivitiesDAO {
 
   public void updateActivities(Activities activity) {
     openDB();
-    ContentValues newValue = new ContentValues(8);
+    ContentValues newValue = new ContentValues(9);
     newValue.put(Activities.COLUMN_TITLE, activity.getTitle());
     newValue.put(Activities.COLUMN_STARTDATE, activity.getStartDate());
     newValue.put(Activities.COLUMN_ENDDATE, activity.getEndDate());
@@ -168,6 +173,7 @@ public class ActivitiesDAO {
     newValue.put(Activities.COLUMN_COMMS, activity.getComms());
     newValue.put(Activities.COLUMN_INITIATIVES, activity.getInitiatives());
     newValue.put(Activities.COLUMN_COHORT, activity.getCohort());
+    newValue.put(Activities.COLUMN_CSPP, activity.getCspp());
     newValue.put(Activities.COLUMN_PROJECTID, activity.getProjectid());
     String whereClause = Activities.COLUMN_ID + '=' + activity.getId();
     // Update the item into the database
