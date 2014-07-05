@@ -6,11 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.projects.ProjectDAO;
+import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.HelpDialog;
 
 /*
  * Presents an activity that lets you edit an EXISTING project
@@ -43,39 +46,67 @@ public class EditProjectActivity extends AddProjectActivity {
     startDate.setText(parser.format(p.getStartDate()));
     endDate.setText(parser.format(p.getEndDate()));
     notes.setText(p.getNotes());
-
-    // change the submit button listener to UPDATE the existing project instead of creating a NEW one
-    submitButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-          Date date = parser.parse(startDate.getText().toString());
-          p.setStartDate(date.getTime());
-          date = parser.parse(endDate.getText().toString());
-          date.setHours(23);
-          date.setMinutes(59);
-          p.setEndDate(date.getTime());
-        } catch (ParseException e) {
-          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        p.setTitle(title.getText().toString());
-        if (p.getTitle().equals("")) {
-          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        p.setNotes(notes.getText().toString());
-
-        ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-        pDao.updateProject(p);
-        finish();
-      }
-    });
   }
   
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        // provide a back button on the actionbar
+        finish();
+        break;
+      case R.id.action_help:
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        helpDialog.show(getSupportFragmentManager(), "helpdialog");
+        break;
+      case R.id.action_framework:
+        FrameworkInfoDialog frameworkInfoDialog = new FrameworkInfoDialog();
+        frameworkInfoDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
+        break;
+      case R.id.action_glossary:
+        HelpDialog glossaryDialog = new HelpDialog();
+        glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
+        glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
+        break;
+      case R.id.action_save:
+        updateProject();
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+
+    return true;
+  }
+  
+  private void updateProject() {
+    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+    try {
+      Date date = parser.parse(startDate.getText().toString());
+      p.setStartDate(date.getTime());
+      date = parser.parse(endDate.getText().toString());
+      date.setHours(23);
+      date.setMinutes(59);
+      p.setEndDate(date.getTime());
+    } catch (ParseException e) {
+      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    p.setTitle(title.getText().toString());
+    if (p.getTitle().equals("")) {
+      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    p.setNotes(notes.getText().toString());
+
+    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+    pDao.updateProject(p);
+    finish();
+  }
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();
