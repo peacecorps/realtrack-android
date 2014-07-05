@@ -16,6 +16,7 @@
     <string name="pendingparticipationactivity_label">Pending Participations</string>
     <string name="allparticipationsactivity_label">Participation Details</string>
     <string name="emptyfieldserrormessage">"All non&#8211;optional fields are required"</string>
+    <string name="fillrequiredfieldserrormessage">"Please provide all required fields"</string>
     <string name="emptyparticipationmessage">"Please enter the number of participants"</string>
     <string name="helpactivity_label">HelpActivity</string>
     <string name="action_settings">Settings</string>
