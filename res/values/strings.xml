@@ -41,9 +41,12 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="save">&#xf00c; Save</string>
+    <string name="only_save">&#xf00c; Save</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="dateformathint">MM/DD/YYYY</string>
+    <string name="startdateformathint">Start Date (MM/DD/YYYY)</string>
+    <string name="enddateformathint">End Date (MM/DD/YYYY)</string>
     <string name="time">Time</string>
     <string name="timeformathint">HH:MM AM/PM</string>
     <string name="participation">Participation</string>
@@ -82,14 +85,14 @@
     <string name="organizationsinvolved">Organizations Involved</string>
     <string name="communitiesoptional">Communities (optional)</string>
     <string name="communitiesimpactedoptional">Communities Impacted</string>
-    <string name="csppoptional">Cross-Sector Programming Priorities (optional)</string>
+    <string name="csppoptional">Cross-Sector Programming Priorities</string>
     <string name="genderequalityandwomensempowerment">Gender Equality and Women\'s Empowerment</string>
     <string name="hivaids">HIV/AIDS</string>
 	<string name="technologyfordevelopment">Technology for Development</string>
     <string name="youthasresources">Youth as Resources</string>
     <string name="volunteerism">Volunteerism</string>
     <string name="peoplewithdisabilities">People with Disabilities</string>
-    <string name="initiativesoptional">Initiatives (optional)</string>
+    <string name="initiativesoptional">Initiatives</string>
     <string name="wid">WID</string>
     <string name="youth">Youth</string>
     <string name="malaria">Malaria</string>
@@ -151,5 +154,7 @@
     <string name="delete">Delete</string>
     <string name="search">Search</string>
     <string name="addproject">Add Project</string>
+    <string name="required">Required</string>
+    <string name="optional">Optional</string>
 
 </resources>

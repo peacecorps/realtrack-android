@@ -1,0 +1,114 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView"
+            android:background="@color/white">
+
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              app:useDefaultMargins="true"
+                                              app:alignmentMode="alignBounds"
+                                              app:columnOrderPreserved="false"
+                                              app:columnCount="2"
+                                              android:padding="10dp">
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/monday"
+                    android:id="@+id/mondayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/mondayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/tuesday"
+                    android:id="@+id/tuesdayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/tuesdayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/wednesday"
+                    android:id="@+id/wednesdayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/wednesdayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/thursday"
+                    android:id="@+id/thursdayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/thursdayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/friday"
+                    android:id="@+id/fridayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/fridayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/saturday"
+                    android:id="@+id/saturdayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/saturdayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+
+            <CheckBox
+                    android:layout_gravity="fill_horizontal"
+                    android:text="@string/sunday"
+                    android:id="@+id/sundayCheckBox"/>
+
+            <EditText
+                    android:id="@+id/sundayTime"
+                    android:clickable="false"
+                    android:layout_gravity="fill_horizontal"
+                    android:inputType="time"
+                    android:hint="@string/timeformathint"
+                    android:textColorHint="#969696"/>
+        </android.support.v7.widget.GridLayout>
+        
+    </LinearLayout>
+</ScrollView>
