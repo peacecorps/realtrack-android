@@ -16,7 +16,7 @@ public class OptionalFragment extends SherlockFragment {
       try {
         ProjectFragmentMarkerInterface mActivity = (ProjectFragmentMarkerInterface) activity;
       } catch (ClassCastException e) {
-          throw new ClassCastException(activity.toString() + " must implement ActivitiesFragmentInterface");
+          throw new ClassCastException(activity.toString() + " must implement ProjectFragmentMarkerInterface");
       }
   }
   

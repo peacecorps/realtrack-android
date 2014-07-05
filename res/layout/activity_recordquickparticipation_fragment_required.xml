@@ -1,0 +1,256 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:paddingBottom="20dp" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/eventdateformathint"
+            android:inputType="date"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/eventtimeformathint"
+            android:inputType="time"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <com.realtrackandroid.common.StyledButton
+                android:id="@+id/openSigninSheetButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orangeitem_background"
+                android:padding="8dp"
+                android:text="@string/openSigninSheetButtonLabel"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/men"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:alignmentMode="alignBounds"
+            app:columnCount="2"
+            app:columnOrderPreserved="false"
+            app:rowCount="4"
+            app:useDefaultMargins="true" >
+
+            <CheckBox
+                android:id="@+id/men09CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/men09"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numMen09"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/men1017CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/men1017"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numMen1017"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/men1824CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/men1824"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numMen1824"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/menOver25CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/menover25"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numMenOver25"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofmen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+        </android.support.v7.widget.GridLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/women"
+            android:textColor="@color/darkgrey"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:alignmentMode="alignBounds"
+            app:columnCount="2"
+            app:columnOrderPreserved="false"
+            app:rowCount="4"
+            app:useDefaultMargins="true" >
+
+            <CheckBox
+                android:id="@+id/women09CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/women09"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numWomen09"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/women1017CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/women1017"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numWomen1017"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/women1824CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/women1824"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numWomen1824"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+
+            <CheckBox
+                android:id="@+id/womenOver25CheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/womenover25"
+                android:textColor="@color/darkgrey" />
+
+            <EditText
+                android:id="@+id/numWomenOver25"
+                android:layout_gravity="fill_horizontal"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="@string/numberofwomen"
+                android:inputType="number"
+                android:textColor="@color/darkgrey"
+                android:textColorHint="#969696" />
+        </android.support.v7.widget.GridLayout>
+    </LinearLayout>
+
+</ScrollView>

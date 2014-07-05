@@ -48,8 +48,10 @@
     <string name="dateformathint">MM/DD/YYYY</string>
     <string name="startdateformathint">Start Date (MM/DD/YYYY)</string>
     <string name="enddateformathint">End Date (MM/DD/YYYY)</string>
+    <string name="eventdateformathint">Enter Date (MM/DD/YYYY)</string>
     <string name="time">Time</string>
     <string name="timeformathint">HH:MM AM/PM</string>
+    <string name="eventtimeformathint">Enter Time (HH:MM AM/PM)</string>
     <string name="participation">Participation</string>
     <string name="men">Individuals (Men)</string>
     <string name="spmen">Service Providers (Men)</string>
