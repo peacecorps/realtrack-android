@@ -40,7 +40,7 @@ public class RequiredFragment extends SherlockFragment {
     try {
       mActivity = (ProjectFragmentInterface) activity;
     } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement ProjectFragmentMarkerInterface");
+      throw new ClassCastException(activity.toString() + " must implement ProjectFragmentInterface");
     }
     
     p = mActivity.getProject();
