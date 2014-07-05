@@ -38,7 +38,7 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_welcomeactivity);
+    setContentView(R.layout.activity_welcome);
   }
 
   @Override

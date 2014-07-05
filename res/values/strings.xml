@@ -157,5 +157,6 @@
     <string name="addproject">Add Project</string>
     <string name="required">Required</string>
     <string name="optional">Optional</string>
+    <string name="peacecorpslogo">Peace Corps Logo</string>
 
 </resources>

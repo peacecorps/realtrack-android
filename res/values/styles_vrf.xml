@@ -3,7 +3,6 @@
 
     <style name="Theme.Vrf" parent="@style/Theme.Sherlock.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Vrf</item>
-        <item name="android:actionBarTabStyle">@style/ActionBar.Tab.Solid.Vrf</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBar.Tab.Text.Style</item>
     </style>
 
@@ -22,10 +21,6 @@
     <style name="Theme.Vrf.FullscreenTheme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@null</item>
-    </style>
-    
-    <style name="ActionBar.Tab.Solid.Vrf" parent="@style/Widget.Sherlock.ActionBar.TabView">
-        <item name="android:background">@color/lightgrey</item>
     </style>
     
     <style name="ActionBar.Tab.Text.Style" parent="@style/Widget.Sherlock.ActionBar.TabText">

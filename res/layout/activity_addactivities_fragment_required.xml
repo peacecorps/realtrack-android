@@ -20,6 +20,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
             android:textColorHint="#969696"
             android:textStyle="bold" />
 
@@ -34,6 +35,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
             android:textColorHint="#969696"
             android:textStyle="bold" />
 
@@ -48,9 +50,9 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
             android:textColorHint="#969696"
             android:textStyle="bold" />
-
     </LinearLayout>
 
 </ScrollView>
