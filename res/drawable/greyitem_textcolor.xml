@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:color="@color/green"
+        android:color="@color/darkgrey"
         android:state_pressed="true"/>
     <item
-        android:color="@color/green"
+        android:color="@color/darkgrey"
         android:state_focused="true"/>
     <item
-        android:color="@color/darkgreen"/>
+        android:color="@color/homeitemdarkgrey"/>
 
 </selector>

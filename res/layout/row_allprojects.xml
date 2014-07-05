@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:background="@null"
             android:gravity="center"
-            android:textColor="@drawable/greenitem_textcolor"
+            android:textColor="@drawable/greyitem_textcolor"
             android:textSize="20sp" />
 
         <TextView

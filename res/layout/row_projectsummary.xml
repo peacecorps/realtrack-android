@@ -18,7 +18,7 @@
             android:background="@null"
             android:gravity="center"
             android:text="@string/fa_downchevron"
-            android:textColor="@drawable/greenitem_textcolor"
+            android:textColor="@drawable/greyitem_textcolor"
             android:textSize="20sp" />
 
         <TextView
