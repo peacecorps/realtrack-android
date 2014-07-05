@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="20dp" >
 
         <TextView
             android:layout_width="fill_parent"
@@ -29,6 +30,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
             app:columnOrderPreserved="false"
@@ -37,13 +39,14 @@
 
             <CheckBox
                 android:id="@+id/spmen09CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/men09"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpMen09"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofmen"
                 android:inputType="number"
@@ -52,13 +55,14 @@
 
             <CheckBox
                 android:id="@+id/spmen1017CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/men1017"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpMen1017"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofmen"
                 android:inputType="number"
@@ -67,33 +71,35 @@
 
             <CheckBox
                 android:id="@+id/spmen1824CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/men1824"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpMen1824"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696"/>
+                android:textColorHint="#969696" />
 
             <CheckBox
                 android:id="@+id/spmenOver25CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/menover25"
-                android:textColor="@color/darkgrey"/>
+                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpMenOver25"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696"/>
+                android:textColorHint="#969696" />
         </android.support.v7.widget.GridLayout>
 
         <TextView
@@ -113,6 +119,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
             app:columnOrderPreserved="false"
@@ -121,13 +128,14 @@
 
             <CheckBox
                 android:id="@+id/spwomen09CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/women09"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpWomen09"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
@@ -136,13 +144,14 @@
 
             <CheckBox
                 android:id="@+id/spwomen1017CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/women1017"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpWomen1017"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
@@ -151,13 +160,14 @@
 
             <CheckBox
                 android:id="@+id/spwomen1824CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/women1824"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpWomen1824"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
@@ -166,13 +176,14 @@
 
             <CheckBox
                 android:id="@+id/spwomenOver25CheckBox"
-                android:layout_gravity="fill_horizontal"
+                android:layout_gravity="left"
                 android:text="@string/womenover25"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numSpWomenOver25"
-                android:layout_gravity="fill_horizontal"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
                 android:clickable="false"
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
