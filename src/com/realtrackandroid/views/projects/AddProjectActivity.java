@@ -39,7 +39,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     super.onCreate(savedInstanceState);
     setContentView(R.layout.base_pager);
     
-    fragments = getFragments();
+    fragments = createFragments();
     requiredFragment = (RequiredFragment) fragments.get(0);
     optionalFragment = (OptionalFragment) fragments.get(1);
     
@@ -54,7 +54,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
   
-  private List<Fragment> getFragments(){
+  private List<Fragment> createFragments(){
     fragmentTitles = new ArrayList<String>();
     fragmentTitles.add("Required");
     fragmentTitles.add("Optional");
