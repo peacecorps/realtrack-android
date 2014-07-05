@@ -1,14 +1,7 @@
 package com.realtrackandroid.views.projects;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.Toast;
-
 import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.projects.ProjectDAO;
@@ -27,25 +20,9 @@ public class EditProjectActivity extends AddProjectActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // read in the ID of the project that this activity must display details of
     id = getIntent().getExtras().getInt("projectid");
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    // pre-populate the fields with the project details from the DB
-    // the user can then change them if he so desires (the changes are handled
-    // from AddProjectActivity
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     p = pDao.getProjectWithId(id);
-    title.setText(p.getTitle());
-    
-    final DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-    startDate.setText(parser.format(p.getStartDate()));
-    endDate.setText(parser.format(p.getEndDate()));
-    notes.setText(p.getNotes());
   }
   
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,27 +58,12 @@ public class EditProjectActivity extends AddProjectActivity {
   }
   
   private void updateProject() {
-    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-    try {
-      Date date = parser.parse(startDate.getText().toString());
-      p.setStartDate(date.getTime());
-      date = parser.parse(endDate.getText().toString());
-      date.setHours(23);
-      date.setMinutes(59);
-      p.setEndDate(date.getTime());
-    } catch (ParseException e) {
-      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+    if(!requiredFragment.setFields(p))
       return;
-    }
-
-    p.setTitle(title.getText().toString());
-    if (p.getTitle().equals("")) {
-      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+    
+    if(!optionalFragment.setFields(p))
       return;
-    }
-
-    p.setNotes(notes.getText().toString());
-
+    
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     pDao.updateProject(p);
     finish();
