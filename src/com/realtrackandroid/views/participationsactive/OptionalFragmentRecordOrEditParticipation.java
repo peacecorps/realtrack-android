@@ -13,44 +13,46 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.realtrackandroid.R;
 import com.realtrackandroid.models.activities.Participation;
 
-public class OptionalFragment extends SherlockFragment {
-  
-  private EditText spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
+public class OptionalFragmentRecordOrEditParticipation extends SherlockFragment {
+  protected EditText spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
   spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText, notesText;
 
-  private CheckBox spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
+  protected CheckBox spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
   spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox;
 
-  
-  public static final OptionalFragment newInstance(String title)
+  public static final OptionalFragmentRecordOrEditParticipation newInstance(String title)
   {
-    OptionalFragment f = new OptionalFragment();
+    OptionalFragmentRecordOrEditParticipation f = new OptionalFragmentRecordOrEditParticipation();
     return f;
   }
 
   private View v;
-  
+  private RecordOrEditParticipationFragmentInterface mActivity;
+  private Participation p;
+  private boolean editParticipation;
+
   @Override
   public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      try {
-        RecordQuickParticipationFragmentInterface mActivity = (RecordQuickParticipationFragmentInterface) activity;
-      } catch (ClassCastException e) {
-          throw new ClassCastException(activity.toString() + " must implement RecordQuickParticipationFragmentInterface");
-      }
+    super.onAttach(activity);
+    try {
+      mActivity = (RecordOrEditParticipationFragmentInterface) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement RecordParticipationFragmentMarkerInterface");
+    }
+    p = mActivity.getParticipation();
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {
-      v = inflater.inflate(R.layout.activity_recordquickparticipation_fragment_optional, container, false);
-      return v;
+    v = inflater.inflate(R.layout.activity_recordoreditparticipation_fragment_optional, container, false);
+    return v;
   }
-  
+
   @Override
   public void onResume(){
     super.onResume();
-    
+
     spmen09Checkbox = (CheckBox) v.findViewById(R.id.spmen09CheckBox);
     spmen1017Checkbox = (CheckBox) v.findViewById(R.id.spmen1017CheckBox);
     spmen1824Checkbox = (CheckBox) v.findViewById(R.id.spmen1824CheckBox);
@@ -70,6 +72,11 @@ public class OptionalFragment extends SherlockFragment {
 
     notesText = (EditText) v.findViewById(R.id.notes);
 
+    if(editParticipation){
+      notesText.setText(p.getNotes());
+      updateServiceProviderCounts();
+    }
+    
     CheckBox[] checkBoxArray = {spmen09Checkbox, spmen1017Checkbox, spmen1824Checkbox, spmenOver25Checkbox,
             spwomen09Checkbox, spwomen1017Checkbox, spwomen1824Checkbox, spwomenOver25Checkbox};
 
@@ -94,10 +101,42 @@ public class OptionalFragment extends SherlockFragment {
     }
   }
   
+  private void updateServiceProviderCounts() {
+    if(p.getSpMen09()>0){
+      spmen09NumText.setText(Integer.toString(p.getSpMen09()));
+      spmen09Checkbox.setChecked(true);
+    }
+    if(p.getSpMen1017()>0){
+      spmen1017NumText.setText(Integer.toString(p.getSpMen1017()));
+      spmen1017Checkbox.setChecked(true);
+    }
+    if(p.getSpMen1824()>0){
+      spmen1824NumText.setText(Integer.toString(p.getSpMen1824()));
+      spmen1824Checkbox.setChecked(true);
+    }
+    if(p.getSpMenOver25()>0){
+      spmenOver25NumText.setText(Integer.toString(p.getSpMenOver25()));
+      spmenOver25Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen09()>0){
+      spwomen09NumText.setText(Integer.toString(p.getSpWomen09()));
+      spwomen09Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen1017()>0){
+      spwomen1017NumText.setText(Integer.toString(p.getSpWomen1017()));
+      spwomen1017Checkbox.setChecked(true);
+    }
+    if(p.getSpWomen1824()>0){
+      spwomen1824NumText.setText(Integer.toString(p.getSpWomen1824()));
+      spwomen1824Checkbox.setChecked(true);
+    }
+    if(p.getSpWomenOver25()>0){
+      spwomenOver25NumText.setText(Integer.toString(p.getSpWomenOver25()));
+      spwomenOver25Checkbox.setChecked(true);
+    }
+  }
+  
   public void setFields(Participation p){
-    if(v==null)
-      return;
-    
     if (spmen09Checkbox.isChecked()) {
       if (spmen09NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -111,7 +150,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpMen09(0);
     }
-
+    
     if (spmen1017Checkbox.isChecked()) {
       if (spmen1017NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -125,7 +164,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpMen1017(0);
     }
-
+    
     if (spmen1824Checkbox.isChecked()) {
       if (spmen1824NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -139,7 +178,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpMen1824(0);
     }
-
+    
     if (spmenOver25Checkbox.isChecked()) {
       if (spmenOver25NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -153,7 +192,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpMenOver25(0);
     }
-
+    
     if (spwomen09Checkbox.isChecked()) {
       if (spwomen09NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -167,7 +206,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpWomen09(0);
     }
-
+    
     if (spwomen1017Checkbox.isChecked()) {
       if (spwomen1017NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -181,7 +220,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpWomen1017(0);
     }
-
+    
     if (spwomen1824Checkbox.isChecked()) {
       if (spwomen1824NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -195,7 +234,7 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpWomen1824(0);
     }
-
+    
     if (spwomenOver25Checkbox.isChecked()) {
       if (spwomenOver25NumText.getText().length() == 0){
         Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
@@ -209,8 +248,15 @@ public class OptionalFragment extends SherlockFragment {
     else {
       p.setSpWomenOver25(0);
     }
-
+    
     p.setNotes(notesText.getText().toString());
+  }
 
+  public boolean isEditParticipation() {
+    return editParticipation;
+  }
+
+  public void setEditParticipation(boolean editParticipation) {
+    this.editParticipation = editParticipation;
   }
 }

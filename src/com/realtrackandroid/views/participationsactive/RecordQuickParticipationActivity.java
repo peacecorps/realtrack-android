@@ -36,7 +36,7 @@ import com.realtrackandroid.views.participationsactive.RequiredFragment;
  * @author Raj
  */
 public class RecordQuickParticipationActivity extends SherlockFragmentActivity implements
-PickDateDialogListener, PickTimeDialogListener, RecordParticipationFragmentInterface {
+PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragmentInterface {
   private int activitiesId;
 
   private ParticipationDAO pDao;
@@ -131,22 +131,22 @@ PickDateDialogListener, PickTimeDialogListener, RecordParticipationFragmentInter
 
   private void saveParticipation() {
     Participation p = new Participation();
-
-    // reminderId doesn't matter because we're setting
-    // serviced to true; it's here just for the not null
-    // constraint
-    p.setReminderid(0);
-    p.setServiced(true);
-    p.setActivityid(activitiesId);
     
     if(!requiredFragment.setFields(p))
       return;
     
     optionalFragment.setFields(p);
-    
+
+    // reminderId doesn't matter because we're setting
+    // serviced to true; it's here just for the not null
+    // constraint
+    p.setReminderid(0);
+    p.setActivityid(activitiesId);
     // update the serviced flag for this Reminder in the Reminders table
     // so that the next time the NotificationReceiver checks, this participation
     // does not show up as unserviced
+    p.setServiced(true);
+    
     int participationId = pDao.addParticipation(p);
     
     requiredFragment.updateParticipants(participationId);

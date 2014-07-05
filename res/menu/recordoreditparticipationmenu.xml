@@ -1,6 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="always"
+        android:title="@string/only_save">
+    </item>
+    <item
+        android:id="@+id/action_dismiss"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="always"
+        android:title="@string/only_cancel">
+    </item>
+    <item
         android:id="@+id/action_helpGroup"
         android:icon="@android:drawable/ic_menu_help"
         android:showAsAction="always"
@@ -14,6 +26,10 @@
                 android:id="@+id/action_framework"
                 android:showAsAction="always"
                 android:title="@string/projectframework"/>
+            <item
+                android:id="@+id/action_glossary"
+                android:showAsAction="always"
+                android:title="@string/glossary"/>
         </menu>
     </item>
 

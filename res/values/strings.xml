@@ -42,7 +42,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="save">&#xf00c; Save</string>
-    <string name="only_save">&#xf00c; Save</string>
+    <string name="only_save">Save</string>
+    <string name="only_cancel">Cancel</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="dateformathint">MM/DD/YYYY</string>

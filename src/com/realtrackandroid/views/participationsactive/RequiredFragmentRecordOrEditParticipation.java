@@ -1,19 +1,18 @@
 package com.realtrackandroid.views.participationsactive;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.View.OnKeyListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,112 +20,94 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.realtrackandroid.R;
+import com.realtrackandroid.backend.activities.ActivitiesDAO;
 import com.realtrackandroid.backend.activities.ParticipantDAO;
 import com.realtrackandroid.common.StyledButton;
 import com.realtrackandroid.models.activities.Activities;
 import com.realtrackandroid.models.activities.Participant;
 import com.realtrackandroid.models.activities.Participation;
-import com.realtrackandroid.views.dialogs.PickDateDialog;
-import com.realtrackandroid.views.dialogs.PickTimeDialog;
 import com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
-public class RequiredFragment extends SherlockFragment {
+public class RequiredFragmentRecordOrEditParticipation extends SherlockFragment {
   static final int ADD_PARTICIPANTS_REQUEST = 1;
-  
+
   private EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText,
-  women09NumText, women1017NumText, women1824NumText, womenOver25NumText;
+  women09NumText, women1017NumText, women1824NumText, womenOver25NumText, notesText;
 
   private CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
   women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox;
 
+  private int men09ManuallyEntered, men1017ManuallyEntered, men1824ManuallyEntered, menOver25ManuallyEntered,
+  women09ManuallyEntered, women1017ManuallyEntered, women1824ManuallyEntered, womenOver25ManuallyEntered;
+
   private int men09FromSignInSheet, men1017FromSignInSheet, men1824FromSignInSheet, menOver25FromSignInSheet, 
   women09FromSignInSheet, women1017FromSignInSheet, women1824FromSignInSheet, womenOver25FromSignInSheet;
-  
+
   private StyledButton signinSheetButton;
-  
-  private EditText date, time;
-  
-  private View v;
-  
-  private Activities a;
-  
-  private RecordQuickParticipationFragmentInterface mActivity;
-  
+  private long dateTime;
   private ArrayList<Participant> participantList;
-  
-  private boolean errorsFound;
-  
-  public static final RequiredFragment newInstance(String title)
+
+  public static final RequiredFragmentRecordOrEditParticipation newInstance(String title)
   {
-    RequiredFragment f = new RequiredFragment();
+    RequiredFragmentRecordOrEditParticipation f = new RequiredFragmentRecordOrEditParticipation();
     return f;
   }
-  
+
+  private RecordOrEditParticipationFragmentInterface mActivity;
+  private View v;
+
+  private Participation p;
+
+  private boolean editParticipation;
+
+  private boolean errorsFound;
+
+  private ParticipantDAO participantDao;
+
+  private ActivitiesDAO aDao;
+
   @Override
   public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      try {
-        mActivity = (RecordQuickParticipationFragmentInterface) activity;
-      } catch (ClassCastException e) {
-          throw new ClassCastException(activity.toString() + " must implement RecordQuickParticipationFragmentInterface");
-      }
-      a = mActivity.getActivities();
+    super.onAttach(activity);
+    try {
+      mActivity = (RecordOrEditParticipationFragmentInterface) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement RecordParticipationFragmentMarkerInterface");
+    }
+    p = mActivity.getParticipation();
+    if(!editParticipation)
       participantList = new ArrayList<Participant>();
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {
-      v = inflater.inflate(R.layout.activity_recordquickparticipation_fragment_required, container, false);
-      return v;
+    v = inflater.inflate(R.layout.activity_recordoreditparticipation_fragment_required, container, false);
+    return v;
   }
-  
+
   @Override
   public void onResume(){
     super.onResume();
-    
+
+    Calendar cal = Calendar.getInstance();
+    cal.setTimeInMillis(dateTime);
+
+    participantDao = new ParticipantDAO(getActivity());
+    aDao = new ActivitiesDAO(getActivity());
+    final Activities a = aDao.getActivityWithId(p.getActivityid());
+    DateFormat simpleDateParser = new SimpleDateFormat("MM/dd/yyyy");
+    final String participationDate = simpleDateParser.format(cal.getTime());
+
+
+    // display title for this activity
     TextView title = (TextView) v.findViewById(R.id.title);
-    title.setText(a.getTitle());
+    title.setText(new ActivitiesDAO(getActivity()).getActivityWithId(p.getActivityid()).getTitle());
 
-    date = (EditText) v.findViewById(R.id.date);
-    date.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first
-    // selection of the text field
-    // not doing this means the first click simply focuses the text field
-    date.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Bundle bundle = new Bundle();
-        bundle.putLong("mindate", a.getStartDate());
-        bundle.putLong("maxdate", a.getEndDate());
-        showDatePickerDialog(bundle);
-      }
-
-      private void showDatePickerDialog(Bundle bundle) {
-        PickDateDialog pickDateDialog = new PickDateDialog();
-        pickDateDialog.setArguments(bundle);
-        pickDateDialog.show(getActivity().getSupportFragmentManager(), "datepicker");
-      }
-    });
-
-    // entering the reminder time
-    time = (EditText) v.findViewById(R.id.time);
-    time.setFocusableInTouchMode(false); // do this so the time picker opens up on the very first
-    // selection of the text field
-    // not doing this means the first click simply focuses the text field
-    time.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Bundle bundle = new Bundle();
-        bundle.putString("timetodisplay", time.getText().toString());
-        showTimePickerDialog(bundle);
-      }
-
-      private void showTimePickerDialog(Bundle bundle) {
-        PickTimeDialog pickTimeDialog = new PickTimeDialog();
-        pickTimeDialog.setArguments(bundle);
-        pickTimeDialog.show(getActivity().getSupportFragmentManager(), "timepicker");
-      }
-    });
+    // display date and time for this reminder
+    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy, EEEE, hh:mm aaa"); // example: 07/04/2013, Thursday, 6:13 PM
+    TextView datetime = (TextView) v.findViewById(R.id.datetime);
+    datetime.setText(parser.format(cal.getTime()));
 
     // opening the sign-in sheet
     signinSheetButton  = (StyledButton) v.findViewById(R.id.openSigninSheetButton);
@@ -135,12 +116,10 @@ public class RequiredFragment extends SherlockFragment {
       public void onClick(View v) {
         Intent i = new Intent(getActivity(), SignInSheetLandingActivity.class);
         i.putExtra("activitytitle", a.getTitle()); // displayed on SignInSheetActivity
+        i.putExtra("participationdate", participationDate); // displayed on SignInSheetActivity
         Bundle resultBundle = new Bundle();
         resultBundle.putParcelableArrayList("participantList", participantList);
         i.putExtras(resultBundle);
-        if(date.getText().toString().length()!=0){
-          i.putExtra("participationdate", date.getText().toString()); // displayed on SignInSheetActivity
-        }
         i.putExtra("firstOpen", true); //used to jump straight to SignInSheetActivity the very first time
         startActivityForResult(i, ADD_PARTICIPANTS_REQUEST);
         getActivity().overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
@@ -163,6 +142,12 @@ public class RequiredFragment extends SherlockFragment {
     women1017NumText = (EditText) v.findViewById(R.id.numWomen1017);
     women1824NumText = (EditText) v.findViewById(R.id.numWomen1824);
     womenOver25NumText = (EditText) v.findViewById(R.id.numWomenOver25);
+
+    if(editParticipation){
+      participantList = participantDao.getAllParticipantsForParticipationId(p.getId());
+    }
+
+    updateParticipantCounts();
 
     CheckBox[] checkBoxArray = {men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
             women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox};
@@ -187,11 +172,8 @@ public class RequiredFragment extends SherlockFragment {
       });
     }
   }
-  
-  public void updateParticipantCountsFromSigninSheet() {
-    if(participantList.isEmpty())
-      return;
 
+  private void updateParticipantCounts() {
     men09FromSignInSheet = 0;
     men1017FromSignInSheet = 0;
     men1824FromSignInSheet = 0;
@@ -224,105 +206,101 @@ public class RequiredFragment extends SherlockFragment {
       }
     }
 
-    // set filters on the text fields so the PCV cannot manually enter a number less than the 
-    // current number of participants. Note that even though we reinitialize menUnder15, men1524
-    // etc to 0 in this method, there is no way their values can be less than what they were because
-    // there is no way that a participant once submitted via the sign-in sheet can be removed.
+    if(editParticipation){
+      men09ManuallyEntered = p.getMen09() - men09FromSignInSheet;
+      men1017ManuallyEntered = p.getMen1017() - men1017FromSignInSheet;
+      men1824ManuallyEntered = p.getMen1824() - men1824FromSignInSheet;
+      menOver25ManuallyEntered = p.getMenOver25() - menOver25FromSignInSheet;
+      women09ManuallyEntered = p.getWomen09() - women09FromSignInSheet;
+      women1017ManuallyEntered = p.getWomen1017() - women1017FromSignInSheet;
+      women1824ManuallyEntered = p.getWomen1824() - women1824FromSignInSheet;
+      womenOver25ManuallyEntered = p.getWomenOver25() - womenOver25FromSignInSheet;
+      editParticipation = false; //makes sure we only do the above once
+    }
+
+    // Note that even though we reinitialize menUnder15, men1524
+    // etc to 0 in this method, there is no way their values can be less than what they were the last time around
+    // there is no way that a participant once submitted via the sign-in sheet can be removed i.e., these values
+    // are strictly increasing.
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(men09FromSignInSheet>0){
-      men09NumText.setText(Integer.toString(men09FromSignInSheet));
+    int totalMen09 = men09FromSignInSheet+men09ManuallyEntered;
+    if(totalMen09>0){
+      men09NumText.setText(Integer.toString(totalMen09));
       men09Checkbox.setChecked(true);
       men09Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(men1017FromSignInSheet>0){
-      men1017NumText.setText(Integer.toString(men1017FromSignInSheet));
+    int totalMen1017 = men1017FromSignInSheet+men1017ManuallyEntered;
+    if(totalMen1017>0){
+      men1017NumText.setText(Integer.toString(totalMen1017));
       men1017Checkbox.setChecked(true);
       men1017Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(men1824FromSignInSheet>0){
-      men1824NumText.setText(Integer.toString(men1824FromSignInSheet));
+    int totalMen1824 = men1824FromSignInSheet+men1824ManuallyEntered;
+    if(totalMen1824>0){
+      men1824NumText.setText(Integer.toString(totalMen1824));
       men1824Checkbox.setChecked(true);
       men1824Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(menOver25FromSignInSheet>0){
-      menOver25NumText.setText(Integer.toString(menOver25FromSignInSheet));
+    int totalMenOver25 = menOver25FromSignInSheet+menOver25ManuallyEntered;
+    if(totalMenOver25>0){
+      menOver25NumText.setText(Integer.toString(totalMenOver25));
       menOver25Checkbox.setChecked(true);
       menOver25Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(women09FromSignInSheet>0){
-      women09NumText.setText(Integer.toString(women09FromSignInSheet));
+    int totalWomen09 = women09FromSignInSheet+women09ManuallyEntered;
+    if(totalWomen09>0){
+      women09NumText.setText(Integer.toString(totalWomen09));
       women09Checkbox.setChecked(true);
       women09Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(women1017FromSignInSheet>0){
-      women1017NumText.setText(Integer.toString(women1017FromSignInSheet));
+    int totalWomen1017 = women1017FromSignInSheet+women1017ManuallyEntered;
+    if(totalWomen1017>0){
+      women1017NumText.setText(Integer.toString(totalWomen1017));
       women1017Checkbox.setChecked(true);
       women1017Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(women1824FromSignInSheet>0){
-      women1824NumText.setText(Integer.toString(women1824FromSignInSheet));
+    int totalWomen1824 = women1824FromSignInSheet+women1824ManuallyEntered;
+    if(totalWomen1824>0){
+      women1824NumText.setText(Integer.toString(totalWomen1824));
       women1824Checkbox.setChecked(true);
       women1824Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
-    if(womenOver25FromSignInSheet>0){
-      womenOver25NumText.setText(Integer.toString(womenOver25FromSignInSheet));
+    int totalWomenOver25 = womenOver25FromSignInSheet+womenOver25ManuallyEntered;
+    if(totalWomenOver25>0){
+      womenOver25NumText.setText(Integer.toString(totalWomenOver25));
       womenOver25Checkbox.setChecked(true);
       womenOver25Checkbox.setEnabled(false);
     }
 
     signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" ("+participantList.size()+" participant(s))");
   }
-  
+
   public boolean setFields(Participation p){
     if(v==null)
       return false;
-    
+
+    errorsFound = false;
+
     if (!men09Checkbox.isChecked() && !men1017Checkbox.isChecked() && !men1824Checkbox.isChecked()
             && !menOver25Checkbox.isChecked() && !women09Checkbox.isChecked() && !women1017Checkbox.isChecked()
             && !women1824Checkbox.isChecked() && !womenOver25Checkbox.isChecked()) {
       Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage,
               Toast.LENGTH_SHORT).show();
-      return false;
-    }
-    
-    errorsFound = false;
-    
-    DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
-    DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
-    try {
-      Calendar c = Calendar.getInstance();
-      // set date
-      c.setTimeInMillis((dateParser.parse(date.getText().toString())).getTime());
-      // set time
-      Date date = timeParser.parse(time.getText().toString());
-      // the date object we just constructed has only two fields that are of interest to us: the
-      // hour and the
-      // minute of the day at which the alarm should be set. The other fields are junk for us
-      // (they are initialized
-      // to some 1970 date. Hence, in the Calendar object that we constructed, we only extract
-      // the hour and
-      // minute from the date object.
-      c.set(Calendar.HOUR_OF_DAY, date.getHours());
-      c.set(Calendar.MINUTE, date.getMinutes());
-      p.setDate(c.getTimeInMillis());
-    }
-    catch (ParseException e) {
-      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT).show();
       return false;
     }
 
@@ -446,29 +424,30 @@ public class RequiredFragment extends SherlockFragment {
     else {
       p.setWomenOver25(0);
     }
-
+    
     if(errorsFound){
       Toast.makeText(getActivity(), R.string.cannotentersmallernumber,
               Toast.LENGTH_SHORT).show();
       return false;
     }
     
+    for(int i=0;i<participantList.size();++i){
+      Participant participant = participantList.get(i);
+      if(participant.getId()!=-1){ //the -1 indicates this is a participant not already in the database
+        participantList.remove(i--);
+      }
+      else{
+        participant.setParticipationId(p.getId());
+      }
+    }
+    
+    // the -1 we set into the id won't affect the actual database write
+    // because we ignore the id field of the participant object there
+    participantDao.addParticipants(participantList);
+
     return true;
   }
-  
-  public void updateParticipants(int newParticipationId){
-    ParticipantDAO participantDao = new ParticipantDAO(getActivity());
-    // write the participant information
-    // first add the participation id
-    // the participation id is only assigned after the participation
-    // has been added to its own table)
-    for(Participant participant: participantList){
-      participant.setParticipationId(newParticipationId);
-    }
 
-    participantDao.addParticipants(participantList);
-  }
-  
   private void checkEnteredValueNotLessThanSigninSheetValue(EditText editText, int numSignedIn) {
     editText.setTextColor(getResources().getColor(android.R.color.black));
     int enteredValue = Integer.parseInt(editText.getText().toString());
@@ -490,24 +469,31 @@ public class RequiredFragment extends SherlockFragment {
       errorsFound = true;
     }
   }
-  
-  public void setDate(String selectedDate) {
-    date.setText(selectedDate);
-  }
-  
-  public void setTime(String selectedTime) {
-    time.setText(selectedTime);
-  }
-  
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {
       if (resultCode == Activity.RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
         participantList = resultBundle.getParcelableArrayList("participantList");
-
-        updateParticipantCountsFromSigninSheet();
+        updateParticipantCounts();
       }
     }
+  }
+
+  public boolean isEditParticipation() {
+    return editParticipation;
+  }
+
+  public void setEditParticipation(boolean editParticipation) {
+    this.editParticipation = editParticipation;
+  }
+
+  public long getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(long dateTime) {
+    this.dateTime = dateTime;
   }
 }
