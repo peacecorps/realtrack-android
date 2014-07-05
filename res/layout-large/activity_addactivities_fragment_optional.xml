@@ -1,0 +1,173 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/enternotes"
+            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
+            android:maxLines="6"
+            android:minLines="3"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/cohort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/entercohort"
+            android:inputType="text|textCapWords"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/orgs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/organizationsinvolved"
+            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
+            android:maxLines="6"
+            android:minLines="1"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/comms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/communitiesimpactedoptional"
+            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
+            android:maxLines="6"
+            android:minLines="1"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/darkgrey"
+            android:textColorHint="#969696"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/csppoptional"
+            android:textColor="@color/darkgrey"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:alignmentMode="alignBounds"
+            app:columnCount="2"
+            app:columnOrderPreserved="false"
+            app:useDefaultMargins="true" >
+
+            <CheckBox
+                android:id="@+id/gendereqCheckBox"
+                android:text="@string/genderequalityandwomensempowerment"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/hivaidsCheckBox"
+                android:text="@string/hivaids"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/technologyfordevelopmentCheckBox"
+                android:text="@string/technologyfordevelopment"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/youthasresourcesCheckBox"
+                android:text="@string/youthasresources"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/volunteerismCheckBox"
+                android:text="@string/volunteerism"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/peoplewithdisabilitiesCheckBox"
+                android:text="@string/peoplewithdisabilities"
+                android:textColor="@color/darkgrey" />
+        </android.support.v7.widget.GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/initiativesoptional"
+            android:textColor="@color/darkgrey"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:alignmentMode="alignBounds"
+            app:columnCount="3"
+            app:columnOrderPreserved="false"
+            app:useDefaultMargins="true" >
+
+            <CheckBox
+                android:id="@+id/malariaCheckBox"
+                android:text="@string/malaria"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/foodSecurityCheckBox"
+                android:text="@string/foodsecurity"
+                android:textColor="@color/darkgrey" />
+
+            <CheckBox
+                android:id="@+id/ECPACheckBox"
+                android:layout_gravity="fill_horizontal"
+                android:text="@string/ecpa"
+                android:textColor="@color/darkgrey" />
+        </android.support.v7.widget.GridLayout>
+    </LinearLayout>
+
+</ScrollView>
