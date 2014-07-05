@@ -8,6 +8,7 @@
 
     <style name="ActionBar.Solid.Vrf" parent="@style/Widget.Sherlock.ActionBar">
         <item name="android:background">#3b3b3b</item>
+        <item name="android:backgroundStacked">@color/darkgrey</item>
         <item name="android:displayOptions">showTitle</item>
         <item name="android:titleTextStyle">@style/ActionBar.Title.Style</item>
     </style>
@@ -24,6 +25,6 @@
     </style>
     
     <style name="ActionBar.Tab.Text.Style" parent="@style/Widget.Sherlock.ActionBar.TabText">
-        <item name="android:textColor">@color/darkgrey</item>
+        <item name="android:textColor">@color/lightgrey</item>
     </style>
 </resources>

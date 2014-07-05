@@ -7,10 +7,14 @@ import java.util.Date;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -28,10 +32,7 @@ import com.realtrackandroid.views.help.HelpDialog;
  * Presents an activity that lets you add a new project
  * Pressing the back key will exit the activity without adding a project
  */
-// TODO: Make sure required text fields are not empty
-// TODO: make sure activity dates don't go out of project dates
-// TODO: make sure repeating alarms stop when the activity ends
-public class AddProjectActivity extends SherlockFragmentActivity implements PickDateDialogListener {
+public class AddProjectActivity extends SherlockFragmentActivity implements PickDateDialogListener, TabListener, ProjectFragmentMarkerInterface {
   protected int mYear, mMonth, mDay;
   protected EditText title;
   protected EditText startDate;
@@ -40,20 +41,41 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
   protected StyledButton submitButton;
   protected boolean startOrEnd; // used to distinguish between start date and end date field
   protected Project p;
+  private OptionalFragment optionalFragment;
+  private RequiredFragment requiredFragment;
+  private Tab requiredTab, optionalTab;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_addproject);
+    setContentView(R.layout.base_fragment);
+    
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    
+    requiredFragment = new RequiredFragment();
+    optionalFragment = new OptionalFragment();
+    
+    requiredTab = getSupportActionBar().newTab().setText(R.string.required);
+    requiredTab.setTabListener(this);
+    optionalTab = getSupportActionBar().newTab().setText(R.string.optional);
+    optionalTab.setTabListener(this);
+    
+    getSupportActionBar().addTab(requiredTab);
+    getSupportActionBar().addTab(optionalTab);
+    
+    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    ft.add(R.id.fragment_container, requiredFragment);
+    ft.add(R.id.fragment_container, optionalFragment);
+    ft.commit();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     // entering the start date
-    startDate = (EditText) findViewById(R.id.startDate);
+    startDate = (EditText) requiredFragment.getView().findViewById(R.id.startDate);
     startDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
     // not doing this means the first click simply focuses the text field
     startDate.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +105,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     });
 
     // entering the end date
-    endDate = (EditText) findViewById(R.id.endDate);
+    endDate = (EditText) requiredFragment.getView().findViewById(R.id.endDate);
     endDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
     // not doing this means the first click simply focuses the text field
     endDate.setOnClickListener(new View.OnClickListener() {
@@ -112,38 +134,8 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
       }
     });
 
-    title = (EditText) findViewById(R.id.title);
-    notes = (EditText) findViewById(R.id.notes);
-
-    submitButton = (StyledButton) findViewById(R.id.submitbutton);
-    submitButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        p = new Project();
-        DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-          Date date = parser.parse(startDate.getText().toString());
-          p.setStartDate(date.getTime());
-          date = parser.parse(endDate.getText().toString());
-          date.setHours(23);
-          date.setMinutes(59);
-          p.setEndDate(date.getTime());
-        } catch (ParseException e) {
-          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-          return;
-        }
-        p.setTitle(title.getText().toString());
-        if (p.getTitle().equals("")) {
-          Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
-          return;
-        }
-        p.setNotes(notes.getText().toString());
-
-        ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-        pDao.addProject(p);
-        finish();
-      }
-    });
+    title = (EditText) requiredFragment.getView().findViewById(R.id.title);
+    notes = (EditText) optionalFragment.getView().findViewById(R.id.notes);
   }
   
   @Override
@@ -178,11 +170,40 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
         glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
         glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
         break;
+      case R.id.action_save:
+        saveProject();
+        break;
       default:
         return super.onOptionsItemSelected(item);
     }
 
     return true;
+  }
+
+  private void saveProject() {
+    p = new Project();
+    DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
+    try {
+      Date date = parser.parse(startDate.getText().toString());
+      p.setStartDate(date.getTime());
+      date = parser.parse(endDate.getText().toString());
+      date.setHours(23);
+      date.setMinutes(59);
+      p.setEndDate(date.getTime());
+    } catch (ParseException e) {
+      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+      return;
+    }
+    p.setTitle(title.getText().toString());
+    if (p.getTitle().equals("")) {
+      Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage, Toast.LENGTH_SHORT).show();
+      return;
+    }
+    p.setNotes(notes.getText().toString());
+
+    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+    pDao.addProject(p);
+    finish();
   }
 
   @Override
@@ -198,6 +219,28 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     super.onBackPressed();
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
+  }
+
+  @Override
+  public void onTabSelected(Tab tab, FragmentTransaction ft) {
+    switch(tab.getPosition()){
+      case 0:
+        ft.show(requiredFragment);
+        ft.hide(optionalFragment);
+        break;
+      case 1:
+        ft.hide(requiredFragment);
+        ft.show(optionalFragment);
+        break;
+    }
+  }
+
+  @Override
+  public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+  }
+
+  @Override
+  public void onTabReselected(Tab tab, FragmentTransaction ft) {
   }
 
 }

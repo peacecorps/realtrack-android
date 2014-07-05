@@ -59,12 +59,10 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_addactivities_fragment);
+    setContentView(R.layout.base_fragment);
     
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    
-    a = new Activities();
     
     requiredFragment = new RequiredFragment();
     remindersFragment = new RemindersFragment();
@@ -89,8 +87,6 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
     
     // get the owner project
     projectid = getIntent().getExtras().getInt("projectid");
-    /*ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-    p = pDao.getProjectWithId(projectid);*/
   }
 
   @Override
@@ -702,7 +698,6 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements P
         ft.show(remindersFragment);
         break;
     }
-    
   }
 
   @Override
