@@ -114,8 +114,7 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
     if(!requiredFragment.setFields(p))
       return;
     
-    if(!optionalFragment.setFields(p))
-      return;
+    optionalFragment.setFields(p);
     
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     pDao.addProject(p);

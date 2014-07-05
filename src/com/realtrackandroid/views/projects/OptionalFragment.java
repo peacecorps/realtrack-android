@@ -35,12 +35,12 @@ public class OptionalFragment extends SherlockFragment {
       p = mActivity.getProject();
   }
   
-  public boolean setFields(Project p){
+  public void setFields(Project p){
     if(v==null)
-      return false;
+      return;
     
     p.setNotes(notes.getText().toString());
-    return true;
+    return;
   }
   
   @Override

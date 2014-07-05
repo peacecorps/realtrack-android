@@ -171,6 +171,7 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
       case R.id.action_editactivity:
         Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);
         i.putExtra("activitiesid", activitiesid);
+        i.putExtra("projectid", a.getProjectid());
         startActivity(i);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
         break;

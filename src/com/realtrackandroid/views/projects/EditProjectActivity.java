@@ -61,8 +61,7 @@ public class EditProjectActivity extends AddProjectActivity {
     if(!requiredFragment.setFields(p))
       return;
     
-    if(!optionalFragment.setFields(p))
-      return;
+    optionalFragment.setFields(p);
     
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     pDao.updateProject(p);
