@@ -173,6 +173,7 @@ public class RequiredFragment extends SherlockFragment {
     for (int i=0; i<checkBoxArray.length; ++i){
       final CheckBox c = checkBoxArray[i];
       final EditText e = numTextArray[i];
+      e.setEnabled(false);
       c.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
