@@ -57,7 +57,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/intermediategrey"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>

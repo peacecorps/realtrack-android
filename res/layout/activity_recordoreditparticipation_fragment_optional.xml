@@ -52,7 +52,7 @@
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spmen1017CheckBox"
@@ -68,7 +68,7 @@
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spmen1824CheckBox"
@@ -84,7 +84,7 @@
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spmenOver25CheckBox"
@@ -100,7 +100,7 @@
                 android:hint="@string/numberofmen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
         </android.support.v7.widget.GridLayout>
 
         <TextView
@@ -142,7 +142,7 @@
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spwomen1017CheckBox"
@@ -158,7 +158,7 @@
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spwomen1824CheckBox"
@@ -174,7 +174,7 @@
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
 
             <CheckBox
                 android:id="@+id/spwomenOver25CheckBox"
@@ -190,7 +190,7 @@
                 android:hint="@string/numberofwomen"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
-                android:textColorHint="#969696" />
+                android:textColorHint="@color/intermediategrey" />
         </android.support.v7.widget.GridLayout>
 
         <EditText
@@ -207,7 +207,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696" />
+            android:textColorHint="@color/intermediategrey" />
     </LinearLayout>
 
 </ScrollView>

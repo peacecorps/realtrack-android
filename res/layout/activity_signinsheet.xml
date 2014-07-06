@@ -32,7 +32,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696" />
+            android:textColorHint="@color/intermediategrey" />
         
         <EditText
             android:id="@+id/phoneEditText"
@@ -47,7 +47,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"/>
+            android:textColorHint="@color/intermediategrey"/>
         
         
         <EditText
@@ -63,7 +63,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"/>
+            android:textColorHint="@color/intermediategrey"/>
         
         <EditText
             android:id="@+id/ageEditText"
@@ -78,7 +78,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"/>
+            android:textColorHint="@color/intermediategrey"/>
 
         <RadioGroup
             android:id="@+id/genderlayout"

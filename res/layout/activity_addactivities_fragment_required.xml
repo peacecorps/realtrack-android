@@ -21,7 +21,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/intermediategrey"
             android:textStyle="bold" />
 
         <EditText
@@ -36,7 +36,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/intermediategrey"
             android:textStyle="bold" />
 
         <EditText
@@ -51,7 +51,7 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="#969696"
+            android:textColorHint="@color/intermediategrey"
             android:textStyle="bold" />
     </LinearLayout>
 
