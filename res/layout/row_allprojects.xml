@@ -42,12 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:background="@drawable/grey_white_gradient_with_bottom_border"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:textColor="@color/darkgrey"
+        android:textColor="@color/intermediategrey"
         android:textSize="18sp"
         android:textStyle="bold" />
 
