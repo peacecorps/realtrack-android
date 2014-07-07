@@ -56,7 +56,7 @@ public class DisplayProjectActivity extends SherlockFragmentActivity {
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
     if(p.getNotes().length()>0)
-      notes.setText(p.getNotes());
+      notes.setText("Notes:\n"+p.getNotes());
   }
 
   // create actionbar menu
