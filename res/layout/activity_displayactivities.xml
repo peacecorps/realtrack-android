@@ -2,262 +2,265 @@
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/globalpattern_background" >
+    android:background="@color/white" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/title"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp" >
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/startdate"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/title"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
-        <TextView
-            android:id="@+id/startDate"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/dateslayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/darkgrey"
-            android:textSize="23sp"
-            android:textStyle="bold" />
+            android:layout_below="@id/horizline1"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:baselineAligned="false"
+            android:maxWidth="300dip"
+            android:minWidth="300dip"
+            android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/enddate"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/endDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/darkgrey"
-            android:textSize="23sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkgrey"
+                    android:gravity="center"
+                    android:text="@string/from"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/reminders"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkgrey"
+                    android:gravity="center"
+                    android:text="@string/to"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/reminders"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/dateslayout"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/noreminders"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/notes"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/reminders"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/notes"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline2"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/nonotes"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/cohort"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/notes"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/cohort"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline3"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/nocohort"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/organizations"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/cohort"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/orgs"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline4"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/noorgs"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/communities"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/orgs"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/comms"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline5"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/nocomms"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/cspp"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/comms"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/cspp"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline6"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/nocspp"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <View
+            android:id="@+id/horizline7"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/initiatives"
-            android:textColor="@color/darkgrey"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:layout_height="1px"
+            android:layout_below="@id/cspp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
 
         <TextView
             android:id="@+id/initiatives"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_below="@id/horizline7"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/noinitiatives"
             android:textColor="@color/darkgrey"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
-    </LinearLayout>
+
+        <View
+            android:id="@+id/horizline8"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/initiatives"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/intermediategrey" />
+    </RelativeLayout>
 
 </ScrollView>

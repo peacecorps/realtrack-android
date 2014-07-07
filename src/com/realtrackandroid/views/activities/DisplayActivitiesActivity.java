@@ -3,7 +3,6 @@ package com.realtrackandroid.views.activities;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.AlertDialog;
@@ -63,13 +62,17 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     TextView endDate = (TextView) findViewById(R.id.endDate);
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
-    notes.setText(a.getNotes());
+    if(a.getNotes().length()>0)
+      notes.setText("Notes:\n"+a.getNotes());
     TextView cohort = (TextView) findViewById(R.id.cohort);
-    cohort.setText(a.getCohort());
+    if(a.getCohort().length()>0)
+      cohort.setText("Cohort:\n"+a.getCohort());
     TextView orgs = (TextView) findViewById(R.id.orgs);
-    orgs.setText(a.getOrgs());
+    if(a.getOrgs().length()>0)
+      orgs.setText("Organizations involved:\n"+a.getOrgs());
     TextView comms = (TextView) findViewById(R.id.comms);
-    comms.setText(a.getComms());
+    if(a.getComms().length()>0)
+      comms.setText("Communities affected:\n"+a.getComms());
     
     TextView initiatives = (TextView) findViewById(R.id.initiatives);
     
@@ -81,7 +84,8 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
         inits += allInits[i] + "\n";
     }
     inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous newline character
-    initiatives.setText(inits);
+    if(inits.length()>0)
+      initiatives.setText("Initiatives:\n"+inits);
     
     TextView csppTextView = (TextView) findViewById(R.id.cspp);
 
@@ -93,21 +97,22 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
         cspp += allCspps[i] + "\n";
     }
     cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last superfluous newline character
-    csppTextView.setText(cspp);
+    if(cspp.length()>0)
+      csppTextView.setText("Cross-sector programming priorities:\n"+cspp);
 
     // display reminders
     TextView reminders = (TextView) findViewById(R.id.reminders);
     RemindersDAO rDao = new RemindersDAO(getApplicationContext());
     reminders_data = rDao.getAllRemindersForActivityId(activitiesid);
     String remindersText = "";
-    Calendar c = Calendar.getInstance();
+    DateFormat dayParser = new SimpleDateFormat("EEEE");
+    DateFormat timeParser = new SimpleDateFormat("hh:mm aaa");
     for (Reminders r : reminders_data) {
-      parser = new SimpleDateFormat("EEEE, hh:mm aaa");
-      c.setTimeInMillis(r.getRemindTime());
-      remindersText += parser.format(r.getRemindTime()) + "\n";
+      remindersText += dayParser.format(r.getRemindTime()) + "s at " + timeParser.format(r.getRemindTime()) + "\n";
     }
     remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
-    reminders.setText(remindersText);
+    if(remindersText.length()>0)
+      reminders.setText("Reminders:\n"+remindersText);
   }
   
   private String[] updateCsppNames() {
