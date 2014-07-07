@@ -161,5 +161,8 @@
     <string name="required">Required</string>
     <string name="optional">Optional</string>
     <string name="peacecorpslogo">Peace Corps Logo</string>
+    <string name="nonotes">No notes</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 
 </resources>
