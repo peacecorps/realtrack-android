@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:hint="@string/organizationsinvolved"
-            android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
+            android:inputType="textCapWords|textImeMultiLine|textMultiLine|textCapSentences"
             android:maxLines="6"
             android:minLines="1"
             android:paddingBottom="10dp"
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:hint="@string/communitiesimpactedoptional"
+            android:hint="@string/communitiesimpacted"
             android:inputType="text|textImeMultiLine|textMultiLine|textCapSentences"
             android:maxLines="6"
             android:minLines="1"
@@ -86,6 +86,14 @@
             android:textColor="@color/darkgrey"
             android:textSize="16sp"
             android:textStyle="bold" />
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/intermediategrey" />
 
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -140,6 +148,14 @@
             android:textColor="@color/darkgrey"
             android:textSize="16sp"
             android:textStyle="bold" />
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/intermediategrey" />
 
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

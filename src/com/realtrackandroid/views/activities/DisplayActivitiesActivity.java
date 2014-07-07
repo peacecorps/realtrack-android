@@ -63,16 +63,16 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
     if(a.getNotes().length()>0)
-      notes.setText("Notes:\n"+a.getNotes());
+      notes.setText(getResources().getString(R.string.notes)+":\n"+a.getNotes());
     TextView cohort = (TextView) findViewById(R.id.cohort);
     if(a.getCohort().length()>0)
-      cohort.setText("Cohort:\n"+a.getCohort());
+      cohort.setText(getResources().getString(R.string.cohort)+":\n"+a.getCohort());
     TextView orgs = (TextView) findViewById(R.id.orgs);
     if(a.getOrgs().length()>0)
-      orgs.setText("Organizations involved:\n"+a.getOrgs());
+      orgs.setText(getResources().getString(R.string.organizationsinvolved)+":\n"+a.getOrgs());
     TextView comms = (TextView) findViewById(R.id.comms);
     if(a.getComms().length()>0)
-      comms.setText("Communities affected:\n"+a.getComms());
+      comms.setText(getResources().getString(R.string.communitiesimpacted) + ":\n"+a.getComms());
     
     TextView initiatives = (TextView) findViewById(R.id.initiatives);
     
@@ -85,7 +85,7 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     }
     inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous newline character
     if(inits.length()>0)
-      initiatives.setText("Initiatives:\n"+inits);
+      initiatives.setText(getResources().getString(R.string.initiatives) + ":\n"+inits);
     
     TextView csppTextView = (TextView) findViewById(R.id.cspp);
 
@@ -98,7 +98,7 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     }
     cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last superfluous newline character
     if(cspp.length()>0)
-      csppTextView.setText("Cross-sector programming priorities:\n"+cspp);
+      csppTextView.setText(getResources().getString(R.string.cspp) + ":\n"+cspp);
 
     // display reminders
     TextView reminders = (TextView) findViewById(R.id.reminders);
