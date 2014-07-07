@@ -26,22 +26,22 @@
             android:textColor="@color/darkgrey"
             android:textSize="20sp"
             android:textStyle="bold" />
-        
+
         <View
-            android:layout_height="1px"
             android:layout_width="match_parent"
+            android:layout_height="1px"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/intermediategrey"/>
+            android:background="@color/intermediategrey" />
 
         <EditText
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/eventdateformathint"
             android:inputType="date"
             android:paddingBottom="10dp"
@@ -56,10 +56,10 @@
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/eventtimeformathint"
             android:inputType="time"
             android:paddingBottom="10dp"
@@ -100,6 +100,14 @@
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/intermediategrey" />
 
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -190,6 +198,14 @@
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/intermediategrey" />
 
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
