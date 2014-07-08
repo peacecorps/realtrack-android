@@ -2,12 +2,8 @@ package com.realtrackandroid.views.participationspending;
 
 import java.util.ArrayList;
 
-import android.app.NotificationManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -19,7 +15,6 @@ import com.realtrackandroid.backend.activities.ParticipationDAO;
 import com.realtrackandroid.models.activities.Participation;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.help.HelpDialog;
-import com.realtrackandroid.views.participationsactive.RecordOrEditParticipationActivity;
 
 public class PendingParticipationActivity extends SherlockFragmentActivity {
   private ArrayList<Participation> unservicedParticipation_data;
@@ -39,23 +34,6 @@ public class PendingParticipationActivity extends SherlockFragmentActivity {
     PendingParticipationListAdapter listAdapter = new PendingParticipationListAdapter(this, R.layout.row_pendingparticipation, unservicedParticipation_data);
     ListView participationitemslist = (ListView) findViewById(R.id.pendingparticipationlistView);
     participationitemslist.setAdapter(listAdapter);
-    participationitemslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Participation p = unservicedParticipation_data.get(position);
-        // if the user is already on the pending participations screen when a notification pops up or comes to it
-        // from the home screen's "Pending" button (and not by clicking the notifification), clear the corresponding
-        // notification
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(p.getId());
-        // clicking on the item must take the user to the record participation activity
-        Intent newActivity = new Intent(PendingParticipationActivity.this, RecordOrEditParticipationActivity.class);
-        newActivity.putExtra("participationid", p.getId());
-        newActivity.putExtra("datetime", p.getDate());
-        startActivity(newActivity);
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-      }
-    });
   }
 
   @Override

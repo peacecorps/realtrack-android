@@ -42,6 +42,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="save">&#xf00c; Save</string>
+    <string name="adddetails">&#xf133; Add Details</string>
     <string name="only_save">Save</string>
     <string name="only_cancel">Cancel</string>
     <string name="title">Title</string>
