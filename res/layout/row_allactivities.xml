@@ -14,13 +14,13 @@
 
         <com.realtrackandroid.common.StyledButton
             android:id="@+id/quickParticipationBtn"
-            android:layout_width="40dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
             android:background="@drawable/greenitem_background"
-            android:text="@string/fa_users"
+            android:text="@string/fa_dansei_jyosei"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
