@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/gridlayout"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PagerSlidingTabStrip"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/achartengine"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
