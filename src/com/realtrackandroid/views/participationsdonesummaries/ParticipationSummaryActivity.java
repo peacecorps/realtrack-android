@@ -168,7 +168,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         aHolder.a = a;
         List<ParticipationHolder> paHolder_data = new ArrayList<ParticipationHolder>();
 
-        List<Participation> participation_data = participationDAO.getAllParticipationsForActivityId(a.getId());
+        List<Participation> participation_data = participationDAO.getServicedParticipationsForActivityId(a.getId());
         for(Participation pa: participation_data){
           dataToExportFound = true;
           ParticipationHolder paHolder = new ParticipationHolder();
