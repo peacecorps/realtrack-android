@@ -54,6 +54,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
                     android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/from"
@@ -82,6 +83,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
                     android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/to"
