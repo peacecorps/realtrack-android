@@ -106,7 +106,9 @@
     <string name="fa_edit_pencil">&#xf040;</string>
     <string name="fa_trash">&#xf014;</string>
     <string name="fa_rightchevron">&#xf054;</string>
+    <string name="fa_rightchevroncircle">&#xf138;</string>
     <string name="fa_downchevron">&#xf078;</string>
+    <string name="fa_downchevroncircle">&#xf13a;</string>
     <string name="fa_rightcircledarrow">&#xf0a9;</string>
     <string name="fa_righthand">&#xf0a4;</string>
     <string name="fa_check">&#xf00c;</string>
@@ -114,6 +116,7 @@
     <string name="fa_list">&#xf00b;</string>
     <string name="fa_table">&#xf0ce;</string>
     <string name="fa_plus">&#xf067;</string>
+    <string name="fa_pluscircle">&#xf055;</string>
     <string name="reviewsigninactivity_label">Review Participants</string>
     <string name="title_activity_signature">Please Sign</string>
     <string name="clear">&#xf021; Clear</string>

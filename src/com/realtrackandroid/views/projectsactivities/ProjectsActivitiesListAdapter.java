@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.realtrackandroid.R;
@@ -117,7 +118,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
 
     if(project.getId() == -1){ //"add new project..." item.
       holder.projectStartDate.setVisibility(View.GONE);
-      holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_plus));
+      holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_pluscircle));
       final ParentViewHolder holderFinal = holder;
       holder.expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -143,9 +144,9 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.projectStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
       
       if(isExp)
-        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevroncircle));
       else
-        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+        holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevroncircle));
 
       // handle click on the title and show participation details
       holder.projectTitle.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +176,11 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         public void onClick(View v) {
           if(isExp){
             listView.collapseGroup(groupPos);
-            holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+            holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevroncircle));
           }
           else{
             listView.expandGroup(groupPos);
-            holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+            holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevroncircle));
           }
         }
       });
@@ -201,6 +202,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.activityTitle = (TextView) row.findViewById(R.id.activityTitle);
       holder.activityStartDate = (TextView) row.findViewById(R.id.activityStartDate);
       holder.quickParticipationBtn = (StyledButton) row.findViewById(R.id.quickParticipationBtn);
+      holder.activityLinearLayout = (LinearLayout) row.findViewById(R.id.activityLinearLayout);
       holder.participationsLinearLayout = (LinearLayout) row.findViewById(R.id.participationsLinearLayout);
       holder.expandCollapseActivityBtn = (StyledButton)row.findViewById(R.id.expandCollapseActivityBtn);
       holder.isExp = true; //show participationsLinearLayout by default
@@ -213,11 +215,17 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     holder.activityTitle.setText(activity.getTitle());
 
     if (activity.getId() == -1) { //"add new activity..." item.
-      holder.quickParticipationBtn.setVisibility(View.INVISIBLE);
+      holder.quickParticipationBtn.setVisibility(View.GONE);
       holder.participationsLinearLayout.setVisibility(View.GONE);
       holder.activityStartDate.setVisibility(View.GONE);
-      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_plus));
+      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_pluscircle));
       final ChildViewHolder holderFinal = holder;
+      holder.activityLinearLayout.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          holderFinal.activityTitle.performClick();
+        }
+      });
       holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -243,7 +251,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.quickParticipationBtn.setVisibility(View.VISIBLE);
       holder.activityStartDate.setVisibility(View.VISIBLE);
       holder.participationsLinearLayout.setVisibility(View.VISIBLE);
-      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+      holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevroncircle));
 
       // handle click on the title and show activity details
       holder.activityTitle.setOnClickListener(new View.OnClickListener() {
@@ -308,14 +316,14 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       for(final Participation p: participationList){
         // the false in the method call below ensures we don't attach the inflated layout right away. if we did, since all the
         // participationsLinearLayouts have the same id. the rest of this loop would only refer to the first participationLinearLayout
-        final LinearLayout participationLinearLayout = (LinearLayout) inflater.inflate(R.layout.row_allparticipations, holder.participationsLinearLayout, false);
+        final RelativeLayout participationRelativeLayout = (RelativeLayout) inflater.inflate(R.layout.row_allparticipations, holder.participationsLinearLayout, false);
         Date d = new Date(p.getDate());
         
         // handle click on the title and show participation details
-        final TextView participationDetails = (TextView) participationLinearLayout.findViewById(R.id.participationDetails);
+        final TextView participationDetails = (TextView) participationRelativeLayout.findViewById(R.id.participationDetails);
         participationDetails.setText(parser.format(d)+":  "+p.getTotalParticipants()+" participants");
         
-        StyledButton editParticipationBtn = (StyledButton) participationLinearLayout.findViewById(R.id.editParticipationBtn);
+        StyledButton editParticipationBtn = (StyledButton) participationRelativeLayout.findViewById(R.id.editParticipationBtn);
         editParticipationBtn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -329,7 +337,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
         });
         
         final ChildViewHolder holderFinal = holder;
-        StyledButton deleteParticipationBtn = (StyledButton) participationLinearLayout.findViewById(R.id.deleteParticipationBtn);
+        StyledButton deleteParticipationBtn = (StyledButton) participationRelativeLayout.findViewById(R.id.deleteParticipationBtn);
         deleteParticipationBtn.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -342,7 +350,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
               public void onClick(DialogInterface dialog, int id) {
                 participationDAO.deleteParticipation(p.getId());
                 participationList.remove(p);
-                holderFinal.participationsLinearLayout.removeView(participationLinearLayout);
+                holderFinal.participationsLinearLayout.removeView(participationRelativeLayout);
                 if(participationList.isEmpty())
                   collapseChild(holderFinal);
               }
@@ -351,7 +359,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           }
         });
         
-        holder.participationsLinearLayout.addView(participationLinearLayout);
+        holder.participationsLinearLayout.addView(participationRelativeLayout);
       }
       
       // simulate expand collapse clicks for activities
@@ -381,12 +389,12 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   
   private void expandChild(ChildViewHolder holder) {
     holder.isExp = true;
-    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevroncircle));
   }
 
   private void collapseChild(ChildViewHolder holder) {
     holder.isExp = false;
-    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevroncircle));
   }
 
   private class ParentViewHolder {
@@ -396,6 +404,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   }
 
   private class ChildViewHolder {
+    LinearLayout activityLinearLayout;
     LinearLayout participationsLinearLayout;
     boolean isExp;
     StyledButton expandCollapseActivityBtn;

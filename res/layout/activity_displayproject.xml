@@ -38,9 +38,9 @@
             android:layout_below="@id/horizline1"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
+            android:baselineAligned="false"
             android:maxWidth="300dip"
             android:minWidth="300dip"
-            android:baselineAligned="false"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/darkgrey"
+                    android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/from"
                     android:textColor="@color/white"
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/darkgrey"
+                    android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/to"
                     android:textColor="@color/white"

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:id="@+id/activityLinearLayout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:paddingBottom="10dp" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white" >
 
         <com.realtrackandroid.common.StyledButton
@@ -19,16 +21,17 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
-            android:background="@drawable/greenitem_background"
+            android:background="@drawable/orangeitem_background"
             android:text="@string/fa_dansei_jyosei"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
         <com.realtrackandroid.common.StyledButton
             android:id="@+id/expandCollapseActivityBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="2dp"
             android:background="@null"
             android:gravity="center"
             android:textColor="@drawable/greyitem_textcolor"
@@ -42,28 +45,23 @@
             android:layout_toLeftOf="@id/quickParticipationBtn"
             android:layout_toRightOf="@id/expandCollapseActivityBtn"
             android:background="@null"
+            android:gravity="center_vertical"
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightgrey" />
-
     <TextView
         android:id="@+id/activityStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/grey_white_gradient_with_bottom_border"
-        android:gravity="center_vertical"
-        android:paddingBottom="1dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="1dp"
-        android:textColor="@color/intermediategrey"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/intermediategrey"
+        android:paddingLeft="40dp"
+        android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 
     <LinearLayout
         android:id="@+id/participationsLinearLayout"

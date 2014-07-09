@@ -18,6 +18,7 @@
 
 <resources>
     <color name="pressed_vrf">#CCF86C6C</color>
+    <color name="eggshellwhite">#F0F0F0</color>
     <color name="lightergrey">#E3E3E3</color>
     <color name="lightgrey">#CACACA</color>
     <color name="intermediategrey">#808080</color>

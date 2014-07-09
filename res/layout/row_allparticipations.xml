@@ -1,55 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/participationLinearLayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="5dip" >
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
+    android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/white" >
+    <com.realtrackandroid.common.StyledButton
+        android:id="@+id/deleteParticipationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/normalitem_background"
+        android:text="@string/fa_trash"
+        android:textColor="@drawable/normalitem_textcolor"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
-        <com.realtrackandroid.common.StyledButton
-            android:id="@+id/deleteParticipationBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/normalitem_background"
-            android:text="@string/fa_trash"
-            android:textColor="@drawable/normalitem_textcolor"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+    <com.realtrackandroid.common.StyledButton
+        android:id="@+id/editParticipationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/deleteParticipationBtn"
+        android:background="@drawable/normalitem_background"
+        android:text="@string/fa_edit_pencil"
+        android:textColor="@drawable/normalitem_textcolor"
+        android:textSize="19sp"
+        android:textStyle="bold" />
 
-        <com.realtrackandroid.common.StyledButton
-            android:id="@+id/editParticipationBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/deleteParticipationBtn"
-            android:background="@drawable/normalitem_background"
-            android:text="@string/fa_edit_pencil"
-            android:textColor="@drawable/normalitem_textcolor"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/participationDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/editParticipationBtn"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:textColor="@color/darkgrey"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/participationDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/editParticipationBtn"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:textColor="@color/darkgrey"
-            android:paddingLeft="10dip"
-            android:textSize="14sp" />
-    </RelativeLayout>
-    
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/lightgrey"/>
-
-</LinearLayout>
+</RelativeLayout>
