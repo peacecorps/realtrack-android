@@ -210,9 +210,17 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     projectsummaryExpandableListView.setGroupIndicator(null);
   }
 
+  private String[] updateCsppNames() {
+    return new String[]{getResources().getString(R.string.genderequalityandwomensempowerment),
+            getResources().getString(R.string.hivaids),
+            getResources().getString(R.string.technologyfordevelopment),
+            getResources().getString(R.string.youthasresources),
+            getResources().getString(R.string.volunteerism),
+            getResources().getString(R.string.peoplewithdisabilities)};
+  }
+
   private String[] updateInitiativeNames() {
-    return new String[]{getResources().getString(R.string.wid), getResources().getString(R.string.youth),
-            getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
+    return new String[]{getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
             getResources().getString(R.string.foodsecurity)};
   }
 
@@ -241,6 +249,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
    */
   private void createEmail(DataHolder dHolder){
     String[] allInits = updateInitiativeNames();
+    String[] allCspps = updateCsppNames();
 
     FileOutputStream dataFos = null;
     FileOutputStream participationFos = null;
@@ -272,22 +281,35 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
             "Activity Title" + "," +
             "Activity Start Date" + "," +
             "Activity End Date" + "," +
+            "Activity Cohort" + "," +
             "Activity Notes" + "," +
             "Activity Organizations" + "," +
             "Activity Community 1" + "," +
+            "Activity CSPP" + "," +
             "Activity Initiatives" + "," +
             "Participation Date" + "," +
             "Participation Time" + "," +
-            "Participation Men under 15" + "," +
-            "Participation Men 15-24" + "," +
-            "Participation Men over 24" + "," +
-            "Participation Women under 15" + "," +
-            "Participation Women 15-24" + "," +
-            "Participation Women over 24" + "," +
+            "Participation Men 0-9" + "," +
+            "Participation Men 10-17" + "," +
+            "Participation Men 18-24" + "," +
+            "Participation Men over 25" + "," +
+            "Participation Women 0-9" + "," +
+            "Participation Women 10-17" + "," +
+            "Participation Women 18-24" + "," +
+            "Participation Women over 25" + "," +
+            "Service Providers Men 0-9" + "," +
+            "Service Providers Men 10-17" + "," +
+            "Service Providers Men 18-24" + "," +
+            "Service Providers Men over 25" + "," +
+            "Service Providers Women 0-9" + "," +
+            "Service Providers Women 10-17" + "," +
+            "Service Providers Women 18-24" + "," +
+            "Service Providers Women over 25" + "," +
             "Participation Event Details" + "\n";
 
     String participationCSVContent = "Project Title" + "," +
             "Activity Title" + "," +
+            "Cohort Name" + "," +
             "Participation Date" + "," +
             "Participation Time" + "," +
             "Participant Name" + "," +
@@ -313,6 +335,14 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
           Participation participation = paHolder.pa;
 
           Date d = new Date(participation.getDate());
+          
+          String[] csppList = a.getCspp().split("\\|");
+          String cspp = "";
+          for (int i = 0; i < csppList.length; i++) {
+            if (csppList[i].equals("1"))
+              cspp += allCspps[i] + "|";
+          }
+          cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last superfluous pipe character
 
           String[] initiativesList = a.getInitiatives().split("\\|");
           String inits = "";
@@ -333,18 +363,30 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
                   ESCAPE_COMMAS + a.getTitle() + ESCAPE_COMMAS + "," +
                   dateParser.format(a.getStartDate()) + "," +
                   dateParser.format(a.getEndDate()) + "," +
+                  ESCAPE_COMMAS + a.getCohort() + ESCAPE_COMMAS + "," +
                   ESCAPE_COMMAS + a.getNotes() + ESCAPE_COMMAS + "," +
                   ESCAPE_COMMAS + a.getOrgs() + ESCAPE_COMMAS + "," +
                   COMMUNITY_DELIMITER + a.getComms() + COMMUNITY_DELIMITER +
+                  cspp + "," +
                   inits + "," +
                   dateParser.format(participation.getDate()) + "," +
                   timeParser.format(participation.getDate()) + "," +
                   participation.getMen09() + "," +
+                  participation.getMen1017() + "," +
                   participation.getMen1824() + "," +
                   participation.getMenOver25() + "," +
                   participation.getWomen09() + "," +
+                  participation.getWomen1017() + "," +
                   participation.getWomen1824() + "," +
                   participation.getWomenOver25() + "," +
+                  participation.getSpMen09() + "," +
+                  participation.getSpMen1017() + "," +
+                  participation.getSpMen1824() + "," +
+                  participation.getSpMenOver25() + "," +
+                  participation.getSpWomen09() + "," +
+                  participation.getSpWomen1017() + "," +
+                  participation.getSpWomen1824() + "," +
+                  participation.getSpWomenOver25() + "," +
                   ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
           try {
             dataFos.write(dataCSVContent.getBytes());
@@ -406,6 +448,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
           for(Participant participant: paHolder.participantList){
             participationCSVContent = ESCAPE_COMMAS + p.getTitle() + ESCAPE_COMMAS + "," +
                     ESCAPE_COMMAS + a.getTitle() + ESCAPE_COMMAS + "," +
+                    ESCAPE_COMMAS + a.getCohort() + ESCAPE_COMMAS + "," +
                     dateParser.format(participation.getDate()) + "," +
                     timeParser.format(participation.getDate()) + "," +
                     ESCAPE_COMMAS + participant.getName() + ESCAPE_COMMAS + "," +

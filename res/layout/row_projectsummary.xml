@@ -30,7 +30,7 @@
             android:layout_toRightOf="@id/expandCollapseProjectBtn"
             android:gravity="center_vertical"
             android:textColor="@color/darkgrey"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
     

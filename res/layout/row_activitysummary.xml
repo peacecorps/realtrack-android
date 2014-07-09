@@ -44,8 +44,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:background="@drawable/grey_white_gradient_with_bottom_border"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
@@ -78,8 +76,6 @@
         android:id="@+id/activityGraphLinearLayout"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:background="@color/white"
