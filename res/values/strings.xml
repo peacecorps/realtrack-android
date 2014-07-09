@@ -91,7 +91,7 @@
     <string name="notes">Notes</string>
     <string name="cohort">Reporting Cohort</string>
     <string name="enternotes">Enter Notes</string>
-    <string name="entercohort">Enter Group Name</string>
+    <string name="entercohort">Enter Reporting Cohort</string>
     <string name="organizationsinvolved">Organizations Involved</string>
     <string name="communitiesimpacted">Communities Impacted</string>
     <string name="csppoptional">Cross&#8211;Sector Programming Priorities</string>
