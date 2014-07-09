@@ -280,35 +280,50 @@ public class RequiredFragmentRecordQuickParticipation extends SherlockFragment {
     checkEnteredValueNotLessThanSigninSheetValue(men09NumText, men09FromSignInSheet);
     if(men09NumText.getText().length()!=0)
       p.setMen09(Integer.parseInt(men09NumText.getText().toString()));
+    else
+      p.setMen09(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(men1017NumText, men1017FromSignInSheet);
     if(men1017NumText.getText().length()!=0)
       p.setMen1017(Integer.parseInt(men1017NumText.getText().toString()));
+    else
+      p.setMen1017(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(men1824NumText, men1824FromSignInSheet);
     if(men1824NumText.getText().length()!=0)
       p.setMen1824(Integer.parseInt(men1824NumText.getText().toString()));
+    else
+      p.setMen1824(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(menOver25NumText, menOver25FromSignInSheet);
     if(menOver25NumText.getText().length()!=0)
       p.setMenOver25(Integer.parseInt(menOver25NumText.getText().toString()));
+    else
+      p.setMenOver25(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(women09NumText, women09FromSignInSheet);
     if(women09NumText.getText().length()!=0)
       p.setWomen09(Integer.parseInt(women09NumText.getText().toString()));
+    else
+      p.setWomen09(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(women1017NumText, women1017FromSignInSheet);
     if(women1017NumText.getText().length()!=0)
       p.setWomen1017(Integer.parseInt(women1017NumText.getText().toString()));
+    else
+      p.setWomen1017(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(women1824NumText, women1824FromSignInSheet);
     if(women1824NumText.getText().length()!=0)
       p.setWomen1824(Integer.parseInt(women1824NumText.getText().toString()));
+    else
+      p.setWomen1824(0);
 
     checkEnteredValueNotLessThanSigninSheetValue(womenOver25NumText, womenOver25FromSignInSheet);
     if(womenOver25NumText.getText().length()!=0)
       p.setWomenOver25(Integer.parseInt(womenOver25NumText.getText().toString()));
-
+    else
+      p.setWomenOver25(0);
     if(errorsFound){
       Toast.makeText(getActivity(), R.string.cannotentersmallernumber,
               Toast.LENGTH_SHORT).show();
@@ -332,28 +347,35 @@ public class RequiredFragmentRecordQuickParticipation extends SherlockFragment {
   }
 
   private void checkEnteredValueNotLessThanSigninSheetValue(EditText editText, int numSignedIn) {
-    if(editText.getText().length()==0)
-      return;
-
     editText.setTextColor(getResources().getColor(android.R.color.black));
+    if(editText.getText().length()==0){
+      if(numSignedIn!=0)
+        signalErrorInTextField(editText, numSignedIn);
+      return;
+    }
+
     int enteredValue = Integer.parseInt(editText.getText().toString());
     if(numSignedIn!=0 && enteredValue < numSignedIn){
-      editText.setText(Integer.toString(numSignedIn)); // put back at least the number of people signed in
-
-      // change the text color to signal an error so that the user can see it easily
-      editText.setTextColor(getResources().getColor(R.color.orange));
-
-      // restore the text color when the user tries to type in a possible correction
-      final EditText fEditText = editText;
-      editText.setOnKeyListener(new OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-          fEditText.setTextColor(getResources().getColor(android.R.color.black));
-          return false;
-        }
-      });
-      errorsFound = true;
+      signalErrorInTextField(editText, numSignedIn);
     }
+  }
+
+  private void signalErrorInTextField(EditText editText, int numSignedIn) {
+    editText.setText(Integer.toString(numSignedIn)); // put back at least the number of people signed in
+
+    // change the text color to signal an error so that the user can see it easily
+    editText.setTextColor(getResources().getColor(R.color.orange));
+
+    // restore the text color when the user tries to type in a possible correction
+    final EditText fEditText = editText;
+    editText.setOnKeyListener(new OnKeyListener() {
+      @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        fEditText.setTextColor(getResources().getColor(android.R.color.black));
+        return false;
+      }
+    });
+    errorsFound = true;
   }
 
   public void setDate(String selectedDate) {
