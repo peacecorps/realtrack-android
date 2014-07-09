@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@color/eggshellwhite" >
+        android:background="@color/white" >
 
         <com.realtrackandroid.common.StyledButton
             android:id="@+id/expandCollapseProjectBtn"
