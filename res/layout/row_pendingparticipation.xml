@@ -146,7 +146,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/greenitem_background"
+        android:background="@drawable/orangeitem_background"
         android:text="@string/adddetails"
         android:textColor="@android:color/white"
         android:textStyle="bold" />

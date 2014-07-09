@@ -7,10 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -30,10 +27,9 @@ import com.realtrackandroid.views.projectsactivities.AllProjectsActivitiesActivi
  * This is the home screen of the app.
  * @author Raj
  */
-public class WelcomeActivity extends SherlockFragmentActivity implements OnClickListener{
-  private ArrayList<String> homeitems_data;
+public class WelcomeActivity extends SherlockFragmentActivity {
   private ArrayList<Participation> unservicedParticipation_data;
-  private LinearLayout welcomeActivityLinearLayout;
+  private StyledButton myProjectsBtn, myDataBtn, pendingParticipationsBtn;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -55,22 +51,44 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
       TextView greetingTextView = (TextView) findViewById(R.id.greetingTextView);
       if(prefs.contains(getString(R.string.name)))
         greetingTextView.setText("Hello, "+prefs.getString(getString(R.string.name), ""));
-      
-      welcomeActivityLinearLayout = (LinearLayout) findViewById(R.id.welcomeactivitylinearlayout);
-      welcomeActivityLinearLayout.removeAllViews();
 
-      homeitems_data = new ArrayList<String>();
-      homeitems_data.add(getResources().getString(R.string.fa_list)+" My Projects");
-      homeitems_data.add(getResources().getString(R.string.fa_table)+" My Data");
+      myProjectsBtn = (StyledButton) findViewById(R.id.myprojectsbutton);
+      myProjectsBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent newActivity = new Intent(WelcomeActivity.this, AllProjectsActivitiesActivity.class);
+          startActivity(newActivity);
+          overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        }
+      });
+
+      myDataBtn = (StyledButton) findViewById(R.id.mydatabutton);
+      myDataBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent newActivity = new Intent(WelcomeActivity.this, ParticipationSummaryActivity.class);
+          startActivity(newActivity);
+          overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        }
+      });
+
+      pendingParticipationsBtn = (StyledButton) findViewById(R.id.pendingParticipationsBtn);
+      pendingParticipationsBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent newActivity = new Intent(WelcomeActivity.this, PendingParticipationActivity.class);
+          startActivity(newActivity);
+          overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        }
+      });
 
       ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
       unservicedParticipation_data = pDao.getAllUnservicedParticipations();
-      if (unservicedParticipation_data.size() != 0) {
-        homeitems_data.add(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
-      }
+      if (unservicedParticipation_data.size() != 0) 
+        pendingParticipationsBtn.setText(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
+      else
+        pendingParticipationsBtn.setVisibility(View.GONE);
 
-      // populate the home items list
-      updateHomeItemsList();
     }
   }
 
@@ -95,39 +113,5 @@ public class WelcomeActivity extends SherlockFragmentActivity implements OnClick
     }
 
     return true;
-  }
-
-  void updateHomeItemsList() {
-    LayoutInflater inflater = getLayoutInflater();
-
-    for(int i=0;i<homeitems_data.size();++i){
-      StyledButton homeItemBtn = (StyledButton) inflater.inflate(R.layout.row_homeitems, welcomeActivityLinearLayout, false);
-      homeItemBtn.setId(i);
-      homeItemBtn.setOnClickListener(this);
-      homeItemBtn.setText(homeitems_data.get(i));
-      welcomeActivityLinearLayout.addView(homeItemBtn);
-    }
-  }
-
-  @Override
-  public void onClick(View v) {
-    int pos = v.getId();
-    switch (pos) {
-      case 0: // MY PROJECTS
-        Intent newActivity = new Intent(this, AllProjectsActivitiesActivity.class);
-        this.startActivity(newActivity);
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        break;
-      case 1: // MY DATA
-        newActivity = new Intent(this, ParticipationSummaryActivity.class);
-        this.startActivity(newActivity);
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        break;
-      case 2: // PENDING
-        newActivity = new Intent(this, PendingParticipationActivity.class);
-        this.startActivity(newActivity);
-        overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-        break;
-    }
   }
 }

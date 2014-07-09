@@ -122,7 +122,9 @@
     <string name="fa_check">&#xf00c;</string>
     <string name="fa_calendar">&#xf133;</string>
     <string name="fa_list">&#xf00b;</string>
+    <string name="myprojects">&#xf00b; My Projects</string>
     <string name="fa_table">&#xf0ce;</string>
+    <string name="mydata">&#xf0ce; My Data</string>
     <string name="fa_plus">&#xf067;</string>
     <string name="fa_pluscircle">&#xf055;</string>
     <string name="reviewsigninactivity_label">Review Participants</string>
