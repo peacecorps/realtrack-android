@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,61 +29,58 @@ import com.realtrackandroid.views.dialogs.PickDateDialog;
 import com.realtrackandroid.views.dialogs.PickTimeDialog;
 import com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity;
 
-public class RequiredFragment extends SherlockFragment {
+public class RequiredFragmentRecordQuickParticipation extends SherlockFragment {
   static final int ADD_PARTICIPANTS_REQUEST = 1;
-  
+
   private EditText men09NumText, men1017NumText, men1824NumText, menOver25NumText,
   women09NumText, women1017NumText, women1824NumText, womenOver25NumText;
 
-  private CheckBox men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
-  women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox;
-
   private int men09FromSignInSheet, men1017FromSignInSheet, men1824FromSignInSheet, menOver25FromSignInSheet, 
   women09FromSignInSheet, women1017FromSignInSheet, women1824FromSignInSheet, womenOver25FromSignInSheet;
-  
+
   private StyledButton signinSheetButton;
-  
+
   private EditText date, time;
-  
+
   private View v;
-  
+
   private Activities a;
-  
+
   private RecordQuickParticipationFragmentInterface mActivity;
-  
+
   private ArrayList<Participant> participantList;
-  
+
   private boolean errorsFound;
-  
-  public static final RequiredFragment newInstance(String title)
+
+  public static final RequiredFragmentRecordQuickParticipation newInstance(String title)
   {
-    RequiredFragment f = new RequiredFragment();
+    RequiredFragmentRecordQuickParticipation f = new RequiredFragmentRecordQuickParticipation();
     return f;
   }
-  
+
   @Override
   public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      try {
-        mActivity = (RecordQuickParticipationFragmentInterface) activity;
-      } catch (ClassCastException e) {
-          throw new ClassCastException(activity.toString() + " must implement RecordQuickParticipationFragmentInterface");
-      }
-      a = mActivity.getActivities();
-      participantList = new ArrayList<Participant>();
+    super.onAttach(activity);
+    try {
+      mActivity = (RecordQuickParticipationFragmentInterface) activity;
+    } catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement RecordQuickParticipationFragmentInterface");
+    }
+    a = mActivity.getActivities();
+    participantList = new ArrayList<Participant>();
   }
-  
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
           Bundle savedInstanceState) {
-      v = inflater.inflate(R.layout.activity_recordquickparticipation_fragment_required, container, false);
-      return v;
+    v = inflater.inflate(R.layout.activity_recordquickparticipation_fragment_required, container, false);
+    return v;
   }
-  
+
   @Override
   public void onResume(){
     super.onResume();
-    
+
     TextView title = (TextView) v.findViewById(R.id.title);
     title.setText(a.getTitle());
 
@@ -147,14 +143,6 @@ public class RequiredFragment extends SherlockFragment {
       }
     });
 
-    men09Checkbox = (CheckBox) v.findViewById(R.id.men09CheckBox);
-    men1017Checkbox = (CheckBox) v.findViewById(R.id.men1017CheckBox);
-    men1824Checkbox = (CheckBox) v.findViewById(R.id.men1824CheckBox);
-    menOver25Checkbox = (CheckBox) v.findViewById(R.id.menOver25CheckBox);
-    women09Checkbox = (CheckBox) v.findViewById(R.id.women09CheckBox);
-    women1017Checkbox = (CheckBox) v.findViewById(R.id.women1017CheckBox);
-    women1824Checkbox = (CheckBox) v.findViewById(R.id.women1824CheckBox);
-    womenOver25Checkbox = (CheckBox) v.findViewById(R.id.womenOver25CheckBox);
     men09NumText = (EditText) v.findViewById(R.id.numMen09);
     men1017NumText = (EditText) v.findViewById(R.id.numMen1017);
     men1824NumText = (EditText) v.findViewById(R.id.numMen1824);
@@ -163,32 +151,8 @@ public class RequiredFragment extends SherlockFragment {
     women1017NumText = (EditText) v.findViewById(R.id.numWomen1017);
     women1824NumText = (EditText) v.findViewById(R.id.numWomen1824);
     womenOver25NumText = (EditText) v.findViewById(R.id.numWomenOver25);
-
-    CheckBox[] checkBoxArray = {men09Checkbox, men1017Checkbox, men1824Checkbox, menOver25Checkbox,
-            women09Checkbox, women1017Checkbox, women1824Checkbox, womenOver25Checkbox};
-
-    EditText[] numTextArray = {men09NumText, men1017NumText, men1824NumText, menOver25NumText,
-            women09NumText, women1017NumText, women1824NumText, womenOver25NumText};
-
-    for (int i=0; i<checkBoxArray.length; ++i){
-      final CheckBox c = checkBoxArray[i];
-      final EditText e = numTextArray[i];
-      e.setEnabled(false);
-      c.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          if (!c.isChecked()){
-            e.setEnabled(false);
-            e.setText("");
-          }
-          else{
-            e.setEnabled(true);
-          }
-        }
-      });
-    }
   }
-  
+
   public void updateParticipantCountsFromSigninSheet() {
     if(participantList.isEmpty())
       return;
@@ -233,76 +197,50 @@ public class RequiredFragment extends SherlockFragment {
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(men09FromSignInSheet>0){
       men09NumText.setText(Integer.toString(men09FromSignInSheet));
-      men09Checkbox.setChecked(true);
-      men09Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(men1017FromSignInSheet>0){
       men1017NumText.setText(Integer.toString(men1017FromSignInSheet));
-      men1017Checkbox.setChecked(true);
-      men1017Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(men1824FromSignInSheet>0){
       men1824NumText.setText(Integer.toString(men1824FromSignInSheet));
-      men1824Checkbox.setChecked(true);
-      men1824Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(menOver25FromSignInSheet>0){
       menOver25NumText.setText(Integer.toString(menOver25FromSignInSheet));
-      menOver25Checkbox.setChecked(true);
-      menOver25Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(women09FromSignInSheet>0){
       women09NumText.setText(Integer.toString(women09FromSignInSheet));
-      women09Checkbox.setChecked(true);
-      women09Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(women1017FromSignInSheet>0){
       women1017NumText.setText(Integer.toString(women1017FromSignInSheet));
-      women1017Checkbox.setChecked(true);
-      women1017Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(women1824FromSignInSheet>0){
       women1824NumText.setText(Integer.toString(women1824FromSignInSheet));
-      women1824Checkbox.setChecked(true);
-      women1824Checkbox.setEnabled(false);
     }
 
     // prevent the PCV from disabling this checkbox if at least one participant is in this category
     if(womenOver25FromSignInSheet>0){
       womenOver25NumText.setText(Integer.toString(womenOver25FromSignInSheet));
-      womenOver25Checkbox.setChecked(true);
-      womenOver25Checkbox.setEnabled(false);
     }
 
     signinSheetButton.setText(getResources().getString(R.string.openSigninSheetButtonLabel)+" ("+participantList.size()+" participant(s))");
   }
-  
+
   public boolean setFields(Participation p){
     if(v==null)
       return false;
-    
-    if (!men09Checkbox.isChecked() && !men1017Checkbox.isChecked() && !men1824Checkbox.isChecked()
-            && !menOver25Checkbox.isChecked() && !women09Checkbox.isChecked() && !women1017Checkbox.isChecked()
-            && !women1824Checkbox.isChecked() && !womenOver25Checkbox.isChecked()) {
-      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage,
-              Toast.LENGTH_SHORT).show();
-      return false;
-    }
-    
-    errorsFound = false;
-    
+
     DateFormat dateParser = new SimpleDateFormat("MM/dd/yyyy"); // example: 07/04/2013
     DateFormat timeParser = new SimpleDateFormat("hh:mm aaa"); // example: 07/04/2013
     try {
@@ -328,135 +266,58 @@ public class RequiredFragment extends SherlockFragment {
     }
 
     // set men, women and serviced
-    if (men09Checkbox.isChecked()) {
-      if (men09NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(men09NumText, men09FromSignInSheet);
-        p.setMen09(Integer.parseInt(men09NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setMen09(0);
+    if (men09NumText.getText().length() == 0 && men1017NumText.getText().length() == 0 
+            && men1824NumText.getText().length() == 0 && menOver25NumText.getText().length() == 0
+            && women09NumText.getText().length() == 0 && women1017NumText.getText().length() == 0 
+            && women1824NumText.getText().length() == 0 && womenOver25NumText.getText().length() == 0){
+      Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
+              Toast.LENGTH_SHORT).show();
+      return false;
     }
 
-    if (men1017Checkbox.isChecked()) {
-      if (men1017NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(men1017NumText, men1017FromSignInSheet);
-        p.setMen1017(Integer.parseInt(men1017NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setMen1017(0);
-    }
+    errorsFound = false;
 
-    if (men1824Checkbox.isChecked()) {
-      if (men1824NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(men1824NumText, men1824FromSignInSheet);
-        p.setMen1824(Integer.parseInt(men1824NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setMen1824(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(men09NumText, men09FromSignInSheet);
+    if(men09NumText.getText().length()!=0)
+      p.setMen09(Integer.parseInt(men09NumText.getText().toString()));
 
-    if (menOver25Checkbox.isChecked()) {
-      if (menOver25NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(menOver25NumText, menOver25FromSignInSheet);
-        p.setMenOver25(Integer.parseInt(menOver25NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setMenOver25(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(men1017NumText, men1017FromSignInSheet);
+    if(men1017NumText.getText().length()!=0)
+      p.setMen1017(Integer.parseInt(men1017NumText.getText().toString()));
 
-    if (women09Checkbox.isChecked()) {
-      if (women09NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(women09NumText, women09FromSignInSheet);
-        p.setWomen09(Integer.parseInt(women09NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setWomen09(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(men1824NumText, men1824FromSignInSheet);
+    if(men1824NumText.getText().length()!=0)
+      p.setMen1824(Integer.parseInt(men1824NumText.getText().toString()));
 
-    if (women1017Checkbox.isChecked()) {
-      if (women1017NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(women1017NumText, women1017FromSignInSheet);
-        p.setWomen1017(Integer.parseInt(women1017NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setWomen1017(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(menOver25NumText, menOver25FromSignInSheet);
+    if(menOver25NumText.getText().length()!=0)
+      p.setMenOver25(Integer.parseInt(menOver25NumText.getText().toString()));
 
-    if (women1824Checkbox.isChecked()) {
-      if (women1824NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(women1824NumText, women1824FromSignInSheet);
-        p.setWomen1824(Integer.parseInt(women1824NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setWomen1824(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(women09NumText, women09FromSignInSheet);
+    if(women09NumText.getText().length()!=0)
+      p.setWomen09(Integer.parseInt(women09NumText.getText().toString()));
 
-    if (womenOver25Checkbox.isChecked()) {
-      if (womenOver25NumText.getText().length() == 0){
-        Toast.makeText(getActivity(), R.string.emptyparticipationmessage,
-                Toast.LENGTH_SHORT).show();
-        return false;
-      }
-      else{
-        checkEnteredValueNotLessThanSigninSheetValue(womenOver25NumText, womenOver25FromSignInSheet);
-        p.setWomenOver25(Integer.parseInt(womenOver25NumText.getText().toString()));
-      }
-    }
-    else {
-      p.setWomenOver25(0);
-    }
+    checkEnteredValueNotLessThanSigninSheetValue(women1017NumText, women1017FromSignInSheet);
+    if(women1017NumText.getText().length()!=0)
+      p.setWomen1017(Integer.parseInt(women1017NumText.getText().toString()));
+
+    checkEnteredValueNotLessThanSigninSheetValue(women1824NumText, women1824FromSignInSheet);
+    if(women1824NumText.getText().length()!=0)
+      p.setWomen1824(Integer.parseInt(women1824NumText.getText().toString()));
+
+    checkEnteredValueNotLessThanSigninSheetValue(womenOver25NumText, womenOver25FromSignInSheet);
+    if(womenOver25NumText.getText().length()!=0)
+      p.setWomenOver25(Integer.parseInt(womenOver25NumText.getText().toString()));
 
     if(errorsFound){
       Toast.makeText(getActivity(), R.string.cannotentersmallernumber,
               Toast.LENGTH_SHORT).show();
       return false;
     }
-    
+
     return true;
   }
-  
+
   public void updateParticipants(int newParticipationId){
     ParticipantDAO participantDao = new ParticipantDAO(getActivity());
     // write the participant information
@@ -469,8 +330,11 @@ public class RequiredFragment extends SherlockFragment {
 
     participantDao.addParticipants(participantList);
   }
-  
+
   private void checkEnteredValueNotLessThanSigninSheetValue(EditText editText, int numSignedIn) {
+    if(editText.getText().length()==0)
+      return;
+
     editText.setTextColor(getResources().getColor(android.R.color.black));
     int enteredValue = Integer.parseInt(editText.getText().toString());
     if(numSignedIn!=0 && enteredValue < numSignedIn){
@@ -491,15 +355,15 @@ public class RequiredFragment extends SherlockFragment {
       errorsFound = true;
     }
   }
-  
+
   public void setDate(String selectedDate) {
     date.setText(selectedDate);
   }
-  
+
   public void setTime(String selectedTime) {
     time.setText(selectedTime);
   }
-  
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == ADD_PARTICIPANTS_REQUEST) {

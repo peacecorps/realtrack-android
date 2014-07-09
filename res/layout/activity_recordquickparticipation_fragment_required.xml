@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
         android:orientation="vertical"
         android:paddingBottom="20dp" >
 
@@ -17,8 +19,6 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
@@ -30,8 +30,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:background="@color/intermediategrey" />
 
         <EditText
@@ -39,8 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:hint="@string/eventdateformathint"
             android:inputType="date"
@@ -57,8 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:hint="@string/eventtimeformathint"
             android:inputType="time"
@@ -93,95 +87,59 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="@string/men"
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/intermediategrey" />
-
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
             app:columnOrderPreserved="false"
-            app:rowCount="4"
+            app:rowCount="2"
             app:useDefaultMargins="true" >
-
-            <CheckBox
-                android:id="@+id/men09CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/men09"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numMen09"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofmen"
+                android:hint="@string/numberofmen09"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/men1017CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/men1017"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numMen1017"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofmen"
+                android:hint="@string/numberofmen1017"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/men1824CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/men1824"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numMen1824"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofmen"
+                android:hint="@string/numberofmen1824"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/menOver25CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/menover25"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numMenOver25"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofmen"
+                android:hint="@string/numberofmenover25"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
@@ -191,95 +149,59 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="@string/women"
             android:textColor="@color/darkgrey"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/intermediategrey" />
-
         <android.support.v7.widget.GridLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             app:alignmentMode="alignBounds"
             app:columnCount="2"
             app:columnOrderPreserved="false"
-            app:rowCount="4"
+            app:rowCount="2"
             app:useDefaultMargins="true" >
-
-            <CheckBox
-                android:id="@+id/women09CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/women09"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numWomen09"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofwomen"
+                android:hint="@string/numberofwomen09"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/women1017CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/women1017"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numWomen1017"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofwomen"
+                android:hint="@string/numberofwomen1017"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/women1824CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/women1824"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numWomen1824"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofwomen"
+                android:hint="@string/numberofwomen1824"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />
-
-            <CheckBox
-                android:id="@+id/womenOver25CheckBox"
-                android:layout_gravity="left"
-                android:text="@string/womenover25"
-                android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/numWomenOver25"
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:clickable="false"
-                android:hint="@string/numberofwomen"
+                android:hint="@string/numberofwomenover25"
                 android:inputType="number"
                 android:textColor="@color/darkgrey"
                 android:textColorHint="@color/intermediategrey" />

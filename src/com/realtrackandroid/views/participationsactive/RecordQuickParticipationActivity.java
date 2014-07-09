@@ -23,8 +23,8 @@ import com.realtrackandroid.views.dialogs.PickDateDialogListener;
 import com.realtrackandroid.views.dialogs.PickTimeDialogListener;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.help.HelpDialog;
-import com.realtrackandroid.views.participationsactive.OptionalFragment;
-import com.realtrackandroid.views.participationsactive.RequiredFragment;
+import com.realtrackandroid.views.participationsactive.OptionalFragmentRecordQuickParticipation;
+import com.realtrackandroid.views.participationsactive.RequiredFragmentRecordQuickParticipation;
 
 /**
  * RecordQuickParticipationActivity is different from RecordOrEditParticipationActivity in the following ways:
@@ -42,8 +42,8 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
   private ParticipationDAO pDao;
   private Activities a;
 
-  private OptionalFragment optionalFragment;
-  private RequiredFragment requiredFragment;
+  private OptionalFragmentRecordQuickParticipation optionalFragment;
+  private RequiredFragmentRecordQuickParticipation requiredFragment;
   
   private ParticipationPageAdapter pageAdapter;
   List<Fragment> fragments;
@@ -55,8 +55,8 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
     setContentView(R.layout.base_pager);
     
     fragments = createFragments();
-    requiredFragment = (RequiredFragment) fragments.get(0);
-    optionalFragment = (OptionalFragment) fragments.get(1);
+    requiredFragment = (RequiredFragmentRecordQuickParticipation) fragments.get(0);
+    optionalFragment = (OptionalFragmentRecordQuickParticipation) fragments.get(1);
     
     tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
     pageAdapter = new ParticipationPageAdapter(getSupportFragmentManager(), fragments);
@@ -81,8 +81,8 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
     fragmentTitles.add("Optional");
     
     List<Fragment> fList = new ArrayList<Fragment>();
-    fList.add(RequiredFragment.newInstance(fragmentTitles.get(0)));
-    fList.add(OptionalFragment.newInstance(fragmentTitles.get(1)));
+    fList.add(RequiredFragmentRecordQuickParticipation.newInstance(fragmentTitles.get(0)));
+    fList.add(OptionalFragmentRecordQuickParticipation.newInstance(fragmentTitles.get(1)));
     
     return fList;
   }
