@@ -33,14 +33,12 @@
 
         <LinearLayout
             android:id="@+id/dateslayout"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/horizline1"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
             android:baselineAligned="false"
-            android:maxWidth="300dip"
-            android:minWidth="300dip"
             android:orientation="horizontal" >
 
             <LinearLayout
@@ -54,13 +52,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginTop="1dp"
                     android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/from"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/darkgrey" />
 
                 <TextView
                     android:id="@+id/startDate"
@@ -83,13 +89,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginTop="1dp"
                     android:background="@color/orange"
                     android:gravity="center"
                     android:text="@string/to"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/darkgrey" />
 
                 <TextView
                     android:id="@+id/endDate"

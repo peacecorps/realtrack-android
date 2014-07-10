@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:background="@null"
             android:gravity="center"
-            android:textColor="@color/darkgrey"
+            android:textColor="@drawable/greyitem_textcolor"
             android:textSize="20sp" />
 
         <TextView
@@ -36,11 +36,11 @@
         android:id="@+id/projectStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/darkgrey"
+        android:background="@color/eggshellwhite"
         android:gravity="center_vertical"
-        android:paddingLeft="40dp"
-        android:textColor="@color/eggshellwhite"
-        android:textSize="16sp"
+        android:paddingLeft="5dp"
+        android:textColor="@color/intermediategrey"
+        android:textSize="15sp"
         android:textStyle="normal" />
 
 </LinearLayout>

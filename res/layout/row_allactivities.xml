@@ -57,10 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="@color/intermediategrey"
-        android:paddingLeft="40dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
+        android:background="@color/eggshellwhite"
+        android:paddingLeft="5dp"
+        android:textColor="@color/intermediategrey"
+        android:textSize="14sp"
         android:textStyle="normal" />
 
     <LinearLayout
