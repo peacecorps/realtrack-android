@@ -18,7 +18,7 @@
 
 <resources>
     <color name="pressed_vrf">#CCF86C6C</color>
-    <color name="eggshellwhite">#F0F0F0</color>
+    <color name="eggshellwhite">#E5E5E5</color>
     <color name="lightergrey">#E3E3E3</color>
     <color name="lightgrey">#CACACA</color>
     <color name="intermediategrey">#808080</color>
@@ -29,7 +29,6 @@
     <color name="orange">#F08222</color>
     <color name="darkorange">#C1610D</color>
     <color name="blue">#0099CC</color>
-    <color name="darkblue">#005977</color>
     <color name="white">#FFFFFF</color>
     <color name="green">#7ACC7A</color>
     <color name="darkgreen">#399639</color>

@@ -141,7 +141,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       Date startDate = new Date(project.getStartDate());
       Date endDate = new Date(project.getEndDate());
       holder.projectStartDate.setVisibility(View.VISIBLE);
-      holder.projectStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
+      holder.projectStartDate.setText(parser.format(startDate) + " " + context.getResources().getString(R.string.emdash) + " " + parser.format(endDate));
       
       if(isExp)
         holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevroncircle));
@@ -246,7 +246,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     else { // normal activity item
       Date startDate = new Date(activity.getStartDate());
       Date endDate = new Date(activity.getEndDate());
-      holder.activityStartDate.setText(parser.format(startDate) + context.getResources().getString(R.string.emdash) + parser.format(endDate));
+      holder.activityStartDate.setText(parser.format(startDate) + " " + context.getResources().getString(R.string.emdash) + " " + parser.format(endDate));
       
       holder.quickParticipationBtn.setVisibility(View.VISIBLE);
       holder.activityStartDate.setVisibility(View.VISIBLE);

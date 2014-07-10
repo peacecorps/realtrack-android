@@ -17,51 +17,65 @@
         <com.realtrackandroid.common.StyledButton
             android:id="@+id/quickParticipationBtn"
             android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
             android:background="@drawable/orangeitem_background"
             android:text="@string/fa_dansei_jyosei"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
-        <com.realtrackandroid.common.StyledButton
-            android:id="@+id/expandCollapseActivityBtn"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="2dp"
-            android:background="@null"
-            android:gravity="center"
-            android:textColor="@drawable/greyitem_textcolor"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/activityTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/quickParticipationBtn"
-            android:layout_toRightOf="@id/expandCollapseActivityBtn"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:textColor="@color/darkgrey"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:layout_toLeftOf="@id/quickParticipationBtn" >
 
-    <TextView
-        android:id="@+id/activityStartDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/eggshellwhite"
-        android:paddingLeft="5dp"
-        android:textColor="@color/intermediategrey"
-        android:textSize="14sp"
-        android:textStyle="normal" />
+            <com.realtrackandroid.common.StyledButton
+                android:id="@+id/expandCollapseActivityBtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
+                android:background="@null"
+                android:gravity="center"
+                android:textColor="@drawable/greyitem_textcolor"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/expandCollapseActivityBtn"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/activityTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkgrey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activityStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/dateitem_background"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/intermediategrey"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/participationsLinearLayout"
