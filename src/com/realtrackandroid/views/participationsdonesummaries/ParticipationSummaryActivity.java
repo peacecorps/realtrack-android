@@ -22,6 +22,8 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -67,9 +69,13 @@ import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 public class ParticipationSummaryActivity extends SherlockFragmentActivity {
-  static final int SENDEMAIL_REQUEST = 1;
-  private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
+  private static final int DISCOVER_DURATION = 300;
+  private static final int SENDEMAIL_REQUEST = 1;
   private static final int PROGRESS_DIALOG = 2;
+  private static final int BLUETOOTH_REQUEST = 3;
+  private static final int BLUETOOTH_ENABLE_REQUEST = 4;
+  private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
+  private static final String BT_PACKAGE_NAME = "com.android.bluetooth";
 
   private int maxComms = 0;
 
@@ -97,6 +103,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   private XYMultipleSeriesRenderer mRenderer;
   private ParticipationSummaryListAdapter projectsActivitiesListAdapter;
   private ExpandableListView projectsummaryExpandableListView;
+  private boolean use_email_not_bt;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -113,6 +120,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         signInReportsFileName = sendEmailTask.signInReportsFileName;
         participationFileName = sendEmailTask.participationFileName;
         dataFileName = sendEmailTask.dataFileName;
+        use_email_not_bt = sendEmailTask.use_email_not_bt;
       }
     }
   }
@@ -239,6 +247,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     sendEmailTask.dataFileName = dataFileName;
     sendEmailTask.participationFileName = participationFileName;
     sendEmailTask.signInReportsFileName = signInReportsFileName;
+    sendEmailTask.use_email_not_bt = use_email_not_bt;
 
     createEmail(dataHolder);
   }
@@ -335,7 +344,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
           Participation participation = paHolder.pa;
 
           Date d = new Date(participation.getDate());
-          
+
           String[] csppList = a.getCspp().split("\\|");
           String cspp = "";
           for (int i = 0; i < csppList.length; i++) {
@@ -629,16 +638,13 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         // provide a back button on the actionbar
         finish();
         break;
+      case R.id.action_exportbt:
+        use_email_not_bt = false;
+        shareData();
+        break;
       case R.id.action_exportdata:
-        if(!dataToExportFound){
-          Toast.makeText(getApplicationContext(), getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT).show();
-          break;
-        }
-        showDialog(PROGRESS_DIALOG);
-
-        if(sendEmailTask == null || sendEmailTask.getStatus()==Status.FINISHED)
-          sendEmailTask = new SendEmailTask(this);
-        sendEmailTask.execute();
+        use_email_not_bt = true;
+        shareData();
         break;
       case R.id.action_help:
         HelpDialog helpDialog = new HelpDialog();
@@ -663,19 +669,78 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     return true;
   }
 
+  private void shareData() {
+    if(!dataToExportFound){
+      Toast.makeText(getApplicationContext(), getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT).show();
+      return;
+    }
+    showDialog(PROGRESS_DIALOG);
+
+    if(sendEmailTask == null || sendEmailTask.getStatus()==Status.FINISHED)
+      sendEmailTask = new SendEmailTask(this);
+    sendEmailTask.execute();
+  }
+
   /**
    * Callback for SendEmailTask
    * @param dataFileName 
    * @param participationFileName 
    * @param signInReportsFileName 
    */
-  public void sendEmail(){
+  public void shareDataCallBack(){
     if(progressDialog.isShowing())
       progressDialog.dismiss();
 
+    if(use_email_not_bt)
+      sendEmail();
+    else
+      prepareBT();
+  }
+
+  private void prepareBT(){
+    BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    if (btAdapter == null) {
+      Toast.makeText(getApplicationContext(), getResources().getString(R.string.nobluetoothsupport), Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    if (!btAdapter.isEnabled()) {
+      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+      startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
+    }
+    else
+      sendBT();
+
+    /*Intent btDiscoverIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    btDiscoverIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, DISCOVER_DURATION );
+    startActivityForResult(btDiscoverIntent, BLUETOOTH_REQUEST);*/
+  }
+
+  private void sendBT(){
+    final Intent sendBTIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+    sendBTIntent.setType("*/*");
+
+    ArrayList<Uri> uris = new ArrayList<Uri>();
+    uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+            + dataFileName));
+    if(signaturesToExportFound){
+      uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+              + participationFileName));
+      uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
+              + signInReportsFileName));
+    }
+    sendBTIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+
+    sendBTIntent.setComponent(new ComponentName("com.android.bluetooth", "com.android.bluetooth.opp.BluetoothOppLauncherActivity"));
+    startActivityForResult(sendBTIntent, ParticipationSummaryActivity.SENDEMAIL_REQUEST);
+    overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+
+  }
+
+  private void sendEmail(){
     final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-    //sendEmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-    sendEmailIntent.setType("plain/text");
+    sendEmailIntent.setType("text/plain");
     String uriText = "mailto:" + Uri.encode("") +
             "?subject=" + Uri.encode("RealTrack Data Report") +
             "&body=" + Uri.encode("Please find your data attached with this email.");
@@ -710,6 +775,18 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == SENDEMAIL_REQUEST) {
       deleteTemporaryFiles(); //delete files irrespective of whether REQUEST_OK or not
+    }
+    else if(requestCode == BLUETOOTH_REQUEST){
+      if (resultCode == DISCOVER_DURATION)
+        sendBT();
+      else
+        Toast.makeText(this, R.string.bttransfercanceled, Toast.LENGTH_SHORT).show();
+    }
+    else if(requestCode == BLUETOOTH_ENABLE_REQUEST){
+      if (resultCode == RESULT_OK)
+        sendBT();
+      else
+        Toast.makeText(this, R.string.bttransfercanceled, Toast.LENGTH_SHORT).show();
     }
   }
 

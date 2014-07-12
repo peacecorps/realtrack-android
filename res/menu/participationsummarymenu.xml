@@ -1,10 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
     <item
-        android:id="@+id/action_exportdata"
-        android:icon="@android:drawable/sym_action_email"
-        android:showAsAction="ifRoom"
-        android:title="Email"/>
+        android:id="@+id/action_shareGroup"
+        android:icon="@android:drawable/ic_menu_share"
+        android:showAsAction="always"
+        android:title="@string/howtouse">
+        <menu>
+            <item
+                android:id="@+id/action_exportdata"
+                android:icon="@android:drawable/sym_action_email"
+                android:showAsAction="always"
+                android:title="@string/email"/>
+            <item
+                android:id="@+id/action_exportbt"
+                android:icon="@android:drawable/stat_sys_data_bluetooth"
+                android:showAsAction="always"
+                android:title="@string/bluetooth"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/action_helpGroup"
         android:icon="@android:drawable/ic_menu_help"

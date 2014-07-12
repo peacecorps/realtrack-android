@@ -134,6 +134,7 @@
     <string name="sign">&#xf044; Sign</string>
     <string name="signagain">&#xf044; Re&#8211;Sign</string>
     <string name="noparticipationstoexport">No participations to export</string>
+    <string name="nobluetoothsupport">Your device does not support Bluetooth</string>
     <string name="newrepeating">New Repeating</string>
     <string name="activityellipses">Activity&#8230;</string>
     <string name="addanewproject">Add a new project&#8230;</string>
@@ -178,6 +179,7 @@
     <string name="to">To</string>
     <string name="noorgs">No organizations</string>
     <string name="nocomms">No communities</string>
-    <string name="nocspp">No cross&#8211;sector programming priorities</string>    <string name="noinitiatives">No initiatives</string>
+    <string name="nocspp">No cross&#8211;sector programming priorities</string>    <string name="noinitiatives">No initiatives</string>    <string name="bluetooth">Bluetooth</string>
+    <string name="bttransfercanceled">Bluetooth transfer canceled</string>    <string name="email">Email</string>
 
 </resources>

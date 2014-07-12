@@ -7,6 +7,7 @@ public class SendEmailTask extends AsyncTask<Void, Void, Boolean> {
   String dataFileName;
   String participationFileName;
   String signInReportsFileName;
+  boolean use_email_not_bt;
 
   public SendEmailTask(ParticipationSummaryActivity participationSummaryActivity){
     this.participationSummaryActivity = participationSummaryActivity;
@@ -30,6 +31,6 @@ public class SendEmailTask extends AsyncTask<Void, Void, Boolean> {
   @Override
   protected void onPostExecute(final Boolean success) {
     super.onPostExecute(success);
-    participationSummaryActivity.sendEmail();
+    participationSummaryActivity.shareDataCallBack();
   }
 }
