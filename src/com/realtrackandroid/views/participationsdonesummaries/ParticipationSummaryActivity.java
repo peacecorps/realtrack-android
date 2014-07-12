@@ -69,13 +69,10 @@ import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 public class ParticipationSummaryActivity extends SherlockFragmentActivity {
-  private static final int DISCOVER_DURATION = 300;
   private static final int SENDEMAIL_REQUEST = 1;
-  private static final int PROGRESS_DIALOG = 2;
-  private static final int BLUETOOTH_REQUEST = 3;
-  private static final int BLUETOOTH_ENABLE_REQUEST = 4;
+  private static final int SENDBT_REQUEST = 2;
+  private static final int PROGRESS_DIALOG = 3;
   private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
-  private static final String BT_PACKAGE_NAME = "com.android.bluetooth";
 
   private int maxComms = 0;
 
@@ -94,7 +91,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   public String participationFileName;
   public String dataFileName;
 
-  private SendEmailTask sendEmailTask;
+  private SendDataTask sendEmailTask;
   private ProgressDialog progressDialog;
 
   private XYSeries mCurrentSeries;
@@ -111,7 +108,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
 
-    SendEmailTask task = (SendEmailTask) getLastCustomNonConfigurationInstance();
+    SendDataTask task = (SendDataTask) getLastCustomNonConfigurationInstance();
     if(task!=null){
       sendEmailTask = task;
       sendEmailTask.reAttach(this);
@@ -232,7 +229,10 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
             getResources().getString(R.string.foodsecurity)};
   }
 
-  public void prepareEmailInBackground() {
+  /**
+   * Callback for SendDataTask doInBackground()
+   */
+  public void prepareDataInBackgroundCallback() {
     DateFormat dateForFileNameParser = new SimpleDateFormat("MMddyyyy");
     dataFileName = "RealTrack_Data_Report_" + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
     participationFileName = "RealTrack_Participation_Report_" + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
@@ -249,14 +249,14 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     sendEmailTask.signInReportsFileName = signInReportsFileName;
     sendEmailTask.use_email_not_bt = use_email_not_bt;
 
-    createEmail(dataHolder);
+    createDataFiles(dataHolder);
   }
 
   /**
    * Creates files to email.
    * @param dHolder
    */
-  private void createEmail(DataHolder dHolder){
+  private void createDataFiles(DataHolder dHolder){
     String[] allInits = updateInitiativeNames();
     String[] allCspps = updateCsppNames();
 
@@ -411,6 +411,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
             addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Project Title: " + p.getTitle()));
             projectParagraph.add(new Paragraph("Activity Title: " + a.getTitle()));
+            projectParagraph.add(new Paragraph("Reporting Cohort: " + a.getCohort()));
             projectParagraph.add(new Paragraph("Sign-In Sheet for: " + dateParser.format(d)+" " + timeParser.format(d)));
             projectParagraph.add(new Paragraph("Event details: " + participation.getNotes()));
             projectParagraph.add(new Paragraph("Sign-in Sheet:"));
@@ -677,47 +678,31 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     showDialog(PROGRESS_DIALOG);
 
     if(sendEmailTask == null || sendEmailTask.getStatus()==Status.FINISHED)
-      sendEmailTask = new SendEmailTask(this);
+      sendEmailTask = new SendDataTask(this);
     sendEmailTask.execute();
   }
 
   /**
-   * Callback for SendEmailTask
-   * @param dataFileName 
-   * @param participationFileName 
-   * @param signInReportsFileName 
+   * Callback for SendDataTask onPostExecute()
    */
-  public void shareDataCallBack(){
+  public void shareDataCallback(){
     if(progressDialog.isShowing())
       progressDialog.dismiss();
 
     if(use_email_not_bt)
-      sendEmail();
+      sendByEmail();
     else
-      prepareBT();
+      sendByBT();
   }
 
-  private void prepareBT(){
+  private void sendByBT(){
     BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
     if (btAdapter == null) {
       Toast.makeText(getApplicationContext(), getResources().getString(R.string.nobluetoothsupport), Toast.LENGTH_SHORT).show();
       return;
     }
-
-    if (!btAdapter.isEnabled()) {
-      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-      startActivityForResult(enableBtIntent, BLUETOOTH_ENABLE_REQUEST);
-    }
-    else
-      sendBT();
-
-    /*Intent btDiscoverIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-    btDiscoverIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, DISCOVER_DURATION );
-    startActivityForResult(btDiscoverIntent, BLUETOOTH_REQUEST);*/
-  }
-
-  private void sendBT(){
+    
     final Intent sendBTIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
     sendBTIntent.setType("*/*");
 
@@ -733,12 +718,11 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     sendBTIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 
     sendBTIntent.setComponent(new ComponentName("com.android.bluetooth", "com.android.bluetooth.opp.BluetoothOppLauncherActivity"));
-    startActivityForResult(sendBTIntent, ParticipationSummaryActivity.SENDEMAIL_REQUEST);
+    startActivityForResult(sendBTIntent, ParticipationSummaryActivity.SENDBT_REQUEST);
     overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
-
   }
 
-  private void sendEmail(){
+  private void sendByEmail(){
     final Intent sendEmailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
     sendEmailIntent.setType("text/plain");
     String uriText = "mailto:" + Uri.encode("") +
@@ -774,19 +758,10 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (requestCode == SENDEMAIL_REQUEST) {
-      deleteTemporaryFiles(); //delete files irrespective of whether REQUEST_OK or not
+      deleteTemporaryFiles();
     }
-    else if(requestCode == BLUETOOTH_REQUEST){
-      if (resultCode == DISCOVER_DURATION)
-        sendBT();
-      else
-        Toast.makeText(this, R.string.bttransfercanceled, Toast.LENGTH_SHORT).show();
-    }
-    else if(requestCode == BLUETOOTH_ENABLE_REQUEST){
-      if (resultCode == RESULT_OK)
-        sendBT();
-      else
-        Toast.makeText(this, R.string.bttransfercanceled, Toast.LENGTH_SHORT).show();
+    else if (requestCode == SENDBT_REQUEST) {
+      deleteTemporaryFiles();
     }
   }
 

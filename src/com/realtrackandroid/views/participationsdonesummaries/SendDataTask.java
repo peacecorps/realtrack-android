@@ -2,14 +2,14 @@ package com.realtrackandroid.views.participationsdonesummaries;
 
 import android.os.AsyncTask;
 
-public class SendEmailTask extends AsyncTask<Void, Void, Boolean> {
+public class SendDataTask extends AsyncTask<Void, Void, Boolean> {
   ParticipationSummaryActivity participationSummaryActivity;
   String dataFileName;
   String participationFileName;
   String signInReportsFileName;
   boolean use_email_not_bt;
 
-  public SendEmailTask(ParticipationSummaryActivity participationSummaryActivity){
+  public SendDataTask(ParticipationSummaryActivity participationSummaryActivity){
     this.participationSummaryActivity = participationSummaryActivity;
   }
   
@@ -24,13 +24,13 @@ public class SendEmailTask extends AsyncTask<Void, Void, Boolean> {
 
   @Override
   protected Boolean doInBackground(final Void... params) {
-    participationSummaryActivity.prepareEmailInBackground();
+    participationSummaryActivity.prepareDataInBackgroundCallback();
     return true;
   }
 
   @Override
   protected void onPostExecute(final Boolean success) {
     super.onPostExecute(success);
-    participationSummaryActivity.shareDataCallBack();
+    participationSummaryActivity.shareDataCallback();
   }
 }
