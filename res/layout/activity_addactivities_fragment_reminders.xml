@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -22,13 +23,13 @@
 
             <CheckBox
                 android:id="@+id/mondayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/monday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/mondayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -37,13 +38,13 @@
 
             <CheckBox
                 android:id="@+id/tuesdayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/tuesday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/tuesdayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -52,13 +53,13 @@
 
             <CheckBox
                 android:id="@+id/wednesdayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/wednesday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/wednesdayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -67,13 +68,13 @@
 
             <CheckBox
                 android:id="@+id/thursdayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/thursday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/thursdayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -82,13 +83,13 @@
 
             <CheckBox
                 android:id="@+id/fridayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/friday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/fridayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -97,13 +98,13 @@
 
             <CheckBox
                 android:id="@+id/saturdayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/saturday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/saturdayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"
@@ -112,13 +113,13 @@
 
             <CheckBox
                 android:id="@+id/sundayCheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/sunday"
                 android:textColor="@color/darkgrey" />
 
             <EditText
                 android:id="@+id/sundayTime"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:clickable="false"
                 android:hint="@string/timeformathint"
                 android:inputType="time"

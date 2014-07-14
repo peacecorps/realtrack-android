@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -101,7 +102,7 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    app:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/men"
                     android:textColor="@color/darkgrey"
@@ -128,7 +129,7 @@
                     <EditText
                         android:id="@+id/numMen09"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen09"
                         android:inputType="number"
@@ -138,7 +139,7 @@
                     <EditText
                         android:id="@+id/numMen1017"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen1017"
                         android:inputType="number"
@@ -148,7 +149,7 @@
                     <EditText
                         android:id="@+id/numMen1824"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen1824"
                         android:inputType="number"
@@ -158,7 +159,7 @@
                     <EditText
                         android:id="@+id/numMenOver25"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmenover25"
                         android:inputType="number"
@@ -179,7 +180,7 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    app:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/women"
                     android:textColor="@color/darkgrey"
@@ -206,7 +207,7 @@
                     <EditText
                         android:id="@+id/numWomen09"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen09"
                         android:inputType="number"
@@ -216,7 +217,7 @@
                     <EditText
                         android:id="@+id/numWomen1017"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen1017"
                         android:inputType="number"
@@ -226,7 +227,7 @@
                     <EditText
                         android:id="@+id/numWomen1824"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen1824"
                         android:inputType="number"
@@ -236,7 +237,7 @@
                     <EditText
                         android:id="@+id/numWomenOver25"
                         android:layout_width="230dp"
-                        android:layout_gravity="fill_horizontal"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomenover25"
                         android:inputType="number"

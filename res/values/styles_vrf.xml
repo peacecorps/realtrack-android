@@ -23,8 +23,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@null</item>
     </style>
-    
+
     <style name="ActionBar.Tab.Text.Style" parent="@style/Widget.Sherlock.ActionBar.TabText">
         <item name="android:textColor">@color/lightgrey</item>
     </style>
-</resources>
+
+</resources>

@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -86,7 +87,7 @@
             android:textColor="@color/darkgrey"
             android:textSize="16sp"
             android:textStyle="bold" />
-        
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -148,7 +149,7 @@
             android:textColor="@color/darkgrey"
             android:textSize="16sp"
             android:textStyle="bold" />
-        
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -180,7 +181,7 @@
 
             <CheckBox
                 android:id="@+id/ECPACheckBox"
-                android:layout_gravity="fill_horizontal"
+                app:layout_gravity="fill_horizontal"
                 android:text="@string/ecpa"
                 android:textColor="@color/darkgrey" />
         </android.support.v7.widget.GridLayout>

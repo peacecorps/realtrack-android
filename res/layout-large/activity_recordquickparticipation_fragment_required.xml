@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -92,16 +93,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                 android:padding="10dp" >
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    app:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/men"
                     android:textColor="@color/darkgrey"
@@ -127,40 +128,40 @@
 
                     <EditText
                         android:id="@+id/numMen09"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen09"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numMen1017"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen1017"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numMen1824"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmen1824"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numMenOver25"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofmenover25"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
@@ -170,23 +171,22 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                    
-                    android:layout_marginRight="20dp"
                 android:padding="10dp" >
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    app:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/women"
                     android:textColor="@color/darkgrey"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-                
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
@@ -206,40 +206,40 @@
 
                     <EditText
                         android:id="@+id/numWomen09"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen09"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numWomen1017"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen1017"
                         android:inputType="number"
-                        android:layout_width="230dp"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numWomen1824"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomen1824"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />
 
                     <EditText
                         android:id="@+id/numWomenOver25"
-                        android:layout_gravity="fill_horizontal"
+                        android:layout_width="230dp"
+                        app:layout_gravity="fill_horizontal"
                         android:clickable="false"
                         android:hint="@string/numberofwomenover25"
-                        android:layout_width="230dp"
                         android:inputType="number"
                         android:textColor="@color/darkgrey"
                         android:textColorHint="@color/intermediategrey" />

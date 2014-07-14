@@ -179,7 +179,9 @@
     <string name="to">To</string>
     <string name="noorgs">No organizations</string>
     <string name="nocomms">No communities</string>
-    <string name="nocspp">No cross&#8211;sector programming priorities</string>    <string name="noinitiatives">No initiatives</string>    <string name="bluetooth">Bluetooth</string>
+    <string name="nocspp">No cross&#8211;sector programming priorities</string>
+    <string name="noinitiatives">No initiatives</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="email">Email</string>
 
 </resources>

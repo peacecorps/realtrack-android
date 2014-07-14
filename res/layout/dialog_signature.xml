@@ -1,20 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:signatureview="http://schemas.android.com/apk/res/com.hackforchange"
+    xmlns:signatureview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <com.realtrackandroid.views.participationsactive.signinsheet.SignatureView
         android:id="@+id/signatureview"
-        android:gravity="center_horizontal"
-        android:background="@drawable/paper_background"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/signatureview_height" />
+        android:layout_height="@dimen/signatureview_height"
+        android:background="@drawable/paper_background"
+        android:gravity="center_horizontal" />
 
     <LinearLayout
         android:layout_width="fill_parent"

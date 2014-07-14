@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -13,10 +15,11 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 
 <resources>
+
     <color name="pressed_vrf">#CCF86C6C</color>
     <color name="eggshellwhite">#F0F0F0</color>
     <color name="lightergrey">#E3E3E3</color>
@@ -32,4 +35,5 @@
     <color name="white">#FFFFFF</color>
     <color name="green">#7ACC7A</color>
     <color name="darkgreen">#399639</color>
+
 </resources>

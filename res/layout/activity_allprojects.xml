@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="@drawable/globalpattern_background">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/globalpattern_background"
+    android:orientation="vertical" >
 
     <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/projectslistView"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"/>
+        android:id="@+id/projectslistView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
 </LinearLayout>

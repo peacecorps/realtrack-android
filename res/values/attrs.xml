@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <declare-styleable name="SignatureView">
-       <attr name="signatureColor" format="color|reference" />
-   </declare-styleable>
+
+    <declare-styleable name="SignatureView">
+        <attr name="signatureColor" format="color|reference" />
+    </declare-styleable>
+
 </resources>

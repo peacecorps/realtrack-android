@@ -33,52 +33,51 @@
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
             android:textColorHint="@color/intermediategrey" />
-        
+
         <EditText
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/nameEditText"
             android:layout_margin="20dp"
             android:hint="@string/phonehint"
-            android:layout_below="@id/nameEditText"
             android:inputType="text|phone"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="@color/intermediategrey"/>
-        
-        
+            android:textColorHint="@color/intermediategrey" />
+
         <EditText
             android:id="@+id/villageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/phoneEditText"
             android:layout_margin="20dp"
             android:hint="@string/villagehint"
             android:inputType="textCapWords"
-            android:layout_below="@id/phoneEditText"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="@color/intermediategrey"/>
-        
+            android:textColorHint="@color/intermediategrey" />
+
         <EditText
             android:id="@+id/ageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/villageEditText"
             android:layout_margin="20dp"
             android:hint="@string/agehint"
-            android:layout_below="@id/villageEditText"
             android:inputType="number"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/darkgrey"
-            android:textColorHint="@color/intermediategrey"/>
+            android:textColorHint="@color/intermediategrey" />
 
         <RadioGroup
             android:id="@+id/genderlayout"
@@ -86,8 +85,8 @@
             android:layout_height="fill_parent"
             android:layout_below="@id/ageEditText"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="20dp"
+            android:gravity="center"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -110,8 +109,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/genderlayout"
-            android:layout_margin="20dp"
             android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:padding="10dp" >
