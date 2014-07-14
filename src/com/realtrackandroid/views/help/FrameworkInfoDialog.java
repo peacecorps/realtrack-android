@@ -13,6 +13,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.indicators.IndicatorsDAO;
 import com.realtrackandroid.models.indicators.Indicators;
@@ -117,7 +118,7 @@ public class FrameworkInfoDialog extends DialogFragment {
     if (getDialog() == null)
       return;
     
-    getDialog().getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    getDialog().getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
   }
 
   private void addNewline(StringBuilder sb) {

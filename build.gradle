@@ -1,0 +1,114 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.9.2'
+  }
+}
+
+subprojects {
+  apply plugin: 'android-library'
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    compile fileTree(dir: '..', include: '*.jar')
+  }
+
+  android {
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+      minSdkVersion 8
+      targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+
+    /* don't fail builds on lint errors */
+    lintOptions {
+      abortOnError false
+    }
+
+    sourceSets {
+      main {
+        manifest.srcFile 'AndroidManifest.xml'
+        java.srcDirs = ['src']
+        res.srcDirs = ['res']
+      }
+    }
+  }
+}
+
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':PagerSlidingTabStrip')
+    compile project(':ActionBarSherlock')
+    compile project(':GridLayout')
+}
+
+android {
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+      minSdkVersion 8
+      targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+
+    /* don't fail builds on lint errors */
+    lintOptions {
+      abortOnError false
+    }
+
+    sourceSets {
+      main {
+        manifest {
+          srcFile 'AndroidManifest.xml'
+        }
+        java {
+          srcDir 'src'
+        }
+        res {
+          srcDir 'res'
+        }
+        assets {
+          srcDir 'assets'
+        }
+        resources {
+          srcDir 'src'
+        }
+        aidl {
+          srcDir 'src'
+        }
+      }
+    }
+
+    if(new File(RELEASE_STORE_FILE).exists()) {
+      signingConfigs {
+        release {
+          storeFile (new File(RELEASE_STORE_FILE))
+          storePassword RELEASE_STORE_PASSWORD
+          keyAlias RELEASE_KEY_ALIAS
+          keyPassword RELEASE_KEY_PASSWORD
+        }
+      }
+
+      buildTypes {
+        release {
+          signingConfig signingConfigs.release
+        }
+      }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}

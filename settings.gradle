@@ -1,0 +1,6 @@
+include ':PagerSlidingTabStrip'
+project(':PagerSlidingTabStrip').projectDir = new File(settingsDir, 'libs/PagerSlidingTabStrip')
+include ':ActionBarSherlock'
+project(':ActionBarSherlock').projectDir = new File(settingsDir, 'libs/ActionBarSherlock')
+include ':GridLayout'
+project(':GridLayout').projectDir = new File(settingsDir, 'libs/GridLayout')

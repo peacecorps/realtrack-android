@@ -63,7 +63,7 @@ public class SignatureDialog extends SherlockDialogFragment {
       return;
     }
     
-    getDialog().getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    getDialog().getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
   }
    
 
