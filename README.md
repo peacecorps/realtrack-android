@@ -64,14 +64,15 @@ This repo will provide the following external libraries for you:
 
 **Installation for development**
 
-1. `temp$> git clone https://github.com/PeaceCorps/realtrack-android.git`. This will create the directory `temp/realtrack-android`.
+1. Clone this repository into a temporary location: 
+<pre>temp$> git clone https://github.com/PeaceCorps/realtrack-android.git</pre>
+This will create the directory `temp/realtrack-android`.
 2. Open Eclipse. File -> Import -> Existing Android Code Into Workspace. Put the path of the `temp/realtrack-android` directory created in step 1 into the `Root Folder` field of the Eclipse dialog.
 3. Import the following four projects (you will see these names in the 'New Project Name' column of the 'Projects' field). Make sure the `Copy projects into workspace` checkbox is selected before you do this.:
-
-     * `RealTrack`
-     * `ActionBarSherlock`
-     * `GridLayout`
-     * `PagerSlidingTabStrip`
+ * `RealTrack`
+ * `ActionBarSherlock`
+ * `GridLayout`
+ * `PagerSlidingTabStrip`
 
 4. Thus, after step 3, the workspace directory layout should look like this:
  <pre>
@@ -85,10 +86,16 @@ workspace
     * `ActionBarSherlock`, `GridLayout`, `PagerSlidingTabStrip` are set up as Library projects (check via right click on project name -> Properties -> Android -> isLibrary (should be checked))
     * `RealTrack` references each of those projects (check via right click on project name -> Properties -> Android -> Library (the three projects should show up as references))
 
-6. If you have `gradle`, you can issue a build (or any other gradle task) from the RealTrack directory: `workspace/RealTrack>$ ./gradlew assembleDebug`
+6. If you have `gradle`, you can issue a build (or any other gradle task) from the RealTrack directory, e.g.:
+<pre>workspace/RealTrack>$ ./gradlew assembleDebug</pre>
+Note that `gradle` assumes you either have a `local.properties` file in your project directory or the environment variable `ANDROID_HOME` set. If you followed the 5 steps listed above, Eclipse would have generated the `local.properties` file for you. However, if you skip those steps, please make sure to either:
+ * (recommended method) generate a `local.properties` file using the command:
+ <pre>workspace/RealTrack>$ android update project -s -t android-17 -p .</pre> in the RealTrack project root. You can change the `android-17` part to target another platform version. OR
+ * set the `ANDROID_HOME` variable to your android installation directory
 
 #### External Libraries Used
 * ActionBarSherlock
 * AChartEngine
 * iText-G Android PDF
 * PagerSlidingTabStrip
+
