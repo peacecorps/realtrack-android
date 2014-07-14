@@ -1,5 +1,7 @@
-RealTrack
-=========
+#RealTrack
+##Android solution to track Peace Corps Volunteer activities in the field
+
+[![Build Status](https://travis-ci.org/PeaceCorps/realtrack-android.svg?branch=master)](https://travis-ci.org/PeaceCorps/realtrack-android)
 
 #### Screenshots
 ##### Project Screens
