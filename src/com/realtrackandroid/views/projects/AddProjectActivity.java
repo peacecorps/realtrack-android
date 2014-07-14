@@ -25,47 +25,54 @@ import com.realtrackandroid.views.help.HelpDialog;
  * Presents an activity that lets you add a new project
  * Pressing the back key will exit the activity without adding a project
  */
-public class AddProjectActivity extends SherlockFragmentActivity implements PickDateDialogListener, ProjectFragmentInterface {
+public class AddProjectActivity extends SherlockFragmentActivity implements PickDateDialogListener,
+        ProjectFragmentInterface {
   protected Project p;
+
   protected OptionalFragment optionalFragment;
+
   protected RequiredFragment requiredFragment;
+
   private ProjectPageAdapter pageAdapter;
+
   List<Fragment> fragments;
+
   private PagerSlidingTabStrip tabs;
+
   private List<String> fragmentTitles;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.base_pager);
-    
+
     fragments = createFragments();
     requiredFragment = (RequiredFragment) fragments.get(0);
     optionalFragment = (OptionalFragment) fragments.get(1);
-    
+
     tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
     pageAdapter = new ProjectPageAdapter(getSupportFragmentManager(), fragments);
-    
-    ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+
+    ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
     pager.setAdapter(pageAdapter);
-    
+
     tabs.setViewPager(pager);
-    
+
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
-  
-  private List<Fragment> createFragments(){
+
+  private List<Fragment> createFragments() {
     fragmentTitles = new ArrayList<String>();
     fragmentTitles.add("Required");
     fragmentTitles.add("Optional");
-    
+
     List<Fragment> fList = new ArrayList<Fragment>();
     fList.add(RequiredFragment.newInstance(fragmentTitles.get(0)));
     fList.add(OptionalFragment.newInstance(fragmentTitles.get(1)));
-    
+
     return fList;
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getSupportMenuInflater();
@@ -110,12 +117,12 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
 
   private void saveProject() {
     p = new Project();
-    
-    if(!requiredFragment.setFields(p))
+
+    if (!requiredFragment.setFields(p))
       return;
-    
+
     optionalFragment.setFields(p);
-    
+
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     pDao.addProject(p);
     finish();
@@ -125,36 +132,36 @@ public class AddProjectActivity extends SherlockFragmentActivity implements Pick
   public void setDate(String date) {
     requiredFragment.setDate(date);
   }
-  
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
   }
-  
+
   private class ProjectPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
 
-      public ProjectPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-          super(fm);
-          this.fragments = fragments;
-      }
-      
-      @Override
-      public Fragment getItem(int position) {
-          return this.fragments.get(position);
-      }
-      
-      @Override
-      public CharSequence getPageTitle(int position) {
-        return fragmentTitles.get(position);
-      }
-   
-      @Override
-      public int getCount() {
-          return this.fragments.size();
-      }
+    public ProjectPageAdapter(FragmentManager fm, List<Fragment> fragments) {
+      super(fm);
+      this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      return this.fragments.get(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return fragmentTitles.get(position);
+    }
+
+    @Override
+    public int getCount() {
+      return this.fragments.size();
+    }
   }
 
   @Override

@@ -29,6 +29,7 @@ import com.realtrackandroid.views.help.HelpDialog;
  */
 public class DisplayProjectActivity extends SherlockFragmentActivity {
   private int id;
+
   private Project p;
 
   public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,8 @@ public class DisplayProjectActivity extends SherlockFragmentActivity {
     TextView endDate = (TextView) findViewById(R.id.endDate);
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
-    if(p.getNotes().length()>0)
-      notes.setText("Notes:\n"+p.getNotes());
+    if (p.getNotes().length() > 0)
+      notes.setText("Notes:\n" + p.getNotes());
   }
 
   // create actionbar menu
@@ -70,9 +71,11 @@ public class DisplayProjectActivity extends SherlockFragmentActivity {
   }
 
   /**
-   * ******************************************************************************************************************
-   * transition to view for adding new project when the add icon in the action bar is clicked
-   * ******************************************************************************************************************
+   * ***********************************************************************************************
+   * ******************* transition to view for adding new project when the add icon in the action
+   * bar is clicked
+   * *********************************************************************************
+   * *********************************
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,17 +87,15 @@ public class DisplayProjectActivity extends SherlockFragmentActivity {
       case R.id.action_deleteproject:
         // warn the user first!
         new AlertDialog.Builder(this)
-        .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
-        .setCancelable(false)
-        .setNegativeButton("No", null)
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int id) {
-            ProjectDAO pDao = new ProjectDAO(getApplicationContext());
-            pDao.deleteProject(DisplayProjectActivity.this.id);
-            finish();
-          }
-        })
-        .show();
+                .setMessage("Are you sure you want to delete this project? This CANNOT be undone.")
+                .setCancelable(false).setNegativeButton("No", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int id) {
+                    ProjectDAO pDao = new ProjectDAO(getApplicationContext());
+                    pDao.deleteProject(DisplayProjectActivity.this.id);
+                    finish();
+                  }
+                }).show();
         break;
       case R.id.action_editproject:
         Intent i = new Intent(DisplayProjectActivity.this, EditProjectActivity.class);

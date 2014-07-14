@@ -32,10 +32,11 @@ public class FrameworkInfoDialog extends DialogFragment {
     String project = prefs.getString(getString(R.string.project), "");
 
     List<Indicators> indicatorList = iDao.getAllIndicatorsForPostAndProject(post, project);
-    
+
     WebView helpContent = (WebView) view.findViewById(R.id.helpContent);
     helpContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-    helpContent.loadDataWithBaseURL(null,createFrameworkContent(post, project, indicatorList), "text/html", "charset=ISO-8859-1", null);
+    helpContent.loadDataWithBaseURL(null, createFrameworkContent(post, project, indicatorList),
+            "text/html", "charset=ISO-8859-1", null);
 
     Button closeButton = (Button) view.findViewById(R.id.closeButton);
     closeButton.setOnClickListener(new View.OnClickListener() {
@@ -50,65 +51,53 @@ public class FrameworkInfoDialog extends DialogFragment {
 
   private String createFrameworkContent(String post, String project, List<Indicators> indicatorList) {
     StringBuilder sb = new StringBuilder();
-    sb.append("<!DOCTYPE html>" +
-    		"<html>" +
-    		"<head>" +
-    		"<style>" +
-    		"div.header{" +
-    		"text-align:center;" +
-    		"background-color:#0099CC;" +
-    		"color:white;" +
-    		"padding:2px;" +
-    		"}" +
-    		"</style>" +
-    		"</head>" +
-    		"<body>" +
-    		"<div class='header'>");
+    sb.append("<!DOCTYPE html>" + "<html>" + "<head>" + "<style>" + "div.header{"
+            + "text-align:center;" + "background-color:#0099CC;" + "color:white;" + "padding:2px;"
+            + "}" + "</style>" + "</head>" + "<body>" + "<div class='header'>");
     sb.append("<strong>Project Framework</strong>");
     addNewline(sb);
-    sb.append("<br>"+project + ", " + post);
+    sb.append("<br>" + project + ", " + post);
     sb.append("</div><br>");
     String _goal = "";
     String _objective = "";
     String _type = "";
-    
-    //the list is sorted on goals, then objectives, then type
-    for(Indicators i: indicatorList){
+
+    // the list is sorted on goals, then objectives, then type
+    for (Indicators i : indicatorList) {
       String goal = i.getGoal();
       String objective = i.getObjective();
       String type = i.getType();
-      if(!goal.equals(_goal)){
-        sb.append("</ul>"); //closes the last OBJECTIVE list
-        sb.append("<strong>"+goal+"</strong>");
-        sb.append("<ul>"); //opens the next OBJECTIVE list
+      if (!goal.equals(_goal)) {
+        sb.append("</ul>"); // closes the last OBJECTIVE list
+        sb.append("<strong>" + goal + "</strong>");
+        sb.append("<ul>"); // opens the next OBJECTIVE list
         addNewline(sb);
         _goal = goal;
         _objective = "";
       }
-      if(!objective.equals(_objective)){
-        sb.append("</ul>"); //closes the last INDICATORS list
-        sb.append("<li><strong>"+objective+"</strong></li>");
-        sb.append("<ul>"); //opens the next INDICATORS list
+      if (!objective.equals(_objective)) {
+        sb.append("</ul>"); // closes the last INDICATORS list
+        sb.append("<li><strong>" + objective + "</strong></li>");
+        sb.append("<ul>"); // opens the next INDICATORS list
         _objective = objective;
         _type = "";
       }
-      if(!type.equals(_type)){
-        sb.append("</ul>"); //closes the last INDICATORS list
-        if(type.equals("Output"))
-          sb.append("<span style='font-weight:bold;color:orange;'>"+type+" Indicators:</span>");
+      if (!type.equals(_type)) {
+        sb.append("</ul>"); // closes the last INDICATORS list
+        if (type.equals("Output"))
+          sb.append("<span style='font-weight:bold;color:orange;'>" + type + " Indicators:</span>");
         else
-          sb.append("<span style='font-weight:bold;color:green;'>"+type+" Indicators:</span>");
+          sb.append("<span style='font-weight:bold;color:green;'>" + type + " Indicators:</span>");
         addNewline(sb);
-        sb.append("<ul>"); //opens the next INDICATORS list
+        sb.append("<ul>"); // opens the next INDICATORS list
         addNewline(sb);
         _type = type;
       }
-      sb.append("<li>"+i.getIndicator());
+      sb.append("<li>" + i.getIndicator());
       addNewline(sb);
     }
-    
-    sb.append("</body>" +
-    		"</html>");
+
+    sb.append("</body>" + "</html>");
     return sb.toString();
   }
 
@@ -117,7 +106,7 @@ public class FrameworkInfoDialog extends DialogFragment {
     super.onStart();
     if (getDialog() == null)
       return;
-    
+
     getDialog().getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
   }
 

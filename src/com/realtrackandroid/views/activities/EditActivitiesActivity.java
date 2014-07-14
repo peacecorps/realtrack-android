@@ -66,31 +66,36 @@ public class EditActivitiesActivity extends AddActivitiesActivity {
   }
 
   private void updateActivity() {
-    
+
     a = new Activities();
-    
+
     a.setProjectid(projectid);
     a.setId(id);
-    
-    if(!requiredFragment.setFields(a))
+
+    if (!requiredFragment.setFields(a))
       return;
 
     optionalFragment.setFields(a);
 
     ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
     aDao.updateActivities(a);
-    
+
     remindersFragment.setFields(a, id);
-    
+
     finish();
   }
 
   // remove all the alarms associated with a reminder
   public static void deleteAlarmsForReminder(Context context, int reminderid) {
     Intent notifIntent = new Intent(context, NotificationService.class);
-    notifIntent.putExtra("reminderid", reminderid); // not necessary for alarmManager.cancel to match pending intents but leaving it here anyway
-    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an action, the extras will NOT be sent!!
-    PendingIntent pendingIntent = PendingIntent.getService(context, reminderid, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents using Reminders.id as the request code
+    notifIntent.putExtra("reminderid", reminderid); // not necessary for alarmManager.cancel to
+                                                    // match pending intents but leaving it here
+                                                    // anyway
+    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an
+                                               // action, the extras will NOT be sent!!
+    PendingIntent pendingIntent = PendingIntent.getService(context, reminderid, notifIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents
+                                                // using Reminders.id as the request code
     pendingIntent.cancel();
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     alarmManager.cancel(pendingIntent);

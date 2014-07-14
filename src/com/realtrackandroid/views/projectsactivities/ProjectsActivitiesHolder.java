@@ -7,6 +7,7 @@ import com.realtrackandroid.models.projects.Project;
 
 class ProjectsActivitiesHolder {
   Project project;
+
   List<Activities> activitiesList;
 
   Project getProject() {

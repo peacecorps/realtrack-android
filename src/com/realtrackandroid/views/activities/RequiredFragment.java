@@ -22,18 +22,22 @@ import com.realtrackandroid.views.dialogs.PickDateDialog;
 public class RequiredFragment extends SherlockFragment {
 
   private EditText title, startDate, endDate;
+
   private boolean startOrEnd;
+
   private long projectStartDate, projectEndDate;
+
   private Activities a;
 
-  public static final RequiredFragment newInstance(String title)
-  {
+  public static final RequiredFragment newInstance(String title) {
     RequiredFragment f = new RequiredFragment();
     return f;
   }
 
   private View v;
+
   private Project p;
+
   private ActivitiesFragmentInterface mActivity;
 
   @Override
@@ -41,29 +45,31 @@ public class RequiredFragment extends SherlockFragment {
     super.onAttach(activity);
     try {
       mActivity = (ActivitiesFragmentInterface) activity;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement ActivitiesFragmentInterface");
+    }
+    catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString()
+              + " must implement ActivitiesFragmentInterface");
     }
     p = mActivity.getProject();
     a = mActivity.getActivities();
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     v = inflater.inflate(R.layout.activity_addactivities_fragment_required, container, false);
     return v;
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
     projectStartDate = p.getStartDate();
     projectEndDate = p.getEndDate();
 
     // entering the start date
     startDate = (EditText) v.findViewById(R.id.startDate);
-    startDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    startDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                              // first selection of the text field
     // not doing this means the first click simply focuses the text field
     startDate.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -74,15 +80,29 @@ public class RequiredFragment extends SherlockFragment {
         bundle.putLong("mindate", projectStartDate);
         try {
           Date date = parser.parse(endDate.getText().toString());
-          Long maxDate = date.getTime() < projectEndDate ? date.getTime() : projectEndDate; // choose the lesser of the two for the upper bound
+          Long maxDate = date.getTime() < projectEndDate ? date.getTime() : projectEndDate; // choose
+                                                                                            // the
+                                                                                            // lesser
+                                                                                            // of
+                                                                                            // the
+                                                                                            // two
+                                                                                            // for
+                                                                                            // the
+                                                                                            // upper
+                                                                                            // bound
           bundle.putLong("maxdate", maxDate);
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
           bundle.putLong("maxdate", projectEndDate);
         }
-        try{
+        try {
           Date date = parser.parse(startDate.getText().toString());
-          bundle.putLong("displaydate", date.getTime()); // really only required in EditActivitiesActivity (which is a subclass of this one) for editing an activity
-        } catch (ParseException e){
+          bundle.putLong("displaydate", date.getTime()); // really only required in
+                                                         // EditActivitiesActivity (which is a
+                                                         // subclass of this one) for editing an
+                                                         // activity
+        }
+        catch (ParseException e) {
         }
         showDatePickerDialog(bundle);
       }
@@ -96,7 +116,8 @@ public class RequiredFragment extends SherlockFragment {
 
     // entering the end date
     endDate = (EditText) v.findViewById(R.id.endDate);
-    endDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    endDate.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first
+                                            // selection of the text field
     // not doing this means the first click simply focuses the text field
     endDate.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -107,15 +128,29 @@ public class RequiredFragment extends SherlockFragment {
         bundle.putLong("maxdate", projectEndDate);
         try {
           Date date = parser.parse(startDate.getText().toString());
-          Long minDate = date.getTime() > projectStartDate ? date.getTime() : projectStartDate; // choose the larger of the two for the lower bound
+          Long minDate = date.getTime() > projectStartDate ? date.getTime() : projectStartDate; // choose
+                                                                                                // the
+                                                                                                // larger
+                                                                                                // of
+                                                                                                // the
+                                                                                                // two
+                                                                                                // for
+                                                                                                // the
+                                                                                                // lower
+                                                                                                // bound
           bundle.putLong("mindate", minDate);
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
           bundle.putLong("mindate", projectStartDate);
         }
         try {
           Date date = parser.parse(endDate.getText().toString());
-          bundle.putLong("displaydate", date.getTime()); // really only required in EditActivitiesActivity (which is a subclass of this one) for editing an activity 
-        } catch (ParseException e){
+          bundle.putLong("displaydate", date.getTime()); // really only required in
+                                                         // EditActivitiesActivity (which is a
+                                                         // subclass of this one) for editing an
+                                                         // activity
+        }
+        catch (ParseException e) {
         }
         showDatePickerDialog(bundle);
       }
@@ -128,8 +163,8 @@ public class RequiredFragment extends SherlockFragment {
     });
 
     title = (EditText) v.findViewById(R.id.title);
-    
-    if(a!=null){
+
+    if (a != null) {
       title.setText(a.getTitle());
       DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
       Date d = new Date(a.getStartDate());
@@ -139,15 +174,15 @@ public class RequiredFragment extends SherlockFragment {
     }
   }
 
-  public void setDate(String date){
+  public void setDate(String date) {
     if (startOrEnd)
-      startDate.setText(date); //sets the chosen date in the text view
+      startDate.setText(date); // sets the chosen date in the text view
     else
-      endDate.setText(date); //sets the chosen date in the text view
+      endDate.setText(date); // sets the chosen date in the text view
   }
 
-  public boolean setFields(Activities a){
-    if(v==null)
+  public boolean setFields(Activities a) {
+    if (v == null)
       return false;
 
     // save the start and end date
@@ -159,15 +194,18 @@ public class RequiredFragment extends SherlockFragment {
       date.setHours(23);
       date.setMinutes(59);
       a.setEndDate(date.getTime());
-    } catch (ParseException e) {
-      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT).show();
+    }
+    catch (ParseException e) {
+      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT)
+              .show();
       return false;
     }
 
     // save title and other params
     a.setTitle(title.getText().toString());
     if (a.getTitle().equals("")) {
-      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT).show();
+      Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT)
+              .show();
       return false;
     }
 

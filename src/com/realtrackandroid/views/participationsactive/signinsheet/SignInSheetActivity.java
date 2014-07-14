@@ -18,12 +18,19 @@ import com.realtrackandroid.models.activities.Participant;
 
 public class SignInSheetActivity extends SherlockFragmentActivity {
   private StyledButton submitButton, signButton;
-  private Intent intent; 
+
+  private Intent intent;
+
   private EditText nameText, phoneText, villageText, ageText;
+
   private TextView signInMessage;
+
   private RadioButton maleRadioButton;
+
   private Bitmap signatureBitmap;
+
   private View spacer;
+
   SignatureDialog signatureDialog;
 
   @Override
@@ -40,7 +47,9 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
 
     String signInMsg = intent.getExtras().getString("activitytitle");
 
-    if(intent.hasExtra("participationdate")){ //we need to check because there's a chance this is not present (from RQPA if user does not enter date)
+    if (intent.hasExtra("participationdate")) { // we need to check because there's a chance this is
+                                                // not present (from RQPA if user does not enter
+                                                // date)
       signInMsg = signInMsg + " " + intent.getExtras().getString("participationdate");
     }
 
@@ -61,7 +70,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
     signButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (ageText.getText().length() == 0 || nameText.getText().length() == 0){
+        if (ageText.getText().length() == 0 || nameText.getText().length() == 0) {
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
                   Toast.LENGTH_SHORT).show();
           return;
@@ -78,12 +87,13 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
       @Override
       public void onClick(View view) {
         Participant p = new Participant();
-        p.setId(-1);  // the -1 indicates this is a participant NOT already in the database. Comes in handy if we're
+        p.setId(-1); // the -1 indicates this is a participant NOT already in the database. Comes in
+                     // handy if we're
         // editing an existing participation in RecordOrEditParticipationActivity
         // it plays no role in RecordQuickParticipationActivity because the only use case for
         // that activity is adding a new participation
 
-        if (nameText.getText().length() == 0){
+        if (nameText.getText().length() == 0) {
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
                   Toast.LENGTH_SHORT).show();
           return;
@@ -95,7 +105,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
 
         p.setVillage(villageText.getText().toString());
 
-        if (ageText.getText().length() == 0){
+        if (ageText.getText().length() == 0) {
           Toast.makeText(getApplicationContext(), R.string.emptyfieldserrormessage,
                   Toast.LENGTH_SHORT).show();
           return;
@@ -103,7 +113,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
         else
           p.setAge(Integer.parseInt(ageText.getText().toString()));
 
-        if(maleRadioButton.isChecked())
+        if (maleRadioButton.isChecked())
           p.setGender(Participant.MALE);
         else
           p.setGender(Participant.FEMALE);
@@ -142,6 +152,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
 
   /**
    * Callback for SignatureDialog
+   * 
    * @param signatureBitmap
    */
   public void setScaledBitmap(Bitmap signatureBitmap) {
@@ -149,7 +160,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
   }
 
   void makeButtonsVisibleIfSignatureAvailable() {
-    if(signatureBitmap!=null){
+    if (signatureBitmap != null) {
       signButton.setText(getResources().getString(R.string.signagain));
       submitButton.setVisibility(View.VISIBLE);
       spacer.setVisibility(View.VISIBLE);
@@ -159,7 +170,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
   @Override
   protected void onSaveInstanceState(Bundle out) {
     super.onSaveInstanceState(out);
-    if(signatureBitmap!=null)
+    if (signatureBitmap != null)
       out.putParcelable("signatureBitmap", signatureBitmap);
   }
 
@@ -167,7 +178,7 @@ public class SignInSheetActivity extends SherlockFragmentActivity {
   protected void onRestoreInstanceState(Bundle in) {
     super.onRestoreInstanceState(in);
     Bitmap savedSignatureBitmap = (Bitmap) in.getParcelable("signatureBitmap");
-    if(savedSignatureBitmap!=null)
+    if (savedSignatureBitmap != null)
       setScaledBitmap(savedSignatureBitmap);
   }
 

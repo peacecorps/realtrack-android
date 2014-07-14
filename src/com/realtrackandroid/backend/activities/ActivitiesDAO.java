@@ -18,8 +18,11 @@ import com.realtrackandroid.views.activities.EditActivitiesActivity;
  */
 public class ActivitiesDAO {
   private GlobalDatabaseHelper opener;
+
   private SQLiteDatabase readDatabase;
+
   private SQLiteDatabase writeDatabase;
+
   private Context context;
 
   public ActivitiesDAO(Context context) {
@@ -63,8 +66,8 @@ public class ActivitiesDAO {
     columnsToRead[8] = Activities.COLUMN_COHORT;
     columnsToRead[9] = Activities.COLUMN_CSPP;
     String whereClause = Activities.COLUMN_PROJECTID + '=' + projectid;
-    Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
-            whereClause, null, null, null, null);
+    Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead, whereClause,
+            null, null, null, null);
     output = extractActivities(returnData);
     closeDB();
     return output;
@@ -115,8 +118,8 @@ public class ActivitiesDAO {
     columnsToRead[9] = Activities.COLUMN_COHORT;
     columnsToRead[10] = Activities.COLUMN_CSPP;
     String whereClause = Activities.COLUMN_ID + '=' + id;
-    Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead,
-            whereClause, null, null, null, null);
+    Cursor returnData = readDatabase.query(Activities.ACTIVITIES_TABLE, columnsToRead, whereClause,
+            null, null, null, null);
     returnData.moveToFirst();
     Activities a = new Activities();
     a.setTitle(returnData.getString(0));
@@ -152,8 +155,10 @@ public class ActivitiesDAO {
     // Insert the item into the database
     writeDatabase.insert(Activities.ACTIVITIES_TABLE, null, newValue);
 
-    // return the id of the activity just created. This will be used as the foreign key for the reminders table
-    Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?", new String[]{Activities.ACTIVITIES_TABLE});
+    // return the id of the activity just created. This will be used as the foreign key for the
+    // reminders table
+    Cursor returnData = readDatabase.rawQuery("select seq from sqlite_sequence where name=?",
+            new String[] { Activities.ACTIVITIES_TABLE });
     int retVal = -1;
     if (returnData != null && returnData.moveToFirst()) {
       retVal = returnData.getInt(0);

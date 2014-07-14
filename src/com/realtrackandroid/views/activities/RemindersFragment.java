@@ -25,15 +25,22 @@ import com.realtrackandroid.views.dialogs.PickTimeDialog;
 public class RemindersFragment extends SherlockFragment {
 
   private int dayOfWeek;
-  private EditText mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
-  private CheckBox mondayCheckbox, tuesdayCheckbox, wednesdayCheckbox, thursdayCheckbox, fridayCheckbox, saturdayCheckbox, sundayCheckbox;
+
+  private EditText mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime,
+          sundayTime;
+
+  private CheckBox mondayCheckbox, tuesdayCheckbox, wednesdayCheckbox, thursdayCheckbox,
+          fridayCheckbox, saturdayCheckbox, sundayCheckbox;
+
   private View v;
+
   private Reminders r;
+
   private ActivitiesFragmentInterface mActivity;
+
   private Activities a;
 
-  public static final RemindersFragment newInstance(String title)
-  {
+  public static final RemindersFragment newInstance(String title) {
     RemindersFragment f = new RemindersFragment();
     return f;
   }
@@ -43,21 +50,22 @@ public class RemindersFragment extends SherlockFragment {
     super.onAttach(activity);
     try {
       mActivity = (ActivitiesFragmentInterface) activity;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement ActivitiesFragmentInterface");
+    }
+    catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString()
+              + " must implement ActivitiesFragmentInterface");
     }
     a = mActivity.getActivities();
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     v = inflater.inflate(R.layout.activity_addactivities_fragment_reminders, container, false);
     return v;
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
 
     mondayCheckbox = (CheckBox) v.findViewById(R.id.mondayCheckBox);
@@ -125,7 +133,8 @@ public class RemindersFragment extends SherlockFragment {
 
     // entering the reminder time
     mondayTime = (EditText) v.findViewById(R.id.mondayTime);
-    mondayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    mondayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                               // first selection of the text field
     // not doing this means the first click simply focuses the text field
     mondayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -146,7 +155,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     tuesdayTime = (EditText) v.findViewById(R.id.tuesdayTime);
-    tuesdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    tuesdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                                // first selection of the text field
     // not doing this means the first click simply focuses the text field
     tuesdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -167,7 +177,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     wednesdayTime = (EditText) v.findViewById(R.id.wednesdayTime);
-    wednesdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    wednesdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                                  // first selection of the text field
     // not doing this means the first click simply focuses the text field
     wednesdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -188,7 +199,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     thursdayTime = (EditText) v.findViewById(R.id.thursdayTime);
-    thursdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    thursdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                                 // first selection of the text field
     // not doing this means the first click simply focuses the text field
     thursdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -209,7 +221,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     fridayTime = (EditText) v.findViewById(R.id.fridayTime);
-    fridayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    fridayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                               // first selection of the text field
     // not doing this means the first click simply focuses the text field
     fridayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -230,7 +243,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     saturdayTime = (EditText) v.findViewById(R.id.saturdayTime);
-    saturdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    saturdayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                                 // first selection of the text field
     // not doing this means the first click simply focuses the text field
     saturdayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -251,7 +265,8 @@ public class RemindersFragment extends SherlockFragment {
     });
 
     sundayTime = (EditText) v.findViewById(R.id.sundayTime);
-    sundayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very first selection of the text field
+    sundayTime.setFocusableInTouchMode(false); // do this so the date picker opens up on the very
+                                               // first selection of the text field
     // not doing this means the first click simply focuses the text field
     sundayTime.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -270,10 +285,10 @@ public class RemindersFragment extends SherlockFragment {
         pickTimeDialog.show(getActivity().getSupportFragmentManager(), "timepicker");
       }
     });
-    
-    if(a!=null){
+
+    if (a != null) {
       int id = a.getId();
-      
+
       // populate the reminder checkboxes
       RemindersDAO rDao = new RemindersDAO(getActivity());
       List<Reminders> reminders_data = rDao.getAllRemindersForActivityId(id);
@@ -326,31 +341,31 @@ public class RemindersFragment extends SherlockFragment {
   public void setTime(String time) {
     switch (dayOfWeek) {
       case 1:
-        mondayTime.setText(time); //sets the chosen date in the text view
+        mondayTime.setText(time); // sets the chosen date in the text view
         break;
       case 2:
-        tuesdayTime.setText(time); //sets the chosen date in the text view
+        tuesdayTime.setText(time); // sets the chosen date in the text view
         break;
       case 3:
-        wednesdayTime.setText(time); //sets the chosen date in the text view
+        wednesdayTime.setText(time); // sets the chosen date in the text view
         break;
       case 4:
-        thursdayTime.setText(time); //sets the chosen date in the text view
+        thursdayTime.setText(time); // sets the chosen date in the text view
         break;
       case 5:
-        fridayTime.setText(time); //sets the chosen date in the text view
+        fridayTime.setText(time); // sets the chosen date in the text view
         break;
       case 6:
-        saturdayTime.setText(time); //sets the chosen date in the text view
+        saturdayTime.setText(time); // sets the chosen date in the text view
         break;
       case 7:
-        sundayTime.setText(time); //sets the chosen date in the text view
+        sundayTime.setText(time); // sets the chosen date in the text view
         break;
     }
   }
 
-  public void setFields(Activities a, int newOrExistingActivityId){
-    if(v==null)
+  public void setFields(Activities a, int newOrExistingActivityId) {
+    if (v == null)
       return;
 
     DateFormat parser = new SimpleDateFormat("MM/dd/yyyy");
@@ -363,9 +378,12 @@ public class RemindersFragment extends SherlockFragment {
       if (mondayTime.getText() != null) {
         try {
           Date date = parser.parse(mondayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -377,13 +395,16 @@ public class RemindersFragment extends SherlockFragment {
           if (mondayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) mondayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (mondayTime.getTag() != null) {
         int reminderid = (Integer) mondayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -395,9 +416,12 @@ public class RemindersFragment extends SherlockFragment {
       if (tuesdayTime.getText() != null) {
         try {
           Date date = parser.parse(tuesdayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -409,13 +433,16 @@ public class RemindersFragment extends SherlockFragment {
           if (tuesdayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) tuesdayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (tuesdayTime.getTag() != null) {
         int reminderid = (Integer) tuesdayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -427,9 +454,12 @@ public class RemindersFragment extends SherlockFragment {
       if (wednesdayTime.getText() != null) {
         try {
           Date date = parser.parse(wednesdayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -441,13 +471,16 @@ public class RemindersFragment extends SherlockFragment {
           if (wednesdayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) wednesdayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (wednesdayTime.getTag() != null) {
         int reminderid = (Integer) wednesdayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -455,14 +488,16 @@ public class RemindersFragment extends SherlockFragment {
       }
     }
 
-
     if (thursdayCheckbox.isChecked()) {
       if (thursdayTime.getText() != null) {
         try {
           Date date = parser.parse(thursdayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -474,13 +509,16 @@ public class RemindersFragment extends SherlockFragment {
           if (thursdayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) thursdayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (thursdayTime.getTag() != null) {
         int reminderid = (Integer) thursdayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -492,9 +530,12 @@ public class RemindersFragment extends SherlockFragment {
       if (fridayTime.getText() != null) {
         try {
           Date date = parser.parse(fridayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -506,13 +547,16 @@ public class RemindersFragment extends SherlockFragment {
           if (fridayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) fridayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (fridayTime.getTag() != null) {
         int reminderid = (Integer) fridayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -524,9 +568,12 @@ public class RemindersFragment extends SherlockFragment {
       if (saturdayTime.getText() != null) {
         try {
           Date date = parser.parse(saturdayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -538,13 +585,16 @@ public class RemindersFragment extends SherlockFragment {
           if (saturdayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) saturdayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (saturdayTime.getTag() != null) {
         int reminderid = (Integer) saturdayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());
@@ -556,9 +606,12 @@ public class RemindersFragment extends SherlockFragment {
       if (sundayTime.getText() != null) {
         try {
           Date date = parser.parse(sundayTime.getText().toString());
-          // the date object we just constructed has only two fields that are of interest to us: the hour and the
-          // minute of the day at which the alarm should be set. The other fields are junk for us (they are initialized
-          // to some 1970 date. Hence, in the Calendar object that we construct below, we only extract the hour and
+          // the date object we just constructed has only two fields that are of interest to us: the
+          // hour and the
+          // minute of the day at which the alarm should be set. The other fields are junk for us
+          // (they are initialized
+          // to some 1970 date. Hence, in the Calendar object that we construct below, we only
+          // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
           c.set(Calendar.HOUR_OF_DAY, date.getHours());
@@ -570,13 +623,16 @@ public class RemindersFragment extends SherlockFragment {
           if (sundayTime.getTag() != null) { // updating an existing reminder
             r.setId((Integer) sundayTime.getTag()); // retrieve the id of this reminder
             rDao.updateReminders(r, getActivity());
-          } else { // add a new reminder
+          }
+          else { // add a new reminder
             rDao.addReminders(r, getActivity());
           }
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
         }
       }
-    } else { // box was unchecked, remove any associated reminder for this day
+    }
+    else { // box was unchecked, remove any associated reminder for this day
       if (sundayTime.getTag() != null) {
         int reminderid = (Integer) sundayTime.getTag();
         rDao.deleteReminders(reminderid, getActivity());

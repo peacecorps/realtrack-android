@@ -14,41 +14,43 @@ import com.realtrackandroid.models.reminders.Reminders;
  * This is a database helper that is shared by the different model classes
  */
 public class GlobalDatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "database.db";
-    public static final int DATABASE_VERSION = 4;
-    private static GlobalDatabaseHelper gHelper;
+  public static final String DATABASE_NAME = "database.db";
 
-    private GlobalDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+  public static final int DATABASE_VERSION = 4;
 
-    public static GlobalDatabaseHelper getInstance(Context context) {
-        gHelper = new GlobalDatabaseHelper(context);
-        return gHelper;
-    }
+  private static GlobalDatabaseHelper gHelper;
 
-    // Method is called during creation of the database
-    @Override
-    public void onCreate(SQLiteDatabase database) {
-        Project.onCreate(database);
-        Activities.onCreate(database);
-        Reminders.onCreate(database);
-        Participation.onCreate(database);
-        Participant.onCreate(database);
-    }
+  private GlobalDatabaseHelper(Context context) {
+    super(context, DATABASE_NAME, null, DATABASE_VERSION);
+  }
 
-    // Method is called during an upgrade of the database,
-    @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-      Participant.onUpgrade(database, oldVersion, newVersion);
+  public static GlobalDatabaseHelper getInstance(Context context) {
+    gHelper = new GlobalDatabaseHelper(context);
+    return gHelper;
+  }
+
+  // Method is called during creation of the database
+  @Override
+  public void onCreate(SQLiteDatabase database) {
+    Project.onCreate(database);
+    Activities.onCreate(database);
+    Reminders.onCreate(database);
+    Participation.onCreate(database);
+    Participant.onCreate(database);
+  }
+
+  // Method is called during an upgrade of the database,
+  @Override
+  public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+    Participant.onUpgrade(database, oldVersion, newVersion);
+  }
+
+  @Override
+  public void onOpen(SQLiteDatabase database) {
+    super.onOpen(database);
+    if (!database.isReadOnly()) {
+      // Enable foreign key constraints
+      database.execSQL("PRAGMA foreign_keys=ON;");
     }
-    
-    @Override
-    public void onOpen(SQLiteDatabase database){
-      super.onOpen(database);
-      if (!database.isReadOnly()) {
-          // Enable foreign key constraints
-          database.execSQL("PRAGMA foreign_keys=ON;");
-      }
-    }
+  }
 }

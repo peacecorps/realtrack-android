@@ -24,8 +24,11 @@ import com.realtrackandroid.models.activities.Participant;
  */
 public class ParticipantDAO {
   private GlobalDatabaseHelper opener;
+
   private SQLiteDatabase readDatabase;
+
   private SQLiteDatabase writeDatabase;
+
   private Context context;
 
   public ParticipantDAO(Context context) {
@@ -56,13 +59,16 @@ public class ParticipantDAO {
 
   /**
    * Add multiple participants at once.
-   * <p><b>WARNING</b>: Before you call this method, you must set the participation id in every
-   * Participant object being written using {@link com.realtrackandroid.models.activities.Participant#setParticipationId(int)}
+   * <p>
+   * <b>WARNING</b>: Before you call this method, you must set the participation id in every
+   * Participant object being written using
+   * {@link com.realtrackandroid.models.activities.Participant#setParticipationId(int)}
+   * 
    * @param participantList
    */
-  public void addParticipants(List<Participant> participantList){
+  public void addParticipants(List<Participant> participantList) {
     openDB();
-    for(Participant p: participantList){
+    for (Participant p : participantList) {
       writeNewParticipantData(p);
     }
     closeDB();
@@ -70,8 +76,11 @@ public class ParticipantDAO {
 
   /**
    * Add a single participant.
-   * <p><b>WARNING</b>: Before you call this method, you must set the participation id in every
-   * Participant object being written using {@link com.realtrackandroid.models.activities.Participant#setParticipationId(int)}
+   * <p>
+   * <b>WARNING</b>: Before you call this method, you must set the participation id in every
+   * Participant object being written using
+   * {@link com.realtrackandroid.models.activities.Participant#setParticipationId(int)}
+   * 
    * @param participantList
    */
   public void addParticipant(Participant participant) {
@@ -81,17 +90,17 @@ public class ParticipantDAO {
   }
 
   /**
-   * We create a new method since this code is shared between addParticipants
-   * and addParticipant. We could have left this code in addParticipant and
-   * simply called that method from addParticipants for each participant. In that
-   * case,the db would be opened and closed for EACH participant. This can negatively
-   * impact performance. On the other hand, removing openDB and closeDB from 
-   * from addParticipant is not safe because someone may decide to call it on its
-   * own. Hence, we extract this logic into a new method that can be called from
-   * addParticipants (with an openDB and a closeDB for all the participants at once)
-   * as well as addParticipant (with an openDB and a closeDB for just that participant).
+   * We create a new method since this code is shared between addParticipants and addParticipant. We
+   * could have left this code in addParticipant and simply called that method from addParticipants
+   * for each participant. In that case,the db would be opened and closed for EACH participant. This
+   * can negatively impact performance. On the other hand, removing openDB and closeDB from from
+   * addParticipant is not safe because someone may decide to call it on its own. Hence, we extract
+   * this logic into a new method that can be called from addParticipants (with an openDB and a
+   * closeDB for all the participants at once) as well as addParticipant (with an openDB and a
+   * closeDB for just that participant).
    * 
-   * @param participant object to write to the database.
+   * @param participant
+   *          object to write to the database.
    */
   private void writeNewParticipantData(Participant participant) {
     ContentValues newValue = new ContentValues(7);
@@ -111,15 +120,17 @@ public class ParticipantDAO {
   }
 
   /**
-   * Saves the signature image to external storage if available or falls back to internal storage if not. 
-   * Returns the URI of the image just saved
+   * Saves the signature image to external storage if available or falls back to internal storage if
+   * not. Returns the URI of the image just saved
+   * 
    * @param signatureBitmap
    * @return URI of image just saved
    */
   private String saveSignatureBitmap(Participant participant) {
     Bitmap signatureBitmapToSave = participant.getSignatureBitmap();
     String timeStamp = new SimpleDateFormat("MM_dd_yyyy_HH_mm_ss_").format(new Date());
-    String signatureFileName = timeStamp+participant.getParticipationId()+"_"+participant.getName()+".png";
+    String signatureFileName = timeStamp + participant.getParticipationId() + "_"
+            + participant.getName() + ".png";
 
     File signatureOutputFile = getOutputSignatureFileOnExternalOrInternalStorage(signatureFileName);
 
@@ -127,29 +138,34 @@ public class ParticipantDAO {
       FileOutputStream fos = new FileOutputStream(signatureOutputFile);
       signatureBitmapToSave.compress(Bitmap.CompressFormat.PNG, 90, fos);
       fos.close();
-    } catch (FileNotFoundException e) {
-    } catch (IOException e) {
+    }
+    catch (FileNotFoundException e) {
+    }
+    catch (IOException e) {
     }
 
     return signatureOutputFile.getAbsolutePath();
   }
 
   /**
-   * Returns a file that we can write the signature to. Will either be on external storage if available
-   * or on internal storage, if not.
-   * @param signatureFileName file name to create
+   * Returns a file that we can write the signature to. Will either be on external storage if
+   * available or on internal storage, if not.
+   * 
+   * @param signatureFileName
+   *          file name to create
    * @return File object that we can write to
    */
   private File getOutputSignatureFileOnExternalOrInternalStorage(String signatureFileName) {
-    File signaturesDir = new File(context.getFilesDir(), "signatures"); //fallback onto internal storage
+    File signaturesDir = new File(context.getFilesDir(), "signatures"); // fallback onto internal
+                                                                        // storage
 
-    if(isExternalStorageWritable())
+    if (isExternalStorageWritable())
       signaturesDir = new File(context.getExternalFilesDir(null), "signatures");
 
-    if(!signaturesDir.isDirectory())
+    if (!signaturesDir.isDirectory())
       signaturesDir.mkdirs();
 
-    File signatureFile = new File(signaturesDir.getPath() + File.separator + signatureFileName);  
+    File signatureFile = new File(signaturesDir.getPath() + File.separator + signatureFileName);
     return signatureFile;
   }
 
@@ -210,7 +226,5 @@ public class ParticipantDAO {
     // Return the ArrayList
     return output;
   }
-
-
 
 }

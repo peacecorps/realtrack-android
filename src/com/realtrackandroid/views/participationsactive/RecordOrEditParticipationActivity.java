@@ -21,26 +21,36 @@ import com.realtrackandroid.views.help.FrameworkInfoDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 /**
- * RecordOrEditParticipationActivity is different from RecordQuickParticipationActivity in the following ways:
- * 1. RecordOrEditParticipationActivity ALREADY has a participation associated with it (created when
- *    reminders are served (in NotificationService)). RecordQuickParticipationActivity does not have a pre-existing
- *    participation. It has to create one.
- * 2. Because RecordOrEditParticipationActivity serves an existing participation, it has a date and time associated with
- *    it. RecordQuickParticipationActivity does not have a date and time a priori, and must get these from the user.
+ * RecordOrEditParticipationActivity is different from RecordQuickParticipationActivity in the
+ * following ways: 1. RecordOrEditParticipationActivity ALREADY has a participation associated with
+ * it (created when reminders are served (in NotificationService)). RecordQuickParticipationActivity
+ * does not have a pre-existing participation. It has to create one. 2. Because
+ * RecordOrEditParticipationActivity serves an existing participation, it has a date and time
+ * associated with it. RecordQuickParticipationActivity does not have a date and time a priori, and
+ * must get these from the user.
+ * 
  * @author Raj
  */
-public class RecordOrEditParticipationActivity extends SherlockFragmentActivity implements RecordOrEditParticipationFragmentInterface {
+public class RecordOrEditParticipationActivity extends SherlockFragmentActivity implements
+        RecordOrEditParticipationFragmentInterface {
   static final int ADD_PARTICIPANTS_REQUEST = 1;
 
   private int participationId;
+
   protected Participation p;
-  private boolean editParticipation; //true if coming in from ProjectsActivitiesListAdapter
+
+  private boolean editParticipation; // true if coming in from ProjectsActivitiesListAdapter
 
   private ParticipationPageAdapter pageAdapter;
+
   List<Fragment> fragments;
+
   private PagerSlidingTabStrip tabs;
+
   private List<String> fragmentTitles;
+
   private OptionalFragmentRecordOrEditParticipation optionalFragment;
+
   private RequiredFragmentRecordOrEditParticipation requiredFragment;
 
   private ParticipationDAO participationDao;
@@ -48,17 +58,17 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.base_pager);
-    
+
     fragments = createFragments();
     requiredFragment = (RequiredFragmentRecordOrEditParticipation) fragments.get(0);
     optionalFragment = (OptionalFragmentRecordOrEditParticipation) fragments.get(1);
-    
+
     tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
     pageAdapter = new ParticipationPageAdapter(getSupportFragmentManager(), fragments);
-    
-    ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+
+    ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
     pager.setAdapter(pageAdapter);
-    
+
     tabs.setViewPager(pager);
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,25 +80,25 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
 
     // also note the date and time
     requiredFragment.setDateTime(getIntent().getExtras().getLong("datetime"));
-    
+
     editParticipation = getIntent().getExtras().getBoolean("editparticipation");
     requiredFragment.setEditParticipation(editParticipation);
     optionalFragment.setEditParticipation(editParticipation);
 
-    if(editParticipation){
+    if (editParticipation) {
       this.setTitle(getResources().getString(R.string.editparticipationactivity_label));
     }
   }
 
-  private List<Fragment> createFragments(){
+  private List<Fragment> createFragments() {
     fragmentTitles = new ArrayList<String>();
     fragmentTitles.add("Required");
     fragmentTitles.add("Optional");
-    
+
     List<Fragment> fList = new ArrayList<Fragment>();
     fList.add(RequiredFragmentRecordOrEditParticipation.newInstance(fragmentTitles.get(0)));
     fList.add(OptionalFragmentRecordOrEditParticipation.newInstance(fragmentTitles.get(1)));
-    
+
     return fList;
   }
 
@@ -96,10 +106,10 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.recordoreditparticipationmenu, menu);
-    
-    if(editParticipation)
+
+    if (editParticipation)
       menu.findItem(R.id.action_dismiss).setVisible(false);
-    
+
     return true;
   }
 
@@ -145,16 +155,16 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
   }
 
   private void saveParticipation() {
-    if(!requiredFragment.setFields(p))
+    if (!requiredFragment.setFields(p))
       return;
-    
+
     optionalFragment.setFields(p);
-    
+
     // update the serviced flag for this Reminder in the Reminders table
     // so that the next time the NotificationReceiver checks, this participation
     // does not show up as unserviced
     p.setServiced(true);
-    
+
     participationDao.updateParticipation(p);
 
     finish();
@@ -166,29 +176,29 @@ public class RecordOrEditParticipationActivity extends SherlockFragmentActivity 
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
   }
-  
+
   private class ParticipationPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
 
-      public ParticipationPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-          super(fm);
-          this.fragments = fragments;
-      }
-      
-      @Override
-      public Fragment getItem(int position) {
-          return this.fragments.get(position);
-      }
-      
-      @Override
-      public CharSequence getPageTitle(int position) {
-        return fragmentTitles.get(position);
-      }
-   
-      @Override
-      public int getCount() {
-          return this.fragments.size();
-      }
+    public ParticipationPageAdapter(FragmentManager fm, List<Fragment> fragments) {
+      super(fm);
+      this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      return this.fragments.get(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return fragmentTitles.get(position);
+    }
+
+    @Override
+    public int getCount() {
+      return this.fragments.size();
+    }
   }
 
   @Override

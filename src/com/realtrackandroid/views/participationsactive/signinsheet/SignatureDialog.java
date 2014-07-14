@@ -14,14 +14,15 @@ import com.realtrackandroid.common.StyledButton;
 
 public class SignatureDialog extends SherlockDialogFragment {
   private StyledButton saveButton, clearButton;
+
   private SignatureView signatureView;
+
   private SignInSheetActivity mSignInSheetActivity;
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.dialog_signature, container, false);
-    
+
     saveButton = (StyledButton) view.findViewById(R.id.submitbutton);
     clearButton = (StyledButton) view.findViewById(R.id.clearButton);
     signatureView = (SignatureView) view.findViewById(R.id.signatureview);
@@ -30,8 +31,9 @@ public class SignatureDialog extends SherlockDialogFragment {
       @Override
       public void onClick(View v) {
         Bitmap signatureBitmap = signatureView.getSignature();
-        if(signatureBitmap==null){
-          Toast.makeText(getSherlockActivity(), getResources().getString(R.string.pleasesignfirst), Toast.LENGTH_SHORT).show();
+        if (signatureBitmap == null) {
+          Toast.makeText(getSherlockActivity(), getResources().getString(R.string.pleasesignfirst),
+                  Toast.LENGTH_SHORT).show();
           return;
         }
         try {
@@ -39,7 +41,8 @@ public class SignatureDialog extends SherlockDialogFragment {
           mSignInSheetActivity.setScaledBitmap(signatureBitmap);
           mSignInSheetActivity.makeButtonsVisibleIfSignatureAvailable();
           getDialog().dismiss();
-        } catch (ClassCastException e) {
+        }
+        catch (ClassCastException e) {
           throw new ClassCastException("This class can only be called from SignInSheetActivity");
         }
       }
@@ -54,7 +57,7 @@ public class SignatureDialog extends SherlockDialogFragment {
 
     return view;
   }
-  
+
   @Override
   public void onStart() {
     super.onStart();
@@ -62,9 +65,8 @@ public class SignatureDialog extends SherlockDialogFragment {
     if (getDialog() == null) {
       return;
     }
-    
+
     getDialog().getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
   }
-   
 
 }

@@ -12,54 +12,56 @@ import com.realtrackandroid.R;
 import com.realtrackandroid.models.projects.Project;
 
 public class OptionalFragment extends SherlockFragment {
-  
+
   private View v;
+
   private EditText notes;
+
   private ProjectFragmentInterface mActivity;
+
   private Project p;
-  
-  public static final OptionalFragment newInstance(String title)
-  {
+
+  public static final OptionalFragment newInstance(String title) {
     OptionalFragment f = new OptionalFragment();
     return f;
   }
-  
+
   @Override
   public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      try {
-        mActivity = (ProjectFragmentInterface) activity;
-      } catch (ClassCastException e) {
-          throw new ClassCastException(activity.toString() + " must implement ProjectFragmentInterface");
-      }
-      p = mActivity.getProject();
+    super.onAttach(activity);
+    try {
+      mActivity = (ProjectFragmentInterface) activity;
+    }
+    catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement ProjectFragmentInterface");
+    }
+    p = mActivity.getProject();
   }
-  
-  public void setFields(Project p){
-    if(v==null)
+
+  public void setFields(Project p) {
+    if (v == null)
       return;
-    
+
     p.setNotes(notes.getText().toString());
     return;
   }
-  
+
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
-      v = inflater.inflate(R.layout.activity_addproject_fragment_optional, container, false);
-      return v;
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    v = inflater.inflate(R.layout.activity_addproject_fragment_optional, container, false);
+    return v;
   }
-  
+
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
-    
+
     notes = (EditText) v.findViewById(R.id.notes);
-    
-    if (p != null){
+
+    if (p != null) {
       notes.setText(p.getNotes());
     }
-    
+
   }
 
   public EditText getNotes() {

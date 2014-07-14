@@ -27,7 +27,8 @@ public class PickTimeDialog extends DialogFragment implements TimePickerDialog.O
       callingActivity = (PickTimeDialogListener) activity;
     }
     catch (ClassCastException e) {
-      throw (new ClassCastException("ERROR: " + activity.toString() + " MUST implement the PickTimeDialogListener interface!!!"));
+      throw (new ClassCastException("ERROR: " + activity.toString()
+              + " MUST implement the PickTimeDialogListener interface!!!"));
     }
   }
 
@@ -51,7 +52,8 @@ public class PickTimeDialog extends DialogFragment implements TimePickerDialog.O
 
   @Override
   public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-    String timeToDisplay = String.format("%02d:%02d %s", ((hourOfDay / 12) > 0 ? ((hourOfDay == 12) ? 12 : (hourOfDay - 12))
+    String timeToDisplay = String.format("%02d:%02d %s",
+            ((hourOfDay / 12) > 0 ? ((hourOfDay == 12) ? 12 : (hourOfDay - 12))
                     : ((hourOfDay == 0) ? 12 : hourOfDay)), minute, ((hourOfDay / 12) > 0 ? "PM"
                     : "AM"));
     callingActivity.setTime(timeToDisplay);

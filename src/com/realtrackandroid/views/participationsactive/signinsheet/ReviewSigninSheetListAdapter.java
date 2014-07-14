@@ -15,8 +15,11 @@ import com.realtrackandroid.models.activities.Participant;
 
 public class ReviewSigninSheetListAdapter extends ArrayAdapter<Participant> {
   Context context;
+
   int layoutResourceId;
+
   List<Participant> data = null;
+
   View row;
 
   public ReviewSigninSheetListAdapter(Context context, int layoutResourceId, List<Participant> data) {
@@ -40,18 +43,20 @@ public class ReviewSigninSheetListAdapter extends ArrayAdapter<Participant> {
       holder.village = (TextView) row.findViewById(R.id.village);
 
       row.setTag(holder);
-    } else
+    }
+    else
       holder = (ParticipantHolder) row.getTag();
 
     Participant participant = data.get(position);
     holder.name.setText(participant.getName());
     holder.village.setText(participant.getVillage());
-    
+
     return row;
   }
 }
 
 class ParticipantHolder {
   TextView name;
+
   TextView village;
 }

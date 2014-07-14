@@ -25,10 +25,12 @@ import com.realtrackandroid.views.projectsactivities.AllProjectsActivitiesActivi
 
 /**
  * This is the home screen of the app.
+ * 
  * @author Raj
  */
 public class WelcomeActivity extends SherlockFragmentActivity {
   private ArrayList<Participation> unservicedParticipation_data;
+
   private StyledButton myProjectsBtn, myDataBtn, pendingParticipationsBtn;
 
   @Override
@@ -42,15 +44,15 @@ public class WelcomeActivity extends SherlockFragmentActivity {
     super.onResume();
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-    if(!prefs.contains(getString(R.string.name))) {
+    if (!prefs.contains(getString(R.string.name))) {
       Intent i = new Intent(this, CollectPCVInfoActivity.class);
       this.startActivity(i);
       this.finish();
     }
     else {
       TextView greetingTextView = (TextView) findViewById(R.id.greetingTextView);
-      if(prefs.contains(getString(R.string.name)))
-        greetingTextView.setText("Hello, "+prefs.getString(getString(R.string.name), ""));
+      if (prefs.contains(getString(R.string.name)))
+        greetingTextView.setText("Hello, " + prefs.getString(getString(R.string.name), ""));
 
       myProjectsBtn = (StyledButton) findViewById(R.id.myprojectsbutton);
       myProjectsBtn.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +86,9 @@ public class WelcomeActivity extends SherlockFragmentActivity {
 
       ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
       unservicedParticipation_data = pDao.getAllUnservicedParticipations();
-      if (unservicedParticipation_data.size() != 0) 
-        pendingParticipationsBtn.setText(getResources().getString(R.string.fa_calendar)+" Pending (" + unservicedParticipation_data.size() + ")");
+      if (unservicedParticipation_data.size() != 0)
+        pendingParticipationsBtn.setText(getResources().getString(R.string.fa_calendar)
+                + " Pending (" + unservicedParticipation_data.size() + ")");
       else
         pendingParticipationsBtn.setVisibility(View.GONE);
 

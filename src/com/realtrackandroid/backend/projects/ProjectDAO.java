@@ -14,8 +14,11 @@ import com.realtrackandroid.models.projects.Project;
 
 public class ProjectDAO {
   private GlobalDatabaseHelper opener;
+
   private SQLiteDatabase readDatabase;
+
   private SQLiteDatabase writeDatabase;
+
   private Context context;
 
   public ProjectDAO(Context context) {
@@ -53,8 +56,8 @@ public class ProjectDAO {
     columnsToRead[2] = Project.COLUMN_ENDDATE;
     columnsToRead[3] = Project.COLUMN_NOTES;
     columnsToRead[4] = Project.COLUMN_ID;
-    Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead, null,
-            null, null, null, null);
+    Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead, null, null, null,
+            null, null);
     output = extractProjects(returnData);
     closeDB();
     return output;
@@ -69,8 +72,8 @@ public class ProjectDAO {
     columnsToRead[3] = Project.COLUMN_NOTES;
     columnsToRead[4] = Project.COLUMN_ID;
     String whereClause = Project.COLUMN_ID + '=' + id;
-    Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead,
-            whereClause, null, null, null, null);
+    Cursor returnData = readDatabase.query(Project.PROJECT_TABLE, columnsToRead, whereClause, null,
+            null, null, null);
     returnData.moveToFirst();
     Project p = new Project();
     p.setTitle(returnData.getString(0));
@@ -143,10 +146,10 @@ public class ProjectDAO {
     return numItemsDeleted;
   }
 
-  private void deleteActivitiesForProjectId(int projectId){
+  private void deleteActivitiesForProjectId(int projectId) {
     ActivitiesDAO aDao = new ActivitiesDAO(context);
     ArrayList<Activities> activities_data = aDao.getAllActivitiesForProjectId(projectId);
-    for(Activities a: activities_data){
+    for (Activities a : activities_data) {
       aDao.deleteActivities(a.getId());
     }
   }

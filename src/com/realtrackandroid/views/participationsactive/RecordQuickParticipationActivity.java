@@ -27,63 +27,70 @@ import com.realtrackandroid.views.participationsactive.OptionalFragmentRecordQui
 import com.realtrackandroid.views.participationsactive.RequiredFragmentRecordQuickParticipation;
 
 /**
- * RecordQuickParticipationActivity is different from RecordOrEditParticipationActivity in the following ways:
- * 1. RecordOrEditParticipationActivity ALREADY has a participation associated with it (created when
- *    reminders are served (in NotificationService)). RecordQuickParticipationActivity does not have a pre-existing
- *    participation. It has to create one.
- * 2. Because RecordOrEditParticipationActivity serves an existing participation, it has a date and time associated with
- *    it. RecordQuickParticipationActivity does not have a date and time a priori, and must get these from the user.
+ * RecordQuickParticipationActivity is different from RecordOrEditParticipationActivity in the
+ * following ways: 1. RecordOrEditParticipationActivity ALREADY has a participation associated with
+ * it (created when reminders are served (in NotificationService)). RecordQuickParticipationActivity
+ * does not have a pre-existing participation. It has to create one. 2. Because
+ * RecordOrEditParticipationActivity serves an existing participation, it has a date and time
+ * associated with it. RecordQuickParticipationActivity does not have a date and time a priori, and
+ * must get these from the user.
+ * 
  * @author Raj
  */
 public class RecordQuickParticipationActivity extends SherlockFragmentActivity implements
-PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragmentInterface {
+        PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragmentInterface {
   private int activitiesId;
 
   private ParticipationDAO pDao;
+
   private Activities a;
 
   private OptionalFragmentRecordQuickParticipation optionalFragment;
+
   private RequiredFragmentRecordQuickParticipation requiredFragment;
-  
+
   private ParticipationPageAdapter pageAdapter;
+
   List<Fragment> fragments;
+
   private PagerSlidingTabStrip tabs;
+
   private List<String> fragmentTitles;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.base_pager);
-    
+
     fragments = createFragments();
     requiredFragment = (RequiredFragmentRecordQuickParticipation) fragments.get(0);
     optionalFragment = (OptionalFragmentRecordQuickParticipation) fragments.get(1);
-    
+
     tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
     pageAdapter = new ParticipationPageAdapter(getSupportFragmentManager(), fragments);
-    
-    ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+
+    ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
     pager.setAdapter(pageAdapter);
-    
+
     tabs.setViewPager(pager);
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     activitiesId = getIntent().getExtras().getInt("activitiesid");
-    
+
     a = new ActivitiesDAO(getApplicationContext()).getActivityWithId(activitiesId);
 
     pDao = new ParticipationDAO(getApplicationContext());
   }
-  
-  private List<Fragment> createFragments(){
+
+  private List<Fragment> createFragments() {
     fragmentTitles = new ArrayList<String>();
     fragmentTitles.add("Required");
     fragmentTitles.add("Optional");
-    
+
     List<Fragment> fList = new ArrayList<Fragment>();
     fList.add(RequiredFragmentRecordQuickParticipation.newInstance(fragmentTitles.get(0)));
     fList.add(OptionalFragmentRecordQuickParticipation.newInstance(fragmentTitles.get(1)));
-    
+
     return fList;
   }
 
@@ -131,10 +138,10 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
 
   private void saveParticipation() {
     Participation p = new Participation();
-    
-    if(!requiredFragment.setFields(p))
+
+    if (!requiredFragment.setFields(p))
       return;
-    
+
     optionalFragment.setFields(p);
 
     // reminderId doesn't matter because we're setting
@@ -146,9 +153,9 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
     // so that the next time the NotificationReceiver checks, this participation
     // does not show up as unserviced
     p.setServiced(true);
-    
+
     int participationId = pDao.addParticipation(p);
-    
+
     requiredFragment.updateParticipants(participationId);
 
     finish();
@@ -170,29 +177,29 @@ PickDateDialogListener, PickTimeDialogListener, RecordQuickParticipationFragment
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
   }
-  
+
   private class ParticipationPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
 
-      public ParticipationPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-          super(fm);
-          this.fragments = fragments;
-      }
-      
-      @Override
-      public Fragment getItem(int position) {
-          return this.fragments.get(position);
-      }
-      
-      @Override
-      public CharSequence getPageTitle(int position) {
-        return fragmentTitles.get(position);
-      }
-   
-      @Override
-      public int getCount() {
-          return this.fragments.size();
-      }
+    public ParticipationPageAdapter(FragmentManager fm, List<Fragment> fragments) {
+      super(fm);
+      this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      return this.fragments.get(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return fragmentTitles.get(position);
+    }
+
+    @Override
+    public int getCount() {
+      return this.fragments.size();
+    }
   }
 
   @Override

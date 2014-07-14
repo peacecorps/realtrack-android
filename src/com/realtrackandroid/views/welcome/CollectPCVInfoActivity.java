@@ -21,11 +21,14 @@ import com.realtrackandroid.common.StyledButton;
 
 /**
  * Start-up screen that asks PCV for his/her name + Post + Sector of their project
+ * 
  * @author Raj
  */
 public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSelectedListener {
   private List<String> projectList;
+
   private IndicatorsDAO iDao;
+
   private ArrayAdapter<String> projectDataAdapter;
 
   @Override
@@ -33,7 +36,7 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_collectpcvinfo);
   }
-  
+
   @Override
   public void onResume() {
     super.onResume();
@@ -51,8 +54,8 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
 
     final Spinner projectSpinner = (Spinner) findViewById(R.id.projectSpinner);
     projectList = iDao.getAllSectors();
-    projectDataAdapter = new ArrayAdapter<String>(this,
-            android.R.layout.simple_spinner_item, projectList);
+    projectDataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+            projectList);
     projectDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     projectSpinner.setAdapter(projectDataAdapter);
 
@@ -60,12 +63,14 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
     submitButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if(nameEditText.getText().length()==0){
-          Toast.makeText(CollectPCVInfoActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
+        if (nameEditText.getText().length() == 0) {
+          Toast.makeText(CollectPCVInfoActivity.this, "Please enter your name", Toast.LENGTH_SHORT)
+                  .show();
           return;
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CollectPCVInfoActivity.this);
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(CollectPCVInfoActivity.this);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(getString(R.string.name), nameEditText.getText().toString());
         editor.putString(getString(R.string.post), postSpinner.getSelectedItem().toString());
@@ -82,7 +87,7 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
 
   @Override
   public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    switch(parent.getId()){
+    switch (parent.getId()) {
       case R.id.postSpinner:
         // if the post changes, update the associated sectors
         String selectedPost = parent.getItemAtPosition(position).toString();
@@ -97,7 +102,7 @@ public class CollectPCVInfoActivity extends SherlockActivity implements OnItemSe
   @Override
   public void onNothingSelected(AdapterView<?> parent) {
   }
-  
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();

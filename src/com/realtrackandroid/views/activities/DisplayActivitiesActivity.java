@@ -32,8 +32,11 @@ import com.realtrackandroid.views.help.HelpDialog;
  */
 public class DisplayActivitiesActivity extends SherlockFragmentActivity {
   public String[] allInits, allCspps;
+
   private int activitiesid;
+
   private Activities a;
+
   private ArrayList<Reminders> reminders_data;
 
   public void onCreate(Bundle savedInstanceState) {
@@ -62,20 +65,20 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     TextView endDate = (TextView) findViewById(R.id.endDate);
     endDate.setText(parser.format(d));
     TextView notes = (TextView) findViewById(R.id.notes);
-    if(a.getNotes().length()>0)
-      notes.setText(getResources().getString(R.string.notes)+":\n"+a.getNotes());
+    if (a.getNotes().length() > 0)
+      notes.setText(getResources().getString(R.string.notes) + ":\n" + a.getNotes());
     TextView cohort = (TextView) findViewById(R.id.cohort);
-    if(a.getCohort().length()>0)
-      cohort.setText(getResources().getString(R.string.cohort)+":\n"+a.getCohort());
+    if (a.getCohort().length() > 0)
+      cohort.setText(getResources().getString(R.string.cohort) + ":\n" + a.getCohort());
     TextView orgs = (TextView) findViewById(R.id.orgs);
-    if(a.getOrgs().length()>0)
-      orgs.setText(getResources().getString(R.string.organizationsinvolved)+":\n"+a.getOrgs());
+    if (a.getOrgs().length() > 0)
+      orgs.setText(getResources().getString(R.string.organizationsinvolved) + ":\n" + a.getOrgs());
     TextView comms = (TextView) findViewById(R.id.comms);
-    if(a.getComms().length()>0)
-      comms.setText(getResources().getString(R.string.communitiesimpacted) + ":\n"+a.getComms());
-    
+    if (a.getComms().length() > 0)
+      comms.setText(getResources().getString(R.string.communitiesimpacted) + ":\n" + a.getComms());
+
     TextView initiatives = (TextView) findViewById(R.id.initiatives);
-    
+
     // convert initiatives back to human-readable form
     String[] initiativesList = a.getInitiatives().split("\\|");
     String inits = "";
@@ -83,10 +86,12 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
       if (initiativesList[i].equals("1"))
         inits += allInits[i] + "\n";
     }
-    inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last superfluous newline character
-    if(inits.length()>0)
-      initiatives.setText(getResources().getString(R.string.initiatives) + ":\n"+inits);
-    
+    inits = (inits.length() > 1) ? inits.substring(0, inits.length() - 1) : ""; // remove the last
+                                                                                // superfluous
+                                                                                // newline character
+    if (inits.length() > 0)
+      initiatives.setText(getResources().getString(R.string.initiatives) + ":\n" + inits);
+
     TextView csppTextView = (TextView) findViewById(R.id.cspp);
 
     // convert initiatives back to human-readable form
@@ -96,9 +101,11 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
       if (csppList[i].equals("1"))
         cspp += allCspps[i] + "\n";
     }
-    cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last superfluous newline character
-    if(cspp.length()>0)
-      csppTextView.setText(getResources().getString(R.string.cspp) + ":\n"+cspp);
+    cspp = (cspp.length() > 1) ? cspp.substring(0, cspp.length() - 1) : ""; // remove the last
+                                                                            // superfluous newline
+                                                                            // character
+    if (cspp.length() > 0)
+      csppTextView.setText(getResources().getString(R.string.cspp) + ":\n" + cspp);
 
     // display reminders
     TextView reminders = (TextView) findViewById(R.id.reminders);
@@ -108,25 +115,27 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
     DateFormat dayParser = new SimpleDateFormat("EEEE");
     DateFormat timeParser = new SimpleDateFormat("hh:mm aaa");
     for (Reminders r : reminders_data) {
-      remindersText += dayParser.format(r.getRemindTime()) + "s at " + timeParser.format(r.getRemindTime()) + "\n";
+      remindersText += dayParser.format(r.getRemindTime()) + "s at "
+              + timeParser.format(r.getRemindTime()) + "\n";
     }
-    remindersText = (remindersText.length() > 1) ? remindersText.substring(0, remindersText.length() - 1) : ""; // remove the last superfluous newline character
-    if(remindersText.length()>0)
-      reminders.setText("Reminders:\n"+remindersText);
+    remindersText = (remindersText.length() > 1) ? remindersText.substring(0,
+            remindersText.length() - 1) : ""; // remove the last superfluous newline character
+    if (remindersText.length() > 0)
+      reminders.setText("Reminders:\n" + remindersText);
   }
-  
+
   private String[] updateCsppNames() {
-    return new String[]{getResources().getString(R.string.genderequalityandwomensempowerment),
-            getResources().getString(R.string.hivaids),
-            getResources().getString(R.string.technologyfordevelopment),
-            getResources().getString(R.string.youthasresources),
-            getResources().getString(R.string.volunteerism),
-            getResources().getString(R.string.peoplewithdisabilities)};
+    return new String[] { getResources().getString(R.string.genderequalityandwomensempowerment),
+        getResources().getString(R.string.hivaids),
+        getResources().getString(R.string.technologyfordevelopment),
+        getResources().getString(R.string.youthasresources),
+        getResources().getString(R.string.volunteerism),
+        getResources().getString(R.string.peoplewithdisabilities) };
   }
 
   private String[] updateInitiativeNames() {
-    return new String[]{getResources().getString(R.string.malaria), getResources().getString(R.string.ecpa),
-            getResources().getString(R.string.foodsecurity)};
+    return new String[] { getResources().getString(R.string.malaria),
+        getResources().getString(R.string.ecpa), getResources().getString(R.string.foodsecurity) };
   }
 
   // create actionbar menu
@@ -139,9 +148,11 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
   }
 
   /**
-   * ******************************************************************************************************************
-   * transition to view for adding new project when the add icon in the action bar is clicked
-   * ******************************************************************************************************************
+   * ***********************************************************************************************
+   * ******************* transition to view for adding new project when the add icon in the action
+   * bar is clicked
+   * *********************************************************************************
+   * *********************************
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -153,25 +164,24 @@ public class DisplayActivitiesActivity extends SherlockFragmentActivity {
       case R.id.action_deleteactivity:
         // warn the user first!
         new AlertDialog.Builder(this)
-        .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
-        .setCancelable(false)
-        .setNegativeButton("No", null)
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int id) {
-            ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
-            int activityId = DisplayActivitiesActivity.this.activitiesid;
-            aDao.deleteActivities(activityId);
-            // cancel all alarms for participation events of the reminders of this activity
-            RemindersDAO rDao = new RemindersDAO(getApplicationContext());
-            ArrayList<Reminders> reminders_data;
-            reminders_data = rDao.getAllRemindersForActivityId(activityId);
-            for (Reminders r : reminders_data) {
-              EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(), r.getId());
-            }
-            finish();
-          }
-        })
-        .show();
+                .setMessage("Are you sure you want to delete this activity? This CANNOT be undone.")
+                .setCancelable(false).setNegativeButton("No", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int id) {
+                    ActivitiesDAO aDao = new ActivitiesDAO(getApplicationContext());
+                    int activityId = DisplayActivitiesActivity.this.activitiesid;
+                    aDao.deleteActivities(activityId);
+                    // cancel all alarms for participation events of the reminders of this activity
+                    RemindersDAO rDao = new RemindersDAO(getApplicationContext());
+                    ArrayList<Reminders> reminders_data;
+                    reminders_data = rDao.getAllRemindersForActivityId(activityId);
+                    for (Reminders r : reminders_data) {
+                      EditActivitiesActivity.deleteAlarmsForReminder(getApplicationContext(),
+                              r.getId());
+                    }
+                    finish();
+                  }
+                }).show();
         break;
       case R.id.action_editactivity:
         Intent i = new Intent(DisplayActivitiesActivity.this, EditActivitiesActivity.class);

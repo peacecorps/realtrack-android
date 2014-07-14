@@ -5,71 +5,77 @@ import android.database.sqlite.SQLiteDatabase;
 import com.realtrackandroid.models.activities.Activities;
 
 /**
- * ********************************************************************************************************************
- * Models the representation of activity reminders
- * ********************************************************************************************************************
+ * *************************************************************************************************
+ * ******************* Models the representation of activity reminders
+ * ******************************
+ * **************************************************************************************
  */
 public class Reminders {
-    // Instance properties
-    private int id;
-    private int activityid; // which activity this reminder is for. This is a foreign key that points to Activities.id
-    private long remindTime;
+  // Instance properties
+  private int id;
 
-    // Database table
-    public static final String REMINDERS_TABLE = "reminders";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing Activity.id
-    public static final String COLUMN_UPDATED = "updated";
-    public static final String COLUMN_REMINDTIME = "remindtime";
+  private int activityid; // which activity this reminder is for. This is a foreign key that points
+                          // to Activities.id
 
-    // Database creation SQL statement
-    private static final String DATABASE_CREATE = "create table if not exists "
-        + REMINDERS_TABLE
-        + "("
-        + COLUMN_ID + " integer primary key autoincrement, "
-        + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
-        + COLUMN_REMINDTIME + " integer not null, "
-        + COLUMN_ACTIVITYID + " integer not null references " + Activities.ACTIVITIES_TABLE + " (" + Activities.COLUMN_ID + ") ON DELETE CASCADE "
-        + ");";
+  private long remindTime;
 
-    // used to create the table
-    public static void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
-    }
+  // Database table
+  public static final String REMINDERS_TABLE = "reminders";
 
-    // used to upgrade the table
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-                                 int newVersion) {
-        database.execSQL("drop table if exists " + REMINDERS_TABLE);
-        onCreate(database);
-    }
+  public static final String COLUMN_ID = "_id";
 
-    // Getters and Setters follow
-    public int getActivityid() {
-        return activityid;
-    }
+  public static final String COLUMN_ACTIVITYID = "_activityid"; // foreign key referencing
+                                                                // Activity.id
 
-    public void setActivityid(int activityid) {
-        this.activityid = activityid;
-    }
+  public static final String COLUMN_UPDATED = "updated";
 
-    public long getRemindTime() {
-        return remindTime;
-    }
+  public static final String COLUMN_REMINDTIME = "remindtime";
 
-    public void setRemindTime(long remindTime) {
-        this.remindTime = remindTime;
-    }
+  // Database creation SQL statement
+  private static final String DATABASE_CREATE = "create table if not exists " + REMINDERS_TABLE
+          + "(" + COLUMN_ID + " integer primary key autoincrement, " + COLUMN_UPDATED
+          + " integer not null default (strftime('%s','now')), " + COLUMN_REMINDTIME
+          + " integer not null, " + COLUMN_ACTIVITYID + " integer not null references "
+          + Activities.ACTIVITIES_TABLE + " (" + Activities.COLUMN_ID + ") ON DELETE CASCADE "
+          + ");";
 
-    public int getId() {
-        return id;
-    }
+  // used to create the table
+  public static void onCreate(SQLiteDatabase database) {
+    database.execSQL(DATABASE_CREATE);
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  // used to upgrade the table
+  public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+    database.execSQL("drop table if exists " + REMINDERS_TABLE);
+    onCreate(database);
+  }
 
-    public Reminders() {
-        super();
-    }
+  // Getters and Setters follow
+  public int getActivityid() {
+    return activityid;
+  }
+
+  public void setActivityid(int activityid) {
+    this.activityid = activityid;
+  }
+
+  public long getRemindTime() {
+    return remindTime;
+  }
+
+  public void setRemindTime(long remindTime) {
+    this.remindTime = remindTime;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public Reminders() {
+    super();
+  }
 }

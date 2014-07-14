@@ -29,11 +29,15 @@ import com.realtrackandroid.views.participationsactive.RecordOrEditParticipation
 // shows the details of the participation e.g. the number of men, women taking part, the day etc
 public class PendingParticipationListAdapter extends ArrayAdapter<Participation> {
   Context context;
+
   int layoutResourceId;
+
   List<Participation> data = null;
+
   View row;
 
-  public PendingParticipationListAdapter(Context context, int layoutResourceId, List<Participation> data) {
+  public PendingParticipationListAdapter(Context context, int layoutResourceId,
+          List<Participation> data) {
     super(context, layoutResourceId, data);
     this.layoutResourceId = layoutResourceId;
     this.context = context;
@@ -57,26 +61,31 @@ public class PendingParticipationListAdapter extends ArrayAdapter<Participation>
       holder.addDetailsButton = (StyledButton) row.findViewById(R.id.adddetailsbutton);
 
       row.setTag(holder);
-    } else
+    }
+    else
       holder = (ParticipationHolder) row.getTag();
-    
+
     final int pos = position;
-    
+
     holder.addDetailsButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Participation p = data.get(pos);
-        // if the user is already on the pending participations screen when a notification pops up or comes to it
-        // from the home screen's "Pending" button (and not by clicking the notifification), clear the corresponding
+        // if the user is already on the pending participations screen when a notification pops up
+        // or comes to it
+        // from the home screen's "Pending" button (and not by clicking the notifification), clear
+        // the corresponding
         // notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Activity.NOTIFICATION_SERVICE);
         notificationManager.cancel(p.getId());
         // clicking on the item must take the user to the record participation activity
         Intent newActivity = new Intent(context, RecordOrEditParticipationActivity.class);
         newActivity.putExtra("participationid", p.getId());
         newActivity.putExtra("datetime", p.getDate());
         context.startActivity(newActivity);
-        ((PendingParticipationActivity)context).overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
+        ((PendingParticipationActivity) context).overridePendingTransition(
+                R.anim.animation_slideinright, R.anim.animation_slideoutleft);
       }
     });
 
@@ -101,10 +110,13 @@ public class PendingParticipationListAdapter extends ArrayAdapter<Participation>
 
   private class ParticipationHolder {
     TextView projectTitle;
+
     TextView activityTitle;
+
     TextView participationDate;
+
     TextView participationTime;
+
     StyledButton addDetailsButton;
   }
 }
-

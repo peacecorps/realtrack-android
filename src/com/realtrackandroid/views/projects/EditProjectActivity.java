@@ -24,7 +24,7 @@ public class EditProjectActivity extends AddProjectActivity {
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     p = pDao.getProjectWithId(id);
   }
-  
+
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
@@ -56,13 +56,13 @@ public class EditProjectActivity extends AddProjectActivity {
 
     return true;
   }
-  
+
   private void updateProject() {
-    if(!requiredFragment.setFields(p))
+    if (!requiredFragment.setFields(p))
       return;
-    
+
     optionalFragment.setFields(p);
-    
+
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
     pDao.updateProject(p);
     finish();

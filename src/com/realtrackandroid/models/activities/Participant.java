@@ -6,52 +6,67 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * ********************************************************************************************************************
- * Models the representation of a participant
- * Implements Parcelable because we're going to be passing Participant objects back and forth between activities.
- * ********************************************************************************************************************
+ * *************************************************************************************************
+ * ******************* Models the representation of a participant Implements Parcelable because
+ * we're going to be passing Participant objects back and forth between activities.
+ * *****************
+ * *********************************************************************************
+ * ******************
  */
 public class Participant implements Parcelable {
   public static final int MALE = 0;
+
   public static final int FEMALE = 1;
 
   // Instance properties
   private int id; // used to modify an existing Activity. Set in ActivitiesDAO
+
   private int participationid;
+
   private String name;
+
   private String phoneNumber;
+
   private String village;
+
   private int age;
-  private int gender; 
+
+  private int gender;
+
   private String signaturePath;
+
   private Bitmap signatureBitmap;
 
   // Database table
   public static final String PARTICIPANT_TABLE = "participants";
+
   public static final String COLUMN_ID = "_id";
+
   public static final String COLUMN_PARTICIPATIONID = "_participationid";
-  public static final String COLUMN_UPDATED = "updated"; //when this record was last modified
-  public static final String COLUMN_NAME = "name"; //required
-  public static final String COLUMN_PHONENUMBER = "phonenumber"; //optional
-  public static final String COLUMN_VILLAGE = "village"; //optional
-  public static final String COLUMN_AGE = "age"; //required
-  public static final String COLUMN_GENDER = "sex"; //required
-  public static final String COLUMN_SIGNATUREPATH = "signaturepath"; //required
+
+  public static final String COLUMN_UPDATED = "updated"; // when this record was last modified
+
+  public static final String COLUMN_NAME = "name"; // required
+
+  public static final String COLUMN_PHONENUMBER = "phonenumber"; // optional
+
+  public static final String COLUMN_VILLAGE = "village"; // optional
+
+  public static final String COLUMN_AGE = "age"; // required
+
+  public static final String COLUMN_GENDER = "sex"; // required
+
+  public static final String COLUMN_SIGNATUREPATH = "signaturepath"; // required
 
   // Database creation SQL statement
-  private static final String DATABASE_CREATE = "create table if not exists "
-          + PARTICIPANT_TABLE
-          + "("
-          + COLUMN_ID + " integer primary key autoincrement, "
-          + COLUMN_UPDATED + " integer not null default (strftime('%s','now')), "
-          + COLUMN_NAME + " string not null, "
-          + COLUMN_PHONENUMBER + " integer, "
-          + COLUMN_VILLAGE + " string, "
-          + COLUMN_AGE + " integer not null, "
-          + COLUMN_GENDER + " integer not null, "
-          + COLUMN_SIGNATUREPATH + " string, "
-          + COLUMN_PARTICIPATIONID + " integer not null references " + Participation.PARTICIPATION_TABLE + " (" + Participation.COLUMN_ID + ") ON DELETE CASCADE"
-          + ");";
+  private static final String DATABASE_CREATE = "create table if not exists " + PARTICIPANT_TABLE
+          + "(" + COLUMN_ID + " integer primary key autoincrement, " + COLUMN_UPDATED
+          + " integer not null default (strftime('%s','now')), " + COLUMN_NAME
+          + " string not null, " + COLUMN_PHONENUMBER + " integer, " + COLUMN_VILLAGE + " string, "
+          + COLUMN_AGE + " integer not null, " + COLUMN_GENDER + " integer not null, "
+          + COLUMN_SIGNATUREPATH + " string, " + COLUMN_PARTICIPATIONID
+          + " integer not null references " + Participation.PARTICIPATION_TABLE + " ("
+          + Participation.COLUMN_ID + ") ON DELETE CASCADE" + ");";
 
   // used to create the table
   public static void onCreate(SQLiteDatabase database) {
@@ -59,8 +74,7 @@ public class Participant implements Parcelable {
   }
 
   // used to upgrade the table
-  public static void onUpgrade(SQLiteDatabase database, int oldVersion,
-          int newVersion) {
+  public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
     database.execSQL("drop table if exists " + PARTICIPANT_TABLE);
     onCreate(database);
   }
@@ -137,7 +151,7 @@ public class Participant implements Parcelable {
   public void setSignatureBitmap(Bitmap signatureBitmap) {
     this.signatureBitmap = signatureBitmap;
   }
-  
+
   /*
    * Methods for Parcelable follow
    */
@@ -168,13 +182,13 @@ public class Participant implements Parcelable {
       return new Participant[size];
     }
   };
-  
-  public Participant(){
+
+  public Participant() {
   }
-  
-  private Participant(Parcel parcel){
+
+  private Participant(Parcel parcel) {
     // should be the SAME order as writeToParcel!!
-    name = parcel.readString(); 
+    name = parcel.readString();
     phoneNumber = parcel.readString();
     village = parcel.readString();
     age = parcel.readInt();

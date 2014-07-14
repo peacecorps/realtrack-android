@@ -34,20 +34,32 @@ import com.realtrackandroid.views.participationsdonesummaries.ParticipationSumma
 
 public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
   private Context context;
+
   private int groupLayoutResourceId;
+
   private int childLayoutResourceId;
+
   private List<ProjectHolder> projectHolderData = null;
+
   private View row;
+
   private LayoutInflater inflater;
+
   private ExpandableListView listView;
-  
+
   private XYSeries mCurrentSeries;
+
   private XYMultipleSeriesDataset mDataset;
+
   private GraphicalView mChartView;
+
   private XYMultipleSeriesRenderer mRenderer;
+
   private Calendar activityCal, participationCal;
 
-  public ParticipationSummaryListAdapter(Context context, int groupLayoutResourceId, int childLayoutResourceId, ExpandableListView expandableListView, List<ProjectHolder> projectHolderData) {
+  public ParticipationSummaryListAdapter(Context context, int groupLayoutResourceId,
+          int childLayoutResourceId, ExpandableListView expandableListView,
+          List<ProjectHolder> projectHolderData) {
     super();
     this.groupLayoutResourceId = groupLayoutResourceId;
     this.childLayoutResourceId = childLayoutResourceId;
@@ -111,49 +123,56 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
       holder = new ParentViewHolder();
       holder.projectSummaryLayout = (LinearLayout) row.findViewById(R.id.projectSummaryLayout);
       holder.projectTitle = (TextView) row.findViewById(R.id.projectTitle);
-      holder.expandCollapseProjectBtn = (StyledButton)row.findViewById(R.id.expandCollapseProjectBtn);
+      holder.expandCollapseProjectBtn = (StyledButton) row
+              .findViewById(R.id.expandCollapseProjectBtn);
 
       row.setTag(holder);
-    } else
+    }
+    else
       holder = (ParentViewHolder) row.getTag();
 
     ProjectHolder pHolder = (ProjectHolder) getGroup(groupPosition);
     final Project project = pHolder.p;
     holder.projectTitle.setText(project.getTitle());
-    
+
     // hide this group if it has no participations
     boolean hasParticipations = false;
-    
-    for(ActivityHolder aHolder: pHolder.activityHolderList){
-      if(!aHolder.participationHolderList.isEmpty()){
+
+    for (ActivityHolder aHolder : pHolder.activityHolderList) {
+      if (!aHolder.participationHolderList.isEmpty()) {
         hasParticipations = true;
         break;
       }
     }
-    
-    if(!hasParticipations){
+
+    if (!hasParticipations) {
       holder.projectSummaryLayout.removeAllViews();
       return row;
     }
 
-    // make sure these views show or else scrolling down all the way and then scrolling up screws them up
-    if(isExp)
-      holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+    // make sure these views show or else scrolling down all the way and then scrolling up screws
+    // them up
+    if (isExp)
+      holder.expandCollapseProjectBtn.setText(context.getResources().getString(
+              R.string.fa_downchevron));
     else
-      holder.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+      holder.expandCollapseProjectBtn.setText(context.getResources().getString(
+              R.string.fa_rightchevron));
 
     // expand and collapse groups
     final ParentViewHolder holderFinal = holder;
     holder.expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if(isExp){
+        if (isExp) {
           listView.collapseGroup(groupPos);
-          holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+          holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(
+                  R.string.fa_rightchevron));
         }
-        else{
+        else {
           listView.expandGroup(groupPos);
-          holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+          holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(
+                  R.string.fa_downchevron));
         }
       }
     });
@@ -162,7 +181,8 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
   }
 
   @Override
-  public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+  public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+          View convertView, ViewGroup parent) {
     row = convertView;
     ChildViewHolder holder = null;
 
@@ -174,23 +194,26 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
       holder.activityTitle = (TextView) row.findViewById(R.id.activityTitle);
       holder.numEvents = (TextView) row.findViewById(R.id.numEvents);
       holder.totalParticipants = (TextView) row.findViewById(R.id.totalParticipants);
-      holder.activityGraphLinearLayout = (LinearLayout) row.findViewById(R.id.activityGraphLinearLayout);
-      holder.expandCollapseActivityBtn = (StyledButton)row.findViewById(R.id.expandCollapseActivityBtn);
+      holder.activityGraphLinearLayout = (LinearLayout) row
+              .findViewById(R.id.activityGraphLinearLayout);
+      holder.expandCollapseActivityBtn = (StyledButton) row
+              .findViewById(R.id.expandCollapseActivityBtn);
       holder.isExp = true;
 
       row.setTag(holder);
-    } else
+    }
+    else
       holder = (ChildViewHolder) row.getTag();
 
     ActivityHolder aHolder = (ActivityHolder) getChild(groupPosition, childPosition);
 
     holder.activityGraphLinearLayout.removeAllViews(); // required because views are reused.
-    final List<ParticipationHolder> participationHolderList =  aHolder.participationHolderList;
+    final List<ParticipationHolder> participationHolderList = aHolder.participationHolderList;
 
-    if(participationHolderList.isEmpty()){
+    if (participationHolderList.isEmpty()) {
       holder.activitySummaryLayout.removeAllViews();
       return row;
-      //collapseChild(holder);
+      // collapseChild(holder);
     }
 
     int sumParticipants = 0;
@@ -205,32 +228,33 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     // sort the participation list first because there's no guarantee participations were added
     // to the database in the order of their dates e.g. a quick add participation could easily
     // be out of order
-    Collections.sort(aHolder.participationHolderList, new Comparator<ParticipationHolder>(){
+    Collections.sort(aHolder.participationHolderList, new Comparator<ParticipationHolder>() {
       @Override
       public int compare(ParticipationHolder pa1, ParticipationHolder pa2) {
         long date1 = pa1.pa.getDate();
         long date2 = pa2.pa.getDate();
-        if(date1 == date2)
+        if (date1 == date2)
           return 0;
-        else if(date1 > date2)
+        else if (date1 > date2)
           return 1;
         else
           return -1;
       }
     });
 
-    for (int i=0; i<aHolder.participationHolderList.size(); ++i) {
+    for (int i = 0; i < aHolder.participationHolderList.size(); ++i) {
       Participation participation = aHolder.participationHolderList.get(i).pa;
-      
+
       participationCal.setTimeInMillis(participation.getDate());
-      if(participationCal.before(activityCal)){
+      if (participationCal.before(activityCal)) {
         sumParticipants += participation.getTotalParticipants();
-        if(weekNum==mCurrentSeries.getMaxX())
-          mCurrentSeries.remove(mCurrentSeries.getItemCount()-1);
+        if (weekNum == mCurrentSeries.getMaxX())
+          mCurrentSeries.remove(mCurrentSeries.getItemCount() - 1);
         mCurrentSeries.add(weekNum, sumParticipants);
-      } else {
-        //sumParticipants += participation.getTotalParticipants();
-        //mCurrentSeries.add(++weekNum, sumParticipants);
+      }
+      else {
+        // sumParticipants += participation.getTotalParticipants();
+        // mCurrentSeries.add(++weekNum, sumParticipants);
         activityCal.add(Calendar.DAY_OF_WEEK, 7);
         weekNum++;
         i--;
@@ -238,8 +262,8 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     }
 
     holder.activityTitle.setText(a.getTitle());
-    holder.numEvents.setText("["+aHolder.participationHolderList.size()+"] event(s)");
-    holder.totalParticipants.setText("["+sumParticipants+"] participants");
+    holder.numEvents.setText("[" + aHolder.participationHolderList.size() + "] event(s)");
+    holder.totalParticipants.setText("[" + sumParticipants + "] participants");
 
     createGraph(row, mCurrentSeries);
 
@@ -248,11 +272,12 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if(holderFinal.isExp){ //"collapse"
+        if (holderFinal.isExp) { // "collapse"
           collapseChild(holderFinal);
           holderFinal.activityGraphLinearLayout.setVisibility(View.GONE);
         }
-        else if(!participationHolderList.isEmpty()){ //"expand". Only if there actually are participations
+        else if (!participationHolderList.isEmpty()) { // "expand". Only if there actually are
+                                                       // participations
           expandChild(holderFinal);
           holderFinal.activityGraphLinearLayout.setVisibility(View.VISIBLE);
         }
@@ -261,7 +286,7 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
 
     return row;
   }
-  
+
   private void createGraph(View view, XYSeries mCurrentSeries) {
     mRenderer = getMultipleSeriesRenderer();
     mRenderer.addSeriesRenderer(getSeriesRenderer());
@@ -270,7 +295,7 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     LinearLayout graphView = (LinearLayout) view.findViewById(R.id.activityGraphLinearLayout);
     graphView.addView(mChartView);
   }
-  
+
   private XYMultipleSeriesDataset getMultipleSeriesDataset(XYSeries mCurrentSeries) {
     mDataset = new XYMultipleSeriesDataset();
     mDataset.addSeries(mCurrentSeries);
@@ -294,7 +319,7 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
 
     mRenderer.setInScroll(true);
 
-    mRenderer.setMargins(new int[]{25, 45, 25, 25});
+    mRenderer.setMargins(new int[] { 25, 45, 25, 25 });
     mRenderer.setMarginsColor(context.getResources().getColor(R.color.white));
 
     mRenderer.setZoomEnabled(false);
@@ -307,42 +332,52 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     renderer.setFillPoints(false);
     renderer.setDisplayChartValues(false);
     renderer.setColor(context.getResources().getColor(R.color.blue));
-    
+
     FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
     fill.setColor(context.getResources().getColor(R.color.blue));
     renderer.addFillOutsideLine(fill);
-    
+
     return renderer;
   }
 
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {
-    return false; //must be true if you want child to be clickable!
+    return false; // must be true if you want child to be clickable!
   }
 
   private void expandChild(ChildViewHolder holder) {
     holder.isExp = true;
-    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_downchevron));
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(
+            R.string.fa_downchevron));
   }
 
   private void collapseChild(ChildViewHolder holder) {
     holder.isExp = false;
-    holder.expandCollapseActivityBtn.setText(context.getResources().getString(R.string.fa_rightchevron));
+    holder.expandCollapseActivityBtn.setText(context.getResources().getString(
+            R.string.fa_rightchevron));
   }
 
   private class ParentViewHolder {
     LinearLayout projectSummaryLayout;
+
     StyledButton expandCollapseProjectBtn;
+
     TextView projectTitle;
   }
 
   private class ChildViewHolder {
     LinearLayout activitySummaryLayout;
+
     LinearLayout activityGraphLinearLayout;
+
     boolean isExp;
+
     StyledButton expandCollapseActivityBtn;
+
     TextView activityTitle;
+
     TextView numEvents;
+
     TextView totalParticipants;
   }
 }

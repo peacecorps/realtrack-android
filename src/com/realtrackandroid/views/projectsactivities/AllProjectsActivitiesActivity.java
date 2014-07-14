@@ -28,8 +28,10 @@ import com.realtrackandroid.views.projects.AddProjectActivity;
  * Pressing the back key will exit the activity and take you back to the home screen (WelcomeActivity)
  */
 public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
-  protected ExpandableListView projectsActivitiesListView; //holds a list of the projects
+  protected ExpandableListView projectsActivitiesListView; // holds a list of the projects
+
   List<ProjectsActivitiesHolder> projectsactivities_data, filteredprojectsactivities_data;
+
   private ProjectsActivitiesListAdapter projectsActivitiesListAdapter;
 
   @Override
@@ -44,7 +46,8 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     projectsActivitiesListView = (ExpandableListView) findViewById(R.id.projectsactivitieslistView);
-    filteredprojectsactivities_data = new ArrayList<ProjectsActivitiesHolder>(); //used for filtered data
+    filteredprojectsactivities_data = new ArrayList<ProjectsActivitiesHolder>(); // used for
+                                                                                 // filtered data
 
     createAllProjectsActivitiesList();
   }
@@ -55,7 +58,7 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.menu.allprojectsmenu, menu);
 
-    //used to filter the projects list as the user types or when he submits the query
+    // used to filter the projects list as the user types or when he submits the query
     SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
       @Override
       public boolean onQueryTextSubmit(String query) {
@@ -81,15 +84,18 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     searchView.setOnSearchClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (m != null) addProject.setVisible(false);
+        if (m != null)
+          addProject.setVisible(false);
       }
     });
     searchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override
       public boolean onClose() {
-        supportInvalidateOptionsMenu(); // this is needed because Android doesn't remember the Add icon and changes it back
+        supportInvalidateOptionsMenu(); // this is needed because Android doesn't remember the Add
+                                        // icon and changes it back
         // to the Settings icon when the Search view is closed
-        if (m != null) addProject.setVisible(true);
+        if (m != null)
+          addProject.setVisible(true);
         return false;
       }
     });
@@ -99,9 +105,11 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
   }
 
   /**
-   * ******************************************************************************************************************
-   * transition to view for adding new project when the add icon in the action bar is clicked
-   * ******************************************************************************************************************
+   * ***********************************************************************************************
+   * ******************* transition to view for adding new project when the add icon in the action
+   * bar is clicked
+   * *********************************************************************************
+   * *********************************
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -138,17 +146,18 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     return true;
   }
 
-
   /**
-   * ******************************************************************************************************************
-   * check whether the string passed in is present in any of the projects in our list
-   * called by queryTextListener
-   * ******************************************************************************************************************
+   * ***********************************************************************************************
+   * ******************* check whether the string passed in is present in any of the projects in our
+   * list called by queryTextListener
+   * ***************************************************************
+   * ***************************************************
    */
   void createFilteredProjectsActivitiesList(String text) {
     filteredprojectsactivities_data.clear();
     for (int i = 0; i < projectsactivities_data.size(); i++) {
-      if (projectsactivities_data.get(i).getProject().getTitle().toLowerCase().matches(".*" + text.toLowerCase() + ".*")) {
+      if (projectsactivities_data.get(i).getProject().getTitle().toLowerCase()
+              .matches(".*" + text.toLowerCase() + ".*")) {
         filteredprojectsactivities_data.add(projectsactivities_data.get(i));
       }
     }
@@ -157,11 +166,11 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
   }
 
   /**
-   * ******************************************************************************************************************
-   * populate the projects list
-   * list style defined in layout/row_allprojects.xml
+   * ***********************************************************************************************
+   * ******************* populate the projects list list style defined in layout/row_allprojects.xml
    * Source: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
-   * ******************************************************************************************************************
+   * **********************************
+   * ********************************************************************************
    */
   void createAllProjectsActivitiesList() {
     ProjectDAO pDao = new ProjectDAO(getApplicationContext());
@@ -173,9 +182,10 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
       ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
       paHolder.setProject(p);
       List<Activities> activitiesList = aDao.getAllActivitiesForProjectId(p.getId());
-      
+
       Activities addNewActivityDummy = new Activities();
-      addNewActivityDummy.setTitle(getResources().getString(R.string.newrepeating)+" "+p.getTitle()+" "+getResources().getString(R.string.activityellipses));
+      addNewActivityDummy.setTitle(getResources().getString(R.string.newrepeating) + " "
+              + p.getTitle() + " " + getResources().getString(R.string.activityellipses));
       addNewActivityDummy.setId(-1);
       addNewActivityDummy.setProjectid(p.getId());
       activitiesList.add(addNewActivityDummy);
@@ -186,7 +196,7 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     ProjectsActivitiesHolder paHolder = new ProjectsActivitiesHolder();
     Project p = new Project();
     p.setId(-1);
-    if(projects_data.isEmpty())
+    if (projects_data.isEmpty())
       p.setTitle(getResources().getString(R.string.addyourprimaryproject));
     else
       p.setTitle(getResources().getString(R.string.addasecondaryproject));
@@ -197,8 +207,10 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
     updateProjectsActivitiesList(projectsactivities_data);
   }
 
-  private void updateProjectsActivitiesList(List<ProjectsActivitiesHolder> projectsactivities_data){
-    projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this, R.layout.row_allprojects, R.layout.row_allactivities, projectsActivitiesListView, projectsactivities_data);
+  private void updateProjectsActivitiesList(List<ProjectsActivitiesHolder> projectsactivities_data) {
+    projectsActivitiesListAdapter = new ProjectsActivitiesListAdapter(this,
+            R.layout.row_allprojects, R.layout.row_allactivities, projectsActivitiesListView,
+            projectsactivities_data);
     projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
     projectsActivitiesListView.setAdapter(projectsActivitiesListAdapter);
 

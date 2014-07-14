@@ -18,13 +18,17 @@ import com.realtrackandroid.models.activities.Participant;
  */
 public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   static final int SIGNIN_REQUEST = 1;
-  
+
   private StyledButton okButton;
+
   private StyledButton doneButton;
+
   private StyledButton reviewButton;
+
   private ArrayList<Participant> participantList;
+
   private Intent intent;
-  
+
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signinsheetlanding);
@@ -37,34 +41,34 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   public void onResume() {
     super.onResume();
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    
+
     okButton = (StyledButton) findViewById(R.id.okbutton);
     doneButton = (StyledButton) findViewById(R.id.doneButton);
     reviewButton = (StyledButton) findViewById(R.id.reviewButton);
-    
-    if(participantList.isEmpty()){
+
+    if (participantList.isEmpty()) {
       reviewButton.setVisibility(View.INVISIBLE);
       ((TextView) findViewById(R.id.reviewMsg)).setVisibility(View.INVISIBLE);
     }
-    else{
+    else {
       reviewButton.setVisibility(View.VISIBLE);
       ((TextView) findViewById(R.id.reviewMsg)).setVisibility(View.VISIBLE);
     }
-    
+
     // go to sign in sheet
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         Intent i = new Intent(getApplicationContext(), SignInSheetActivity.class);
         i.putExtra("activitytitle", intent.getExtras().getString("activitytitle"));
-        if(intent.hasExtra("participationdate")){
+        if (intent.hasExtra("participationdate")) {
           i.putExtra("participationdate", intent.getExtras().getString("participationdate"));
         }
         startActivityForResult(i, SIGNIN_REQUEST);
         overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
       }
     });
-    
+
     // go back to RecordQuickParticipationActivity or RecordOrEditParticipationActivity
     // send back the participants collected so far
     doneButton.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +81,12 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
         finish();
       }
     });
-    
-    if(intent.hasExtra("firstOpen")){
+
+    if (intent.hasExtra("firstOpen")) {
       intent.removeExtra("firstOpen");
       okButton.performClick();
     }
-    
+
     // go back to RecordQuickParticipationActivity or RecordOrEditParticipationActivity
     // send back the participants collected so far
     reviewButton.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +99,9 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
         startActivity(i);
       }
     });
-    
+
   }
-  
+
   // Handle participant returned by SignInSheetActivity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -105,20 +109,20 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
       if (resultCode == RESULT_OK) {
         Bundle resultBundle = intent.getExtras();
         Participant currentParticipant = resultBundle.getParcelable("participant");
-        
-        if(currentParticipant!=null)
+
+        if (currentParticipant != null)
           participantList.add(currentParticipant);
       }
     }
   }
-  
+
   @Override
   public void onBackPressed() {
     super.onBackPressed();
     overridePendingTransition(R.anim.animation_slideinleft, R.anim.animation_slideoutright);
     finish();
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
@@ -132,7 +136,6 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
 
     return true;
   }
-  
 
   @Override
   protected void onSaveInstanceState(Bundle out) {
@@ -143,7 +146,7 @@ public class SignInSheetLandingActivity extends SherlockFragmentActivity {
   @Override
   protected void onRestoreInstanceState(Bundle in) {
     super.onRestoreInstanceState(in);
-    participantList= in.getParcelableArrayList("participantList");
+    participantList = in.getParcelableArrayList("participantList");
   }
 
 }

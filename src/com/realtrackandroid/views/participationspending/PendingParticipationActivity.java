@@ -31,7 +31,8 @@ public class PendingParticipationActivity extends SherlockFragmentActivity {
     ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
     unservicedParticipation_data = pDao.getAllUnservicedParticipations();
 
-    PendingParticipationListAdapter listAdapter = new PendingParticipationListAdapter(this, R.layout.row_pendingparticipation, unservicedParticipation_data);
+    PendingParticipationListAdapter listAdapter = new PendingParticipationListAdapter(this,
+            R.layout.row_pendingparticipation, unservicedParticipation_data);
     ListView participationitemslist = (ListView) findViewById(R.id.pendingparticipationlistView);
     participationitemslist.setAdapter(listAdapter);
   }

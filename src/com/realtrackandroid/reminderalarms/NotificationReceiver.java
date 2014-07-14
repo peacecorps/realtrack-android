@@ -18,11 +18,12 @@ import com.realtrackandroid.models.activities.Participation;
 import com.realtrackandroid.models.reminders.Reminders;
 
 /**
- * This class receives the boot completed event whenever the phone is started up
- * Its job is to schedule an alarm for this app's notifications
+ * This class receives the boot completed event whenever the phone is started up Its job is to
+ * schedule an alarm for this app's notifications
  */
 public class NotificationReceiver extends BroadcastReceiver {
   private static ArrayList<Reminders> reminders_data;
+
   private static ArrayList<Participation> participation_data;
 
   public void onReceive(Context context, Intent intent) {
@@ -50,7 +51,8 @@ public class NotificationReceiver extends BroadcastReceiver {
       Calendar c = Calendar.getInstance();
       c.setTimeInMillis(r.getRemindTime());
 
-      // delete any participation events for this reminder scheduled in the future (from now) and also cancel the associated
+      // delete any participation events for this reminder scheduled in the future (from now) and
+      // also cancel the associated
       // alarms for those events
       participation_data = pDao.getAllParticipationsForReminderId(r.getId());
       for (Participation p : participation_data) {
@@ -67,50 +69,67 @@ public class NotificationReceiver extends BroadcastReceiver {
       Activities a = aDao.getActivityWithId(r.getActivityid());
       // if the activity has ended, delete the reminder and do not create any alarms
       // also cancel any existing alarms
-      // note that if the activity's end date was 9/9/2013, reminders up to (but not including) 9/10/2013 00:00 will
+      // note that if the activity's end date was 9/9/2013, reminders up to (but not including)
+      // 9/10/2013 00:00 will
       // show up
-      // we do NOT kill pending unserviced participations so that the user can still fill them in from the pending
+      // we do NOT kill pending unserviced participations so that the user can still fill them in
+      // from the pending
       // screen; he will just never get to see them via a notification
       Calendar activityCalendar = Calendar.getInstance();
       activityCalendar.setTimeInMillis(a.getEndDate());
-      activityCalendar.add(Calendar.DAY_OF_WEEK, 1); //roll over to the start of the next day
+      activityCalendar.add(Calendar.DAY_OF_WEEK, 1); // roll over to the start of the next day
       if (c.compareTo(activityCalendar) == 1) {
-        Log.e("burra", "this activity is over. deleting reminder " + r.getId()+" and its associated alarms.");
+        Log.e("burra", "this activity is over. deleting reminder " + r.getId()
+                + " and its associated alarms.");
         deleteReminderAndAlarm(context, rDao, r.getId());
         return;
       }
 
-      // if we're already past the time we want in this week, schedule it for the same time next week
+      // if we're already past the time we want in this week, schedule it for the same time next
+      // week
       if (r.getRemindTime() < System.currentTimeMillis()) {
         // set the reminder for the same day and time next week
         c.add(Calendar.DAY_OF_WEEK, 7);
-        // update the reminder time in the Reminders table, which in turn, schedules this new participation event
+        // update the reminder time in the Reminders table, which in turn, schedules this new
+        // participation event
         // by calling this same NotificationReceiver function
         r.setRemindTime(c.getTimeInMillis());
-        // if the activity ends within the next 7 days, delete the reminder since it would have been shown after 7 days
+        // if the activity ends within the next 7 days, delete the reminder since it would have been
+        // shown after 7 days
         // and do not create any alarms
-        // note that if the activity's end date was 9/9/2013, reminders up to (but not including) 9/10/2013 00:00 will
+        // note that if the activity's end date was 9/9/2013, reminders up to (but not including)
+        // 9/10/2013 00:00 will
         // show up
-        // we do NOT kill pending unserviced participations so that the user can still fill them in from the pending
+        // we do NOT kill pending unserviced participations so that the user can still fill them in
+        // from the pending
         // screen; he will just never get to see them via a notification
         if (c.compareTo(activityCalendar) == 1) {
-          Log.e("burra", "this activity will be over within the week. deleting reminder " + r.getId()+" and its associated alarms.");
+          Log.e("burra",
+                  "this activity will be over within the week. deleting reminder " + r.getId()
+                          + " and its associated alarms.");
           deleteReminderAndAlarm(context, rDao, r.getId());
           return;
         }
         rDao.updateReminders(r, context);
-        Log.e("burra", "already passed this week, scheduling for next week " + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH));
+        Log.e("burra",
+                "already passed this week, scheduling for next week " + c.get(Calendar.MONTH) + "/"
+                        + c.get(Calendar.DAY_OF_MONTH));
         return;
       }
 
       Intent notifIntent = new Intent(context, NotificationService.class);
       notifIntent.putExtra("reminderid", r.getId());
-      notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an action, the extras will NOT be sent!!
-      PendingIntent pendingIntent = PendingIntent.getService(context, r.getId(), notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents using Reminders.id as the request code
-      Log.e("burra", "scheduling for " + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + ", " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
+      notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an
+                                                 // action, the extras will NOT be sent!!
+      PendingIntent pendingIntent = PendingIntent.getService(context, r.getId(), notifIntent,
+              PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents
+                                                  // using Reminders.id as the request code
+      Log.e("burra", "scheduling for " + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH)
+              + ", " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
 
       AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-      alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+      alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+              AlarmManager.INTERVAL_DAY * 7, pendingIntent);
 
       c.clear();
     }
@@ -121,8 +140,11 @@ public class NotificationReceiver extends BroadcastReceiver {
     pDao.deleteParticipation(participationId);
     Intent notifIntent = new Intent(context, NotificationService.class);
     notifIntent.putExtra("participationid", participationId);
-    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an action, the extras will NOT be sent!!
-    PendingIntent pendingIntent = PendingIntent.getService(context, participationId, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents using Participation.id as the request code
+    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an
+                                               // action, the extras will NOT be sent!!
+    PendingIntent pendingIntent = PendingIntent.getService(context, participationId, notifIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents
+                                                // using Participation.id as the request code
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     alarmManager.cancel(pendingIntent);
     pendingIntent.cancel();
@@ -132,8 +154,11 @@ public class NotificationReceiver extends BroadcastReceiver {
     rDao.deleteReminders(reminderId, context);
     Intent notifIntent = new Intent(context, NotificationService.class);
     notifIntent.putExtra("reminderid", reminderId);
-    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an action, the extras will NOT be sent!!
-    PendingIntent pendingIntent = PendingIntent.getService(context, reminderId, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents using Participation.id as the request code
+    notifIntent.setAction(Intent.ACTION_VIEW); // unpredictable android crap again. without an
+                                               // action, the extras will NOT be sent!!
+    PendingIntent pendingIntent = PendingIntent.getService(context, reminderId, notifIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT); // remember to distinguish between pendingintents
+                                                // using Participation.id as the request code
     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     alarmManager.cancel(pendingIntent);
     pendingIntent.cancel();

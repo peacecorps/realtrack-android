@@ -5,5 +5,6 @@ import com.realtrackandroid.models.projects.Project;
 
 public interface ActivitiesFragmentInterface {
   public Project getProject();
+
   public Activities getActivities();
 }

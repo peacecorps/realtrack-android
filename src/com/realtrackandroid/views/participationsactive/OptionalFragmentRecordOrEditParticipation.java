@@ -12,17 +12,20 @@ import com.realtrackandroid.models.activities.Participation;
 
 public class OptionalFragmentRecordOrEditParticipation extends SherlockFragment {
   protected EditText spmen09NumText, spmen1017NumText, spmen1824NumText, spmenOver25NumText,
-  spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText, notesText;
+          spwomen09NumText, spwomen1017NumText, spwomen1824NumText, spwomenOver25NumText,
+          notesText;
 
-  public static final OptionalFragmentRecordOrEditParticipation newInstance(String title)
-  {
+  public static final OptionalFragmentRecordOrEditParticipation newInstance(String title) {
     OptionalFragmentRecordOrEditParticipation f = new OptionalFragmentRecordOrEditParticipation();
     return f;
   }
 
   private View v;
+
   private RecordOrEditParticipationFragmentInterface mActivity;
+
   private Participation p;
+
   private boolean editParticipation;
 
   @Override
@@ -30,21 +33,23 @@ public class OptionalFragmentRecordOrEditParticipation extends SherlockFragment 
     super.onAttach(activity);
     try {
       mActivity = (RecordOrEditParticipationFragmentInterface) activity;
-    } catch (ClassCastException e) {
-      throw new ClassCastException(activity.toString() + " must implement RecordParticipationFragmentMarkerInterface");
+    }
+    catch (ClassCastException e) {
+      throw new ClassCastException(activity.toString()
+              + " must implement RecordParticipationFragmentMarkerInterface");
     }
     p = mActivity.getParticipation();
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
-    v = inflater.inflate(R.layout.activity_recordoreditparticipation_fragment_optional, container, false);
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    v = inflater.inflate(R.layout.activity_recordoreditparticipation_fragment_optional, container,
+            false);
     return v;
   }
 
   @Override
-  public void onResume(){
+  public void onResume() {
     super.onResume();
 
     spmen09NumText = (EditText) v.findViewById(R.id.numSpMen09);
@@ -58,88 +63,81 @@ public class OptionalFragmentRecordOrEditParticipation extends SherlockFragment 
 
     notesText = (EditText) v.findViewById(R.id.notes);
 
-    if(editParticipation){
+    if (editParticipation) {
       notesText.setText(p.getNotes());
       updateServiceProviderCounts();
     }
   }
 
   private void updateServiceProviderCounts() {
-    if(p.getSpMen09()>0){
+    if (p.getSpMen09() > 0) {
       spmen09NumText.setText(Integer.toString(p.getSpMen09()));
     }
-    if(p.getSpMen1017()>0){
+    if (p.getSpMen1017() > 0) {
       spmen1017NumText.setText(Integer.toString(p.getSpMen1017()));
     }
-    if(p.getSpMen1824()>0){
+    if (p.getSpMen1824() > 0) {
       spmen1824NumText.setText(Integer.toString(p.getSpMen1824()));
     }
-    if(p.getSpMenOver25()>0){
+    if (p.getSpMenOver25() > 0) {
       spmenOver25NumText.setText(Integer.toString(p.getSpMenOver25()));
     }
-    if(p.getSpWomen09()>0){
+    if (p.getSpWomen09() > 0) {
       spwomen09NumText.setText(Integer.toString(p.getSpWomen09()));
     }
-    if(p.getSpWomen1017()>0){
+    if (p.getSpWomen1017() > 0) {
       spwomen1017NumText.setText(Integer.toString(p.getSpWomen1017()));
     }
-    if(p.getSpWomen1824()>0){
+    if (p.getSpWomen1824() > 0) {
       spwomen1824NumText.setText(Integer.toString(p.getSpWomen1824()));
     }
-    if(p.getSpWomenOver25()>0){
+    if (p.getSpWomenOver25() > 0) {
       spwomenOver25NumText.setText(Integer.toString(p.getSpWomenOver25()));
     }
   }
 
-  public void setFields(Participation p){
-    if(v==null)
+  public void setFields(Participation p) {
+    if (v == null)
       return;
 
     if (spmen09NumText.getText().length() != 0)
       p.setSpMen09(Integer.parseInt(spmen09NumText.getText().toString()));
-    else 
+    else
       p.setSpMen09(0);
-
 
     if (spmen1017NumText.getText().length() != 0)
       p.setSpMen1017(Integer.parseInt(spmen1017NumText.getText().toString()));
-    else 
+    else
       p.setSpMen1017(0);
-
 
     if (spmen1824NumText.getText().length() != 0)
       p.setSpMen1824(Integer.parseInt(spmen1824NumText.getText().toString()));
-    else 
+    else
       p.setSpMen1824(0);
-
 
     if (spmenOver25NumText.getText().length() != 0)
       p.setSpMenOver25(Integer.parseInt(spmenOver25NumText.getText().toString()));
-    else 
+    else
       p.setSpMenOver25(0);
-
 
     if (spwomen09NumText.getText().length() != 0)
       p.setSpWomen09(Integer.parseInt(spwomen09NumText.getText().toString()));
-    else 
+    else
       p.setSpWomen09(0);
-
 
     if (spwomen1017NumText.getText().length() != 0)
       p.setSpWomen1017(Integer.parseInt(spwomen1017NumText.getText().toString()));
-    else 
+    else
       p.setSpWomen1017(0);
-
 
     if (spwomen1824NumText.getText().length() != 0)
       p.setSpWomen1824(Integer.parseInt(spwomen1824NumText.getText().toString()));
-    else 
+    else
       p.setSpWomen1824(0);
-
 
     if (spwomenOver25NumText.getText().length() != 0)
       p.setSpWomenOver25(Integer.parseInt(spwomenOver25NumText.getText().toString()));
-    else 
+    else
       p.setSpWomenOver25(0);
 
     p.setNotes(notesText.getText().toString());
