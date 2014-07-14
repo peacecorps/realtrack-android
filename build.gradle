@@ -93,7 +93,7 @@ android {
 
     /* only sign the package if the cert key is available. A good place to set this (and associated
        variables is in your global gradle directory e.g. : ~/.gradle/gradle.properties) */
-    if(new File(RELEASE_STORE_FILE).exists()) {
+    if(project.hasProperty('RELEASE_STORE_FILE') && new File(RELEASE_STORE_FILE).exists()) {
       signingConfigs {
         release {
           storeFile (new File(RELEASE_STORE_FILE))

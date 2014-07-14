@@ -115,7 +115,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
   private XYMultipleSeriesRenderer mRenderer;
 
-  private ParticipationSummaryListAdapter projectsActivitiesListAdapter;
+  private ParticipationSummaryListAdapter participationSummaryListAdapter;
 
   private ExpandableListView projectsummaryExpandableListView;
 
@@ -225,11 +225,11 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   private void updateDisplay(DataHolder dHolder) {
     projectsummaryExpandableListView = (ExpandableListView) findViewById(R.id.projectsummaryListView);
 
-    projectsActivitiesListAdapter = new ParticipationSummaryListAdapter(this,
+    participationSummaryListAdapter = new ParticipationSummaryListAdapter(this,
             R.layout.row_projectsummary, R.layout.row_activitysummary,
             projectsummaryExpandableListView, dHolder.pHolder_data);
-    projectsActivitiesListAdapter.setInflater((getLayoutInflater()));
-    projectsummaryExpandableListView.setAdapter(projectsActivitiesListAdapter);
+    participationSummaryListAdapter.setInflater((getLayoutInflater()));
+    projectsummaryExpandableListView.setAdapter(participationSummaryListAdapter);
 
     // make sure all groups are expanded by default
     for (int i = 0; i < dHolder.pHolder_data.size(); i++) {

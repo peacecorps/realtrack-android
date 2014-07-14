@@ -154,10 +154,10 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     // them up
     if (isExp)
       holder.expandCollapseProjectBtn.setText(context.getResources().getString(
-              R.string.fa_downchevron));
+              R.string.fa_downchevroncircle));
     else
       holder.expandCollapseProjectBtn.setText(context.getResources().getString(
-              R.string.fa_rightchevron));
+              R.string.fa_rightchevroncircle));
 
     // expand and collapse groups
     final ParentViewHolder holderFinal = holder;
@@ -167,12 +167,12 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
         if (isExp) {
           listView.collapseGroup(groupPos);
           holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(
-                  R.string.fa_rightchevron));
+                  R.string.fa_rightchevroncircle));
         }
         else {
           listView.expandGroup(groupPos);
           holderFinal.expandCollapseProjectBtn.setText(context.getResources().getString(
-                  R.string.fa_downchevron));
+                  R.string.fa_downchevroncircle));
         }
       }
     });
@@ -331,10 +331,10 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
     XYSeriesRenderer renderer = new XYSeriesRenderer();
     renderer.setFillPoints(false);
     renderer.setDisplayChartValues(false);
-    renderer.setColor(context.getResources().getColor(R.color.blue));
+    renderer.setColor(context.getResources().getColor(R.color.darkorange));
 
     FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
-    fill.setColor(context.getResources().getColor(R.color.blue));
+    fill.setColor(context.getResources().getColor(R.color.orange));
     renderer.addFillOutsideLine(fill);
 
     return renderer;
@@ -348,13 +348,13 @@ public class ParticipationSummaryListAdapter extends BaseExpandableListAdapter {
   private void expandChild(ChildViewHolder holder) {
     holder.isExp = true;
     holder.expandCollapseActivityBtn.setText(context.getResources().getString(
-            R.string.fa_downchevron));
+            R.string.fa_downchevroncircle));
   }
 
   private void collapseChild(ChildViewHolder holder) {
     holder.isExp = false;
     holder.expandCollapseActivityBtn.setText(context.getResources().getString(
-            R.string.fa_rightchevron));
+            R.string.fa_rightchevroncircle));
   }
 
   private class ParentViewHolder {

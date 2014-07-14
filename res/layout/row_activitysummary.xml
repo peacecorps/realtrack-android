@@ -14,19 +14,19 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="10dp" >
+        android:background="@color/white" >
 
         <com.realtrackandroid.common.StyledButton
             android:id="@+id/expandCollapseActivityBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="2dp"
             android:background="@null"
             android:gravity="center"
-            android:text="@string/fa_downchevron"
+            android:text="@string/fa_downchevroncircle"
             android:textColor="@drawable/greyitem_textcolor"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/activityTitle"
