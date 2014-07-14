@@ -3,38 +3,43 @@ RealTrack
 
 #### Screenshots
 ##### Project Screens
-![All projects](http://i.imgur.com/KU5sylo.png)
-![Add/Edit project - required fields](http://i.imgur.com/dRxFuUm.png)
-![Add/Edit project - optional fields](http://i.imgur.com/bmMxuxy.png)
-![Project details](http://i.imgur.com/70tOvJq.png)
+![All projects](screens/all_projects.png?raw=true All projects)
+![Add/Edit project - required fields](screens/addproject_required.png?raw=true Add/Edit project - Required fields)
+![Add/Edit project - optional fields](screens/addproject_optional.png?raw=true Add/Edit project - Optional fields)
+![Project details](screens/project_details.png?raw=true Project details)
 
 ##### Activities screens
-![Add/Edit activity - required fields](http://i.imgur.com/hMiiwBh.png)
-![Add/Edit activity - optional fields](http://i.imgur.com/ivi6rcG.png)
-![Add/Edit activity - reminders](http://i.imgur.com/Acgw4fv.png)
-![Activity Details](http://i.imgur.com/RXFz5GK.png)
+![Add/Edit activity - required fields](screens/addactivity_required.png?raw=true Add/Edit activity - Required fields)
+![Add/Edit activity - optional fields](screens/addactivity_optional.png?raw=true Add/Edit activity - Optional fields)
+![Add/Edit activity - reminders](screens/addactivity_reminders.png?raw=true Add/Edit activity - Reminders)
+![Activity Details](screens/activity_details.png?raw=true Activity details)
 
 ##### Recording Participations screens
-![Record participation - required fields](http://i.imgur.com/MtqfiYA.png)
-![Record participation - optional fields](http://i.imgur.com/B7Ub8WO.png)
-![Participation details](http://i.imgur.com/Rrz3UAZ.png)
+![Record participation - required fields](screens/recordparticipation_required.png?raw=true Record-participation - Required fields)
+![Record participation - optional fields](screens/recordparticipation_optional.png?raw=true Record-participation - Optional fields)
+![Participation details](screens/participation_details.png?raw=true Participation details)
+
+##### Sign-in screens
+![Sign-in - details](screens/signin_details.png?raw=true Sign-in - details)
+![Sign-in - signature](screens/signin_signature.png?raw=true Sign-in - signature)
 
 #### App Features
 
 * Streamlined and clean interface
-* Daily/weekly reminders to record data for activities
-* Quickly record participations without a reminder
-* Spreadsheet reports emailed to user on demand
+* Repeating or non-repeating activities
+* Daily/weekly reminders to record data for repeating activities
+* Quickly record participations for non-repeating activities
 * Review and change participation details from within app
+* Spreadsheet reports emailed to user on demand
 * Sign-in sheets with finger-drawn signatures for event participants
 * PDF export of signatures that can be emailed as proof of participant involvement
+* **New: transfer reports to your laptop using Bluetooth**
 
 
 #### Background
 This is a project started at the [*Random Hacks of Kindness*](http://www.rhok.org/event/atlanta-ga-usa-1) (part of the [National Civic Day of Hacking](http://hackforchange.org/)) event at Atlanta, GA on 6/1-2/2013.
 
 **RealTrack** is an Android smartphone application designed to facilitate day-to-day data collection by Peace Corps Volunteers (PCV) in the field. This app is based on an [idea](http://www.rhok.org/problems/realtrack-app) suggested by Julia Schulkers, who is a Peace Corps Volunteer in Thailand, for the [Peace Corps Innovation Challenge](innovationchallenge.peacecorps.gov).
-
 
 
 #### Notes for Developers
@@ -45,7 +50,7 @@ In addition to the Android SDK Platform (API 17 is targeted but you can use a mo
 * `Android SDK Tools` found under `Tools` in the `SDK Manager` (e.g. `v 23.0.2`)
 * `Android SDK Platform-tools` found under `Tools` in the `SDK Manager` (e.g. >= `v 20`)
 * `Android SDK Build-tools` found under `Tools` in the `SDK Manager` (use `19.0.3` if you plan to use Travis as that is the most recent version they have as of 07/14/2014. Or else you can use a more recent one)
-* `Gradle 1.11`
+* `Gradle 1.11` (if you would like to use gradle to build the project)
 
 This repo will provide the following external libraries for you:
 
