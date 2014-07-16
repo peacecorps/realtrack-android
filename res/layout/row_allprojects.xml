@@ -16,6 +16,7 @@
         android:textSize="20sp" />
 
     <LinearLayout
+        android:id="@+id/projectLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

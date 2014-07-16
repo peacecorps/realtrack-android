@@ -115,6 +115,7 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       row = inflater.inflate(groupLayoutResourceId, parent, false);
 
       holder = new ParentViewHolder();
+      holder.projectLinearLayout = (LinearLayout) row.findViewById(R.id.projectLinearLayout);
       holder.projectTitle = (TextView) row.findViewById(R.id.projectTitle);
       holder.projectStartDate = (TextView) row.findViewById(R.id.projectStartDate);
       holder.expandCollapseProjectBtn = (StyledButton) row
@@ -128,11 +129,18 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
     final Project project = ((ProjectsActivitiesHolder) getGroup(groupPosition)).getProject();
     holder.projectTitle.setText(project.getTitle());
 
+    final ParentViewHolder holderFinal = holder;
+    holder.projectLinearLayout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        holderFinal.projectTitle.performClick();
+      }
+    });
+    
     if (project.getId() == -1) { // "add new project..." item.
       holder.projectStartDate.setVisibility(View.GONE);
       holder.expandCollapseProjectBtn.setText(context.getResources().getString(
               R.string.fa_pluscircle));
-      final ParentViewHolder holderFinal = holder;
       holder.expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -189,7 +197,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       });
 
       // expand and collapse groups
-      final ParentViewHolder holderFinal = holder;
       holder.expandCollapseProjectBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -238,6 +245,14 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
 
     final Activities activity = (Activities) getChild(groupPosition, childPosition);
     holder.activityTitle.setText(activity.getTitle());
+    
+    final ChildViewHolder holderFinal = holder;
+    holder.activityLinearLayout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        holderFinal.activityTitle.performClick();
+      }
+    });
 
     if (activity.getId() == -1) { // "add new activity..." item.
       holder.quickParticipationBtn.setVisibility(View.GONE);
@@ -245,13 +260,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       holder.activityStartDate.setVisibility(View.GONE);
       holder.expandCollapseActivityBtn.setText(context.getResources().getString(
               R.string.fa_pluscircle));
-      final ChildViewHolder holderFinal = holder;
-      holder.activityLinearLayout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          holderFinal.activityTitle.performClick();
-        }
-      });
       holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -383,7 +391,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
           }
         });
 
-        final ChildViewHolder holderFinal = holder;
         StyledButton deleteParticipationBtn = (StyledButton) participationRelativeLayout
                 .findViewById(R.id.deleteParticipationBtn);
         deleteParticipationBtn.setOnClickListener(new View.OnClickListener() {
@@ -411,7 +418,6 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
       }
 
       // simulate expand collapse clicks for activities
-      final ChildViewHolder holderFinal = holder;
       holder.expandCollapseActivityBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -449,6 +455,8 @@ public class ProjectsActivitiesListAdapter extends BaseExpandableListAdapter {
   }
 
   private class ParentViewHolder {
+    LinearLayout projectLinearLayout;
+    
     StyledButton expandCollapseProjectBtn;
 
     TextView projectTitle;
