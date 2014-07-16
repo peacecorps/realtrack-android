@@ -20,6 +20,7 @@ import com.realtrackandroid.backend.projects.ProjectDAO;
 import com.realtrackandroid.models.activities.Activities;
 import com.realtrackandroid.models.projects.Project;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.GlossaryDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 import com.realtrackandroid.views.projects.AddProjectActivity;
 
@@ -134,9 +135,8 @@ public class AllProjectsActivitiesActivity extends SherlockFragmentActivity {
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       case R.id.action_glossary:
-        HelpDialog glossaryDialog = new HelpDialog();
+        GlossaryDialog glossaryDialog = new GlossaryDialog();
         glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
         glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
         break;
       default:

@@ -66,6 +66,7 @@ import com.realtrackandroid.models.activities.Participation;
 import com.realtrackandroid.models.projects.Project;
 import com.realtrackandroid.providers.CachedFileContentProvider;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.GlossaryDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 public class ParticipationSummaryActivity extends SherlockFragmentActivity {
@@ -128,6 +129,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     timeParser = new SimpleDateFormat("hh:mm aaa");
 
     SendDataTask task = (SendDataTask) getLastCustomNonConfigurationInstance();
+    
     if (task != null) {
       sendEmailTask = task;
       sendEmailTask.reAttach(this);
@@ -671,9 +673,8 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       case R.id.action_glossary:
-        HelpDialog glossaryDialog = new HelpDialog();
+        GlossaryDialog glossaryDialog = new GlossaryDialog();
         glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
         glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
         break;
       default:
@@ -790,7 +791,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     switch (id) {
       case PROGRESS_DIALOG:
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Generating Reports");
+        progressDialog.setMessage("Generating Reports...");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

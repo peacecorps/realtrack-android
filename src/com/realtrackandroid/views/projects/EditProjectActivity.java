@@ -2,10 +2,12 @@ package com.realtrackandroid.views.projects;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+
 import com.actionbarsherlock.view.MenuItem;
 import com.realtrackandroid.R;
 import com.realtrackandroid.backend.projects.ProjectDAO;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.GlossaryDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 /*
@@ -42,9 +44,8 @@ public class EditProjectActivity extends AddProjectActivity {
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       case R.id.action_glossary:
-        HelpDialog glossaryDialog = new HelpDialog();
+        GlossaryDialog glossaryDialog = new GlossaryDialog();
         glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
         glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
         break;
       case R.id.action_save:

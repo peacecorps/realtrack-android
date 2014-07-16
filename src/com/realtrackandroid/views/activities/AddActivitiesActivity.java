@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -22,6 +23,7 @@ import com.realtrackandroid.models.projects.Project;
 import com.realtrackandroid.views.dialogs.PickDateDialogListener;
 import com.realtrackandroid.views.dialogs.PickTimeDialogListener;
 import com.realtrackandroid.views.help.FrameworkInfoDialog;
+import com.realtrackandroid.views.help.GlossaryDialog;
 import com.realtrackandroid.views.help.HelpDialog;
 
 /**
@@ -92,9 +94,8 @@ public class AddActivitiesActivity extends SherlockFragmentActivity implements
         frameworkInfoDialog.show(getSupportFragmentManager(), "frameworkinfodialog");
         break;
       case R.id.action_glossary:
-        HelpDialog glossaryDialog = new HelpDialog();
+        GlossaryDialog glossaryDialog = new GlossaryDialog();
         glossaryDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        glossaryDialog.setDisplayUrl("file:///android_asset/glossary.html");
         glossaryDialog.show(getSupportFragmentManager(), "glossarydialog");
         break;
       case R.id.action_save:

@@ -4,7 +4,9 @@
     android:versionCode="7"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="17" />
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -16,7 +18,23 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Vrf" >
 
+        <!-- HELP DIALOGS -->
+        <activity
+            android:name="com.realtrackandroid.views.help.HelpDialog"
+            android:label="@string/helpactivity_label" >
+        </activity>
+        <activity
+            android:name="com.realtrackandroid.views.help.FrameworkInfoDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/frameworkinfoactivity_label" >
+        </activity>
+
         <!-- ACTIVITIES -->
+        <activity
+            android:name="com.realtrackandroid.views.welcome.CollectPCVInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/collectpcvactivity_label" >
+        </activity>
         <activity
             android:name="com.realtrackandroid.views.welcome.WelcomeActivity"
             android:label="@string/app_name" >
@@ -31,27 +49,32 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/allprojectsactivity_label" />
         <activity
+            android:name="com.realtrackandroid.views.projects.DisplayProjectActivity"
+            android:label="@string/displayprojectactivity_label" />
+        <activity
             android:name="com.realtrackandroid.views.projects.AddProjectActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/addprojectactivity_label" />
-        <activity
-            android:name="com.realtrackandroid.views.projects.DisplayProjectActivity"
-            android:label="@string/displayprojectactivity_label" />
         <activity
             android:name="com.realtrackandroid.views.projects.EditProjectActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/editprojectactivity_label" />
         <activity
+            android:name="com.realtrackandroid.views.activities.DisplayActivitiesActivity"
+            android:label="@string/displayactivitiesactivity_label" />
+        <activity
             android:name="com.realtrackandroid.views.activities.AddActivitiesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/addactivitiesactivity_label" />
         <activity
-            android:name="com.realtrackandroid.views.activities.DisplayActivitiesActivity"
-            android:label="@string/displayactivitiesactivity_label" />
-        <activity
             android:name="com.realtrackandroid.views.activities.EditActivitiesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/editactivitiesactivity_label" />
+        <activity
+            android:name="com.realtrackandroid.views.participationsactive.RecordQuickParticipationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/recordquickparticipationactivity_label"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.realtrackandroid.views.participationsactive.RecordOrEditParticipationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -65,21 +88,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.realtrackandroid.views.welcome.WelcomeActivity" />
-        </activity>
-        <activity
-            android:name="com.realtrackandroid.views.participationsactive.RecordQuickParticipationActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/recordquickparticipationactivity_label"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.realtrackandroid.views.participationspending.PendingParticipationActivity"
-            android:label="@string/pendingparticipationactivity_label" />
-        <activity
-            android:name="com.realtrackandroid.views.participationsdonesummaries.ParticipationSummaryActivity"
-            android:label="@string/allparticipationsactivity_label" />
-        <activity
-            android:name="com.realtrackandroid.views.help.HelpDialog"
-            android:label="@string/helpactivity_label" >
         </activity>
         <activity
             android:name="com.realtrackandroid.views.participationsactive.signinsheet.SignInSheetLandingActivity"
@@ -98,15 +106,11 @@
             android:label="@string/title_activity_signature" >
         </activity>
         <activity
-            android:name="com.realtrackandroid.views.welcome.CollectPCVInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/collectpcvactivity_label" >
-        </activity>
+            android:name="com.realtrackandroid.views.participationsdonesummaries.ParticipationSummaryActivity"
+            android:label="@string/allparticipationsactivity_label" />
         <activity
-            android:name="com.realtrackandroid.views.help.FrameworkInfoDialog"
-            android:label="@string/frameworkinfoactivity_label"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
+            android:name="com.realtrackandroid.views.participationspending.PendingParticipationActivity"
+            android:label="@string/pendingparticipationactivity_label" />
 
         <!-- SERVICES AND PROVIDERS -->
 
