@@ -183,5 +183,7 @@
     <string name="noinitiatives">No initiatives</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="email">Email</string>
+    <string name="generatingreports">Generating Reports&#8230;</string>
+    <string name="sendmail">Send mail&#8230;</string>
 
 </resources>

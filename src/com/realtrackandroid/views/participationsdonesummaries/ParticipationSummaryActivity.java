@@ -20,12 +20,11 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Build;
@@ -73,8 +72,8 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
   private static final int SENDEMAIL_REQUEST = 1;
 
   private static final int SENDBT_REQUEST = 2;
-
-  private static final int PROGRESS_DIALOG = 3;
+  
+  private static final String PROGRESS_DIALOG_TAG = "progressDialog";
 
   private static final Font TITLE_FONT = new Font(FontFamily.HELVETICA, 18);
 
@@ -84,11 +83,15 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
   private final String COMMUNITY_DELIMITER = "@_@";
 
-  private boolean dataToExportFound, signaturesToExportFound;
+  private boolean dataToExportFound;
+  
+  private boolean areAnyParticipantsPresent;
+  
+  private boolean useEmailNotBT;
 
   private DataHolder dataHolder;
 
-  DateFormat dateParser, timeParser;
+  private DateFormat dateParser, timeParser;
 
   private File nonAlignedDataOutputFile;
 
@@ -98,15 +101,13 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
   private File cacheDataOutputFile;
 
-  public String signInReportsFileName;
+  private String signInReportsFileName;
 
-  public String participationFileName;
+  private String participationFileName;
 
-  public String dataFileName;
+  private String dataFileName;
 
-  private SendDataTask sendEmailTask;
-
-  private ProgressDialog progressDialog;
+  private SendDataTask sendDataTask;
 
   private XYSeries mCurrentSeries;
 
@@ -120,27 +121,30 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
   private ExpandableListView projectsummaryExpandableListView;
 
-  private boolean use_email_not_bt;
-
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_participationsummary);
     dateParser = new SimpleDateFormat("MM/dd/yyyy");
     timeParser = new SimpleDateFormat("hh:mm aaa");
 
-    SendDataTask task = (SendDataTask) getLastCustomNonConfigurationInstance();
+    SendDataTask oldTask = (SendDataTask) getLastCustomNonConfigurationInstance();
     
-    if (task != null) {
-      sendEmailTask = task;
-      sendEmailTask.reAttach(this);
-      if (sendEmailTask.getStatus() == Status.RUNNING) {
-        showDialog(PROGRESS_DIALOG);
-        signInReportsFileName = sendEmailTask.signInReportsFileName;
-        participationFileName = sendEmailTask.participationFileName;
-        dataFileName = sendEmailTask.dataFileName;
-        use_email_not_bt = sendEmailTask.use_email_not_bt;
+    if (oldTask != null) {
+      sendDataTask = oldTask;
+      sendDataTask.reAttach(this);
+      if (sendDataTask.getStatus() == Status.RUNNING) {
+        showProgressDialog();
+        restoreDataFromBeforeConfigurationChange(oldTask);
       }
     }
+  }
+
+  private void restoreDataFromBeforeConfigurationChange(SendDataTask oldTask) {
+    signInReportsFileName = oldTask.signInReportsFileName;
+    participationFileName = oldTask.participationFileName;
+    dataFileName = oldTask.dataFileName;
+    useEmailNotBT = oldTask.useEmailNotBT;
+    areAnyParticipantsPresent = oldTask.areAnyParticipantsPresent;
   }
 
   @Override
@@ -258,8 +262,11 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
   /**
    * Callback for SendDataTask doInBackground()
+   * @param sendDataTask
    */
-  public void prepareDataInBackgroundCallback() {
+  public void setDataToPreserveOnConfigurationChange(SendDataTask sendDataTask) {
+    /* these fields are preserved in sendDataTask to be used in case this activity is destroyed
+     and recreated e.g. on rotation, keyboard popup etc*/
     DateFormat dateForFileNameParser = new SimpleDateFormat("MMddyyyy");
     dataFileName = "RealTrack_Data_Report_"
             + dateForFileNameParser.format(Calendar.getInstance().getTimeInMillis()) + ".csv";
@@ -272,15 +279,13 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     cacheParticipationOutputFile = new File(cacheDir + File.separator + participationFileName);
     signInReportsOutputFile = new File(cacheDir + File.separator + signInReportsFileName);
     nonAlignedDataOutputFile = new File(cacheDir + File.separator + "temp.csv");
+    areAnyParticipantsPresent = new ParticipantDAO(getApplicationContext()).areAnyParticipantsPresent();
 
-    // will be used in case this activity is destroyed and recreated e.g. on rotation, keyboard
-    // popup etc
-    sendEmailTask.dataFileName = dataFileName;
-    sendEmailTask.participationFileName = participationFileName;
-    sendEmailTask.signInReportsFileName = signInReportsFileName;
-    sendEmailTask.use_email_not_bt = use_email_not_bt;
-
-    createDataFiles(dataHolder);
+    sendDataTask.dataFileName = dataFileName;
+    sendDataTask.participationFileName = participationFileName;
+    sendDataTask.signInReportsFileName = signInReportsFileName;
+    sendDataTask.useEmailNotBT = useEmailNotBT;
+    sendDataTask.areAnyParticipantsPresent = areAnyParticipantsPresent;
   }
 
   /**
@@ -288,7 +293,8 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
    * 
    * @param dHolder
    */
-  private void createDataFiles(DataHolder dHolder) {
+  public void sendDataTaskDoInBackgroundCallback() {
+    DataHolder dHolder = dataHolder;
     String[] allInits = updateInitiativeNames();
     String[] allCspps = updateCsppNames();
 
@@ -412,7 +418,6 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
           PdfPTable table = null;
 
           if (!paHolder.participantList.isEmpty()) {
-            signaturesToExportFound = true;
             projectParagraph = new Paragraph();
             addNewLines(projectParagraph, 1);
             projectParagraph.add(new Paragraph("Project Title: " + p.getTitle()));
@@ -471,14 +476,14 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
                     + participant.getName() + ESCAPE_COMMAS + "," + ESCAPE_COMMAS
                     + participant.getPhoneNumber() + ESCAPE_COMMAS + "," + ESCAPE_COMMAS
                     + participant.getVillage() + ESCAPE_COMMAS + "," + participant.getAge() + ","
-                    + (participant.getGender() == Participant.MALE ? "Male" : "Female") + ","
+                    + (participant.getGender() == Participant.MALE ? getString(R.string.male) : getString(R.string.female)) + ","
                     + ESCAPE_COMMAS + participation.getNotes() + ESCAPE_COMMAS + "\n";
 
             table.addCell(participant.getName());
             table.addCell(participant.getPhoneNumber());
             table.addCell(participant.getVillage());
             table.addCell(Integer.toString(participant.getAge()));
-            table.addCell(participant.getGender() == Participant.MALE ? "Male" : "Female");
+            table.addCell(participant.getGender() == Participant.MALE ? getString(R.string.male) : getString(R.string.female));
             try {
               Image signatureImage = Image.getInstance(participant.getSignaturePath());
               PdfPCell imageCell = new PdfPCell(signatureImage);
@@ -655,12 +660,12 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
         finish();
         break;
       case R.id.action_exportbt:
-        use_email_not_bt = false;
-        shareData();
+        useEmailNotBT = false;
+        startSendDataTask();
         break;
       case R.id.action_exportdata:
-        use_email_not_bt = true;
-        shareData();
+        useEmailNotBT = true;
+        startSendDataTask();
         break;
       case R.id.action_help:
         HelpDialog helpDialog = new HelpDialog();
@@ -684,28 +689,31 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
     return true;
   }
 
-  private void shareData() {
+  private void startSendDataTask() {
     if (!dataToExportFound) {
       Toast.makeText(getApplicationContext(),
               getResources().getString(R.string.noparticipationstoexport), Toast.LENGTH_SHORT)
               .show();
       return;
     }
-    showDialog(PROGRESS_DIALOG);
-
-    if (sendEmailTask == null || sendEmailTask.getStatus() == Status.FINISHED)
-      sendEmailTask = new SendDataTask(this);
-    sendEmailTask.execute();
+    
+    showProgressDialog();
+    
+    if (sendDataTask == null || sendDataTask.getStatus() == Status.FINISHED)
+      sendDataTask = new SendDataTask(this);
+    
+    setDataToPreserveOnConfigurationChange(sendDataTask);
+    
+    sendDataTask.execute();
   }
 
   /**
    * Callback for SendDataTask onPostExecute()
    */
-  public void shareDataCallback() {
-    if (progressDialog.isShowing())
-      progressDialog.dismiss();
+  public void sendDataTaskOnPostExecuteCallback() {
+    removeExistingProgressDialog();
 
-    if (use_email_not_bt)
+    if (useEmailNotBT)
       sendByEmail();
     else
       sendByBT();
@@ -725,7 +733,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
     ArrayList<Uri> uris = new ArrayList<Uri>();
     uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/" + dataFileName));
-    if (signaturesToExportFound) {
+    if (areAnyParticipantsPresent) {
       uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
               + participationFileName));
       uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
@@ -749,7 +757,7 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
 
     ArrayList<Uri> uris = new ArrayList<Uri>();
     uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/" + dataFileName));
-    if (signaturesToExportFound) {
+    if (areAnyParticipantsPresent) {
       uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
               + participationFileName));
       uris.add(Uri.parse("content://" + CachedFileContentProvider.AUTHORITY + "/"
@@ -766,13 +774,14 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
       sendEmailIntent.setSelector(restrictIntent);
     }
 
-    startActivityForResult(Intent.createChooser(sendEmailIntent, "Send mail..."),
+    startActivityForResult(Intent.createChooser(sendEmailIntent, getString(R.string.sendmail)),
             ParticipationSummaryActivity.SENDEMAIL_REQUEST);
     overridePendingTransition(R.anim.animation_slideinright, R.anim.animation_slideoutleft);
   }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    /* leaving the ifs in here in case we want some behavior specific to email/BT in the future */
     if (requestCode == SENDEMAIL_REQUEST) {
       deleteTemporaryFiles();
     }
@@ -780,22 +789,26 @@ public class ParticipationSummaryActivity extends SherlockFragmentActivity {
       deleteTemporaryFiles();
     }
   }
-
+  
   @Override
-  public Object onRetainCustomNonConfigurationInstance() {
-    return sendEmailTask;
+  public void onConfigurationChanged(Configuration newConfig) {
+      super.onConfigurationChanged(newConfig);
+      removeExistingProgressDialog();
   }
 
   @Override
-  protected Dialog onCreateDialog(int id) {
-    switch (id) {
-      case PROGRESS_DIALOG:
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Generating Reports...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
-    return super.onCreateDialog(id);
+  public Object onRetainCustomNonConfigurationInstance() {
+    return sendDataTask;
+  }
+
+  private void showProgressDialog() {
+      ProgressDialogFragment.newInstance().show(getSupportFragmentManager(), PROGRESS_DIALOG_TAG);
+  }
+
+  private void removeExistingProgressDialog() {
+    ProgressDialogFragment progressDialogFragment = (ProgressDialogFragment) getSupportFragmentManager().findFragmentByTag(PROGRESS_DIALOG_TAG);
+    if(progressDialogFragment != null)
+      progressDialogFragment.dismiss();
   }
 
 }

@@ -3,6 +3,7 @@ package com.realtrackandroid.views.projects;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -67,9 +68,11 @@ public class RequiredFragment extends SherlockFragment {
       Date date = parser.parse(startDate.getText().toString());
       p.setStartDate(date.getTime());
       date = parser.parse(endDate.getText().toString());
-      date.setHours(23);
-      date.setMinutes(59);
-      p.setEndDate(date.getTime());
+      Calendar endCal = Calendar.getInstance();
+      endCal.setTimeInMillis(date.getTime());
+      endCal.set(Calendar.HOUR_OF_DAY, 23);
+      endCal.set(Calendar.MINUTE, 59);
+      p.setEndDate(endCal.getTimeInMillis());
     }
     catch (ParseException e) {
       Toast.makeText(getActivity(), R.string.fillrequiredfieldserrormessage, Toast.LENGTH_SHORT)

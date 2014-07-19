@@ -11,7 +11,9 @@ public class SendDataTask extends AsyncTask<Void, Void, Boolean> {
 
   String signInReportsFileName;
 
-  boolean use_email_not_bt;
+  boolean useEmailNotBT;
+
+  boolean areAnyParticipantsPresent;
 
   public SendDataTask(ParticipationSummaryActivity participationSummaryActivity) {
     this.participationSummaryActivity = participationSummaryActivity;
@@ -28,13 +30,13 @@ public class SendDataTask extends AsyncTask<Void, Void, Boolean> {
 
   @Override
   protected Boolean doInBackground(final Void... params) {
-    participationSummaryActivity.prepareDataInBackgroundCallback();
+    participationSummaryActivity.sendDataTaskDoInBackgroundCallback();
     return true;
   }
 
   @Override
   protected void onPostExecute(final Boolean success) {
     super.onPostExecute(success);
-    participationSummaryActivity.shareDataCallback();
+    participationSummaryActivity.sendDataTaskOnPostExecuteCallback();
   }
 }

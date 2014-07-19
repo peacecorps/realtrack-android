@@ -386,8 +386,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -424,8 +426,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -462,8 +466,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -500,8 +506,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -538,8 +546,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -576,8 +586,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);
@@ -614,8 +626,10 @@ public class RemindersFragment extends SherlockFragment {
           // extract the hour and
           // minute from the date object.
           Calendar c = Calendar.getInstance();
-          c.set(Calendar.HOUR_OF_DAY, date.getHours());
-          c.set(Calendar.MINUTE, date.getMinutes());
+          Calendar c1 = Calendar.getInstance();
+          c1.setTimeInMillis(date.getTime());
+          c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+          c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
           c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
           r = new Reminders();
           r.setActivityid(newOrExistingActivityId);

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -264,8 +265,10 @@ public class RequiredFragmentRecordQuickParticipation extends SherlockFragment {
       // to some 1970 date. Hence, in the Calendar object that we constructed, we only extract
       // the hour and
       // minute from the date object.
-      c.set(Calendar.HOUR_OF_DAY, date.getHours());
-      c.set(Calendar.MINUTE, date.getMinutes());
+      Calendar c1 = Calendar.getInstance();
+      c1.setTimeInMillis(date.getTime());
+      c.set(Calendar.HOUR_OF_DAY, c1.get(Calendar.HOUR_OF_DAY));
+      c.set(Calendar.MINUTE, c1.get(Calendar.MINUTE));
       p.setDate(c.getTimeInMillis());
     }
     catch (ParseException e) {

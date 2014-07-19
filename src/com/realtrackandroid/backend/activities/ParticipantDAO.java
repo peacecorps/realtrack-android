@@ -176,6 +176,18 @@ public class ParticipantDAO {
     }
     return false;
   }
+  
+  /**
+   * @return true if any participants were recorded for any activity
+   */
+  public boolean areAnyParticipantsPresent() {
+    openDB();
+    Cursor returnData = readDatabase.query(Participant.PARTICIPANT_TABLE, new String[] {},
+            null, null, null, null, null);
+    boolean areAnyParticipantsPresent = returnData.getCount() > 0;
+    closeDB();
+    return areAnyParticipantsPresent;
+  }
 
   public ArrayList<Participant> getAllParticipantsForParticipationId(int participationid) {
     openDB();

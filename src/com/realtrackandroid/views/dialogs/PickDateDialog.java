@@ -2,7 +2,6 @@ package com.realtrackandroid.views.dialogs;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,8 +12,6 @@ import android.widget.DatePicker;
 public class PickDateDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
   PickDateDialogListener callingActivity;
-
-  private boolean startorend;
 
   public PickDateDialog() {
   }
@@ -61,11 +58,6 @@ public class PickDateDialog extends DialogFragment implements DatePickerDialog.O
       datePickerDialog.getDatePicker().setMaxDate(maxDate);
     }
 
-    /*
-     * if(getArguments().containsKey("startorend")){ startorend =
-     * getArguments().getBoolean("startorend"); }
-     */
-
     datePickerDialog.getDatePicker().setCalendarViewShown(false); // Unpredictable Android crap
                                                                   // again. Workaround for
                                                                   // CalendarView bug that causes
@@ -77,11 +69,6 @@ public class PickDateDialog extends DialogFragment implements DatePickerDialog.O
   @Override
   public void onDateSet(DatePicker view, int year, int month, int day) {
     callingActivity.setDate(String.format("%02d/%02d/%4d", (month + 1), day, year));
-    /*
-     * if(startorend) callingActivity.setStartDate(String.format("%02d/%02d/%4d", (month + 1), day,
-     * year)); else callingActivity.setEndDate(String.format("%02d/%02d/%4d", (month + 1), day,
-     * year));
-     */
   }
 
 }

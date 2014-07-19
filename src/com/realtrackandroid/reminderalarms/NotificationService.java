@@ -11,7 +11,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -85,18 +84,11 @@ public class NotificationService extends Service {
 
     reminderid = intent.getExtras().getInt("reminderid");
 
-    // check the global background data setting
-    ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-    if (!cm.getBackgroundDataSetting()) {
-      stopSelf();
-      return;
-    }
-
     // do the actual work, in a separate thread
-    new PollTask().execute();
+    new DisplayNotificationAsyncTask().execute();
   }
 
-  private class PollTask extends AsyncTask<Void, Void, Void> {
+  private class DisplayNotificationAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
       ParticipationDAO pDao = new ParticipationDAO(getApplicationContext());
@@ -152,7 +144,7 @@ public class NotificationService extends Service {
         // build notification
         Notification notificationBuilder = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.icon).setContentTitle("Record Attendance")
-                .setContentText(remindersText).setContentIntent(pendingIntent).getNotification();
+                .setContentText(remindersText).setContentIntent(pendingIntent).build();
         // Hide the notification after it is clicked
         notificationBuilder.flags |= Notification.FLAG_AUTO_CANCEL;
 

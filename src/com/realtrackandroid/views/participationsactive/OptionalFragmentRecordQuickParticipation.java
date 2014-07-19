@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.realtrackandroid.R;
 import com.realtrackandroid.models.activities.Participation;
@@ -27,6 +28,7 @@ public class OptionalFragmentRecordQuickParticipation extends SherlockFragment {
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
+      @SuppressWarnings("unused")
       RecordQuickParticipationFragmentInterface mActivity = (RecordQuickParticipationFragmentInterface) activity;
     }
     catch (ClassCastException e) {
