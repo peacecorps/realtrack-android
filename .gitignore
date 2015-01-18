@@ -1,1 +1,4 @@
 local.properties
+/ci/
+/gradle/
+/libs/
