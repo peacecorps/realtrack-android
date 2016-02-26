@@ -1,5 +1,8 @@
 language: android
 
+sudo: required
+sudo: false
+
 jdk: oraclejdk7
 
 env:
@@ -8,9 +11,9 @@ env:
 
 android:
   components:
-    - build-tools-19.0.3
+    - build-tools-21.1.1
     - android-17
-    - sysimg-17
+    - sys-img-armeabi-v7a-android-17
     - extra-android-support
 
 before_install:
